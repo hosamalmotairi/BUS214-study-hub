@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BUS 214 — HOSAM Study Hub</title>
+  <meta name="description" content="BUS 214 Business Ethics Interactive Study Guide — Chapters 1-3. Practice Questions, Mock Exams, Flash Cards, and More.">
+  <meta name="author" content="Hosam Almotairi">
+  <meta name="robots" content="index, follow">
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%230ea5e9'/><text y='.9em' font-size='72' x='50%' dominant-baseline='auto' text-anchor='middle'>⚖️</text></svg>">
+  <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%230ea5e9'/><text y='.9em' font-size='72' x='50%' dominant-baseline='auto' text-anchor='middle'>⚖️</text></svg>">
+  <!-- Open Graph -->
+  <meta property="og:title" content="BUS 214 — HOSAM Study Hub">
+  <meta property="og:description" content="دليل دراسي تفاعلي لمادة BUS 214 أخلاقيات الأعمال — فصول 1-3 مع أسئلة تدريبية واختبارات محاكاة وبطاقات تعليمية">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="HOSAM Study Hub">
+  <meta name="theme-color" content="#0ea5e9">
+  <link rel="stylesheet" href="bus214_styles.css">
+  <style>
+    /* BUS 214 accent override — teal/green theme */
+    :root {
+      --accent: #0ea5e9;
+      --accent-soft: #e0f2fe;
+    }
+    body.dark { --accent-soft: #0c2942; }
+    .hero { background: linear-gradient(135deg, #0369a1, #0ea5e9); }
+    .quiz-progress-fill { background: linear-gradient(90deg, #0ea5e9, #38bdf8); }
+    .quiz-ch-item input:checked + .quiz-ch-card { border-color: #0ea5e9; background: #e0f2fe; box-shadow: 0 8px 16px rgba(14,165,233,0.15); }
+    body.dark .quiz-ch-item input:checked + .quiz-ch-card { background: #0c2942; }
+    .sidebar-logo span { color: #0ea5e9; }
+    .tag { background: rgba(255,255,255,0.2); }
+    .toc-item { border-left: 3px solid #0ea5e9; }
+  </style>
+</head>
+<body>
+
+<!-- ── SIDEBAR OVERLAY ──────────────────────── -->
+<div id="sidebar-overlay" onclick="toggleSidebar()"></div>
+
+<!-- ── SIDEBAR ─────────────────────────────── -->
+<nav class="sidebar-nav" id="sidebar">
+  <div class="sidebar-header">
+    <div class="sidebar-logo">BUS 214</div>
+    <div class="sidebar-subtitle">HOSAM Study Hub</div>
+  </div>
+  <ul class="sidebar-menu">
+    <li><a href="#" onclick="showPage('page-home');if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon">🏠</span> Home</a></li>
+    <li class="sidebar-divider"></li>
+    <li class="sidebar-label">📖 Chapters</li>
+    <li><a href="#" onclick="showPage('page-ch1');if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon">📖</span> Ch 1 — Business Ethics</a></li>
+    <li><a href="#" onclick="showPage('page-ch2');if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon">🤝</span> Ch 2 — Stakeholders</a></li>
+    <li><a href="#" onclick="showPage('page-ch3');if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon">🌱</span> Ch 3 — Sustainability</a></li>
+    <li class="sidebar-divider"></li>
+    <li class="sidebar-label">🔍 Review</li>
+    <li><a href="#" onclick="showPage('page-quick');if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon">⚡</span> Quick Review</a></li>
+    <li><a href="#" onclick="showPage('page-flash');initFlashCards();if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon">🃏</span> Flash Cards</a></li>
+    <li class="sidebar-divider"></li>
+    <li class="sidebar-label">✏️ Practice</li>
+    <li><a href="#" onclick="showPage('page-quiz');if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon">🎯</span> Quiz Mode</a></li>
+    <li><a href="#" onclick="showPage('page-mock');if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon">📋</span> Mock Exam</a></li>
+    <li><a href="#" onclick="showPage('page-dashboard');if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon">📊</span> Dashboard</a></li>
+  </ul>
+  <div class="sidebar-footer">
+    <button class="dark-toggle" onclick="toggleDark()" id="dark-btn">🌙 Dark Mode</button>
+  </div>
+</nav>
+
+<!-- ── SIDEBAR TOGGLE ──────────────────────── -->
+<button class="sidebar-toggle" id="sidebar-toggle" onclick="toggleSidebar()">☰</button>
+
+<!-- ── FLOATING BUTTONS ────────────────────── -->
+<button id="dark-btn-float"   onclick="toggleDark()"    title="وضع الليل" class="fab fab-dark">🌙</button>
+<button id="search-btn-float" onclick="openSearch()"    title="بحث"       class="fab fab-search">🔍</button>
+<button id="ar-btn-float"     onclick="toggleArabic()"  title="إظهار/إخفاء الترجمة" class="fab fab-ar">ع</button>
+
+<!-- ── SEARCH OVERLAY ─────────────────────── -->
+<div id="search-overlay" onclick="if(event.target===this)closeSearch()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:9999;align-items:flex-start;justify-content:center;padding-top:80px;">
+  <div id="search-box" style="background:var(--paper,#fff);border-radius:20px;padding:24px;width:90%;max-width:560px;box-shadow:0 20px 60px rgba(0,0,0,.2);">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;">
+      <span style="font-size:1.2rem;">🔍</span>
+      <input id="search-input" type="text" placeholder="ابحث في المحتوى... (Search content)" oninput="runSearch(this.value)" style="flex:1;border:none;outline:none;font-size:1rem;background:transparent;color:var(--ink,#1a1d2e);">
+      <button onclick="closeSearch()" style="border:none;background:none;font-size:1.3rem;cursor:pointer;color:var(--muted);">✕</button>
+    </div>
+    <div id="search-results" style="max-height:360px;overflow-y:auto;display:flex;flex-direction:column;gap:8px;">
+      <p style="color:var(--muted);font-size:.85rem;text-align:center;margin:0;">اكتب للبحث في الفصول الثلاثة</p>
+    </div>
+  </div>
+</div>
+
+<!-- ── MAIN CONTENT ────────────────────────── -->
+<div class="main-content" id="main-content">
+
+<!-- ══════════════════════════════════════════
+     HOME PAGE
+═══════════════════════════════════════════ -->
+<div id="page-home" class="page active">
+
+  <!-- الدعاء -->
+  <div style="background:linear-gradient(135deg,#0369a1,#0ea5e9,#06b6d4);color:#fff;text-align:center;border-radius:16px;padding:20px 24px;margin-bottom:12px;box-shadow:0 10px 30px rgba(14,165,233,0.2);">
+    <div style="font-size:1.05rem;font-weight:700;line-height:1.6;">
+      ✨ زكاة العِلم نشره، لا تنسوني من صالح دعائكم بالتوفيق والتيسير — حسام المطيري ✨
+    </div>
+  </div>
+
+
+  <section class="hero">
+    <div class="tag">BUS 214 · Business Ethics</div>
+    <h1>HOSAM Study Hub</h1>
+    <p>Interactive study guide for BUS 214 — Business Ethics. Chapters 1–3 with practice questions, mock exams, and flash cards.</p>
+    <div class="cover-meta">
+      <div class="cover-box"><span class="cover-label">Course</span><span class="cover-value">BUS 214</span></div>
+      <div class="cover-box"><span class="cover-label">Chapters</span><span class="cover-value">1 — 3</span></div>
+      <div class="cover-box"><span class="cover-label">Questions</span><span class="cover-value">118+</span></div>
+    </div>
+  </section>
+
+  <div class="quick-nav-grid">
+    <button class="qn-card" onclick="showPage('page-ch1')"><div class="qn-icon">📖</div><div class="qn-label">Chapter 1</div><div class="qn-sub">Business Ethics</div></button>
+    <button class="qn-card" onclick="showPage('page-ch2')"><div class="qn-icon">🤝</div><div class="qn-label">Chapter 2</div><div class="qn-sub">Stakeholders & Governance</div></button>
+    <button class="qn-card" onclick="showPage('page-ch3')"><div class="qn-icon">🌱</div><div class="qn-label">Chapter 3</div><div class="qn-sub">Sustainability</div></button>
+    <button class="qn-card" onclick="showPage('page-quiz')"><div class="qn-icon">🎯</div><div class="qn-label">Quiz Mode</div><div class="qn-sub">Practice Questions</div></button>
+    <button class="qn-card" onclick="showPage('page-flash');initFlashCards()"><div class="qn-icon">🃏</div><div class="qn-label">Flash Cards</div><div class="qn-sub">45 Key Terms</div></button>
+    <button class="qn-card" onclick="showPage('page-mock')"><div class="qn-icon">📋</div><div class="qn-label">Mock Exam</div><div class="qn-sub">30 Questions · 30 min</div></button>
+  </div>
+
+  <section class="chapter" style="margin-top:24px;">
+    <h2>📚 Course Overview</h2>
+    <p>BUS 214 — Business Ethics covers the ethical dimensions of business decision-making using Ferrell's <em>Business Ethics: Ethical Decision Making and Cases</em> (13th Edition).</p>
+    <div class="toc">
+      <div class="toc-item" onclick="showPage('page-ch1')"><strong>Chapter 1:</strong> The Importance of Business Ethics — Definitions, History, Benefits</div>
+      <div class="toc-item" onclick="showPage('page-ch2')"><strong>Chapter 2:</strong> Stakeholder Relationships, Social Responsibility & Corporate Governance</div>
+      <div class="toc-item" onclick="showPage('page-ch3')"><strong>Chapter 3:</strong> Sustainability: Social and Ethical Dimensions</div>
+    </div>
+  </section>
+
+  <!-- ── CHAPTER MASTERY ──────────────────────── -->
+  <section class="chapter" style="margin-top:24px;">
+    <h2>🎯 إتقان الفصول <span style="font-size:.8rem;font-weight:400;color:var(--muted);margin-right:8px;">Chapter Mastery</span></h2>
+    <p style="color:var(--muted);font-size:.85rem;margin-bottom:16px;">بناءً على أعلى نتيجة في الكويز لكل فصل</p>
+    <div class="mastery-bars">
+      <div class="mastery-row">
+        <div class="mastery-label"><span class="mastery-icon">📖</span><span>الفصل الأول — Business Ethics</span><span id="home-pct-ch1" class="mastery-pct">—</span></div>
+        <div class="mastery-track"><div id="home-bar-ch1" class="mastery-fill" style="width:0%"></div></div>
+      </div>
+      <div class="mastery-row">
+        <div class="mastery-label"><span class="mastery-icon">🤝</span><span>الفصل الثاني — Stakeholders</span><span id="home-pct-ch2" class="mastery-pct">—</span></div>
+        <div class="mastery-track"><div id="home-bar-ch2" class="mastery-fill" style="width:0%"></div></div>
+      </div>
+      <div class="mastery-row">
+        <div class="mastery-label"><span class="mastery-icon">🌱</span><span>الفصل الثالث — Sustainability</span><span id="home-pct-ch3" class="mastery-pct">—</span></div>
+        <div class="mastery-track"><div id="home-bar-ch3" class="mastery-fill" style="width:0%"></div></div>
+      </div>
+    </div>
+    <p style="color:var(--muted);font-size:.78rem;margin-top:12px;">💡 حل كويز لكل فصل عشان تشوف نسبة إتقانك</p>
+  </section>
+
+  <!-- ── CONCEPT OF THE DAY ────────────────────── -->
+  <section class="chapter" style="margin-top:24px;">
+    <h2>💡 مفهوم اليوم <span style="font-size:.8rem;font-weight:400;color:var(--muted);margin-right:8px;">Concept of the Day</span></h2>
+    <div id="cotd-card" class="cotd-card">
+      <div class="cotd-chapter" id="cotd-chapter"></div>
+      <div class="cotd-term" id="cotd-term"></div>
+      <div class="cotd-def" id="cotd-def"></div>
+      <button class="cotd-btn" onclick="showPage('page-flash');initFlashCards()">شوف كل البطاقات ←</button>
+    </div>
+  </section>
+
+  <!-- ── EXAM MUST-KNOWS ───────────────────────── -->
+  <section class="chapter" style="margin-top:24px;">
+    <h2>⚠️ لازم تحفظ <span style="font-size:.8rem;font-weight:400;color:var(--muted);margin-right:8px;">Exam Must-Knows</span></h2>
+    <p style="color:var(--muted);font-size:.85rem;margin-bottom:14px;">أبرز النقاط اللي تخرج في الاختبار</p>
+    <div class="mustknow-list">
+      <div class="mk-item mk-ch1"><span class="mk-tag">Ch1</span><span>الفرق بين <strong>Morals</strong> (فردي) و<strong>Ethics</strong> (جماعي) — لا تخلطهم</span></div>
+      <div class="mk-item mk-ch1"><span class="mk-tag">Ch1</span><span><strong>FSGO</strong> بُني على <strong>DII</strong> — مبدأ العصا والجزرة (carrot & stick)</span></div>
+      <div class="mk-item mk-ch1"><span class="mk-tag">Ch1</span><span><strong>SOX</strong> جاء بعد فضائح Enron & WorldCom — يُلزم بـ code of ethics</span></div>
+      <div class="mk-item mk-ch1"><span class="mk-tag">Ch1</span><span><strong>ISO 19600</strong> ≠ UN Global Compact — الأول امتثال، الثاني 10 مبادئ</span></div>
+      <div class="mk-item mk-ch2"><span class="mk-tag">Ch2</span><span>أصحاب المصلحة الأساسيون <strong>ضروريون للبقاء</strong> — الثانويون ليسوا كذلك</span></div>
+      <div class="mk-item mk-ch2"><span class="mk-tag">Ch2</span><span>المستويات الأربعة بالترتيب: <strong>Economic → Legal → Ethical → Philanthropic</strong></span></div>
+      <div class="mk-item mk-ch2"><span class="mk-tag">Ch2</span><span><strong>Interlocking Directorate</strong> — قانوني إلا مع المنافس المباشر</span></div>
+      <div class="mk-item mk-ch2"><span class="mk-tag">Ch2</span><span><strong>Milton Friedman</strong>: هدف الأعمال = الربح | <strong>Adam Smith</strong>: اليد الخفية</span></div>
+      <div class="mk-item mk-ch3"><span class="mk-tag">Ch3</span><span><strong>Hydropower</strong> = أكبر مصدر طاقة متجددة | <strong>Geothermal</strong> = الأكثر استقراراً</span></div>
+      <div class="mk-item mk-ch3"><span class="mk-tag">Ch3</span><span><strong>Greenwashing</strong> ≠ Green Marketing — الأول تضليل، الثاني استراتيجية حقيقية</span></div>
+    </div>
+  </section>
+
+  <!-- ── CONTACT ────────────────────────────────── -->
+  <section class="chapter" style="margin-top:24px;text-align:center;">
+    <h2>📞 تواصل معي</h2>
+    <p style="color:var(--muted);margin-bottom:20px;">أسئلة؟ ملاحظات؟ راسلني مباشرة</p>
+    <div style="display:flex;justify-content:center;gap:14px;flex-wrap:wrap;">
+      <a href="https://wa.me/966594555022" target="_blank" class="social-btn whatsapp">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        WhatsApp
+      </a>
+      <a href="https://t.me/p6_op" target="_blank" class="social-btn telegram">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+        Telegram
+      </a>
+    </div>
+  </section>
+</div>
+
+<!-- ══════════════════════════════════════════
+     CHAPTER 1
+═══════════════════════════════════════════ -->
+<div id="page-ch1" class="page">
+  <section class="chapter">
+    <h2>📖 Chapter 1 — The Importance of Business Ethics</h2>
+    <span class="ar-line" style="font-size:.95rem;font-weight:600;">الفصل الأول — أهمية أخلاقيات الأعمال</span>
+    <p style="color:var(--muted);">Source: Ferrell, Business Ethics 13e · Ch. 1</p>
+
+    <div class="summary-block">
+      <h3>1-1 Business Ethics Defined <span class="ar-line">تعريف أخلاقيات الأعمال</span></h3>
+      <ul>
+        <li><strong>Morals</strong> — A person's personal philosophies about what is right or wrong. <em>Relate to the individual alone.</em><span class="ar-line">الأخلاق — الفلسفة الشخصية للفرد حول ما هو صواب أو خطأ. تتعلق بالفرد وحده.</span></li>
+        <li><strong>Ethics</strong> — Behavior or decisions made within a group's values or morals. Right or wrong is defined by the group.<span class="ar-line">الأخلاقيات — السلوك أو القرارات المبنية على قيم المجموعة. الصواب والخطأ يحددهما المجتمع.</span></li>
+        <li><strong>Business Ethics</strong> — Comprises organizational principles, values, and norms that primarily guide individual and group behavior in business.<span class="ar-line">أخلاقيات الأعمال — المبادئ والقيم والمعايير التنظيمية التي توجه السلوك في بيئة العمل.</span></li>
+        <li><strong>Principles</strong> — Specific and pervasive boundaries for behavior that should not be violated.<span class="ar-line">المبادئ — حدود محددة وشاملة للسلوك لا يجوز تجاوزها (مثل حقوق الإنسان).</span></li>
+        <li><strong>Values</strong> — Enduring beliefs and ideals that are socially enforced. Examples: Teamwork, Trust, Integrity.<span class="ar-line">القيم — معتقدات ومُثل راسخة يفرضها المجتمع. أمثلة: العمل الجماعي، الثقة، النزاهة.</span></li>
+        <li><strong>Note:</strong> Conflict or trade-offs <em>do</em> exist between profits and business ethics.<span class="ar-line">ملاحظة: يوجد تعارض حقيقي بين الأرباح وأخلاقيات الأعمال. الإدارة الأخلاقية لا تضمن النجاح المالي دائماً.</span></li>
+      </ul>
+    </div>
+
+    <div class="summary-block">
+      <h3>1-2 Why Study Business Ethics? <span class="ar-line">لماذا ندرس أخلاقيات الأعمال؟</span></h3>
+      <ul>
+        <li><strong>A Crisis in Business Ethics</strong> — Business ethics has become a major concern.<span class="ar-line">أزمة أخلاقيات الأعمال — الضغط على الموظفين لتجاوز المعايير، والسلوك الخاطئ الملاحظ.</span></li>
+        <li><strong>Moral dilemma</strong> — Two or more morals in conflict with one another.<span class="ar-line">المعضلة الأخلاقية — تعارض مبدأين أو أكثر مع بعضهما.</span></li>
+        <li><strong>Value dilemma</strong> — Two or more beliefs/ideals in conflict with one another.<span class="ar-line">معضلة القيم — تعارض معتقدين أو مُثُلَين أو أكثر.</span></li>
+        <li>Being a good person may not be sufficient to handle ethical issues in business.<span class="ar-line">كونك شخصاً جيداً قد لا يكفي للتعامل مع الإشكاليات الأخلاقية في العمل.</span></li>
+        <li>Ethically charged decisions are made at <em>all levels</em> of work and management.<span class="ar-line">القرارات ذات الطابع الأخلاقي تُتخذ على جميع مستويات العمل والإدارة.</span></li>
+        <li>When society deems an action wrong — legislation usually follows.<span class="ar-line">حين يعتبر المجتمع فعلاً ما خاطئاً — عادةً ما تتبعه تشريعات.</span></li>
+      </ul>
+    </div>
+
+    <div class="summary-block">
+      <h3>1-3 The Development of Business Ethics — Historical Timeline <span class="ar-line">التطور التاريخي لأخلاقيات الأعمال</span></h3>
+      <table class="summary-table">
+        <tr><th>Era / الحقبة</th><th>Key Development / التطور الرئيسي</th></tr>
+        <tr><td>Before 1960s</td><td>Ethics discussed mainly in theology or philosophy.<span class="ar-line">الأخلاق كانت تُناقش في إطار علم اللاهوت أو الفلسفة فقط.</span></td></tr>
+        <tr><td>1960s</td><td>Rise of <strong>consumerism</strong> — activities to protect consumer rights. JFK's Consumer Bill of Rights.<span class="ar-line">ظهور حركة <strong>حماية المستهلك</strong>. وثيقة حقوق المستهلك لـ JFK: الأمان، الإسماع، الاختيار، المعلومات.</span></td></tr>
+        <tr><td>1970s</td><td><strong>Foreign Corrupt Practices Act (FCPA)</strong> — outlawed bribery of foreign public officials.<span class="ar-line"><strong>قانون FCPA</strong> — حظر رشوة المسؤولين الحكوميين الأجانب.</span></td></tr>
+        <tr><td>1980s</td><td><strong>Defense Industry Initiative (DII)</strong> — developed to guide corporate support for ethical conduct.<span class="ar-line"><strong>مبادرة صناعة الدفاع DII</strong> — لدعم السلوك الأخلاقي المؤسسي.</span></td></tr>
+        <tr><td>1990s</td><td><strong>Federal Sentencing Guidelines for Organizations (FSGO)</strong> — carrot-and-stick approach. DII became the foundation for FSGO.<span class="ar-line"><strong>FSGO</strong> — مبدأ العصا والجزرة لمكافأة المنظمات على منع المخالفات. DII كانت أساسه.</span></td></tr>
+        <tr><td>2000s</td><td><strong>Sarbanes-Oxley Act (SOX)</strong> — created accounting oversight board, required codes of ethics. After Enron, WorldCom scandals.<span class="ar-line"><strong>قانون SOX</strong> — مجلس رقابة محاسبية، رموز أخلاقيات إلزامية، بعد فضائح إنرون وورلدكوم.</span></td></tr>
+        <tr><td>2010s</td><td><strong>Dodd-Frank Wall Street Reform Act</strong> — financial services more responsible.<span class="ar-line"><strong>قانون دود-فرانك</strong> — زيادة مسؤولية قطاع الخدمات المالية.</span></td></tr>
+        <tr><td>Today</td><td><strong>ESG</strong> — Environmental, Social, Governance performance framework.<span class="ar-line"><strong>ESG</strong> — إطار تقييم أداء الشركات في البيئة والمجتمع والحوكمة.</span></td></tr>
+      </table>
+    </div>
+
+    <div class="summary-block">
+      <h3>1-4 Developing Organizational and Global Ethical Cultures <span class="ar-line">بناء ثقافة أخلاقية مؤسسية وعالمية</span></h3>
+      <ul>
+        <li><strong>Ethical culture</strong> — Acceptable behavior as defined by the company and industry.<span class="ar-line">الثقافة الأخلاقية — السلوك المقبول كما تحدده الشركة والصناعة.</span></li>
+        <li>Factors: corporate policies, top management leadership, coworker influence, opportunity for unethical behavior.<span class="ar-line">العوامل المُشكِّلة: السياسات المؤسسية، قيادة الإدارة العليا، تأثير الزملاء، فرص السلوك غير الأخلاقي.</span></li>
+        <li><strong>ISO 19600</strong> — Global compliance management standard. <em>(NOT the 10-principle Global Compact)</em><span class="ar-line"><strong>ISO 19600</strong> — معيار إدارة الامتثال العالمي. <em>ليس هو الميثاق العالمي ذو المبادئ العشرة.</em></span></li>
+        <li><strong>UN Global Compact</strong> — 10 principles: human rights, labor, environment, anti-corruption.<span class="ar-line"><strong>الميثاق العالمي للأمم المتحدة</strong> — 10 مبادئ: حقوق الإنسان، العمل، البيئة، مكافحة الفساد.</span></li>
+        <li>Reagan/Bush eras focused on <strong>self-regulation</strong> rather than government regulation.<span class="ar-line">حقبة ريغان/بوش ركّزت على <strong>التنظيم الذاتي</strong> بدلاً من التنظيم الحكومي.</span></li>
+      </ul>
+    </div>
+
+    <div class="summary-block">
+      <h3>1-5 The Benefits of Business Ethics <span class="ar-line">فوائد أخلاقيات الأعمال</span></h3>
+      <div class="benefits-grid">
+        <div class="benefit-card"><div class="benefit-icon">👥</div><strong>Employee Commitment</strong><span class="ar-line">التزام الموظفين</span><p>Willingness to sacrifice for the org. Less pressure to compromise ethical standards.</p></div>
+        <div class="benefit-card"><div class="benefit-icon">📈</div><strong>Investor Loyalty</strong><span class="ar-line">ولاء المستثمرين</span><p>Ethics provides foundation for efficiency and profits. Misconduct lowers stock prices.</p></div>
+        <div class="benefit-card"><div class="benefit-icon">😊</div><strong>Customer Satisfaction</strong><span class="ar-line">رضا العملاء</span><p>Corporate misconduct decreases trust. Customers will pay more for ethical companies' products.</p></div>
+        <div class="benefit-card"><div class="benefit-icon">💰</div><strong>Profits</strong><span class="ar-line">الأرباح</span><p>Being ethical leads to better business performance and competitive advantage.</p></div>
+      </div>
+      <p style="margin-top:12px;">When an organization has a strong ethical environment, it usually focuses on placing <strong>customers'</strong> interests first. <span class="ar-line">حين تمتلك المنظمة بيئة أخلاقية قوية، فإنها عادةً تضع مصالح <strong>العملاء</strong> في المقدمة.</span></p>
+    </div>
+  </section>
+</div>
+
+<!-- ══════════════════════════════════════════
+     CHAPTER 2
+═══════════════════════════════════════════ -->
+<div id="page-ch2" class="page">
+  <section class="chapter">
+    <h2>🤝 Chapter 2 — Stakeholder Relationships, Social Responsibility & Corporate Governance</h2>
+    <span class="ar-line" style="font-size:.95rem;font-weight:600;">الفصل الثاني — علاقات أصحاب المصلحة والمسؤولية الاجتماعية وحوكمة الشركات</span>
+    <p style="color:var(--muted);">Source: Ferrell, Business Ethics 13e · Ch. 2</p>
+
+    <div class="summary-block">
+      <h3>2-1 Stakeholders Define Ethical Issues in Business <span class="ar-line">أصحاب المصلحة يُحددون القضايا الأخلاقية</span></h3>
+      <ul>
+        <li><strong>Stakeholders</strong> — Those who have a "stake" or claim in some aspect of a company's products, operations, markets, industry, and outcomes.<span class="ar-line">أصحاب المصلحة — كل من له مطالبة أو مصلحة في جانب من جوانب عمل الشركة.</span></li>
+        <li><strong>Primary Stakeholders</strong> — Absolutely necessary for a firm's survival: employees, customers, shareholders, governments, communities.<span class="ar-line">أصحاب المصلحة الأساسيون — ضروريون لبقاء الشركة: الموظفون، العملاء، المساهمون، الحكومات، المجتمعات.</span></li>
+        <li><strong>Secondary Stakeholders</strong> — Not essential to survival; don't engage directly: media, trade associations, special interest groups.<span class="ar-line">أصحاب المصلحة الثانويون — غير ضروريين للبقاء: الإعلام، نقابات التجارة، مجموعات المصالح الخاصة.</span></li>
+        <li><strong>Stakeholder Orientation</strong> — The degree to which a firm understands and addresses stakeholder demands. Viewed as a <em>continuum</em>.<span class="ar-line">توجه أصحاب المصلحة — مدى فهم الشركة واستجابتها لمطالب أصحاب المصلحة. يُنظر إليه كـ <em>متصل</em>.</span></li>
+        <li>Stakeholders' power stems from their <em>ability to withhold organizational resources</em>.<span class="ar-line">قوة أصحاب المصلحة تنبع من قدرتهم على <em>حجب الموارد</em> عن المنظمة.</span></li>
+      </ul>
+      <table class="summary-table">
+        <tr><th>Approach / النهج</th><th>Definition / التعريف</th></tr>
+        <tr><td>Normative / المعياري</td><td>Identifies ethical guidelines that dictate how firms <em>should</em> treat stakeholders.<span class="ar-line">يُحدد المبادئ الأخلاقية التي تملي كيف <em>ينبغي</em> للشركات معاملة أصحاب المصلحة.</span></td></tr>
+        <tr><td>Descriptive / الوصفي</td><td>Focuses on the firm's <em>behavior</em>; addresses how decisions are made.<span class="ar-line">يركّز على <em>سلوك</em> الشركة ويعالج كيفية اتخاذ القرارات.</span></td></tr>
+        <tr><td>Instrumental / الأداتي</td><td>Describes what <em>happens if</em> firms behave in a particular way.<span class="ar-line">يصف <em>ما يحدث إذا</em> تصرفت الشركات بطريقة معينة.</span></td></tr>
+      </table>
+    </div>
+
+    <div class="summary-block">
+      <h3>2-2 Social Responsibility and Business Ethics <span class="ar-line">المسؤولية الاجتماعية وأخلاقيات الأعمال</span></h3>
+      <ul>
+        <li><strong>Social Responsibility</strong> — Obligation to <em>maximize positive impact</em> and <em>minimize negative impact</em> on stakeholders.<span class="ar-line">المسؤولية الاجتماعية — التزام المنظمة بتعظيم تأثيرها الإيجابي وتقليل تأثيرها السلبي على أصحاب المصلحة.</span></li>
+        <li><strong>Four Levels of Social Responsibility:</strong><span class="ar-line">المستويات الأربعة للمسؤولية الاجتماعية:</span></li>
+      </ul>
+      <div class="sr-levels">
+        <div class="sr-level"><span class="sr-num">1</span><strong>Economic</strong> — Be profitable<span class="ar-line">اقتصادي — تحقيق الربح</span></div>
+        <div class="sr-level"><span class="sr-num">2</span><strong>Legal</strong> — Obey the law<span class="ar-line">قانوني — الامتثال للقانون</span></div>
+        <div class="sr-level"><span class="sr-num">3</span><strong>Ethical</strong> — Be ethical, beyond what the law requires<span class="ar-line">أخلاقي — التصرف بأخلاق تفوق ما يُلزم به القانون</span></div>
+        <div class="sr-level"><span class="sr-num">4</span><strong>Philanthropic</strong> — Be a good corporate citizen; voluntary contributions<span class="ar-line">خيري — مواطنة مؤسسية جيدة؛ مساهمات طوعية</span></div>
+      </div>
+      <ul style="margin-top:12px;">
+        <li><strong>Corporate Citizenship</strong> — Strategically meeting economic, legal, ethical, and philanthropic responsibilities.<span class="ar-line">المواطنة المؤسسية — الوفاء الاستراتيجي بالمسؤوليات الاقتصادية والقانونية والأخلاقية والخيرية.</span></li>
+        <li><strong>Reputation</strong> — A corporation's image; an intangible asset with tangible value.<span class="ar-line">السمعة — صورة الشركة؛ أصل غير ملموس ذو قيمة ملموسة.</span></li>
+      </ul>
+    </div>
+
+    <div class="summary-block">
+      <h3>2-3 Issues in Social Responsibility <span class="ar-line">قضايا المسؤولية الاجتماعية</span></h3>
+      <ul>
+        <li>Social issues are associated with the <strong>common good</strong> — social rules should benefit the community.<span class="ar-line">القضايا الاجتماعية مرتبطة بـ<strong>الصالح العام</strong> — فكرة أن القواعد الاجتماعية يجب أن تعود بالنفع على المجتمع.</span></li>
+        <li>Major issues today: data privacy, consumer protection, sustainability, corporate governance.<span class="ar-line">أبرز القضايا اليوم: خصوصية البيانات، حماية المستهلك، الاستدامة، حوكمة الشركات.</span></li>
+        <li><strong>Corporate Governance</strong> — Formal systems of accountability, oversight, and control.<span class="ar-line">حوكمة الشركات — أنظمة رسمية للمساءلة والرقابة والتحكم.</span></li>
+      </ul>
+    </div>
+
+    <div class="summary-block">
+      <h3>2-4 Social Responsibility & Stakeholder Orientation <span class="ar-line">المسؤولية الاجتماعية وتوجه أصحاب المصلحة</span></h3>
+      <ul>
+        <li><strong>Milton Friedman</strong> — Basic mission of business is profit. Market deters wrongdoing better than laws. Economic + legal compliance = satisfying society.<span class="ar-line"><strong>ميلتون فريدمان</strong> — مهمة الأعمال الأساسية هي الربح. السوق يردع المخالفات أفضل من القوانين.</span></li>
+        <li><strong>Adam Smith</strong> — Founder of capitalism. Theory of the <em>invisible hand</em>. Each individual must produce for the common good.<span class="ar-line"><strong>آدم سميث</strong> — مؤسس الرأسمالية. نظرية <em>اليد الخفية</em>. كل فرد يجب أن ينتج للصالح العام.</span></li>
+        <li>Evidence suggests caring about stakeholder well-being leads to <em>increased profits</em>.<span class="ar-line">الأدلة تشير إلى أن الاهتمام برفاهية أصحاب المصلحة يؤدي إلى <em>زيادة الأرباح</em>.</span></li>
+      </ul>
+    </div>
+
+    <div class="summary-block">
+      <h3>2-5 Corporate Governance Provides Formalized Responsibility <span class="ar-line">حوكمة الشركات توفر المسؤولية الرسمية</span></h3>
+      <table class="summary-table">
+        <tr><th>Concept / المفهوم</th><th>Definition / التعريف</th></tr>
+        <tr><td>Accountability / المساءلة</td><td>How closely workplace decisions align with a firm's strategic direction and ethical/legal compliance.<span class="ar-line">مدى توافق قرارات العمل مع التوجه الاستراتيجي والامتثال الأخلاقي/القانوني.</span></td></tr>
+        <tr><td>Oversight / الرقابة</td><td>System of checks and balances limiting opportunities to deviate from ethical policies.<span class="ar-line">نظام ضوابط وموازين يُقيّد فرص الانحراف عن السياسات الأخلاقية.</span></td></tr>
+        <tr><td>Control / التحكم</td><td>The process of auditing and improving organizational decisions and actions.<span class="ar-line">عملية مراجعة وتحسين قرارات وإجراءات المنظمة.</span></td></tr>
+        <tr><td>Duty of Care / واجب العناية</td><td>Legal obligation to make informed, prudent decisions and avoid harm to others.<span class="ar-line">التزام قانوني باتخاذ قرارات مدروسة وتجنب الأضرار.</span></td></tr>
+        <tr><td>Duty of Loyalty / واجب الولاء</td><td>Obligation to make decisions in the best interest of the corporation and its stakeholders.<span class="ar-line">التزام باتخاذ قرارات في مصلحة الشركة وأصحاب مصلحتها.</span></td></tr>
+        <tr><td>Fiduciaries / الأمناء</td><td>Persons in positions of trust acting on behalf of the organization (directors and officers).<span class="ar-line">أشخاص في مواقع ثقة يتصرفون نيابةً عن مصالح المنظمة (المديرون والمسؤولون).</span></td></tr>
+        <tr><td>Interlocking Directorate / مجلس الإدارة المترابط</td><td>Board members linked to more than one company. Legal unless it involves a direct competitor.<span class="ar-line">أعضاء مجلس إدارة مرتبطون بأكثر من شركة. قانوني ما لم يشمل منافساً مباشراً.</span></td></tr>
+      </table>
+      <ul style="margin-top:12px;">
+        <li><strong>Shareholder Model</strong> — Focuses on maximizing wealth for investors.<span class="ar-line">نموذج المساهمين — يركز على تعظيم ثروة المستثمرين.</span></li>
+        <li><strong>Stakeholder Model</strong> — Broader view considering all stakeholder welfare.<span class="ar-line">نموذج أصحاب المصلحة — رؤية أشمل تراعي رفاهية جميع أصحاب المصلحة.</span></li>
+        <li>A major ethical concern among corporate boards: <strong>executive compensation</strong>.<span class="ar-line">من أبرز المخاوف الأخلاقية في مجالس الإدارة: <strong>مكافآت التنفيذيين</strong>.</span></li>
+      </ul>
+    </div>
+
+    <div class="summary-block">
+      <h3>2-6 Implementing a Stakeholder Perspective — 6 Steps <span class="ar-line">تطبيق منظور أصحاب المصلحة — ٦ خطوات</span></h3>
+      <div class="steps-list">
+        <div class="step-item"><div class="step-num">1</div><div><strong>Assessing the Corporate Culture</strong> — Identify mission, values, and norms with social responsibility implications.<span class="ar-line">تقييم الثقافة المؤسسية — تحديد رسالة المنظمة وقيمها ومعاييرها ذات الأثر الاجتماعي.</span></div></div>
+        <div class="step-item"><div class="step-num">2</div><div><strong>Identifying Stakeholder Groups</strong> — Recognize stakeholder needs, wants, and desires.<span class="ar-line">تحديد مجموعات أصحاب المصلحة — التعرف على احتياجاتهم ورغباتهم.</span></div></div>
+        <div class="step-item"><div class="step-num">3</div><div><strong>Identifying Stakeholder Issues</strong> — Level of power and legitimacy determines urgency.<span class="ar-line">تحديد قضايا أصحاب المصلحة — مستوى القوة والشرعية يحدد الأولوية.</span></div></div>
+        <div class="step-item"><div class="step-num">4</div><div><strong>Assessing Organizational Commitment</strong> — Evaluate current practices and select SR initiatives.<span class="ar-line">تقييم الالتزام المؤسسي — مراجعة الممارسات الحالية واختيار مبادرات المسؤولية الاجتماعية.</span></div></div>
+        <div class="step-item"><div class="step-num">5</div><div><strong>Identifying Resources and Determining Urgency</strong> — Based on financial investment and stakeholder pressure.<span class="ar-line">تحديد الموارد والإلحاحية — بناءً على الاستثمار المالي المطلوب وضغط أصحاب المصلحة.</span></div></div>
+        <div class="step-item"><div class="step-num">6</div><div><strong>Gaining Stakeholder Feedback</strong> — Through surveys, focus groups, and formal research.<span class="ar-line">الحصول على تغذية راجعة — عبر الاستطلاعات ومجموعات التركيز والبحث الرسمي.</span></div></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ══════════════════════════════════════════
+     CHAPTER 3
+═══════════════════════════════════════════ -->
+<div id="page-ch3" class="page">
+  <section class="chapter">
+    <h2>🌱 Chapter 3 — Sustainability: Social and Ethical Dimensions</h2>
+    <span class="ar-line" style="font-size:.95rem;font-weight:600;">الفصل الثالث — الاستدامة: الأبعاد الاجتماعية والأخلاقية</span>
+    <p style="color:var(--muted);">Source: Ferrell, Business Ethics 13e · Ch. 3</p>
+
+    <div class="summary-block">
+      <h3>3-1 Defining Sustainability <span class="ar-line">تعريف الاستدامة</span></h3>
+      <ul>
+        <li><strong>Sustainability</strong> — The potential for the long-term well-being of the natural environment, including all biological entities, and mutually beneficial interactions among nature and individuals, organizations, and business strategies.<span class="ar-line">الاستدامة — إمكانية الرفاهية طويلة الأمد للبيئة الطبيعية بما في ذلك الكائنات الحية والتفاعلات المتبادلة بين الطبيعة والأفراد والمنظمات.</span></li>
+        <li><strong>Sustainable Development</strong> — Meeting present needs without compromising future generations' ability to meet their own needs.<span class="ar-line">التنمية المستدامة — تلبية احتياجات الحاضر دون المساس بقدرة الأجيال القادمة على تلبية احتياجاتها.</span></li>
+        <li><strong>Important:</strong> Sustainability, social responsibility, and ethics should NOT be used interchangeably — related but distinct.<span class="ar-line">مهم: الاستدامة والمسؤولية الاجتماعية والأخلاقيات مفاهيم متميزة — لا يجوز استخدامها بالتبادل.</span></li>
+      </ul>
+    </div>
+
+    <div class="summary-block">
+      <h3>3-2 How Sustainability Relates to Ethical Decision Making <span class="ar-line">علاقة الاستدامة باتخاذ القرار الأخلاقي</span></h3>
+      <ul>
+        <li>Sustainability falls into the social responsibility domain of maximizing positive and minimizing negative impacts.<span class="ar-line">الاستدامة ضمن نطاق المسؤولية الاجتماعية: تعظيم التأثيرات الإيجابية وتقليل السلبية.</span></li>
+        <li><strong>Ethical awareness</strong> — The ability to perceive an issue or dilemma involving principles, values, and appropriate behavior.<span class="ar-line">الوعي الأخلاقي — القدرة على إدراك القضايا والمعضلات المتعلقة بالمبادئ والقيم والسلوك المناسب.</span></li>
+        <li>Companies with a sustainability agenda can create long-term favorable stakeholder responses.<span class="ar-line">الشركات ذات أجندة الاستدامة تستطيع خلق استجابات إيجابية طويلة الأمد من أصحاب المصلحة.</span></li>
+        <li>Socially responsible activities can create <em>competitive advantages</em>.<span class="ar-line">الأنشطة المسؤولة اجتماعياً يمكن أن تخلق <em>مزايا تنافسية</em>.</span></li>
+      </ul>
+    </div>
+
+    <div class="summary-block">
+      <h3>3-3 Global Environmental Issues <span class="ar-line">القضايا البيئية العالمية</span></h3>
+      <table class="summary-table">
+        <tr><th>Category / الفئة</th><th>Key Points / النقاط الرئيسية</th></tr>
+        <tr><td><strong>Air / الهواء</strong></td><td>Three sources: stationary (factories), mobile (cars), natural (volcanoes). Acid rain from nitrous oxides + sulfur dioxides. <strong>Climate change</strong> = long-term variation in weather. Kyoto Protocol aimed to curb greenhouse gases.<span class="ar-line">ثلاثة مصادر: ثابتة (مصانع)، متحركة (سيارات)، طبيعية (براكين). الأمطار الحمضية. <strong>تغير المناخ</strong> = تغير طويل الأمد في الطقس. بروتوكول كيوتو.</span></td></tr>
+        <tr><td><strong>Water / الماء</strong></td><td>One of the biggest contributors to illnesses in developing countries. Water quantity increasingly a global concern.<span class="ar-line">أحد أكبر مسببات الأمراض في الدول النامية. كميات المياه تصبح مصدر قلق عالمي متزايد.</span></td></tr>
+        <tr><td><strong>Land / الأرض</strong></td><td>Pollution from industrial waste, strip mining. <strong>Deforestation</strong> caused mainly by beef, soy, palm oil. <strong>E-waste</strong> is a major problem. Biggest wasters: US consumers.<span class="ar-line">التلوث من النفايات الصناعية. <strong>إزالة الغابات</strong> بسبب اللحوم وزيت النخيل. النفايات الإلكترونية. أكبر المبذّرين: المستهلكون الأمريكيون.</span></td></tr>
+      </table>
+    </div>
+
+    <div class="summary-block">
+      <h3>3-4 Environmental Legislation <span class="ar-line">التشريعات البيئية</span></h3>
+      <ul>
+        <li><strong>EPA</strong> — Mission: "protect human health and the environment." Most influential environmental regulatory agency.<span class="ar-line"><strong>وكالة حماية البيئة EPA</strong> — مهمتها: حماية صحة الإنسان والبيئة. أكثر الجهات التنظيمية البيئية تأثيراً.</span></li>
+        <li>The first Earth Day led to the creation of the EPA and brought <em>sustainability</em> to the forefront.<span class="ar-line">أول يوم للأرض أدى إلى إنشاء EPA وأبرز مفهوم <em>الاستدامة</em>.</span></li>
+      </ul>
+      <table class="summary-table">
+        <tr><th>Law / القانون</th><th>What It Does / ما يفعله</th></tr>
+        <tr><td>Clean Air Act</td><td>Established national air quality standards.<span class="ar-line">وضع معايير وطنية لجودة الهواء.</span></td></tr>
+        <tr><td>Clean Water Act</td><td>Illegal to discharge pollutants into navigable waters without a <strong>permit</strong>.<span class="ar-line">يحظر تصريف الملوثات في المياه الصالحة للملاحة دون <strong>تصريح</strong>.</span></td></tr>
+        <tr><td>Toxic Substances Control Act</td><td>Tracks 75,000 industrial chemicals.<span class="ar-line">يتتبع 75,000 مادة كيميائية صناعية.</span></td></tr>
+        <tr><td>Pollution Prevention Act</td><td>Reduces pollution through cost-effective production changes.<span class="ar-line">يُقلل التلوث عبر تغييرات فعّالة من حيث التكلفة في الإنتاج.</span></td></tr>
+        <tr><td>Endangered Species Act</td><td>Protects endangered species and their habitats.<span class="ar-line">يحمي الأنواع المهددة بالانقراض وموائلها.</span></td></tr>
+        <tr><td>Energy Policy Act</td><td>Lessens U.S. dependence on foreign oil.<span class="ar-line">يُقلل الاعتماد الأمريكي على النفط الأجنبي.</span></td></tr>
+        <tr><td>LEED</td><td>Certification for sustainable building practices.<span class="ar-line">شهادة لممارسات البناء المستدام.</span></td></tr>
+      </table>
+    </div>
+
+    <div class="summary-block">
+      <h3>3-5 Alternative Energy Sources <span class="ar-line">مصادر الطاقة البديلة</span></h3>
+      <div class="energy-grid">
+        <div class="energy-card"><div class="energy-icon">💨</div><strong>Wind Power</strong><span class="ar-line">طاقة الرياح</span><p>Concentrated in the Great Plains. Could meet 20% of US energy needs.</p></div>
+        <div class="energy-card"><div class="energy-icon">🌋</div><strong>Geothermal</strong><span class="ar-line">الطاقة الحرارية الأرضية</span><p>From natural heat inside the Earth. Provides a <em>constant source of heat</em> — most dependable.</p></div>
+        <div class="energy-card"><div class="energy-icon">☀️</div><strong>Solar Power</strong><span class="ar-line">الطاقة الشمسية</span><p>Uses photovoltaic cells or solar thermal collectors. Increasingly cost-competitive.</p></div>
+        <div class="energy-card"><div class="energy-icon">⚛️</div><strong>Nuclear Power</strong><span class="ar-line">الطاقة النووية</span><p>No greenhouse gases but has waste disposal and safety concerns.</p></div>
+        <div class="energy-card"><div class="energy-icon">🌽</div><strong>Biofuels</strong><span class="ar-line">الوقود الحيوي</span><p>Ethanol is most controversial after nuclear. Decreases food supply, increases prices.</p></div>
+        <div class="energy-card"><div class="energy-icon">💧</div><strong>Hydropower</strong><span class="ar-line">الطاقة المائية</span><p>The <em>largest form of renewable energy</em>. Uses moving water to generate electricity.</p></div>
+      </div>
+    </div>
+
+    <div class="summary-block">
+      <h3>3-6 Business Response to Sustainability Issues <span class="ar-line">استجابة الأعمال لقضايا الاستدامة</span></h3>
+      <ul>
+        <li>Most businesses use <strong>ESG</strong> factors to report sustainability issues.<span class="ar-line">معظم الشركات تستخدم معايير <strong>ESG</strong> للإبلاغ عن قضايا الاستدامة.</span></li>
+        <li>Better environmental performance can increase revenue via: market access, product differentiation, pollution-control technology sales.<span class="ar-line">الأداء البيئي الأفضل يزيد الإيرادات عبر: الوصول للسوق، تمييز المنتج، بيع تقنيات التحكم في التلوث.</span></li>
+        <li><strong>Green Marketing</strong> — Strategy involving stakeholder assessment to create long-term customer relationships while maintaining the environment.<span class="ar-line">التسويق الأخضر — استراتيجية تقييم أصحاب المصلحة لبناء علاقات طويلة مع العملاء مع صون البيئة.</span></li>
+        <li><strong>Greenwashing</strong> — Misleading a consumer into thinking a product is more environmentally friendly than it really is.<span class="ar-line">الغسيل الأخضر — تضليل المستهلك بجعله يعتقد أن المنتج أكثر صداقةً للبيئة مما هو عليه في الواقع.</span></li>
+        <li><strong>Low-commitment business</strong> — Avoids dealing with environmental issues and hopes no one finds out.<span class="ar-line">الأعمال منخفضة الالتزام — تتجنب معالجة القضايا البيئية وتأمل ألا يعلم أحد.</span></li>
+      </ul>
+    </div>
+
+    <div class="summary-block">
+      <h3>3-7 Strategic Implementation of Environmental Responsibility <span class="ar-line">التطبيق الاستراتيجي للمسؤولية البيئية</span></h3>
+      <ul>
+        <li><strong>Recycling Initiatives</strong> — Reprocessing materials (steel, aluminum, paper, glass, rubber, plastics) for reuse.<span class="ar-line">مبادرات إعادة التدوير — إعادة معالجة المواد (الصلب، الألومنيوم، الورق، الزجاج، المطاط، البلاستيك).</span></li>
+        <li><strong>Stakeholder Assessment</strong> — Actively monitoring environmental concerns of all legitimate stakeholders.<span class="ar-line">تقييم أصحاب المصلحة — مراقبة نشطة للمخاوف البيئية لجميع أصحاب المصلحة الشرعيين.</span></li>
+        <li><strong>Risk Analysis</strong> — Assessing environmental risks associated with business decisions.<span class="ar-line">تحليل المخاطر — تقييم المخاطر البيئية المرتبطة بقرارات الأعمال.</span></li>
+        <li><strong>Strategic Environmental Audit</strong> — Audit and report results to stakeholders. May use <strong>ISO 14000</strong> — comprehensive environmental standards for a cleaner, safer world.<span class="ar-line">التدقيق البيئي الاستراتيجي — مراجعة النتائج والإبلاغ عنها. قد يستخدم <strong>ISO 14000</strong> — معايير بيئية شاملة لعالم أنظف وأكثر أماناً.</span></li>
+      </ul>
+    </div>
+  </section>
+</div>
+
+<!-- ══════════════════════════════════════════
+     QUICK REVIEW
+═══════════════════════════════════════════ -->
+<div id="page-quick" class="page">
+  <section class="chapter">
+    <h2>⚡ Quick Review</h2>
+    <p style="color:var(--muted);">All key definitions and concepts at a glance.</p>
+
+    <div class="qr-section">
+      <h3>📖 Chapter 1 — Key Definitions</h3>
+      <div class="qr-grid">
+        <div class="qr-card"><div class="qr-term">Morals</div><div class="qr-def">A person's personal philosophies about what is right or wrong. Relate to the individual alone.</div></div>
+        <div class="qr-card"><div class="qr-term">Ethics</div><div class="qr-def">Behavior or decisions made within a group's values or morals. Right or wrong is defined by the group.</div></div>
+        <div class="qr-card"><div class="qr-term">Business Ethics</div><div class="qr-def">Organizational principles, values, and norms from individuals, organizational statements, or the legal system that guide individual and group behavior in business.</div></div>
+        <div class="qr-card"><div class="qr-term">Principles</div><div class="qr-def">Specific and pervasive boundaries for behavior that should not be violated.</div></div>
+        <div class="qr-card"><div class="qr-term">Values</div><div class="qr-def">Enduring beliefs and ideals that are socially enforced.</div></div>
+        <div class="qr-card"><div class="qr-term">Ethical Culture</div><div class="qr-def">Acceptable behavior as defined by the company and industry.</div></div>
+        <div class="qr-card"><div class="qr-term">Moral Dilemma</div><div class="qr-def">Two or more morals in conflict with one another.</div></div>
+        <div class="qr-card"><div class="qr-term">Consumerism</div><div class="qr-def">Activities by individuals, groups, and organizations to protect their rights as consumers. Rose in the 1960s.</div></div>
+        <div class="qr-card"><div class="qr-term">Sarbanes-Oxley (SOX)</div><div class="qr-def">Created accounting oversight board, required codes of ethics for financial reporting, made securities fraud a criminal offense.</div></div>
+        <div class="qr-card"><div class="qr-term">FSGO</div><div class="qr-def">Federal Sentencing Guidelines for Organizations. Uses a carrot-and-stick approach. Incentivizes organizations to prevent misconduct.</div></div>
+        <div class="qr-card"><div class="qr-term">ISO 19600</div><div class="qr-def">Global compliance management standard addressing risks, legal requirements, and stakeholder needs.</div></div>
+        <div class="qr-card"><div class="qr-term">UN Global Compact</div><div class="qr-def">Set of 10 principles concerning human rights, labor, environment, and anti-corruption.</div></div>
+      </div>
+    </div>
+
+    <div class="qr-section">
+      <h3>🤝 Chapter 2 — Key Definitions</h3>
+      <div class="qr-grid">
+        <div class="qr-card"><div class="qr-term">Stakeholders</div><div class="qr-def">Those with a claim in some aspect of a company's products, operations, markets, industry, and outcomes.</div></div>
+        <div class="qr-card"><div class="qr-term">Primary Stakeholders</div><div class="qr-def">Those absolutely necessary for a firm's survival (employees, customers, shareholders, governments, communities).</div></div>
+        <div class="qr-card"><div class="qr-term">Secondary Stakeholders</div><div class="qr-def">Not essential for survival; do not engage directly in transactions (media, trade associations, special interest groups).</div></div>
+        <div class="qr-card"><div class="qr-term">Stakeholder Orientation</div><div class="qr-def">The degree to which a firm understands and addresses stakeholder demands. Viewed as a continuum.</div></div>
+        <div class="qr-card"><div class="qr-term">Social Responsibility</div><div class="qr-def">Organization's obligation to maximize positive impact and minimize negative impact on stakeholders. Has 4 levels: economic, legal, ethical, philanthropic.</div></div>
+        <div class="qr-card"><div class="qr-term">Corporate Citizenship</div><div class="qr-def">Extent businesses strategically meet economic, legal, ethical, and philanthropic responsibilities placed by stakeholders.</div></div>
+        <div class="qr-card"><div class="qr-term">Corporate Governance</div><div class="qr-def">Development of formal systems of accountability, oversight, and control.</div></div>
+        <div class="qr-card"><div class="qr-term">Common Good</div><div class="qr-def">The idea that social rules should benefit the community because people live in a community.</div></div>
+        <div class="qr-card"><div class="qr-term">Duty of Care</div><div class="qr-def">Legal obligation to make informed, prudent decisions and avoid behavior that could harm others.</div></div>
+        <div class="qr-card"><div class="qr-term">Duty of Loyalty</div><div class="qr-def">Obligation to make decisions in the best interest of the corporation and its stakeholders.</div></div>
+        <div class="qr-card"><div class="qr-term">Interlocking Directorate</div><div class="qr-def">Board members linked to more than one company. Legal unless it involves a direct competitor.</div></div>
+        <div class="qr-card"><div class="qr-term">Fiduciaries</div><div class="qr-def">Persons in positions of trust acting on behalf of the best interests of the organization (e.g., directors and officers).</div></div>
+      </div>
+    </div>
+
+    <div class="qr-section">
+      <h3>🌱 Chapter 3 — Key Definitions</h3>
+      <div class="qr-grid">
+        <div class="qr-card"><div class="qr-term">Sustainability</div><div class="qr-def">Potential for the long-term well-being of the natural environment, including all biological entities, and mutually beneficial interactions among nature and individuals.</div></div>
+        <div class="qr-card"><div class="qr-term">Sustainable Development</div><div class="qr-def">Meeting present needs without compromising future generations' ability to meet their own needs.</div></div>
+        <div class="qr-card"><div class="qr-term">Greenwashing</div><div class="qr-def">Misleading a consumer into thinking a product is more environmentally friendly than it really is.</div></div>
+        <div class="qr-card"><div class="qr-term">Green Marketing</div><div class="qr-def">Strategy involving stakeholder assessment to create long-term relationships with customers while maintaining and enhancing the natural environment.</div></div>
+        <div class="qr-card"><div class="qr-term">EPA</div><div class="qr-def">Environmental Protection Agency. Mission: protect human health and the environment.</div></div>
+        <div class="qr-card"><div class="qr-term">Clean Air Act</div><div class="qr-def">Established national air quality standards. Regulates atmospheric emissions.</div></div>
+        <div class="qr-card"><div class="qr-term">Pollution Prevention Act</div><div class="qr-def">Reduces pollution through cost-effective changes in production and raw materials.</div></div>
+        <div class="qr-card"><div class="qr-term">LEED</div><div class="qr-def">Leadership in Energy & Environmental Design. Certification recognizing sustainable building practices.</div></div>
+        <div class="qr-card"><div class="qr-term">ISO 14000</div><div class="qr-def">Comprehensive environmental standards encouraging a cleaner, safer, healthier world.</div></div>
+        <div class="qr-card"><div class="qr-term">ESG</div><div class="qr-def">Environmental, Social, Governance framework. Used by most businesses to report air, land, and water sustainability issues.</div></div>
+        <div class="qr-card"><div class="qr-term">Kyoto Protocol</div><div class="qr-def">International treaty to curb global greenhouse gas emissions by having countries voluntarily reduce national outputs.</div></div>
+        <div class="qr-card"><div class="qr-term">Hydropower</div><div class="qr-def">The largest form of renewable energy. Uses moving water to generate electricity.</div></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ══════════════════════════════════════════
+     FLASH CARDS
+═══════════════════════════════════════════ -->
+<div id="page-flash" class="page">
+  <section class="chapter">
+    <h2>🃏 Flash Cards</h2>
+    <p style="color:var(--muted);">Click a card to reveal the definition.</p>
+
+    <div class="fc-filter-row">
+      <button class="fc-filter-btn active" data-fc="all" onclick="setFCFilter('all')">All (45)</button>
+      <button class="fc-filter-btn" data-fc="ch1" onclick="setFCFilter('ch1')">📖 Ch 1</button>
+      <button class="fc-filter-btn" data-fc="ch2" onclick="setFCFilter('ch2')">🤝 Ch 2</button>
+      <button class="fc-filter-btn" data-fc="ch3" onclick="setFCFilter('ch3')">🌱 Ch 3</button>
+    </div>
+
+    <div class="fc-progress-wrap">
+      <div class="fc-progress-bar-track"><div id="fc-progress-bar" class="fc-progress-bar-fill"></div></div>
+      <span id="fc-counter" class="fc-counter">1 / 45</span>
+    </div>
+
+    <div id="flash-card" class="flash-card" onclick="flipCard()">
+      <div class="flash-card-inner">
+        <div class="flash-card-front">
+          <div class="fc-label">المصطلح · Term</div>
+          <div id="fc-front" class="fc-text"></div>
+          <div class="fc-hint">اضغط للكشف ↓</div>
+        </div>
+        <div class="flash-card-back">
+          <div class="fc-label">التعريف · Definition</div>
+          <div id="fc-back" class="fc-text fc-back-text"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Rating buttons — يظهرون بعد القلب -->
+    <div id="fc-rating-row" class="fc-rating-row" style="display:none;">
+      <button class="sr-btn sr-hard" onclick="markCard('hard')">😓 صعب</button>
+      <button class="sr-btn sr-ok"   onclick="markCard('ok')">🙂 فاهم</button>
+      <button class="sr-btn sr-easy" onclick="markCard('easy')">😊 سهل</button>
+    </div>
+
+    <div id="fc-nav-row" class="fc-nav-row">
+      <button class="quiz-btn quiz-btn-secondary" onclick="prevCard()">← السابق</button>
+      <button class="quiz-btn quiz-btn-primary"   onclick="nextCard()">التالي →</button>
+    </div>
+  </section>
+</div>
+
+<!-- ══════════════════════════════════════════
+     QUIZ MODE
+═══════════════════════════════════════════ -->
+<div id="page-quiz" class="page quiz-page">
+  <section class="chapter" id="quiz-section">
+    <h2>🎯 Quiz Mode</h2>
+    <p style="color:var(--muted);margin-bottom:16px;">Test yourself with random questions from all chapters. Your best scores are saved!</p>
+    <div class="quiz-wrap">
+      <div id="quiz-start-screen" class="quiz-card" style="text-align:center;">
+        <div style="font-size:3rem;margin-bottom:5px;">🎯</div>
+        <h3 style="margin-top:0;">Quiz Setup</h3>
+        <p style="font-size:.9rem;color:var(--muted);margin-bottom:20px;">Choose a chapter to start your practice session.</p>
+
+        <div class="quiz-chapter-grid">
+          <label class="quiz-ch-item">
+            <input type="radio" name="quiz-filter" value="all" checked>
+            <div class="quiz-ch-card"><div class="icon">📚</div><div class="label">All Chapters</div></div>
+          </label>
+          <label class="quiz-ch-item">
+            <input type="radio" name="quiz-filter" value="ch1">
+            <div class="quiz-ch-card"><div class="icon">📖</div><div class="label">Chapter 1</div><div class="mastery-badge" id="mastery-ch1"></div></div>
+          </label>
+          <label class="quiz-ch-item">
+            <input type="radio" name="quiz-filter" value="ch2">
+            <div class="quiz-ch-card"><div class="icon">🤝</div><div class="label">Chapter 2</div><div class="mastery-badge" id="mastery-ch2"></div></div>
+          </label>
+          <label class="quiz-ch-item">
+            <input type="radio" name="quiz-filter" value="ch3">
+            <div class="quiz-ch-card"><div class="icon">🌱</div><div class="label">Chapter 3</div><div class="mastery-badge" id="mastery-ch3"></div></div>
+          </label>
+        </div>
+
+        <div style="display:flex;gap:20px;justify-content:center;align-items:center;margin-bottom:20px;flex-wrap:wrap;">
+          <div style="display:flex;flex-direction:column;align-items:flex-start;">
+            <label style="font-size:.75rem;font-weight:700;color:var(--muted);text-transform:uppercase;margin-bottom:4px;">Questions</label>
+            <select id="quiz-count" style="padding:10px 14px;border-radius:12px;border:2px solid var(--line);background:var(--paper);color:var(--ink);font-size:.95rem;min-width:140px;">
+              <option value="5">5 Questions</option>
+              <option value="10" selected>10 Questions</option>
+              <option value="15">15 Questions</option>
+              <option value="20">20 Questions</option>
+              <option value="30">30 Questions</option>
+              <option value="999">All Questions</option>
+            </select>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:flex-start;">
+            <label style="font-size:.75rem;font-weight:700;color:var(--muted);text-transform:uppercase;margin-bottom:4px;">Time Limit</label>
+            <select id="quiz-time-limit" style="padding:10px 14px;border-radius:12px;border:2px solid var(--line);background:var(--paper);color:var(--ink);font-size:.95rem;min-width:140px;">
+              <option value="0" selected>No Time Limit</option>
+              <option value="300">5 Minutes</option>
+              <option value="600">10 Minutes</option>
+              <option value="900">15 Minutes</option>
+              <option value="1800">30 Minutes</option>
+            </select>
+          </div>
+        </div>
+
+        <button class="quiz-btn quiz-btn-primary" onclick="startQuiz()" style="padding:16px 48px;font-size:1.1rem;border-radius:16px;margin-top:10px;width:100%;max-width:400px;">Start Practice 🚀</button>
+      </div>
+
+      <div id="quiz-game-screen" class="quiz-screen-hidden">
+        <div class="quiz-progress-bar"><div class="quiz-progress-fill" id="qpf" style="width:0%"></div></div>
+        <div style="display:flex;justify-content:space-between;margin-bottom:14px;font-size:.85rem;color:var(--muted);">
+          <span id="q-counter">Question 1 / 10</span>
+          <span id="quiz-timer-display"></span>
+        </div>
+        <div class="quiz-card">
+          <div class="quiz-q-num" id="quiz-chapter-tag"></div>
+          <div class="quiz-q-text" id="quiz-q-text"></div>
+          <div class="quiz-opts" id="quiz-opts"></div>
+          <div class="quiz-feedback" id="quiz-feedback"></div>
+          <div id="quiz-explanation" class="quiz-explanation" style="display:none;"></div>
+        </div>
+        <div class="quiz-actions">
+          <button class="quiz-btn quiz-btn-primary" id="quiz-next-btn" onclick="nextQuizQ()" style="display:none;">Next →</button>
+          <button class="quiz-btn quiz-btn-secondary" onclick="endQuiz()">End Quiz</button>
+        </div>
+      </div>
+
+      <div id="quiz-result-screen" class="quiz-screen-hidden">
+        <div class="quiz-card quiz-result-card">
+          <div id="quiz-final-badge" class="quiz-grade-badge">?</div>
+          <div id="quiz-confetti-msg" style="font-size:1.2rem;font-weight:700;margin-bottom:8px;color:var(--accent);"></div>
+          <div class="quiz-score-big" id="quiz-final-score">0%</div>
+          <div class="quiz-score-label" id="quiz-final-label"></div>
+          <div class="quiz-stats-row">
+            <div class="quiz-stat-item"><div class="quiz-stat-val" id="res-correct" style="color:#1f8f5f">-</div><div class="quiz-stat-lbl">Correct</div></div>
+            <div class="quiz-stat-item"><div class="quiz-stat-val" id="res-wrong" style="color:#c0392b">-</div><div class="quiz-stat-lbl">Wrong</div></div>
+            <div class="quiz-stat-item"><div class="quiz-stat-val" id="res-time" style="color:var(--accent)">-</div><div class="quiz-stat-lbl">Time</div></div>
+          </div>
+          <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:20px;">
+            <button class="quiz-btn quiz-btn-primary" onclick="retakeQuiz()">🔄 Try Again</button>
+            <button class="quiz-btn quiz-btn-secondary" onclick="showPage('page-dashboard')">📊 Dashboard</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ══════════════════════════════════════════
+     MOCK EXAM
+═══════════════════════════════════════════ -->
+<div id="page-mock" class="page mock-page">
+  <section class="chapter">
+    <h2>📋 Mock Exam</h2>
+
+    <div id="mock-start-screen">
+      <div class="mock-start-card">
+        <div style="font-size:3rem;margin-bottom:12px;">📋</div>
+        <h3>BUS 214 Mock Exam</h3>
+        <p class="m-desc">Simulate a real exam with 30 questions covering all chapters. You have 30 minutes.</p>
+        <div style="display:flex;gap:20px;justify-content:center;flex-wrap:wrap;margin:20px 0;">
+          <div style="text-align:center;"><div style="font-size:1.8rem;font-weight:800;color:#d93025;">30</div><div style="font-size:.8rem;color:var(--muted);">Questions</div></div>
+          <div style="text-align:center;"><div style="font-size:1.8rem;font-weight:800;color:#d93025;">30</div><div style="font-size:.8rem;color:var(--muted);">Minutes</div></div>
+          <div style="text-align:center;"><div style="font-size:1.8rem;font-weight:800;color:#d93025;">3</div><div style="font-size:.8rem;color:var(--muted);">Chapters</div></div>
+        </div>
+        <button class="quiz-btn quiz-btn-primary" onclick="startMock()" style="width:100%;max-width:360px;padding:16px;font-size:1.1rem;">Start Mock Exam 🎯</button>
+      </div>
+    </div>
+
+    <div id="mock-game-screen" style="display:none;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+        <span id="mock-counter" style="font-size:.9rem;color:var(--muted);">Q 1 / 30</span>
+        <span id="mock-timer" style="font-size:1rem;font-weight:700;color:#d93025;">⏱ 30:00</span>
+      </div>
+      <div class="quiz-progress-bar"><div class="quiz-progress-fill" id="mock-progress-fill" style="width:0%"></div></div>
+      <div class="quiz-card" style="margin-top:16px;">
+        <div class="quiz-q-num" id="mock-ch-tag"></div>
+        <div class="quiz-q-text" id="mock-q-text"></div>
+        <div class="quiz-opts" id="mock-opts"></div>
+        <div class="quiz-feedback" id="mock-feedback"></div>
+      </div>
+      <div class="quiz-actions" style="margin-top:16px;">
+        <button class="quiz-btn quiz-btn-primary" id="mock-next-btn" onclick="nextMockQ()" style="display:none;">Next →</button>
+        <button class="quiz-btn quiz-btn-secondary" onclick="endMock()">End Exam</button>
+      </div>
+    </div>
+
+    <div id="mock-result-screen" style="display:none;">
+      <div class="quiz-card quiz-result-card" style="text-align:center;">
+        <div id="mock-grade" class="quiz-grade-badge" style="font-size:2.5rem;">?</div>
+        <div class="quiz-score-big" id="mock-final-score">0%</div>
+        <div class="quiz-stats-row">
+          <div class="quiz-stat-item"><div class="quiz-stat-val" id="mock-res-correct" style="color:#1f8f5f">-</div><div class="quiz-stat-lbl">Correct</div></div>
+          <div class="quiz-stat-item"><div class="quiz-stat-val" id="mock-res-wrong" style="color:#c0392b">-</div><div class="quiz-stat-lbl">Wrong</div></div>
+        </div>
+        <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:20px;">
+          <button class="quiz-btn quiz-btn-primary" onclick="retakeMock()">🔄 Retake</button>
+          <button class="quiz-btn quiz-btn-secondary" onclick="showPage('page-dashboard')">📊 Dashboard</button>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ══════════════════════════════════════════
+     DASHBOARD
+═══════════════════════════════════════════ -->
+<div id="page-dashboard" class="page">
+  <section class="chapter">
+    <h2>📊 Your Dashboard</h2>
+    <p style="color:var(--muted);">Track your progress across all chapters.</p>
+
+    <div class="dash-stats-grid">
+      <div class="dash-stat-card"><div class="dash-stat-icon">🔥</div><div class="dash-stat-val" id="dash-streak">0</div><div class="dash-stat-lbl">Day Streak</div></div>
+      <div class="dash-stat-card"><div class="dash-stat-icon">🎯</div><div class="dash-stat-val" id="dash-accuracy">0%</div><div class="dash-stat-lbl">Accuracy</div></div>
+      <div class="dash-stat-card"><div class="dash-stat-icon">📝</div><div class="dash-stat-val" id="dash-quizzes">0</div><div class="dash-stat-lbl">Quizzes Done</div></div>
+    </div>
+
+    <h3 style="margin-top:28px;">Best Scores</h3>
+    <div class="dash-scores-grid">
+      <div class="dash-score-card"><div class="dash-score-label">All Chapters</div><div class="dash-score-val" id="dash-best-all">—</div></div>
+      <div class="dash-score-card"><div class="dash-score-label">Chapter 1</div><div class="dash-score-val" id="dash-best-ch1">—</div></div>
+      <div class="dash-score-card"><div class="dash-score-label">Chapter 2</div><div class="dash-score-val" id="dash-best-ch2">—</div></div>
+      <div class="dash-score-card"><div class="dash-score-label">Chapter 3</div><div class="dash-score-val" id="dash-best-ch3">—</div></div>
+    </div>
+
+    <div style="text-align:center;margin-top:32px;">
+      <button class="quiz-btn quiz-btn-primary" onclick="showPage('page-quiz')">🎯 Start Quiz</button>
+      <button class="quiz-btn quiz-btn-secondary" onclick="showPage('page-flash');initFlashCards()" style="margin-left:12px;">🃏 Flash Cards</button>
+    </div>
+  </section>
+</div>
+
+</div><!-- /main-content -->
+
+
+<script src="bus214_scripts.js"></script>
+<style>
+  /* ── Additional BUS 214 specific styles ── */
+  .summary-block { background: var(--paper); border-radius: 16px; padding: 20px 24px; margin-bottom: 20px; border: 1px solid var(--line); box-shadow: 0 4px 12px rgba(0,0,0,.04); }
+  .summary-block h3 { margin: 0 0 14px; color: var(--accent); font-size: 1rem; }
+  .summary-block ul { margin: 0; padding-left: 20px; }
+  .summary-block ul li { margin-bottom: 8px; }
+  .summary-table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: .9rem; }
+  .summary-table th { background: var(--accent-soft); color: var(--accent); padding: 8px 12px; text-align: left; font-weight: 700; }
+  .summary-table td { padding: 8px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  .summary-table tr:last-child td { border-bottom: none; }
+  .benefits-grid, .energy-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; margin-top: 14px; }
+  .benefit-card, .energy-card { background: var(--accent-soft); border-radius: 14px; padding: 16px; }
+  .benefit-card p, .energy-card p { margin: 6px 0 0; font-size: .85rem; color: var(--muted); }
+  .benefit-icon, .energy-icon { font-size: 1.8rem; margin-bottom: 8px; }
+  .sr-levels { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; }
+  .sr-level { display: flex; align-items: center; gap: 12px; padding: 10px 16px; background: var(--accent-soft); border-radius: 10px; }
+  .sr-num { background: var(--accent); color: #fff; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: .85rem; flex-shrink: 0; }
+  .steps-list { display: flex; flex-direction: column; gap: 10px; margin-top: 10px; }
+  .step-item { display: flex; align-items: flex-start; gap: 14px; padding: 12px 16px; background: var(--paper); border: 1px solid var(--line); border-radius: 12px; }
+  .step-num { background: var(--accent); color: #fff; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; flex-shrink: 0; }
+  .qr-section { margin-bottom: 32px; }
+  .qr-section h3 { color: var(--accent); margin-bottom: 16px; }
+  .qr-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 12px; }
+  .qr-card { background: var(--paper); border: 1px solid var(--line); border-radius: 12px; padding: 14px; }
+  .qr-term { font-weight: 800; color: var(--accent); margin-bottom: 4px; font-size: .95rem; }
+  .qr-def { font-size: .85rem; color: var(--muted); line-height: 1.5; }
+  .fc-filter-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+  .fc-filter-btn { padding: 8px 16px; border-radius: 999px; border: 2px solid var(--line); background: var(--paper); color: var(--ink); font-weight: 700; cursor: pointer; font-size: .85rem; transition: all .2s; }
+  .fc-filter-btn.active { border-color: var(--accent); background: var(--accent-soft); color: var(--accent); }
+  .fc-progress-wrap { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+  .fc-progress-bar-track { flex: 1; height: 6px; background: var(--line); border-radius: 999px; overflow: hidden; }
+  .fc-progress-bar-fill { height: 100%; background: var(--accent); border-radius: 999px; transition: width .3s; width: 0%; }
+  .fc-counter { font-size: .85rem; color: var(--muted); font-weight: 700; white-space: nowrap; }
+  /* ── Flash Card Redesign ── */
+  .flash-card { max-width: 560px; margin: 0 auto; min-height: 220px; perspective: 1200px; cursor: pointer; }
+  .flash-card-inner { width: 100%; min-height: 220px; position: relative; transform-style: preserve-3d; transition: transform .5s cubic-bezier(.4,0,.2,1); }
+  .flash-card.flipped .flash-card-inner { transform: rotateY(180deg); }
+  .flash-card-front, .flash-card-back {
+    position: absolute; width: 100%; min-height: 220px;
+    backface-visibility: hidden; -webkit-backface-visibility: hidden;
+    border-radius: 24px; padding: 32px 28px;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    text-align: center; box-shadow: 0 12px 40px rgba(0,0,0,.10);
+  }
+  .flash-card-front {
+    background: linear-gradient(145deg, var(--paper) 0%, var(--accent-soft) 100%);
+    border: 2px solid var(--accent);
+  }
+  .flash-card-back {
+    background: linear-gradient(145deg, var(--accent) 0%, #0369a1 100%);
+    transform: rotateY(180deg);
+    border: none;
+  }
+  body.dark .flash-card-front { background: linear-gradient(145deg, #0f2035 0%, #0c2942 100%); }
+  body.dark .flash-card-back  { background: linear-gradient(145deg, #0369a1 0%, #023e72 100%); }
+  .flash-card-front .fc-label { color: var(--accent); }
+  .flash-card-back .fc-label  { color: rgba(255,255,255,.7); }
+  .flash-card-back .fc-text   { color: #fff; }
+  .fc-label { font-size: .72rem; font-weight: 700; text-transform: uppercase; margin-bottom: 14px; letter-spacing: .08em; }
+  .fc-text { font-size: 1.25rem; font-weight: 800; color: var(--ink); line-height: 1.4; }
+  .fc-back-text { font-size: .95rem; font-weight: 500; line-height: 1.65; }
+  .fc-hint { font-size: .75rem; color: var(--muted); margin-top: 14px; opacity: .7; }
+  /* Rating row — برّا الكارد */
+  .fc-rating-row { display: none; gap: 10px; justify-content: center; margin-top: 18px; flex-wrap: wrap; }
+  .sr-btn { padding: 10px 22px; border-radius: 999px; border: 2px solid transparent; font-weight: 700; cursor: pointer; font-size: .88rem; min-height: 44px; transition: all .2s; }
+  .sr-hard { background: #fee2e2; color: #b91c1c; border-color: #fca5a5; }
+  .sr-hard:hover { background: #b91c1c; color: #fff; }
+  .sr-ok   { background: #fef3c7; color: #d97706; border-color: #fcd34d; }
+  .sr-ok:hover   { background: #d97706; color: #fff; }
+  .sr-easy { background: #dcfce7; color: #15803d; border-color: #86efac; }
+  .sr-easy:hover { background: #15803d; color: #fff; }
+  .fc-nav-row { display: flex; gap: 12px; justify-content: center; margin-top: 16px; }
+  .dash-stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .dash-stat-card { background: var(--paper); border: 1px solid var(--line); border-radius: 16px; padding: 20px; text-align: center; box-shadow: var(--shadow); }
+  .dash-stat-icon { font-size: 2rem; margin-bottom: 8px; }
+  .dash-stat-val { font-size: 2rem; font-weight: 800; color: var(--accent); }
+  .dash-stat-lbl { font-size: .8rem; color: var(--muted); margin-top: 4px; }
+  .dash-scores-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; }
+  .dash-score-card { background: var(--accent-soft); border-radius: 14px; padding: 16px; text-align: center; }
+  .dash-score-label { font-size: .8rem; color: var(--muted); margin-bottom: 4px; }
+  .dash-score-val { font-size: 1.6rem; font-weight: 800; color: var(--accent); }
+  .quick-nav-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 20px; }
+  .qn-card { background: var(--paper); border: 1.5px solid var(--line); border-radius: 16px; padding: 18px 14px; text-align: center; cursor: pointer; transition: all .2s; box-shadow: 0 2px 8px rgba(0,0,0,.04); }
+  .qn-card:hover { transform: translateY(-3px); border-color: var(--accent); box-shadow: 0 8px 24px rgba(14,165,233,.12); }
+  .qn-icon { font-size: 1.8rem; margin-bottom: 6px; }
+  .qn-label { font-weight: 800; font-size: .95rem; color: var(--ink); }
+  .qn-sub { font-size: .75rem; color: var(--muted); margin-top: 2px; }
+  .toc { display: flex; flex-direction: column; gap: 10px; margin-top: 16px; }
+  .toc-item { padding: 12px 16px; background: var(--paper); border-radius: 10px; border-left: 3px solid var(--accent); cursor: pointer; transition: all .2s; font-size: .9rem; }
+  .toc-item:hover { background: var(--accent-soft); }
+  @media (max-width: 768px) {
+    .quick-nav-grid { grid-template-columns: repeat(2, 1fr); }
+    .dash-stats-grid { grid-template-columns: repeat(3, 1fr); }
+    .benefits-grid, .energy-grid { grid-template-columns: 1fr; }
+    .summary-block { padding: 14px 16px; }
+  }
+  @media (max-width: 480px) {
+    .quick-nav-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .dash-stats-grid { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .dash-stat-val { font-size: 1.4rem; }
+  }
+
+  /* ── FLOATING ACTION BUTTONS ─────────────── */
+  .fab {
+    position: fixed; right: 16px; z-index: 1000;
+    width: 44px; height: 44px; border-radius: 50%;
+    border: 1.5px solid #e1e4f3;
+    background: var(--paper, #fff);
+    color: var(--accent, #0ea5e9);
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+    font-size: 1.2rem; font-weight: 800; font-family: system-ui;
+    box-shadow: 0 6px 16px rgba(0,0,0,.08);
+    transition: all 0.35s cubic-bezier(0.4,0,0.2,1);
+  }
+  .fab:hover { transform: scale(1.1) translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,.13); }
+  .fab:active { transform: scale(0.94); }
+
+  .fab-dark   { bottom: 90px; }
+  .fab-search { bottom: 148px; }
+  .fab-ar     { bottom: 206px; }
+
+  /* active states — glow عند التفعيل */
+  .fab-ar.ar-on {
+    background: linear-gradient(135deg, #10b981, #059669);
+    color: #fff; border-color: #059669;
+    box-shadow: 0 0 22px rgba(16,185,129,.45);
+  }
+  .fab-ar.ar-hidden {
+    color: var(--muted, #999); border-color: #d1d5db;
+  }
+
+  body.dark .fab { background: #1e2130; border-color: #3a3d54; }
+
+  /* إخفاء الترجمة العربية */
+  body.hide-arabic .ar-line { display: none !important; }
+  body.hide-arabic #quiz-explanation [dir='rtl'] { display: none !important; }
+
+  @media (max-width: 768px) {
+    .fab-dark   { bottom: 16px  !important; }
+    .fab-search { bottom: 74px  !important; }
+    .fab-ar     { bottom: 132px !important; }
+  }
+  /* ── SEARCH ──────────────────────────────── */
+  #search-overlay { display: none; }
+  #search-overlay.open { display: flex !important; }
+  #search-input { caret-color: var(--accent, #0ea5e9); }
+  #search-box { background: var(--paper); }
+  body.dark #search-box { background: #1e2130; }
+  body.dark #search-input { color: var(--ink); }
+  .search-result {
+    padding: 10px 14px; border-radius: 10px; cursor: pointer;
+    border: 1.5px solid var(--line, #e1e4f3); transition: all .15s;
+  }
+  .search-result:hover { background: var(--accent-soft); border-color: var(--accent); }
+  .search-result-page { font-size: .72rem; color: var(--accent); font-weight: 700; margin-bottom: 3px; }
+  .search-result-text { font-size: .88rem; color: var(--ink); line-height: 1.4; }
+  .search-result-text mark { background: #fef08a; border-radius: 3px; padding: 0 2px; color: #1a1d2e; }
+  body.dark .search-result-text mark { background: #854d0e; color: #fef9c3; }
+  /* Arabic line style */
+  .ar-line { direction:rtl; text-align:right; color:#4c5268; font-size:.85rem; margin:2px 0 0; display:block; }
+  body.dark .ar-line { color: var(--muted); }
+
+  /* ── MASTERY BARS ────────────────────────── */
+  .mastery-bars { display:flex; flex-direction:column; gap:14px; }
+  .mastery-row { display:flex; flex-direction:column; gap:6px; }
+  .mastery-label { display:flex; align-items:center; gap:8px; font-size:.88rem; font-weight:600; color:var(--ink); }
+  .mastery-icon { font-size:1.1rem; }
+  .mastery-pct { margin-right:auto; font-size:.82rem; font-weight:700; color:var(--accent); }
+  .mastery-track { height:10px; background:var(--line,#e1e4f3); border-radius:99px; overflow:hidden; }
+  .mastery-fill { height:100%; background:linear-gradient(90deg,#0ea5e9,#38bdf8); border-radius:99px; transition:width 1s cubic-bezier(.4,0,.2,1); }
+
+  /* ── CONCEPT OF THE DAY ──────────────────── */
+  .cotd-card { background:linear-gradient(135deg,#f0f9ff,#e0f2fe); border:1.5px solid #bae6fd; border-radius:16px; padding:20px 24px; }
+  body.dark .cotd-card { background:linear-gradient(135deg,#0c2233,#0c1a2e); border-color:#1e4060; }
+  .cotd-chapter { font-size:.72rem; font-weight:700; color:var(--accent); text-transform:uppercase; letter-spacing:.05em; margin-bottom:8px; }
+  .cotd-term { font-size:1.3rem; font-weight:800; color:var(--ink); margin-bottom:10px; }
+  .cotd-def { font-size:.9rem; color:var(--ink); line-height:1.6; margin-bottom:16px; }
+  .cotd-btn { background:var(--accent); color:#fff; border:none; border-radius:10px; padding:8px 18px; font-size:.85rem; font-weight:700; cursor:pointer; transition:opacity .2s; }
+  .cotd-btn:hover { opacity:.85; }
+
+  /* ── MUST KNOW LIST ──────────────────────── */
+  .mustknow-list { display:flex; flex-direction:column; gap:8px; }
+  .mk-item { display:flex; align-items:flex-start; gap:10px; padding:10px 14px; border-radius:10px; background:var(--paper); border:1.5px solid var(--line); font-size:.88rem; line-height:1.5; color:var(--ink); }
+  .mk-tag { flex-shrink:0; font-size:.68rem; font-weight:800; padding:2px 7px; border-radius:6px; margin-top:2px; }
+  .mk-ch1 .mk-tag { background:#dbeafe; color:#1e40af; }
+  .mk-ch2 .mk-tag { background:#dcfce7; color:#166534; }
+  .mk-ch3 .mk-tag { background:#fef9c3; color:#854d0e; }
+  body.dark .mk-item { background:rgba(255,255,255,.04); }
+  body.dark .mk-ch1 .mk-tag { background:#1e3a5f; color:#93c5fd; }
+  body.dark .mk-ch2 .mk-tag { background:#14532d; color:#86efac; }
+  body.dark .mk-ch3 .mk-tag { background:#451a03; color:#fde68a; }
+
+  /* ── SOCIAL BUTTONS ──────────────────────── */
+  .social-btn { display:inline-flex; align-items:center; gap:8px; padding:12px 22px; border-radius:12px; font-size:.9rem; font-weight:700; text-decoration:none; transition:all .2s; }
+  .social-btn.whatsapp { background:#25D366; color:#fff; }
+  .social-btn.telegram { background:#229ED9; color:#fff; }
+  .social-btn:hover { transform:translateY(-2px); box-shadow:0 8px 20px rgba(0,0,0,.15); }
+</style>
+</body>
+</html>

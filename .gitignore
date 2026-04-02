@@ -1,0 +1,8 @@
+*.pptx
+*.pdf
+*.zip
+drive-download-*
+ملخصات*
+ميد*
+.DS_Store
+.claude/
