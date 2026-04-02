@@ -475,6 +475,10 @@ function endQuiz() {
   updateStreak();
   renderMasteryBadges();
   renderHomeMastery();
+  // Save to Firebase if signed in
+  if (typeof saveQuizResult === 'function') {
+    saveQuizResult(chKey, pct, quizCorrect, quizWrong, elapsed);
+  }
 }
 
 function renderMasteryBadges() {
