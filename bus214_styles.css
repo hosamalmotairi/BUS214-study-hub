@@ -2712,6 +2712,7 @@
       /* 1. Global Layout Refactor */
       .page {
         padding: 10px 10px 80px !important; /* Extra bottom padding for floating nav */
+        min-height: 100dvh;
       }
       
       /* .hidden-view ensures an element is hidden even across different display modes */
@@ -2903,6 +2904,135 @@
       .mcq-grid {
         grid-template-columns: 1fr !important;
       }
+
+      /* Hide desktop FABs — bottom bar handles mobile nav */
+      .fab { display: none !important; }
+
+      /* Adjust AI chat button position for mobile */
+      #ai-chat-btn {
+        bottom: 80px !important;
+        right: 16px !important;
+        width: 52px !important;
+        height: 52px !important;
+        font-size: 1.4rem !important;
+      }
+      #ai-chat-window {
+        bottom: 140px !important;
+        right: 8px !important;
+        left: 8px !important;
+        width: auto !important;
+        max-width: none !important;
+      }
+
+      /* Larger tap targets for quiz buttons */
+      .quiz-mcq-btn {
+        padding: 14px 16px !important;
+        font-size: .92rem !important;
+        min-height: 52px !important;
+        text-align: left !important;
+      }
+
+      /* Quiz header on mobile */
+      #quiz-timer-display {
+        font-size: 1rem !important;
+        font-weight: 700 !important;
+      }
+
+      /* Quiz result screen */
+      .quiz-result-score {
+        font-size: 3rem !important;
+      }
+
+      /* Better flashcard on mobile */
+      .flashcard-wrap {
+        min-height: 220px !important;
+        margin: 0 4px !important;
+      }
+
+      .fc-front, .fc-back {
+        font-size: .9rem !important;
+        padding: 16px !important;
+      }
+
+      /* Cover meta: 2 columns on small, 1 on very small */
+      .cover-meta {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 8px !important;
+      }
+
+      /* Auth box mobile fix */
+      #auth-box {
+        padding: 20px 16px !important;
+        margin: 8px !important;
+        width: calc(100% - 16px) !important;
+      }
+
+      /* Leaderboard: hide chapter scores on very small */
+      .lb-sub {
+        font-size: .68rem !important;
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+      }
+
+      /* Quick nav grid: 2x3 on mobile */
+      .quick-nav-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 10px !important;
+      }
+
+      /* Hero padding mobile */
+      .hero {
+        padding: 20px 16px !important;
+        border-radius: 16px !important;
+      }
+
+      .hero h1 {
+        font-size: 1.5rem !important;
+        margin: 8px 0 !important;
+      }
+
+      /* Mock exam timer mobile */
+      .mock-timer-display {
+        font-size: 1.2rem !important;
+      }
+
+      /* Chapter content padding */
+      .chapter-content, .content-section {
+        padding: 14px !important;
+      }
+
+      /* Tables scroll on mobile */
+      .ref-table, table {
+        font-size: .78rem !important;
+      }
+
+      /* Sidebar toggle: make sure it shows on mobile */
+      .sidebar-toggle {
+        display: flex !important;
+      }
+
+      /* Dashboard cards */
+      .dash-stat-card, .dash-score-card {
+        padding: 14px !important;
+      }
+
+      /* iOS safe area padding (notch/home indicator) */
+      #mobile-bottom-bar {
+        padding-bottom: env(safe-area-inset-bottom, 0px) !important;
+        height: calc(70px + env(safe-area-inset-bottom, 0px)) !important;
+      }
+      .page {
+        padding-bottom: calc(80px + env(safe-area-inset-bottom, 0px)) !important;
+        min-height: calc(100dvh - env(safe-area-inset-bottom, 0px));
+      }
+
+      /* Auth overlay mobile fix */
+      #auth-overlay {
+        padding: 12px !important;
+        align-items: flex-start !important;
+        padding-top: 40px !important;
+      }
     }
 
 
@@ -2985,4 +3115,183 @@
         display: none !important;
       }
     }
+
+    /* ════════════════════════════════════════
+       BUS 214 — ENHANCED UI IMPROVEMENTS
+       ════════════════════════════════════════ */
+
+    /* ── QUIZ ANSWER ANIMATIONS ─────────────── */
+    @keyframes correctPop {
+      0%   { transform: scale(1); }
+      30%  { transform: scale(1.04); }
+      100% { transform: scale(1); }
+    }
+    @keyframes wrongShake {
+      0%, 100% { transform: translateX(0); }
+      20%       { transform: translateX(-6px); }
+      40%       { transform: translateX(6px); }
+      60%       { transform: translateX(-4px); }
+      80%       { transform: translateX(4px); }
+    }
+    .quiz-mcq-btn.correct-anim { animation: correctPop .35s ease forwards; }
+    .quiz-mcq-btn.wrong-anim   { animation: wrongShake .4s ease forwards; }
+
+    /* ── TIMER PULSE (low time warning) ─────── */
+    @keyframes timerPulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%       { opacity: .7; transform: scale(1.08); }
+    }
+    .timer-urgent {
+      animation: timerPulse .8s ease infinite;
+      color: #ef4444 !important;
+      font-weight: 800 !important;
+    }
+
+    /* ── LEADERBOARD AVATAR INITIALS ────────── */
+    .lb-avatar-ph {
+      font-size: .95rem !important;
+      font-weight: 800 !important;
+      letter-spacing: 0;
+    }
+    .lb-row.lb-me .lb-avatar-ph {
+      border: 2px solid var(--accent);
+    }
+
+    /* ── FLASHCARD FLIP TRANSITION ──────────── */
+    .flashcard-inner {
+      transition: transform .45s cubic-bezier(.4,0,.2,1) !important;
+    }
+
+    /* ── SMOOTH PAGE TRANSITIONS ─────────────── */
+    .page.active {
+      animation: pageFadeIn .25s ease;
+    }
+    @keyframes pageFadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── QUIZ PROGRESS BAR GLOW ──────────────── */
+    .quiz-progress-fill {
+      transition: width .4s cubic-bezier(.4,0,.2,1) !important;
+      box-shadow: 0 0 8px rgba(14,165,233,.4);
+    }
+
+    /* ── CARD HOVER LIFT ─────────────────────── */
+    .qn-card {
+      transition: transform .18s ease, box-shadow .18s ease !important;
+    }
+    .qn-card:hover {
+      transform: translateY(-3px) !important;
+      box-shadow: 0 12px 28px rgba(14,165,233,.18) !important;
+    }
+
+    /* ── SIDEBAR NAV LINK ACTIVE INDICATOR ───── */
+    .sidebar-menu a.active {
+      border-left: 3px solid var(--accent);
+      padding-left: calc(1rem - 3px);
+    }
+
+    /* ── DARK MODE QUIZ TIMER ─────────────────── */
+    body.dark #quiz-timer-display {
+      color: #7dd3fc;
+    }
+    body.dark .timer-urgent {
+      color: #f87171 !important;
+    }
+
+    /* ── EXAM COUNTDOWN PULSE ────────────────── */
+    @keyframes countdownGlow {
+      0%, 100% { box-shadow: 0 10px 30px rgba(14,165,233,.2); }
+      50%       { box-shadow: 0 10px 40px rgba(14,165,233,.45); }
+    }
+    .exam-countdown-section {
+      animation: countdownGlow 3s ease infinite;
+    }
+
+    /* ── FEEDBACK MESSAGE ANIMATION ──────────── */
+    @keyframes feedbackSlide {
+      from { opacity: 0; transform: translateY(-4px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .quiz-feedback:not(:empty) {
+      animation: feedbackSlide .2s ease;
+    }
+
+    /* ── LEADERBOARD ROW HOVER ───────────────── */
+    .lb-row {
+      transition: transform .15s ease, box-shadow .15s ease !important;
+    }
+    .lb-row:hover {
+      transform: translateX(3px);
+      box-shadow: 0 4px 16px rgba(0,0,0,.08) !important;
+    }
+
+    /* ── BETTER SCROLLBAR ────────────────────── */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--line); border-radius: 999px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--muted); }
+
+    /* ── DARK MODE AUTH OVERLAY ──────────────── */
+    body.dark #auth-box input {
+      background: #0c1020 !important;
+      border-color: #1e3050 !important;
+      color: #e8eaf6 !important;
+    }
+    body.dark #auth-box input::placeholder {
+      color: #4a5570 !important;
+    }
+
+/* ════════════════════════════════════════
+   MOBILE TOUCH & iOS IMPROVEMENTS
+   ════════════════════════════════════════ */
+
+/* Prevent double-tap zoom on buttons */
+button, .qn-card, .quiz-mcq-btn, .mob-bar-btn {
+  touch-action: manipulation;
+}
+
+/* Smooth scrolling on iOS */
+.page, .sidebar-nav, #ai-chat-messages {
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Prevent text selection during quiz */
+.quiz-mcq-btn, .mob-bar-btn, .qn-card {
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* Better tap highlight */
+* {
+  -webkit-tap-highlight-color: rgba(14, 165, 233, 0.15);
+}
+
+/* Very small screens (375px and below) */
+@media (max-width: 390px) {
+  .cover-meta {
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 6px !important;
+  }
+  .cover-box {
+    padding: 8px 6px !important;
+  }
+  .cover-label { font-size: .65rem !important; }
+  .cover-value { font-size: .8rem !important; }
+  .hero h1 { font-size: 1.3rem !important; }
+  .qn-label { font-size: .82rem !important; }
+  .qn-sub { font-size: .7rem !important; }
+  .mob-label { font-size: .6rem !important; }
+}
+
+/* Tablet (768px - 1024px) improvements */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .quick-nav-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+  .cover-meta {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+}
 

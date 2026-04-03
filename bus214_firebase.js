@@ -50,7 +50,17 @@ async function authSubmit() {
     }
     err.textContent = "";
   } catch(e) {
-    err.textContent = e.message.replace("Firebase: ", "").replace(/ \(auth\/.*\)/, "");
+    const code = e.code || '';
+    const msgs = {
+      'auth/user-not-found': 'البريد الإلكتروني غير مسجّل',
+      'auth/wrong-password': 'كلمة المرور غير صحيحة',
+      'auth/invalid-credential': 'البريد أو كلمة المرور غير صحيحة',
+      'auth/email-already-in-use': 'البريد الإلكتروني مستخدم بالفعل',
+      'auth/weak-password': 'كلمة المرور ضعيفة جداً (6 أحرف على الأقل)',
+      'auth/invalid-email': 'صيغة البريد الإلكتروني غير صحيحة',
+      'auth/too-many-requests': 'محاولات كثيرة، يرجى الانتظار قليلاً'
+    };
+    err.textContent = msgs[code] || e.message.replace("Firebase: ", "").replace(/ \(auth\/.*\)/, "");
     document.getElementById("auth-submit").textContent = mode === "login" ? "دخول" : "إنشاء حساب";
   }
 }
@@ -94,9 +104,11 @@ async function syncUserProgress(user) {
     const localBest    = JSON.parse(localStorage.getItem('bus214_bestScores') || '{}');
     const localTotal   = parseInt(localStorage.getItem('bus214_totalQuizzes') || '0');
     const localCorrect = parseInt(localStorage.getItem('bus214_totalCorrect')  || '0');
+    const localWrong   = parseInt(localStorage.getItem('bus214_totalWrong')    || '0');
     let mergedBest    = { ...localBest };
     let mergedTotal   = localTotal;
     let mergedCorrect = localCorrect;
+    let mergedWrong   = localWrong;
     if (doc.exists) {
       const data = doc.data();
       const remoteBest = data.bestScores || {};
@@ -105,16 +117,19 @@ async function syncUserProgress(user) {
       });
       mergedTotal   = Math.max(localTotal,   data.totalQuizzes  || 0);
       mergedCorrect = Math.max(localCorrect, data.totalCorrect  || 0);
+      mergedWrong   = Math.max(localWrong,   data.totalWrong    || 0);
     }
     localStorage.setItem('bus214_bestScores',   JSON.stringify(mergedBest));
     localStorage.setItem('bus214_totalQuizzes', mergedTotal);
     localStorage.setItem('bus214_totalCorrect', mergedCorrect);
+    localStorage.setItem('bus214_totalWrong',   String(mergedWrong));
     if (typeof bestScores   !== 'undefined') bestScores   = mergedBest;
     if (typeof totalQuizzes !== 'undefined') totalQuizzes = mergedTotal;
     if (typeof totalCorrect !== 'undefined') totalCorrect = mergedCorrect;
+    if (typeof totalWrong   !== 'undefined') totalWrong   = mergedWrong;
     await ref.set({
       profile: { name: user.displayName || '', email: user.email || '' },
-      bestScores: mergedBest, totalQuizzes: mergedTotal, totalCorrect: mergedCorrect,
+      bestScores: mergedBest, totalQuizzes: mergedTotal, totalCorrect: mergedCorrect, totalWrong: mergedWrong,
       lastSeen: firebase.firestore.FieldValue.serverTimestamp()
     }, { merge: true });
     if (typeof renderMasteryBadges === 'function') renderMasteryBadges();
@@ -165,12 +180,17 @@ async function renderLeaderboard() {
       const bestAll = b.all !== undefined ? b.all + '%' : '—';
       const isMe = doc.id === currentUser.uid;
       const icon = medals[rank-1] || ('#'+rank);
+      const displayName = p.name || p.email || 'طالب';
+      const initials = displayName.charAt(0).toUpperCase();
+      const totalAnswered = (d.totalCorrect || 0) + (d.totalWrong || 0);
+      const accuracy = totalAnswered > 0 ? Math.round((d.totalCorrect || 0) / totalAnswered * 100) : 0;
+      const rankColor = rank === 1 ? '#FFD700' : rank === 2 ? '#C0C0C0' : rank === 3 ? '#CD7F32' : '#0ea5e9';
       html += `<div class="lb-row${isMe?' lb-me':''}">
-        <div class="lb-rank">${icon}</div>
-        <div class="lb-avatar lb-avatar-ph">👤</div>
+        <div class="lb-rank" style="color:${rankColor};font-weight:700;">${icon}</div>
+        <div class="lb-avatar lb-avatar-ph" style="background:${rankColor};color:#fff;font-weight:700;font-size:.9rem;">${initials}</div>
         <div class="lb-info">
-          <div class="lb-name">${p.name || p.email || 'طالب'}${isMe?' <span class="lb-you">(أنت)</span>':''}</div>
-          <div class="lb-sub">${d.totalQuizzes||0} كويز · F1:${b.ch1!==undefined?b.ch1+'%':'—'} · F2:${b.ch2!==undefined?b.ch2+'%':'—'} · F3:${b.ch3!==undefined?b.ch3+'%':'—'}</div>
+          <div class="lb-name">${displayName}${isMe?' <span class="lb-you">(أنت)</span>':''}</div>
+          <div class="lb-sub">${d.totalQuizzes||0} كويز · دقة: ${accuracy}% · F1:${b.ch1!==undefined?b.ch1+'%':'—'} · F2:${b.ch2!==undefined?b.ch2+'%':'—'} · F3:${b.ch3!==undefined?b.ch3+'%':'—'}</div>
         </div>
         <div class="lb-score">${bestAll}</div>
       </div>`;
