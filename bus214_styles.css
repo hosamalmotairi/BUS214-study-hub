@@ -2957,23 +2957,20 @@
         grid-template-columns: 1fr !important;
       }
 
-      /* Hide desktop FABs — bottom bar handles mobile nav */
-      .fab { display: none !important; }
-
-      /* Keep AI chat button visible on mobile — above bottom bar */
+      /* FABs visible on mobile — same as desktop */
       #ai-chat-btn {
-        display: flex !important;
-        bottom: 80px !important;
+        bottom: 84px !important;
         right: 16px !important;
-        width: 52px !important;
-        height: 52px !important;
-        font-size: 1.4rem !important;
-        border-radius: 50% !important;
-        align-items: center !important;
-        justify-content: center !important;
-        background: linear-gradient(135deg,#0369a1,#0ea5e9) !important;
-        box-shadow: 0 4px 16px rgba(14,165,233,.45) !important;
-        z-index: 9000 !important;
+      }
+      .fab-dark   { bottom: calc(84px + 58px * 1) !important; right: 16px !important; }
+      .fab-search { bottom: calc(84px + 58px * 2) !important; right: 16px !important; }
+      .fab-ar     { bottom: calc(84px + 58px * 3) !important; right: 16px !important; }
+      #ai-chat-box {
+        bottom: 142px !important;
+        right: 8px !important;
+        left: 8px !important;
+        width: auto !important;
+        max-width: none !important;
       }
       #ai-chat-box {
         bottom: 142px !important;
