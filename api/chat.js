@@ -43,32 +43,33 @@ export default async function handler(req, res) {
 - إذا سُئلت عن موضوع خارج المادة، قل: "أنا متخصص فقط في BUS 214"
 - أجب بنفس لغة السؤال (عربي أو إنجليزي)
 - اجعل إجاباتك مختصرة وواضحة ومنظمة
-- استخدم emoji لتنظيم الإجابة
-- في نهاية كل إجابة مفيدة، أضف: "📚 للمراجعة الكاملة: bus-214-study-hub.vercel.app"`;
+- استخدم emoji لتنظيم الإجابة`;
 
   try {
-    const apiKey = process.env.GEMINI_API_KEY;
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
-
-    const geminiRes = await fetch(url, {
+    const apiKey = process.env.GROQ_API_KEY;
+    const groqRes = await fetch('https://api.groq.com/openai/v1/chat/completions', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${apiKey}`
+      },
       body: JSON.stringify({
-        contents: [
-          { role: 'user', parts: [{ text: SYSTEM + '\n\n---\nسؤال الطالب: ' + message }] }
+        model: 'llama-3.1-8b-instant',
+        messages: [
+          { role: 'system', content: SYSTEM },
+          { role: 'user', content: message }
         ],
-        generationConfig: { maxOutputTokens: 512, temperature: 0.4 }
+        max_tokens: 512,
+        temperature: 0.4
       })
     });
 
-    const data = await geminiRes.json();
-    console.log('Gemini response:', JSON.stringify(data).slice(0, 500));
+    const data = await groqRes.json();
     if (data.error) {
-      console.error('Gemini error:', data.error);
       res.json({ reply: `خطأ: ${data.error.message}` });
       return;
     }
-    const reply = data.candidates?.[0]?.content?.parts?.[0]?.text || 'عذراً، لم أفهم السؤال. حاول مرة أخرى.';
+    const reply = data.choices?.[0]?.message?.content || 'عذراً، حاول مرة أخرى.';
     res.json({ reply });
   } catch (e) {
     res.status(500).json({ reply: 'حدث خطأ، حاول مرة أخرى.' });
