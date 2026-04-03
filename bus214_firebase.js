@@ -57,10 +57,7 @@ async function authSubmit() {
 
 function skipAuth() {
   document.getElementById("auth-overlay").style.display = "none";
-  const userInfo = document.getElementById("fb-user-info");
-  const userName = document.getElementById("fb-user-name");
-  if (userInfo) userInfo.style.display = "flex";
-  if (userName) userName.textContent = "Guest";
+  // Guest: don't show user info or logout button
 }
 
 function signOutUser() {
