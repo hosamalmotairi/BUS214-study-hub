@@ -1427,8 +1427,8 @@
   .kp-header { font-size: 1rem; font-weight: 800; color: #15803d; margin-bottom: 14px; }
   body.dark .kp-header { color: #4ade80; }
   .kp-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; }
-  .kp-list li { display: flex; align-items: flex-start; gap: 10px; font-size: .88rem; color: var(--ink); line-height: 1.6; }
-  .kp-tag { flex-shrink: 0; background: #15803d; color: #fff; font-size: .68rem; font-weight: 800; padding: 2px 8px; border-radius: 6px; margin-top: 2px; }
+  .kp-list li { display: block; font-size: .88rem; color: var(--ink); line-height: 1.6; overflow-wrap: break-word; word-break: break-word; }
+  .kp-tag { display: inline-block; vertical-align: top; background: #15803d; color: #fff; font-size: .68rem; font-weight: 800; padding: 2px 8px; border-radius: 6px; margin-right: 6px; margin-bottom: 2px; }
   body.dark .kp-tag { background: #166534; }
 
   /* ── CHAPTER QUIZ ────────────────────────── */
@@ -1439,7 +1439,7 @@
   body.dark .chq-item { background: rgba(255,255,255,.04); }
   .chq-q { font-size: .92rem; font-weight: 700; color: var(--ink); margin-bottom: 12px; line-height: 1.5; }
   .chq-opts { display: flex; flex-direction: column; gap: 8px; }
-  .chq-btn { text-align: right; padding: 10px 14px; border-radius: 10px; border: 1.5px solid var(--line); background: var(--paper); color: var(--ink); font-size: .86rem; cursor: pointer; transition: all .15s; font-family: inherit; }
+  .chq-btn { text-align: right; padding: 10px 14px; border-radius: 10px; border: 1.5px solid var(--line); background: var(--paper); color: var(--ink); font-size: .86rem; cursor: pointer; transition: all .15s; font-family: inherit; width: 100%; box-sizing: border-box; overflow-wrap: break-word; word-break: break-word; }
   .chq-btn:hover:not(:disabled) { border-color: var(--accent); background: var(--accent-soft); }
   .chq-btn.chq-correct { background: #d1fae5 !important; border-color: #34d399 !important; color: #065f46 !important; font-weight: 700; }
   .chq-btn.chq-wrong   { background: #fee2e2 !important; border-color: #f87171 !important; color: #991b1b !important; }
