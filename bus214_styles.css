@@ -2781,7 +2781,7 @@
         display: block !important;
       }
 
-      #sidebar.active {
+      #sidebar.open {
         left: 0 !important;
       }
 
