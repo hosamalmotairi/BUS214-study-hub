@@ -5,8 +5,9 @@ export default async function handler(req, res) {
   if (req.method === 'OPTIONS') return res.status(200).end();
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
-  const { message } = req.body || {};
-  if (!message) return res.status(400).json({ error: 'No message' });
+  const { history, message } = req.body || {};
+  const messages = history || (message ? [{ role: 'user', content: message }] : null);
+  if (!messages || messages.length === 0) return res.status(400).json({ error: 'No message' });
 
   const SYSTEM = `أنت مساعد دراسي ذكي متخصص حصراً في مادة BUS 214 — أخلاقيات الأعمال (Business Ethics).
 تساعد الطلاب على فهم محتوى الفصول الثلاثة:
@@ -57,7 +58,7 @@ export default async function handler(req, res) {
         model: 'moonshotai/kimi-k2-instruct',
         messages: [
           { role: 'system', content: SYSTEM },
-          { role: 'user', content: message }
+          ...messages
         ],
         max_tokens: 512,
         temperature: 0.4

@@ -1241,12 +1241,18 @@ function toggleAIChat() {
   if (!isOpen) document.getElementById('ai-input').focus();
 }
 
+// ذاكرة المحادثة
+const aiHistory = [];
+
 async function sendAIMsg() {
   const input = document.getElementById('ai-input');
   const msgs = document.getElementById('ai-messages');
   const text = input.value.trim();
   if (!text) return;
   input.value = '';
+
+  // أضف رسالة المستخدم للتاريخ
+  aiHistory.push({ role: 'user', content: text });
 
   const userDiv = document.createElement('div');
   userDiv.className = 'ai-msg-user';
@@ -1263,14 +1269,18 @@ async function sendAIMsg() {
     const res = await fetch('/api/chat', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ message: text })
+      body: JSON.stringify({ history: aiHistory })
     });
     const data = await res.json();
+    const reply = data.reply || 'حدث خطأ';
     typing.className = 'ai-msg-bot';
-    typing.textContent = data.reply || 'حدث خطأ';
+    typing.textContent = reply;
+    // أضف رد البوت للتاريخ
+    aiHistory.push({ role: 'assistant', content: reply });
   } catch {
     typing.className = 'ai-msg-bot';
     typing.textContent = '⚠️ تأكد من اتصالك بالإنترنت وحاول مرة أخرى.';
+    aiHistory.pop();
   }
   msgs.scrollTop = msgs.scrollHeight;
 }
