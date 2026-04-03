@@ -228,7 +228,7 @@ const flashCards = [
 // ── QUIZ STATE ────────────────────────────────
 let quizQs = [], quizIdx = 0, quizCorrect = 0, quizWrong = 0, quizAnswered = false;
 let quizTimeLimit = 0, quizTimeRemaining = 0, quizTimerInt = null, quizStartTime = null;
-let mockQs = [], mockIdx = 0, mockCorrect = 0, mockWrong = 0;
+let mockQs = [], mockIdx = 0, mockCorrect = 0, mockWrong = 0, mockAnswers = [];
 let mockTimeLimit = 1800, mockTimeRemaining = 1800, mockTimerInt = null;
 let currentFlashCards = [], fcIdx = 0, fcMastered = [], fcQueue = [];
 
@@ -501,7 +501,7 @@ function retakeQuiz() {
 // ── MOCK EXAM ─────────────────────────────────
 function startMock() {
   const pool = [...mockBank].sort(() => Math.random() - 0.5).slice(0, 30);
-  mockQs = pool; mockIdx = 0; mockCorrect = 0; mockWrong = 0;
+  mockQs = pool; mockIdx = 0; mockCorrect = 0; mockWrong = 0; mockAnswers = [];
   mockTimeRemaining = mockTimeLimit;
   document.body.classList.add('mock-mode');
   document.getElementById("mock-start-screen").style.display = "none";
@@ -557,6 +557,7 @@ function handleMockAnswer(chosen) {
     document.getElementById("mock-feedback").textContent = "❌ Wrong — The correct answer is: " + ["A","B","C","D"][q.ans] + ". " + q.opts[q.ans];
     document.getElementById("mock-feedback").className = "quiz-feedback wrong";
   }
+  mockAnswers.push({ q: mockQs[mockIdx], chosen });
   document.getElementById("mock-next-btn").style.display = "block";
 }
 
@@ -582,6 +583,22 @@ function endMock() {
   localStorage.setItem('bus214_totalQuizzes', totalQuizzes);
   localStorage.setItem('bus214_totalCorrect', totalCorrect);
   updateStreak();
+  // Render solutions
+  const letters = ["A","B","C","D"];
+  let solHtml = mockAnswers.map((a, i) => {
+    const isCorrect = a.chosen === a.q.ans;
+    return `<div class="mock-sol-item ${isCorrect ? 'mock-sol-ok' : 'mock-sol-wrong'}">
+      <div class="mock-sol-q">${i+1}. ${a.q.q}</div>
+      ${a.q.opts.map((opt, j) => {
+        let cls = '';
+        if (j === a.q.ans) cls = 'mock-sol-correct';
+        else if (j === a.chosen && !isCorrect) cls = 'mock-sol-chosen';
+        return `<div class="mock-sol-opt ${cls}">${letters[j]}. ${opt}</div>`;
+      }).join('')}
+    </div>`;
+  }).join('');
+  const solEl = document.getElementById('mock-solutions');
+  if (solEl) solEl.innerHTML = solHtml;
 }
 
 function retakeMock() {
