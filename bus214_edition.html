@@ -152,6 +152,40 @@
     <button class="qn-card" onclick="showPage('page-mock')"><div class="qn-icon">📋</div><div class="qn-label">Mock Exam</div><div class="qn-sub">30 Questions · 30 min</div></button>
   </div>
 
+  <!-- ── EXAM COUNTDOWN ─────────────────────────── -->
+  <section class="chapter" style="margin-top:24px;text-align:center;">
+    <div id="exam-countdown" style="background:linear-gradient(135deg,#0c2d4a,#0369a1);border-radius:18px;padding:22px 20px;color:#fff;">
+      <div style="font-size:.8rem;opacity:.8;margin-bottom:6px;letter-spacing:.08em;">⏰ الاختبار في</div>
+      <div id="countdown-display" style="font-size:2.4rem;font-weight:900;letter-spacing:.04em;line-height:1;">--</div>
+      <div style="font-size:.75rem;opacity:.7;margin-top:6px;">يوم متبقي — اذاكر الحين! 💪</div>
+    </div>
+  </section>
+
+  <script>
+  (function() {
+    const examDate = new Date('2026-04-12T00:00:00');
+    function updateCountdown() {
+      const now = new Date();
+      const diff = examDate - now;
+      if (diff <= 0) {
+        document.getElementById('countdown-display').textContent = 'اليوم هو الاختبار! 🎯';
+        return;
+      }
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      document.getElementById('countdown-display').textContent =
+        days + 'د ' + hours + 'س ' + mins + 'د';
+      document.getElementById('countdown-display').innerHTML =
+        '<span>' + days + '</span><small style="font-size:.9rem;opacity:.8"> يوم </small>' +
+        '<span>' + hours + '</span><small style="font-size:.9rem;opacity:.8"> ساعة </small>' +
+        '<span>' + mins + '</span><small style="font-size:.9rem;opacity:.8"> دقيقة</small>';
+    }
+    updateCountdown();
+    setInterval(updateCountdown, 60000);
+  })();
+  </script>
+
   <section class="chapter" style="margin-top:24px;">
     <h2>📚 Course Overview</h2>
     <p>BUS 214 — Business Ethics covers the ethical dimensions of business decision-making using Ferrell's <em>Business Ethics: Ethical Decision Making and Cases</em> (13th Edition).</p>
