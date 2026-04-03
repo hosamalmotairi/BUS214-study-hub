@@ -62,6 +62,12 @@ export default async function handler(req, res) {
     });
 
     const data = await geminiRes.json();
+    console.log('Gemini response:', JSON.stringify(data).slice(0, 500));
+    if (data.error) {
+      console.error('Gemini error:', data.error);
+      res.json({ reply: `خطأ: ${data.error.message}` });
+      return;
+    }
     const reply = data.candidates?.[0]?.content?.parts?.[0]?.text || 'عذراً، لم أفهم السؤال. حاول مرة أخرى.';
     res.json({ reply });
   } catch (e) {
