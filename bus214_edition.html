@@ -153,11 +153,24 @@
   </div>
 
   <!-- ── EXAM COUNTDOWN ─────────────────────────── -->
-  <section class="chapter" style="margin-top:24px;text-align:center;">
-    <div id="exam-countdown" style="background:linear-gradient(135deg,#0c2d4a,#0369a1);border-radius:18px;padding:22px 20px;color:#fff;">
-      <div style="font-size:.8rem;opacity:.8;margin-bottom:6px;letter-spacing:.08em;">⏰ الاختبار في</div>
-      <div id="countdown-display" style="font-size:2.4rem;font-weight:900;letter-spacing:.04em;line-height:1;">--</div>
-      <div style="font-size:.75rem;opacity:.7;margin-top:6px;">يوم متبقي — اذاكر الحين! 💪</div>
+  <section class="chapter" style="margin-top:24px;">
+    <div style="background:linear-gradient(135deg,#0c2d4a,#0369a1);border-radius:18px;padding:28px 20px;color:#fff;text-align:center;">
+      <div style="font-size:.95rem;font-weight:600;opacity:.85;margin-bottom:20px;letter-spacing:.05em;">⏰ الوقت المتبقي للاختبار</div>
+      <div style="display:flex;justify-content:center;gap:16px;flex-wrap:wrap;">
+        <div style="background:rgba(255,255,255,.15);border-radius:14px;padding:16px 20px;min-width:70px;">
+          <div id="cd-days" style="font-size:2.4rem;font-weight:900;line-height:1;">--</div>
+          <div style="font-size:.78rem;opacity:.75;margin-top:4px;">يوم</div>
+        </div>
+        <div style="background:rgba(255,255,255,.15);border-radius:14px;padding:16px 20px;min-width:70px;">
+          <div id="cd-hours" style="font-size:2.4rem;font-weight:900;line-height:1;">--</div>
+          <div style="font-size:.78rem;opacity:.75;margin-top:4px;">ساعة</div>
+        </div>
+        <div style="background:rgba(255,255,255,.15);border-radius:14px;padding:16px 20px;min-width:70px;">
+          <div id="cd-mins" style="font-size:2.4rem;font-weight:900;line-height:1;">--</div>
+          <div style="font-size:.78rem;opacity:.75;margin-top:4px;">دقيقة</div>
+        </div>
+      </div>
+      <div style="margin-top:18px;font-size:.85rem;opacity:.7;">📅 الاختبار: السبت 12 أبريل 2026 &nbsp;—&nbsp; اذاكر الحين! 💪</div>
     </div>
   </section>
 
@@ -168,18 +181,14 @@
       const now = new Date();
       const diff = examDate - now;
       if (diff <= 0) {
-        document.getElementById('countdown-display').textContent = 'اليوم هو الاختبار! 🎯';
+        document.getElementById('cd-days').textContent = '0';
+        document.getElementById('cd-hours').textContent = '0';
+        document.getElementById('cd-mins').textContent = '0';
         return;
       }
-      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-      document.getElementById('countdown-display').textContent =
-        days + 'د ' + hours + 'س ' + mins + 'د';
-      document.getElementById('countdown-display').innerHTML =
-        '<span>' + days + '</span><small style="font-size:.9rem;opacity:.8"> يوم </small>' +
-        '<span>' + hours + '</span><small style="font-size:.9rem;opacity:.8"> ساعة </small>' +
-        '<span>' + mins + '</span><small style="font-size:.9rem;opacity:.8"> دقيقة</small>';
+      document.getElementById('cd-days').textContent = Math.floor(diff / (1000*60*60*24));
+      document.getElementById('cd-hours').textContent = Math.floor((diff % (1000*60*60*24)) / (1000*60*60));
+      document.getElementById('cd-mins').textContent = Math.floor((diff % (1000*60*60)) / (1000*60));
     }
     updateCountdown();
     setInterval(updateCountdown, 60000);
