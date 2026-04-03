@@ -2785,6 +2785,20 @@
         left: 0 !important;
       }
 
+      /* Force white text inside mobile sidebar (dark bg always) */
+      #sidebar.sidebar-nav .sidebar-logo,
+      #sidebar.sidebar-nav .sidebar-subtitle,
+      #sidebar.sidebar-nav .sidebar-menu a,
+      #sidebar.sidebar-nav .sidebar-label,
+      #sidebar.sidebar-nav .sidebar-footer button,
+      #sidebar.sidebar-nav .fb-user-name {
+        color: #e8eaf6 !important;
+      }
+      #sidebar.sidebar-nav .sidebar-menu a:hover {
+        background: rgba(255,255,255,0.08) !important;
+        color: #fff !important;
+      }
+
       #sidebar .sidebar-menu {
         padding: 80px 20px 40px !important;
         overflow-y: auto !important;
