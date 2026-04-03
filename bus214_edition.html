@@ -91,6 +91,11 @@
   </div>
   <div class="sidebar-footer">
     <button class="dark-toggle" onclick="toggleDark()" id="dark-btn">🌙 Dark Mode</button>
+    <div class="sidebar-footer-actions">
+      <button class="sf-action-btn" onclick="toggleArabic();if(window.innerWidth<=768)toggleSidebar();" title="إظهار/إخفاء العربي" id="sf-ar-btn">ع Arabic</button>
+      <button class="sf-action-btn" onclick="if(window.innerWidth<=768)toggleSidebar();setTimeout(openSearch,200);" title="بحث">🔍 Search</button>
+      <button class="sf-action-btn sf-ai-btn" onclick="if(window.innerWidth<=768)toggleSidebar();setTimeout(toggleAIChat,200);" title="بوت المطيري">🤖 AI Chat</button>
+    </div>
   </div>
 </nav>
 

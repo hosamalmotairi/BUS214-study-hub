@@ -1552,6 +1552,56 @@
       border-top-color: #2e3150;
     }
 
+    .sidebar-footer-actions {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .sf-action-btn {
+      flex: 1;
+      min-width: 80px;
+      padding: 8px 10px;
+      border-radius: 10px;
+      border: 1px solid var(--line, #e5e7ef);
+      background: var(--card, #f8fafc);
+      color: var(--ink, #1a1d2e);
+      font-size: .82rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all .2s;
+      text-align: center;
+    }
+
+    .sf-action-btn:hover {
+      background: var(--accent-soft, #e0f2fe);
+      border-color: var(--accent, #0ea5e9);
+      color: var(--accent, #0ea5e9);
+    }
+
+    .sf-ai-btn {
+      background: linear-gradient(135deg,#0c2d4a,#0369a1);
+      color: #fff !important;
+      border-color: transparent !important;
+    }
+
+    .sf-ai-btn:hover {
+      opacity: .9;
+      background: linear-gradient(135deg,#0c2d4a,#0369a1) !important;
+      color: #fff !important;
+    }
+
+    body.dark .sf-action-btn {
+      background: #1e2130;
+      border-color: #3a3d54;
+      color: #c8cde8;
+    }
+
+    body.dark .sf-action-btn:hover {
+      background: #263050;
+      color: #0ea5e9;
+    }
+
     .sidebar-nav.closed {
       transform: translateX(-260px);
     }
@@ -2780,6 +2830,8 @@
         backdrop-filter: blur(15px) !important;
         transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
         display: block !important;
+        padding-bottom: 80px !important;
+        overflow-y: auto !important;
       }
 
       #sidebar.open {
@@ -2908,16 +2960,23 @@
       /* Hide desktop FABs — bottom bar handles mobile nav */
       .fab { display: none !important; }
 
-      /* Adjust AI chat button position for mobile */
+      /* Keep AI chat button visible on mobile — above bottom bar */
       #ai-chat-btn {
+        display: flex !important;
         bottom: 80px !important;
         right: 16px !important;
         width: 52px !important;
         height: 52px !important;
         font-size: 1.4rem !important;
+        border-radius: 50% !important;
+        align-items: center !important;
+        justify-content: center !important;
+        background: linear-gradient(135deg,#0369a1,#0ea5e9) !important;
+        box-shadow: 0 4px 16px rgba(14,165,233,.45) !important;
+        z-index: 9000 !important;
       }
-      #ai-chat-window {
-        bottom: 140px !important;
+      #ai-chat-box {
+        bottom: 142px !important;
         right: 8px !important;
         left: 8px !important;
         width: auto !important;
