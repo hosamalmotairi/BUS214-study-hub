@@ -36,23 +36,23 @@
 <body>
 
 <!-- ── AUTH OVERLAY ────────────────────────── -->
-<div id="auth-overlay" style="position:fixed;inset:0;background:rgba(15,17,30,0.95);z-index:99999;display:flex;align-items:center;justify-content:center;">
-  <div id="auth-box" style="background:#1a1d2e;border-radius:24px;padding:40px;width:90%;max-width:420px;box-shadow:0 24px 64px rgba(0,0,0,0.5);">
-    <h2 style="text-align:center;color:#0ea5e9;margin:0 0 6px;">⚖️ BUS 214</h2>
-    <p style="text-align:center;color:#888;margin:0 0 24px;font-size:.88rem;">سجّل دخولك لحفظ تقدمك من أي جهاز</p>
-    <div style="display:flex;gap:8px;margin-bottom:20px;">
+<div id="auth-overlay" style="position:fixed;inset:0;background:rgba(15,17,30,0.95);z-index:99999;display:flex;align-items:center;justify-content:center;overflow-y:auto;">
+  <div id="auth-box" style="background:#1a1d2e;border-radius:20px;padding:24px 28px;width:90%;max-width:420px;box-shadow:0 24px 64px rgba(0,0,0,0.5);margin:16px auto;">
+    <h2 style="text-align:center;color:#0ea5e9;margin:0 0 4px;">⚖️ BUS 214</h2>
+    <p style="text-align:center;color:#888;margin:0 0 16px;font-size:.85rem;">سجّل دخولك لحفظ تقدمك من أي جهاز</p>
+    <div style="display:flex;gap:8px;margin-bottom:14px;">
       <button id="tab-login" class="auth-tab-btn" onclick="authTab('login')" style="flex:1;padding:10px;border-radius:10px;font-weight:700;cursor:pointer;font-size:.95rem;background:#0ea5e9;color:#fff;border:none;">دخول</button>
       <button id="tab-register" class="auth-tab-btn" onclick="authTab('register')" style="flex:1;padding:10px;border-radius:10px;font-weight:700;cursor:pointer;font-size:.95rem;background:transparent;color:#0ea5e9;border:2px solid #1e4060;">حساب جديد</button>
     </div>
     <div id="auth-name-wrap" style="display:none;">
       <input id="auth-name" type="text" placeholder="اسمك (مثال: Hosam)" style="width:100%;padding:12px 16px;border-radius:12px;border:1.5px solid #1e4060;font-size:.95rem;box-sizing:border-box;margin-bottom:12px;background:#12152a;color:#e8eaf6;">
     </div>
-    <input id="auth-email" type="email" placeholder="البريد الإلكتروني" style="width:100%;padding:12px 16px;border-radius:12px;border:1.5px solid #1e4060;font-size:.95rem;box-sizing:border-box;margin-bottom:12px;background:#12152a;color:#e8eaf6;">
-    <input id="auth-pass" type="password" placeholder="كلمة السر" style="width:100%;padding:12px 16px;border-radius:12px;border:1.5px solid #1e4060;font-size:.95rem;box-sizing:border-box;margin-bottom:12px;background:#12152a;color:#e8eaf6;">
-    <div id="auth-err" style="color:#f87171;font-size:.82rem;text-align:center;min-height:18px;margin-bottom:10px;"></div>
+    <input id="auth-email" type="email" placeholder="البريد الإلكتروني" style="width:100%;padding:10px 14px;border-radius:12px;border:1.5px solid #1e4060;font-size:.92rem;box-sizing:border-box;margin-bottom:10px;background:#12152a;color:#e8eaf6;">
+    <input id="auth-pass" type="password" placeholder="كلمة السر" style="width:100%;padding:10px 14px;border-radius:12px;border:1.5px solid #1e4060;font-size:.92rem;box-sizing:border-box;margin-bottom:10px;background:#12152a;color:#e8eaf6;">
+    <div id="auth-err" style="color:#f87171;font-size:.8rem;text-align:center;min-height:16px;margin-bottom:8px;"></div>
     <button id="auth-submit" onclick="authSubmit()" data-mode="login" style="width:100%;padding:13px;border-radius:12px;border:none;background:#0ea5e9;color:#fff;font-size:1rem;font-weight:700;cursor:pointer;">دخول</button>
-    <div style="text-align:center;margin-top:16px;padding-top:16px;border-top:1px dashed #1e4060;">
-      <button onclick="skipAuth()" style="background:none;border:none;color:#888;font-size:.85rem;cursor:pointer;text-decoration:underline;">استخدم بدون حساب (لن يتم حفظ تقدمك)</button>
+    <div style="text-align:center;margin-top:12px;">
+      <button onclick="skipAuth()" style="width:100%;padding:11px;border-radius:12px;border:1px dashed #2a3550;background:transparent;color:#888;font-size:.85rem;cursor:pointer;">تصفح بدون حساب</button>
     </div>
   </div>
 </div>
