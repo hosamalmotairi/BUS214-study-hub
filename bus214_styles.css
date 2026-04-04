@@ -2906,28 +2906,6 @@
         grid-template-columns: 1fr !important;
       }
 
-      /* FABs visible on mobile — same as desktop */
-      #ai-chat-btn {
-        bottom: 84px !important;
-        right: 16px !important;
-      }
-      .fab-dark   { bottom: calc(84px + 58px * 1) !important; right: 16px !important; }
-      .fab-search { bottom: calc(84px + 58px * 2) !important; right: 16px !important; }
-      .fab-ar     { bottom: calc(84px + 58px * 3) !important; right: 16px !important; }
-      #ai-chat-box {
-        bottom: 142px !important;
-        right: 8px !important;
-        left: 8px !important;
-        width: auto !important;
-        max-width: none !important;
-      }
-      #ai-chat-box {
-        bottom: 142px !important;
-        right: 8px !important;
-        left: 8px !important;
-        width: auto !important;
-        max-width: none !important;
-      }
 
       /* Larger tap targets for quiz buttons */
       .quiz-mcq-btn {
