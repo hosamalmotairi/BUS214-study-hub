@@ -57,7 +57,7 @@ ISO 14001 | LEED | Kyoto 1997 | Cap-and-Trade | Rachel Carson 1962`;
         'Authorization': `Bearer ${apiKey}`
       },
       body: JSON.stringify({
-        model: 'moonshotai/kimi-k2-instruct',
+        model: 'llama-3.3-70b-versatile',
         messages: [
           { role: 'system', content: SYSTEM },
           ...messages
