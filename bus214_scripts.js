@@ -558,7 +558,9 @@ function handleQuizAnswer(chosen) {
     expEl.innerHTML = `<div class="exp-header${headerClass}">${headerText}</div><div class="exp-options">${optsHtml}</div>`;
     expEl.style.display = "block";
   }
-  document.getElementById("quiz-next-btn").style.display = "block";
+  const nextBtn = document.getElementById("quiz-next-btn");
+  nextBtn.style.display = "block";
+  setTimeout(() => nextBtn.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 50);
 }
 
 function nextQuizQ() {

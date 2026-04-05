@@ -1720,7 +1720,6 @@
       box-shadow: 0 12px 36px rgba(0,0,0,0.08); /* Premium shadow */
       margin-top: 20px;
       position: relative;
-      overflow: hidden;
       max-width: 800px;
       margin-left: auto;
       margin-right: auto;
