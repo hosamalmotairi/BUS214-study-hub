@@ -75,6 +75,8 @@ function signOutUser() {
     document.getElementById("auth-overlay").style.display = "flex";
     const userInfo = document.getElementById("fb-user-info");
     if (userInfo) userInfo.style.display = "none";
+    const signoutBtn = document.getElementById("signout-btn");
+    if (signoutBtn) signoutBtn.style.display = "none";
   });
 }
 
@@ -87,6 +89,8 @@ auth.onAuthStateChanged(async user => {
     const userName = document.getElementById("fb-user-name");
     if (userInfo) userInfo.style.display = "flex";
     if (userName) userName.textContent = user.displayName || user.email.split("@")[0];
+    const signoutBtn = document.getElementById("signout-btn");
+    if (signoutBtn) signoutBtn.style.display = "block";
     await syncUserProgress(user);
     renderLeaderboard();
   } else {
