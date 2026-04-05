@@ -437,7 +437,10 @@
 
     <!-- ── CHAPTER QUIZ CH1 ── -->
     <div class="ch-quiz-block">
-      <div class="chq-header">❓ <span class="ar-line">أسئلة الفصل الأول —</span> Chapter 1 Quiz</div>
+      <div class="chq-header" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+        <span>❓ <span class="ar-line">أسئلة الفصل الأول —</span> Chapter 1 Quiz</span>
+        <button class="quiz-btn quiz-btn-primary" style="font-size:.78rem;padding:6px 14px;" onclick="startQuickCheck('ch1')">⚡ Quick Check — 5 أسئلة</button>
+      </div>
       <div class="chq-list" id="chq-ch1">
 
         <div class="chq-item">
@@ -693,7 +696,10 @@
 
     <!-- ── CHAPTER QUIZ CH2 ── -->
     <div class="ch-quiz-block">
-      <div class="chq-header">❓ <span class="ar-line">أسئلة الفصل الثاني —</span> Chapter 2 Quiz</div>
+      <div class="chq-header" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+        <span>❓ <span class="ar-line">أسئلة الفصل الثاني —</span> Chapter 2 Quiz</span>
+        <button class="quiz-btn quiz-btn-primary" style="font-size:.78rem;padding:6px 14px;" onclick="startQuickCheck('ch2')">⚡ Quick Check — 5 أسئلة</button>
+      </div>
       <div class="chq-list" id="chq-ch2">
 
         <div class="chq-item">
@@ -967,7 +973,10 @@
 
     <!-- ── CHAPTER QUIZ CH3 ── -->
     <div class="ch-quiz-block">
-      <div class="chq-header">❓ <span class="ar-line">أسئلة الفصل الثالث —</span> Chapter 3 Quiz</div>
+      <div class="chq-header" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+        <span>❓ <span class="ar-line">أسئلة الفصل الثالث —</span> Chapter 3 Quiz</span>
+        <button class="quiz-btn quiz-btn-primary" style="font-size:.78rem;padding:6px 14px;" onclick="startQuickCheck('ch3')">⚡ Quick Check — 5 أسئلة</button>
+      </div>
       <div class="chq-list" id="chq-ch3">
 
         <div class="chq-item">
@@ -1159,7 +1168,8 @@
 
     <div class="fc-progress-wrap">
       <div class="fc-progress-bar-track"><div id="fc-progress-bar" class="fc-progress-bar-fill"></div></div>
-      <span id="fc-counter" class="fc-counter">1 / 45</span>
+      <span id="fc-counter" class="fc-counter">1 / 75</span>
+      <span id="fc-mastered-badge" style="display:none;margin-right:8px;font-size:.78rem;font-weight:700;color:#10b981;background:#d1fae5;padding:2px 8px;border-radius:999px;">✓ <span id="fc-mastered-count">0</span> محفوظ</span>
     </div>
 
     <div id="flash-card" class="flash-card" onclick="flipCard()">
@@ -1186,6 +1196,7 @@
     <div id="fc-nav-row" class="fc-nav-row">
       <button class="quiz-btn quiz-btn-secondary" onclick="prevCard()">← السابق</button>
       <button class="quiz-btn quiz-btn-primary"   onclick="nextCard()">التالي →</button>
+      <button class="quiz-btn" style="background:var(--line);color:var(--muted);font-size:.8rem;" onclick="resetMastered()" title="إعادة تعيين المحفوظات">↺ إعادة</button>
     </div>
   </section>
 </div>
@@ -1372,7 +1383,9 @@
       <div class="dash-score-card"><div class="dash-score-label">Chapter 3</div><div class="dash-score-val" id="dash-best-ch3">—</div></div>
     </div>
 
-    <div style="text-align:center;margin-top:32px;">
+    <div id="dash-weak-alert" style="display:none;gap:10px;align-items:center;margin-top:24px;padding:14px 18px;border-radius:14px;border:1.5px solid var(--line);"></div>
+
+    <div style="text-align:center;margin-top:24px;">
       <button class="quiz-btn quiz-btn-primary" onclick="showPage('page-quiz')">🎯 Start Quiz</button>
       <button class="quiz-btn quiz-btn-secondary" onclick="showPage('page-flash');initFlashCards()" style="margin-left:12px;">🃏 Flash Cards</button>
     </div>

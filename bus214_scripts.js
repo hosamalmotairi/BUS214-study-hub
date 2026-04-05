@@ -162,7 +162,19 @@ const allQuizQ = [
   { ch: "ch1", q: "Studying business ethics helps professionals do all of the following EXCEPT:", opts: ["Identify ethical issues when they arise", "Recognize approaches for resolving ethical issues", "Guarantee that all business decisions will be ethical", "Cope with conflicts between personal values and organizational values"], ans: 2, exp: ["❌ Identifying ethical issues is one of the 4 key reasons to study business ethics.<br><span dir='rtl'>❌ تحديد المشكلات الأخلاقية هو أحد الأسباب الأربعة لدراسة الأخلاقيات.</span>", "❌ Recognizing resolution approaches is another key reason to study business ethics.<br><span dir='rtl'>❌ التعرف على أساليب الحل سبب آخر لدراسة أخلاقيات الأعمال.</span>", "✅ Correct. Studying ethics CANNOT guarantee that all decisions will be ethical — it only provides tools and frameworks for better decision-making.<br><span dir='rtl'>✅ صح — دراسة الأخلاقيات لا تضمن أن تكون جميع القرارات أخلاقية — بل توفر أدوات وأطر لاتخاذ قرارات أفضل.</span>", "❌ Coping with conflicts between personal and organizational values is explicitly one of the 4 reasons.<br><span dir='rtl'>❌ التعامل مع التضارب بين القيم الشخصية والتنظيمية سبب صريح من الأسباب الأربعة.</span>"] },
   { ch: "ch2", q: "The Stakeholder Interaction Model differs from the Normative, Descriptive, and Instrumental approaches because it:", opts: ["Focuses only on how firms should maximize shareholder value", "Explicitly acknowledges dialogue between a firm's internal and external environments", "Measures the financial outcomes of stakeholder decisions", "Prescribes a single set of rules for all stakeholder relationships"], ans: 1, exp: ["❌ Shareholder value maximization is the Shareholder Model of governance, not the Interaction Model.<br><span dir='rtl'>❌ تعظيم قيمة المساهمين هو نموذج المساهمين في الحوكمة، وليس نموذج التفاعل.</span>", "✅ Correct. The Stakeholder Interaction Model explicitly recognizes dialogue and interaction between a firm's internal and external environments — going beyond the other three approaches.<br><span dir='rtl'>✅ صح — نموذج تفاعل أصحاب المصلحة يُقرّ صراحةً بوجود حوار بين البيئة الداخلية والخارجية للشركة.</span>", "❌ Measuring financial outcomes is the focus of the Instrumental approach, not the Interaction Model.<br><span dir='rtl'>❌ قياس النتائج المالية هو تركيز النهج الأداتي، لا نموذج التفاعل.</span>", "❌ The Interaction Model acknowledges variety and dialogue — it does NOT prescribe a single set of rules.<br><span dir='rtl'>❌ نموذج التفاعل يُقرّ بالتنوع والحوار — لا يضع مجموعة واحدة من القواعد.</span>"] },
   { ch: "ch2", q: "Corporate governance establishes fundamental systems and processes for which THREE functions?", opts: ["Planning, budgeting, and staffing", "Marketing, operations, and finance", "Preventing & detecting misconduct, investigating & disciplining, recovery & continuous improvement", "Hiring executives, setting compensation, and filing annual reports"], ans: 2, exp: ["❌ Planning, budgeting, and staffing are general management functions, not specifically corporate governance systems.<br><span dir='rtl'>❌ التخطيط والميزانية والتوظيف وظائف إدارية عامة، وليست أنظمة حوكمة شركات بالتحديد.</span>", "❌ Marketing, operations, and finance are business functions — not the three corporate governance systems.<br><span dir='rtl'>❌ التسويق والعمليات والتمويل وظائف تجارية، وليست الوظائف الثلاث لحوكمة الشركات.</span>", "✅ Correct. Corporate governance establishes systems for: (1) Preventing and detecting misconduct, (2) Investigating and disciplining, (3) Recovery and continuous improvement.<br><span dir='rtl'>✅ صح — تُرسّخ حوكمة الشركات أنظمة لـ: منع المخالفات وكشفها، التحقيق والتأديب، والتعافي والتحسين المستمر.</span>", "❌ These are board-level activities but do not represent the three core governance systems as defined in the textbook.<br><span dir='rtl'>❌ هذه أنشطة على مستوى مجلس الإدارة لكنها لا تمثل الأنظمة الثلاثة الأساسية للحوكمة كما يُعرّفها الكتاب.</span>"] },
-  { ch: "ch2", q: "Outside directors on a board of directors are preferred because they:", opts: ["Are paid more than inside directors", "Have a vested interest in the firm's success", "Do not have a vested interest — selected for expertise and diverse perspectives", "Report directly to the CEO"], ans: 2, exp: ["❌ Outside directors may receive compensation but are not chosen based on pay level.<br><span dir='rtl'>❌ قد يحصل المديرون الخارجيون على تعويض لكنهم لا يُختارون بناءً على مستوى الراتب.</span>", "❌ Having a vested interest is a characteristic of INSIDE directors — outside directors are valued precisely because they lack this.<br><span dir='rtl'>❌ وجود مصلحة شخصية صفة المديرين الداخليين — المديرون الخارجيون يُقدَّرون لافتقارهم لذلك.</span>", "✅ Correct. Outside directors do not have a vested interest in the firm — they are selected for their expertise, competence, and ability to bring diverse perspectives to strategic discussions.<br><span dir='rtl'>✅ صح — المديرون الخارجيون لا يملكون مصلحة شخصية — يُختارون بناءً على خبرتهم وكفاءتهم وتنوع وجهات نظرهم.</span>", "❌ Outside directors report to the full board and shareholders — not directly to the CEO.<br><span dir='rtl'>❌ المديرون الخارجيون يُرفعون إلى مجلس الإدارة الكامل والمساهمين، لا إلى الرئيس التنفيذي مباشرةً.</span>"] }
+  { ch: "ch2", q: "Outside directors on a board of directors are preferred because they:", opts: ["Are paid more than inside directors", "Have a vested interest in the firm's success", "Do not have a vested interest — selected for expertise and diverse perspectives", "Report directly to the CEO"], ans: 2, exp: ["❌ Outside directors may receive compensation but are not chosen based on pay level.<br><span dir='rtl'>❌ قد يحصل المديرون الخارجيون على تعويض لكنهم لا يُختارون بناءً على مستوى الراتب.</span>", "❌ Having a vested interest is a characteristic of INSIDE directors — outside directors are valued precisely because they lack this.<br><span dir='rtl'>❌ وجود مصلحة شخصية صفة المديرين الداخليين — المديرون الخارجيون يُقدَّرون لافتقارهم لذلك.</span>", "✅ Correct. Outside directors do not have a vested interest in the firm — they are selected for their expertise, competence, and ability to bring diverse perspectives to strategic discussions.<br><span dir='rtl'>✅ صح — المديرون الخارجيون لا يملكون مصلحة شخصية — يُختارون بناءً على خبرتهم وكفاءتهم وتنوع وجهات نظرهم.</span>", "❌ Outside directors report to the full board and shareholders — not directly to the CEO.<br><span dir='rtl'>❌ المديرون الخارجيون يُرفعون إلى مجلس الإدارة الكامل والمساهمين، لا إلى الرئيس التنفيذي مباشرةً.</span>"] },
+
+  // ════════ SCENARIO-BASED QUESTIONS ════════
+  { ch: "ch1", q: "A pharmaceutical company discovers a side effect in one of its drugs but delays disclosure to avoid a stock price drop. Which ethical principle is MOST directly violated?", opts: ["Duty of care to shareholders only", "Transparency and honesty with stakeholders", "The right of companies to protect trade secrets", "ISO 19600 compliance standards"], ans: 1, exp: ["❌ Duty of care extends to ALL stakeholders including patients — not shareholders only.<br><span dir='rtl'>❌ واجب الرعاية يمتد لجميع أصحاب المصلحة بما فيهم المرضى، وليس المساهمين فقط.</span>", "✅ Correct. Concealing known harm violates the fundamental ethical principle of transparency and honesty — the company has a duty to inform patients, doctors, and regulators.<br><span dir='rtl'>✅ صح — إخفاء الضرر المعروف ينتهك مبدأ الشفافية والصدق — للشركة واجب إعلام المرضى والأطباء والجهات التنظيمية.</span>", "❌ Trade secrets protect proprietary formulas — not the right to hide safety information from patients.<br><span dir='rtl'>❌ الأسرار التجارية تحمي الصيغ الحاصلة على براءة اختراع — وليس حق إخفاء معلومات السلامة عن المرضى.</span>", "❌ While ISO 19600 addresses compliance, the most directly violated principle here is the ethical standard of transparency.<br><span dir='rtl'>❌ رغم أن ISO 19600 يعالج الامتثال، فإن المبدأ الأكثر انتهاكًا هنا هو معيار الشفافية الأخلاقية.</span>"] },
+  { ch: "ch1", q: "An employee discovers that their manager is submitting false expense reports. The employee fears retaliation if they report it. This scenario BEST illustrates:", opts: ["A simple accounting error that should be corrected", "An ethical conflict between personal values and organizational pressure", "A legal requirement to report under FCPA", "Normal business behavior with no ethical concern"], ans: 1, exp: ["❌ Knowingly submitting false expense reports is fraud — not a simple accounting error.<br><span dir='rtl'>❌ تقديم تقارير مصروفات مزيفة عن سبق إصرار هو احتيال، وليس خطأً محاسبيًا بسيطًا.</span>", "✅ Correct. This illustrates a classic ethical conflict — the employee's personal values (honesty) clash with organizational pressure (fear of retaliation), which is a core topic in business ethics.<br><span dir='rtl'>✅ صح — يجسّد هذا تعارضًا أخلاقيًا كلاسيكيًا — تتعارض القيم الشخصية (الأمانة) مع الضغط المؤسسي (الخوف من الانتقام).</span>", "❌ FCPA applies to bribery of foreign officials — not internal expense fraud.<br><span dir='rtl'>❌ FCPA يطبق على رشوة المسؤولين الأجانب، وليس على الاحتيال الداخلي في المصروفات.</span>", "❌ Expense fraud is clearly unethical and illegal — it is never 'normal business behavior'.<br><span dir='rtl'>❌ الاحتيال في المصروفات غير أخلاقي وغير قانوني بشكل واضح — فهو ليس 'سلوكًا تجاريًا طبيعيًا' أبدًا.</span>"] },
+  { ch: "ch2", q: "A tech company's data breach exposes 10 million customers' personal data. The company waits 3 months before notifying customers. Which stakeholder group is MOST directly harmed first?", opts: ["Shareholders — because stock prices will fall", "Primary stakeholders (customers) — who face immediate identity theft risk", "Secondary stakeholders (media) — who break the story", "Government regulators — who must investigate"], ans: 1, exp: ["❌ While shareholders are affected, the immediate direct harm falls on customers who are at risk right now.<br><span dir='rtl'>❌ رغم تضرر المساهمين، فإن الضرر المباشر الفوري يقع على العملاء المعرضين للخطر الآن.</span>", "✅ Correct. Customers are primary stakeholders — directly affected by the breach. The 3-month delay exposes them to identity theft and fraud while the company fails its primary stakeholder duty.<br><span dir='rtl'>✅ صح — العملاء أصحاب مصلحة أساسيون — متأثرون مباشرةً بالاختراق. التأخير 3 أشهر يعرضهم لسرقة الهوية والاحتيال.</span>", "❌ Media is a secondary stakeholder — they are informers, not the party directly harmed by identity theft.<br><span dir='rtl'>❌ الإعلام أصحاب مصلحة ثانويون — هم مُبلِّغون، وليس الطرف المتضرر مباشرةً من سرقة الهوية.</span>", "❌ Regulators are also secondary stakeholders — they oversee but are not directly harmed by the breach itself.<br><span dir='rtl'>❌ الجهات التنظيمية أيضًا أصحاب مصلحة ثانويون — يشرفون لكنهم لا يتضررون مباشرةً من الاختراق.</span>"] },
+  { ch: "ch2", q: "A board of directors votes to approve a merger that benefits the CEO personally (he owns stock in the acquiring company) without disclosing this conflict. This BEST violates:", opts: ["The Duty of Care", "The Duty of Loyalty", "The right to interlocking directorates", "Carroll's economic responsibility"], ans: 1, exp: ["❌ Duty of Care requires informed, prudent decisions — but here the issue is a personal financial conflict, not a lack of diligence.<br><span dir='rtl'>❌ واجب الرعاية يتطلب قرارات مستنيرة وحكيمة — لكن المشكلة هنا تعارض مالي شخصي، وليس انعدام العناية الواجبة.</span>", "✅ Correct. The Duty of Loyalty requires directors to put the corporation's interests above their own. Approving a self-benefiting deal without disclosure is a direct breach of this duty.<br><span dir='rtl'>✅ صح — واجب الولاء يستوجب على المديرين تقديم مصالح الشركة على مصالحهم. الموافقة على صفقة تعود بالنفع الشخصي دون الإفصاح انتهاك مباشر لهذا الواجب.</span>", "❌ Interlocking directorate refers to serving on competing boards — not conflict of interest in a merger.<br><span dir='rtl'>❌ الترابط بين مجالس الإدارة يشير إلى العمل في مجالس شركات منافسة، وليس تعارض المصالح في عملية اندماج.</span>", "❌ Carroll's economic responsibility is about being profitable — not board member fiduciary duties.<br><span dir='rtl'>❌ المسؤولية الاقتصادية لكارول تتعلق بالربحية، وليس بالواجبات الائتمانية لأعضاء مجلس الإدارة.</span>"] },
+  { ch: "ch3", q: "A clothing brand advertises its new line as '100% eco-friendly' but uses the same petroleum-based dyes as its regular products, only changing the packaging to green. This is an example of:", opts: ["Effective green marketing strategy", "Greenwashing", "ISO 14001 compliance", "Triple Bottom Line reporting"], ans: 1, exp: ["❌ Effective green marketing requires GENUINE environmental commitment backed by real action — this company has neither.<br><span dir='rtl'>❌ التسويق الأخضر الفعّال يتطلب التزامًا بيئيًا حقيقيًا مدعومًا بإجراءات فعلية — هذه الشركة لا تمتلك أيًا منهما.</span>", "✅ Correct. This is classic greenwashing — making false or misleading environmental claims (eco-friendly label) without actual environmental improvements (still using petroleum dyes).<br><span dir='rtl'>✅ صح — هذا غسيل أخضر كلاسيكي — ادعاءات بيئية مضللة (ملصق صديق للبيئة) دون تحسينات بيئية فعلية (لا يزال يستخدم أصباغ نفطية).</span>", "❌ ISO 14001 requires implementing actual environmental management systems — not just relabeling products.<br><span dir='rtl'>❌ ISO 14001 يتطلب تطبيق أنظمة إدارة بيئية فعلية، وليس مجرد إعادة تسمية المنتجات.</span>", "❌ Triple Bottom Line reporting measures actual People, Planet, and Profit outcomes — not packaging changes.<br><span dir='rtl'>❌ تقارير خط القاع الثلاثي تقيس نتائج الناس والكوكب والربح الفعلية، وليس تغييرات التغليف.</span>"] },
+  { ch: "ch3", q: "A city proposes clearing a forest to build a new industrial park that will create 5,000 jobs. Environmentalists argue this violates sustainability principles. The CORE conflict is between:", opts: ["Short-term economic gains vs. long-term environmental sustainability", "Federal law vs. state law on land use", "Primary vs. secondary stakeholders only", "ISO 14000 standards vs. EPA regulations"], ans: 0, exp: ["✅ Correct. This is the classic sustainability tension — immediate economic benefit (jobs, growth) vs. the long-term well-being of the natural environment (deforestation, biodiversity loss).<br><span dir='rtl'>✅ صح — هذا هو التوتر الكلاسيكي للاستدامة — المنفعة الاقتصادية الفورية (وظائف، نمو) مقابل السلامة البيئية طويلة الأمد (إزالة الغابات، فقدان التنوع البيولوجي).</span>", "❌ While land use has legal dimensions, the CORE ethical conflict here is economic vs. environmental sustainability.<br><span dir='rtl'>❌ رغم أن استخدام الأراضي له أبعاد قانونية، فإن التعارض الأخلاقي الجوهري هنا هو الاستدامة الاقتصادية مقابل البيئية.</span>", "❌ Stakeholder classification is relevant but does not define the CORE conflict in this scenario.<br><span dir='rtl'>❌ تصنيف أصحاب المصلحة وثيق الصلة لكنه لا يُحدد التعارض الجوهري في هذا السيناريو.</span>", "❌ The conflict is not about regulatory standards — it is about the ethical trade-off between economic and environmental priorities.<br><span dir='rtl'>❌ التعارض لا يتعلق بالمعايير التنظيمية — بل بالمقايضة الأخلاقية بين الأولويات الاقتصادية والبيئية.</span>"] },
+  { ch: "ch1", q: "A company's HR department fires an employee for reporting a safety violation to OSHA. This action MOST directly violates which principle?", opts: ["The FCPA anti-bribery provisions", "Whistleblower protection under Dodd-Frank", "The principle of stakeholder orientation", "The concept of moral dilemma resolution"], ans: 1, exp: ["❌ FCPA deals with foreign bribery — not whistleblower retaliation in the workplace.<br><span dir='rtl'>❌ FCPA يتعامل مع الرشوة الأجنبية، وليس الانتقام من المبلِّغين في مكان العمل.</span>", "✅ Correct. Dodd-Frank and similar legislation explicitly protect employees who report violations from retaliation. Firing a whistleblower is both unethical and illegal under these protections.<br><span dir='rtl'>✅ صح — يحمي Dodd-Frank وتشريعات مماثلة صراحةً الموظفين الذين يُبلِّغون عن الانتهاكات من الانتقام. طرد المُبلِّغ أمر غير أخلاقي وغير قانوني.</span>", "❌ Stakeholder orientation describes how firms engage with all stakeholders — not whistleblower protections specifically.<br><span dir='rtl'>❌ توجه أصحاب المصلحة يصف كيفية تعامل الشركات مع أصحاب المصلحة، وليس حماية المُبلِّغين تحديدًا.</span>", "❌ A moral dilemma involves two undesirable choices — here the answer is clearly to protect the employee, not a dilemma.<br><span dir='rtl'>❌ المعضلة الأخلاقية تنطوي على خيارين غير مرغوب فيهما — هنا الجواب واضح وهو حماية الموظف، وليست معضلة.</span>"] },
+  { ch: "ch2", q: "A startup founder holds 60% of shares and uses her voting power to block independent board members who challenge her decisions. Which governance principle is being undermined?", opts: ["The concept of primary stakeholders", "Accountability and independent oversight in corporate governance", "Carroll's philanthropic responsibility", "The Pollution Prevention Act"], ans: 1, exp: ["❌ Primary stakeholders are employees, customers, etc. — this scenario is about board governance structure.<br><span dir='rtl'>❌ أصحاب المصلحة الأساسيون هم الموظفون والعملاء وغيرهم — هذا السيناريو يتعلق بهيكل حوكمة مجلس الإدارة.</span>", "✅ Correct. Corporate governance requires independent oversight and accountability. Blocking independent directors undermines these principles — the board cannot properly oversee management if it's controlled by the founder.<br><span dir='rtl'>✅ صح — تتطلب حوكمة الشركات الرقابة المستقلة والمساءلة. منع المديرين المستقلين يُضعف هذه المبادئ.</span>", "❌ Carroll's philanthropic responsibility refers to charitable giving — not board independence.<br><span dir='rtl'>❌ المسؤولية الخيرية لكارول تشير إلى العمل الخيري، وليس استقلالية مجلس الإدارة.</span>", "❌ The Pollution Prevention Act is an environmental regulation — completely unrelated to board governance.<br><span dir='rtl'>❌ قانون منع التلوث تشريع بيئي — لا علاقة له بحوكمة مجلس الإدارة.</span>"] },
+  { ch: "ch3", q: "A manufacturing company installs solar panels, publishes an annual sustainability report, and partners with local communities to reduce waste. This behavior BEST represents:", opts: ["Greenwashing — since it still operates as a manufacturer", "A high-commitment approach to environmental responsibility", "Legal compliance only — required by EPA", "A low-commitment business strategy"], ans: 1, exp: ["❌ Greenwashing involves MISLEADING claims — this company is taking real, documented action across multiple dimensions.<br><span dir='rtl'>❌ الغسيل الأخضر ينطوي على ادعاءات مضللة — هذه الشركة تتخذ إجراءات حقيقية وموثقة عبر أبعاد متعددة.</span>", "✅ Correct. A high-commitment approach involves proactive stakeholder assessment, genuine environmental investment (solar panels), transparent reporting, and community partnerships — all present here.<br><span dir='rtl'>✅ صح — نهج الالتزام العالي ينطوي على تقييم أصحاب المصلحة بشكل استباقي، والاستثمار البيئي الحقيقي، والتقارير الشفافة، والشراكات المجتمعية.</span>", "❌ Publishing sustainability reports and community partnerships go beyond what EPA legally requires — this is voluntary commitment.<br><span dir='rtl'>❌ نشر تقارير الاستدامة والشراكات المجتمعية يتجاوز ما تطلبه EPA قانونًا — هذا التزام طوعي.</span>", "❌ A low-commitment business avoids environmental issues and hopes nothing bad happens — the opposite of what's described.<br><span dir='rtl'>❌ الأعمال منخفضة الالتزام تتجنب القضايا البيئية وتأمل ألا يحدث شيء سيئ — عكس ما هو موصوف.</span>"] },
+  { ch: "ch2", q: "A consumer products company surveys customers, employees, and suppliers quarterly to understand their concerns, then adjusts strategy accordingly. This is BEST described as:", opts: ["A one-time stakeholder audit", "A fully developed stakeholder orientation with all three activities", "Meeting minimum legal CSR requirements", "Shareholder model governance"], ans: 1, exp: ["❌ A one-time audit is a snapshot — this company conducts ongoing surveys, showing a continuous orientation.<br><span dir='rtl'>❌ التدقيق لمرة واحدة لقطة فورية — هذه الشركة تجري استطلاعات مستمرة، مما يدل على توجه مستمر.</span>", "✅ Correct. A fully developed stakeholder orientation includes: (1) organization-wide generation of data about stakeholders, (2) distribution throughout the firm, and (3) responsiveness — all three are present here.<br><span dir='rtl'>✅ صح — يشمل توجه أصحاب المصلحة المتطور: توليد بيانات على مستوى المنظمة، توزيعها في الشركة، والاستجابة — الأنشطة الثلاثة موجودة هنا.</span>", "❌ This goes far beyond minimum legal CSR — it is proactive stakeholder engagement across multiple groups.<br><span dir='rtl'>❌ هذا يتجاوز متطلبات المسؤولية الاجتماعية القانونية الدنيا — إنه مشاركة استباقية لأصحاب المصلحة عبر مجموعات متعددة.</span>", "❌ The shareholder model focuses on maximizing investor returns — not surveying multiple stakeholder groups.<br><span dir='rtl'>❌ نموذج المساهمين يركز على تعظيم عوائد المستثمرين، وليس استطلاع مجموعات متعددة من أصحاب المصلحة.</span>"] }
 ];
 
 // ── MOCK EXAM BANK ─────────────────────────────
@@ -630,6 +642,25 @@ function retakeQuiz() {
   document.getElementById("quiz-start-screen").classList.remove('quiz-screen-hidden');
 }
 
+function startQuickCheck(ch) {
+  // Pre-set quiz filter and count, then navigate to quiz
+  showPage('page-quiz');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  // Select the right chapter radio
+  document.querySelectorAll("input[name=quiz-filter]").forEach(r => {
+    r.checked = r.value === ch;
+  });
+  // Set count to 5
+  const countSel = document.getElementById("quiz-count");
+  if (countSel) countSel.value = "5";
+  // Show start screen
+  document.getElementById("quiz-start-screen").classList.remove('quiz-screen-hidden');
+  document.getElementById("quiz-game-screen").classList.add('quiz-screen-hidden');
+  document.getElementById("quiz-result-screen").classList.add('quiz-screen-hidden');
+  // Auto-start after brief delay
+  setTimeout(() => startQuiz(), 300);
+}
+
 // ── MOCK EXAM ─────────────────────────────────
 function startMock() {
   const pool = [...mockBank].sort(() => Math.random() - 0.5).slice(0, 30);
@@ -748,10 +779,13 @@ function initFlashCards() {
 
 function loadFlashCards() {
   let cards = fcFilter === "all" ? flashCards : flashCards.filter(c => c.ch === fcFilter);
-  currentFlashCards = [...cards].sort(() => Math.random() - 0.5);
+  // Exclude already-mastered cards from current pool
+  currentFlashCards = [...cards].filter(c => !fcMasteredSet.has(c.ch + '|' + c.front)).sort(() => Math.random() - 0.5);
+  if (currentFlashCards.length === 0) currentFlashCards = [...cards].sort(() => Math.random() - 0.5);
   fcIdx = 0;
   renderFlashCard();
   updateFCProgress();
+  updateFCMasteredBadge();
 }
 
 function setFCFilter(f) {
@@ -818,8 +852,63 @@ function updateFCProgress() {
   }
 }
 
+// Spaced repetition state (persisted per filter session)
+let fcMasteredSet = new Set(JSON.parse(localStorage.getItem('bus214_fc_mastered') || '[]'));
+
 function markCard(rating) {
-  nextCard();
+  if (currentFlashCards.length === 0) return;
+  const card = currentFlashCards[fcIdx];
+  const key = card.ch + '|' + card.front;
+
+  if (rating === 'easy') {
+    // Mark as mastered — remove from current queue
+    fcMasteredSet.add(key);
+    localStorage.setItem('bus214_fc_mastered', JSON.stringify([...fcMasteredSet]));
+    currentFlashCards.splice(fcIdx, 1);
+    if (currentFlashCards.length === 0) {
+      document.getElementById("fc-front").textContent = "🎉 أتقنت جميع البطاقات!";
+      document.getElementById("fc-back").textContent = "";
+      const rating = document.getElementById("fc-rating-row");
+      const nav = document.getElementById("fc-nav-row");
+      if (rating) rating.style.display = 'none';
+      if (nav) nav.style.display = 'flex';
+      updateFCMasteredBadge();
+      return;
+    }
+    if (fcIdx >= currentFlashCards.length) fcIdx = 0;
+  } else if (rating === 'hard') {
+    // Re-insert card 2 positions ahead so student sees it again soon
+    const insertAt = Math.min(fcIdx + 2, currentFlashCards.length);
+    currentFlashCards.splice(insertAt, 0, { ...card });
+    fcIdx = (fcIdx + 1) % currentFlashCards.length;
+  } else {
+    // OK — just advance
+    fcIdx = (fcIdx + 1) % currentFlashCards.length;
+  }
+
+  renderFlashCard();
+  updateFCProgress();
+  updateFCMasteredBadge();
+}
+
+function updateFCMasteredBadge() {
+  const badge = document.getElementById('fc-mastered-badge');
+  const countEl = document.getElementById('fc-mastered-count');
+  if (!badge || !countEl) return;
+  const count = fcMasteredSet.size;
+  if (count > 0) {
+    badge.style.display = 'inline-block';
+    countEl.textContent = count;
+  } else {
+    badge.style.display = 'none';
+  }
+}
+
+function resetMastered() {
+  fcMasteredSet = new Set();
+  localStorage.removeItem('bus214_fc_mastered');
+  updateFCMasteredBadge();
+  loadFlashCards();
 }
 
 // ── DASHBOARD ────────────────────────────────
@@ -840,11 +929,35 @@ function renderDashboard() {
   if (el6) el6.textContent = bestScores["ch2"] !== undefined ? bestScores["ch2"] + "%" : "—";
   const el7 = document.getElementById("dash-best-ch3");
   if (el7) el7.textContent = bestScores["ch3"] !== undefined ? bestScores["ch3"] + "%" : "—";
+
+  // Weak Area Alert
+  const weakEl = document.getElementById("dash-weak-alert");
+  if (weakEl) {
+    const chNames = { ch1: 'الفصل الأول (أخلاقيات الأعمال)', ch2: 'الفصل الثاني (أصحاب المصلحة)', ch3: 'الفصل الثالث (الاستدامة)' };
+    const scores = ['ch1','ch2','ch3'].map(ch => ({ ch, score: bestScores[ch] })).filter(x => x.score !== undefined);
+    if (scores.length === 0) {
+      weakEl.style.display = 'none';
+    } else {
+      const weakest = scores.reduce((a, b) => a.score < b.score ? a : b);
+      const strongest = scores.reduce((a, b) => a.score > b.score ? a : b);
+      let msg = '', color = '', icon = '';
+      if (weakest.score < 60) {
+        icon = '🔴'; color = '#fef2f2'; msg = `ركز على <strong>${chNames[weakest.ch]}</strong> — درجتك ${weakest.score}% تحتاج تحسين`;
+      } else if (weakest.score < 80) {
+        icon = '🟡'; color = '#fffbeb'; msg = `<strong>${chNames[weakest.ch]}</strong> هو أضعف فصل لديك (${weakest.score}%) — راجعه قبل الاختبار`;
+      } else {
+        icon = '🟢'; color = '#f0fdf4'; msg = `أداء ممتاز! أعلى درجة في <strong>${chNames[strongest.ch]}</strong> (${strongest.score}%)`;
+      }
+      weakEl.style.display = 'flex';
+      weakEl.style.background = color;
+      weakEl.innerHTML = `<span style="font-size:1.2rem;">${icon}</span><span style="font-size:.88rem;line-height:1.5;">${msg}</span>`;
+    }
+  }
 }
 
 // ── HOME PAGE — MASTERY BARS ──────────────────
 function renderHomeMastery() {
-  const bestScores = JSON.parse(localStorage.getItem('bus214_best') || '{}');
+  const bestScores = JSON.parse(localStorage.getItem('bus214_bestScores') || '{}');
   ['ch1','ch2','ch3'].forEach(ch => {
     const pct = bestScores[ch] !== undefined ? bestScores[ch] : null;
     const bar = document.getElementById('home-bar-' + ch);
@@ -919,11 +1032,23 @@ function runSearch(query) {
       }
     });
   });
+  // Also search quiz questions
+  const chLabels = { ch1: 'Ch1 Quiz', ch2: 'Ch2 Quiz', ch3: 'Ch3 Quiz' };
+  allQuizQ.forEach(q => {
+    if (re.test(q.q) || q.opts.some(o => re.test(o))) {
+      const correct = q.opts[q.ans];
+      const snippet = q.q.substring(0, 100) + ' → ' + correct.substring(0, 60);
+      const highlighted = snippet.replace(re, m => `<mark>${m}</mark>`);
+      results.push({ pageId: 'page-quiz', pageLabel: '❓ ' + (chLabels[q.ch] || 'Quiz'), html: highlighted });
+      re.lastIndex = 0;
+    }
+  });
+
   if (results.length === 0) {
     container.innerHTML = '<p style="color:var(--muted);font-size:.85rem;text-align:center;margin:0;">لا نتائج — No results found</p>';
     return;
   }
-  container.innerHTML = results.slice(0, 12).map(r => `
+  container.innerHTML = results.slice(0, 15).map(r => `
     <div class="search-result" onclick="goToResult('${r.pageId}')">
       <div class="search-result-page">${r.pageLabel}</div>
       <div class="search-result-text">${r.html}</div>
