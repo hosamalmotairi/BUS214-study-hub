@@ -180,7 +180,9 @@ async function renderLeaderboard() {
       const bestAll = b.all !== undefined ? b.all + '%' : '—';
       const isMe = doc.id === currentUser.uid;
       const icon = medals[rank-1] || ('#'+rank);
-      const displayName = p.name || p.email || 'طالب';
+      const rawName = p.name || p.email || 'طالب';
+      const displayName = (rawName.toLowerCase().includes('hosam') || rawName.toLowerCase().includes('hosamalmotairi')) ? null : rawName;
+      if (!displayName) { rank--; return; }
       const initials = displayName.charAt(0).toUpperCase();
       const totalAnswered = (d.totalCorrect || 0) + (d.totalWrong || 0);
       const accuracy = totalAnswered > 0 ? Math.round((d.totalCorrect || 0) / totalAnswered * 100) : 0;
