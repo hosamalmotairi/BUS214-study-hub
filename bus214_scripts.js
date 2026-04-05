@@ -612,6 +612,17 @@ function renderMasteryBadges() {
     else if (score >= 75) el.innerHTML = '<span style="color:#6c63ff;font-size:.75rem;">✓ ' + score + '%</span>';
     else el.innerHTML = '<span style="color:#94a3b8;font-size:.75rem;">' + score + '%</span>';
   });
+  // Update question count badges
+  const counts = {
+    all: allQuizQ.length,
+    ch1: allQuizQ.filter(q => q.ch === 'ch1').length,
+    ch2: allQuizQ.filter(q => q.ch === 'ch2').length,
+    ch3: allQuizQ.filter(q => q.ch === 'ch3').length
+  };
+  Object.entries(counts).forEach(([ch, n]) => {
+    const el = document.getElementById('count-' + ch);
+    if (el) el.textContent = n + ' Q';
+  });
 }
 
 function retakeQuiz() {

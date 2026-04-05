@@ -2735,6 +2735,14 @@
       content: '✓';
     }
 
+    .q-count-badge {
+      margin-top: 4px;
+      font-size: .72rem;
+      font-weight: 700;
+      color: var(--muted);
+      letter-spacing: .03em;
+    }
+
     @keyframes popIn {
       0% { transform: scale(0); }
       100% { transform: scale(1); }
