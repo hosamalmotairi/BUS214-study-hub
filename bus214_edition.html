@@ -98,6 +98,7 @@
     <li><a href="#" onclick="showPage('page-quiz');if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon">🎯</span> Quiz Mode</a></li>
     <li><a href="#" onclick="showPage('page-mock');if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon">📋</span> Mock Exam</a></li>
     <li><a href="#" onclick="showPage('page-dashboard');if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon">📊</span> Dashboard</a></li>
+    <li><a href="#" onclick="showPage('page-badges');renderBadgesPage();if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon">🏅</span> الشارات</a></li>
     <li><a href="#" onclick="showPage('page-leaderboard');renderLeaderboard();if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon">🏆</span> Leaderboard</a></li>
   </ul>
   <!-- Auth UI -->
@@ -1473,6 +1474,40 @@
     <div><span id="pomo-today-minutes" style="font-weight:800;color:var(--accent);">0</span> <span style="font-size:.68rem;color:var(--muted);">دقيقة</span></div>
   </div>
   <div id="pomo-total-sessions" style="display:none;">0</div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     BADGES PAGE
+═══════════════════════════════════════════ -->
+<div id="page-badges" class="page">
+  <section class="chapter">
+    <h2>🏅 الشارات والإنجازات</h2>
+    <p style="color:var(--muted);margin-bottom:20px;">حقق إنجازات واحصل على شارات — تابع تقدمك هنا</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:14px;margin-bottom:24px;">
+      <div style="background:var(--accent-soft);border-radius:14px;padding:16px;text-align:center;">
+        <div id="badge-level-icon" style="font-size:2rem;">🌱</div>
+        <div id="badge-level-name" style="font-weight:800;font-size:.85rem;margin-top:4px;">مبتدئ</div>
+        <div id="badge-xp-text" style="font-size:.75rem;color:var(--muted);">0 XP</div>
+      </div>
+      <div style="background:var(--accent-soft);border-radius:14px;padding:16px;text-align:center;">
+        <div style="font-size:2rem;">🔥</div>
+        <div id="badge-streak-text" style="font-weight:800;font-size:.85rem;margin-top:4px;">0 أيام</div>
+        <div style="font-size:.75rem;color:var(--muted);">ستريك</div>
+      </div>
+      <div style="background:var(--accent-soft);border-radius:14px;padding:16px;text-align:center;">
+        <div style="font-size:2rem;">⚡</div>
+        <div id="badge-combo-text" style="font-weight:800;font-size:.85rem;margin-top:4px;">0</div>
+        <div style="font-size:.75rem;color:var(--muted);">أعلى كومبو</div>
+      </div>
+      <div style="background:var(--accent-soft);border-radius:14px;padding:16px;text-align:center;">
+        <div style="font-size:2rem;">📚</div>
+        <div id="badge-answered-text" style="font-weight:800;font-size:.85rem;margin-top:4px;">0</div>
+        <div style="font-size:.75rem;color:var(--muted);">أسئلة أجبتها</div>
+      </div>
+    </div>
+    <h3 style="margin-bottom:14px;font-size:.95rem;">🏅 شاراتك</h3>
+    <div id="badges-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;"></div>
+  </section>
 </div>
 
 <!-- ══════════════════════════════════════════

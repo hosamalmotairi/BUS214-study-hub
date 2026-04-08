@@ -1593,6 +1593,30 @@ function updateGameHUD() {
   if (hudXPBar) hudXPBar.style.width = li.progress + '%';
 }
 
+function renderBadgesPage() {
+  const d = getGameData();
+  const li = getLevelInfo(d.xp);
+  // Update stats
+  const el = (id, v) => { const e = document.getElementById(id); if (e) e.textContent = v; };
+  el('badge-level-icon', li.icon);
+  el('badge-level-name', li.name);
+  el('badge-xp-text', d.xp + ' XP');
+  el('badge-streak-text', (d.streak || 0) + ' أيام');
+  el('badge-combo-text', d.maxCombo || 0);
+  el('badge-answered-text', d.totalAnswered || 0);
+  // Render badges grid
+  const grid = document.getElementById('badges-grid');
+  if (!grid) return;
+  grid.innerHTML = BADGES.map(b => {
+    const earned = d.badges.includes(b.id);
+    return `<div style="border-radius:16px;padding:18px;text-align:center;border:2px solid ${earned ? '#f59e0b' : 'var(--line)'};background:${earned ? 'linear-gradient(135deg,#fef3c7,#fde68a)' : 'var(--paper)'};transition:all .2s;">
+      <div style="font-size:2rem;${earned ? '' : 'opacity:.3;filter:grayscale(1);'}">${b.icon}</div>
+      <div style="font-size:.8rem;font-weight:700;margin-top:6px;color:${earned ? '#92400e' : 'var(--ink)'};">${b.name}</div>
+      <div style="font-size:.68rem;color:${earned ? '#b45309' : 'var(--muted)'};margin-top:2px;">${earned ? '✅ مفتوحة' : '🔒 مقفلة'}</div>
+    </div>`;
+  }).join('');
+}
+
 // ═══════════════════════════════════════════════
 //  FEATURE: POMODORO TIMER
 // ═══════════════════════════════════════════════
