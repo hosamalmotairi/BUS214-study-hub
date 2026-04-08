@@ -1248,12 +1248,6 @@ function exportChapterPDF(pageId, chapterName) {
       .toolbar { position:sticky;top:0;z-index:100;background:${isDark?p.paper:'#fff'};padding:14px 32px;border-bottom:1px solid ${isDark?p.line:'#e2e8f0'};display:flex;align-items:center;gap:14px;box-shadow:0 2px 12px rgba(0,0,0,${isDark?'.15':'.04'}); }
       .toolbar-btn { background:linear-gradient(135deg,var(--c1),var(--c2));color:#fff;border:none;padding:10px 28px;border-radius:10px;font-weight:700;cursor:pointer;font-size:.92rem;font-family:inherit;box-shadow:0 4px 14px rgba(108,99,255,.25); }
       .toolbar .hint { color:var(--muted);font-size:.82rem; }
-      .cover { color:#fff;padding:32px 30px 28px;position:relative;overflow:hidden; }
-      .cover::before { content:'';position:absolute;top:-60px;right:-60px;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.08),transparent 70%); }
-      .cover-tag { display:inline-block;background:rgba(255,255,255,.15);padding:5px 16px;border-radius:20px;font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:16px;border:1px solid rgba(255,255,255,.12);color:#fff; }
-      .cover h1 { font-size:1.4rem;font-weight:900;line-height:1.25;margin-bottom:8px;color:#fff; }
-      .cover .sub { font-size:.9rem;color:rgba(255,255,255,.75); }
-      .cover .info { margin-top:12px;padding-top:10px;border-top:1px solid rgba(255,255,255,.12);display:flex;gap:24px;font-size:.78rem;color:rgba(255,255,255,.6); }
       .content { padding:20px 24px 36px; }
       .section { margin-bottom:14px; }
       .section h3 { font-size:.95rem;font-weight:700;color:var(--c2);margin:10px 0 6px;padding-bottom:6px;border-bottom:1.5px solid var(--line); }
@@ -1273,15 +1267,8 @@ function exportChapterPDF(pageId, chapterName) {
       .footer { text-align:center;color:var(--muted);font-size:.72rem;padding:24px 0;border-top:1.5px solid ${isDark?p.line:'#e2e8f0'};margin-top:24px; }
       @media print {
         .toolbar { display:none !important; }
-        body { padding:0;max-width:none;font-size:11px;background:#fff !important;color:#1e293b !important; }
-        .cover { border-radius:0;padding:24px 24px 20px;background:#fff !important;border-bottom:4px solid ${p.c1}; }
-        .cover svg { display:none !important; }
-        .print-ct { color:${isDark ? p.c1 : p.c3} !important; }
-        .cover .cover-tag.print-ct { background:${p.bg1} !important;border-color:${p.line} !important;color:${p.c1} !important; }
-        .cover .sub.print-ct { color:#64748b !important; }
-        .cover .info.print-ct,.cover .info.print-ct span { color:#64748b !important;border-color:${p.line} !important; }
-        .content { padding:16px 0 32px;background:#fff !important; }
-        .block,.note { background:#fff !important; }
+        body { padding:0;max-width:none;font-size:11px; }
+        .content { padding:16px 0 32px; }
         .block,.tip,.memo,.hbox { break-inside:avoid;box-shadow:none!important; }
         table { box-shadow:none!important; }
         td { color:#334155 !important; }
@@ -1291,21 +1278,14 @@ function exportChapterPDF(pageId, chapterName) {
       <button class="toolbar-btn" onclick="window.print()">🖨️ طباعة / حفظ كـ PDF</button>
       <span class="hint">اختر "Save as PDF" في خيارات الطابعة</span>
     </div>
-    <div class="cover">
-      <svg style="position:absolute;inset:0;width:100%;height:100%;z-index:0;" preserveAspectRatio="none">
-        <defs><linearGradient id="cg" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stop-color="${p.svgStops[0]}"/>
-          <stop offset="30%" stop-color="${p.svgStops[1]}"/>
-          <stop offset="70%" stop-color="${p.svgStops[2]}"/>
-          <stop offset="100%" stop-color="${p.svgStops[3]}"/>
-        </linearGradient></defs>
-        <rect width="100%" height="100%" fill="url(#cg)"/>
-      </svg>
-      <div style="position:relative;z-index:1;">
-        <div class="cover-tag print-ct">BUS 214 — Business Ethics</div>
-        <h1 class="print-ct">${chapterName}</h1>
-        <div class="sub print-ct">Ferrell · Business Ethics: Ethical Decision Making and Cases · 13th Edition</div>
-        <div class="info print-ct"><span>📅 ${dateStr}</span><span>📖 ملخص شامل</span><span>🌐 bus-214-study-hub.vercel.app</span></div>
+    <div style="padding:28px 32px 20px;border-bottom:4px solid ${p.c1};margin-bottom:24px;">
+      <div style="display:inline-block;border:1.5px solid ${p.c1};color:${p.c1};padding:4px 14px;border-radius:20px;font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:12px;">BUS 214 — Business Ethics</div>
+      <h1 style="font-size:1.5rem;font-weight:900;color:${isDark ? p.c1 : p.c3};margin:0 0 6px;line-height:1.3;">${chapterName}</h1>
+      <div style="font-size:.88rem;color:#64748b;">Ferrell · Business Ethics · 13th Edition</div>
+      <div style="margin-top:12px;padding-top:10px;border-top:1px solid ${p.line};display:flex;gap:20px;font-size:.78rem;color:#94a3b8;">
+        <span>📅 ${dateStr}</span>
+        <span>📖 ملخص شامل</span>
+        <span>🌐 bus-214-study-hub.vercel.app</span>
       </div>
     </div>
     <div class="content">
