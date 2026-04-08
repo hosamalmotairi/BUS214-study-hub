@@ -1087,22 +1087,23 @@ function handleChQ(btn, isCorrect) {
   const item = btn.closest('.chq-item');
   if (item.dataset.answered) return;
   item.dataset.answered = '1';
+  if (isCorrect) item.dataset.correct = '1';
   item.querySelectorAll('.chq-btn').forEach(b => {
     b.disabled = true;
     if (b === btn) b.classList.add(isCorrect ? 'chq-correct' : 'chq-wrong');
   });
-  // find & highlight correct btn if wrong
+  // highlight correct btn when user answered wrong
   if (!isCorrect) {
     item.querySelectorAll('.chq-btn').forEach(b => {
       if (b.getAttribute('onclick').includes('true')) b.classList.add('chq-correct');
     });
   }
-  // update score
+  // update score once all answered
   const block = item.closest('.ch-quiz-block');
   const items = block.querySelectorAll('.chq-item');
   const answered = block.querySelectorAll('.chq-item[data-answered]');
   if (answered.length === items.length) {
-    const correct = block.querySelectorAll('.chq-btn.chq-correct:not([onclick*="false"])').length;
+    const correct = block.querySelectorAll('.chq-item[data-correct]').length;
     const scoreEl = block.querySelector('.chq-score');
     const pct = Math.round(correct / items.length * 100);
     scoreEl.textContent = `نتيجتك: ${correct}/${items.length} — ${pct}% ${pct===100?'🏆':pct>=80?'🥇':pct>=60?'👍':'📚'}`;
