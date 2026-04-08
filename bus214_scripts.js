@@ -1217,7 +1217,7 @@ function dlImg(blob) { const u=URL.createObjectURL(blob),a=document.createElemen
 function exportChapterPDF(pageId, chapterName) {
   const page = document.getElementById(pageId);
   if (!page) return;
-  const isDark = false; // PDF always light for clean printing
+  const isDark = document.body.classList.contains('dark');
   const p = isDark ? {
     c1:'#a78bfa',c2:'#8b5cf6',c3:'#c4b5fd',bg1:'#1e1b4b',bg2:'#1a1744',bg3:'#2e1065',
     line:'#312e81',ink:'#e8e4f8',muted:'#a5a0c8',paper:'#1e1b4b',bodyBg:'#0f0d1a',
@@ -1269,21 +1269,16 @@ function exportChapterPDF(pageId, chapterName) {
       tr:nth-child(even) td { background:var(--bg2); }
       tr:last-child td { border-bottom:none; }
       .footer { text-align:center;color:var(--muted);font-size:.72rem;padding:24px 0;border-top:1.5px solid ${isDark?p.line:'#e2e8f0'};margin-top:24px; }
+      * {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+        color-adjust: exact !important;
+      }
       @media print {
         .toolbar { display:none !important; }
-        body { padding:0;max-width:none;font-size:11px;-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important; }
-        ${isDark ? `body,.content { background:#fff!important;color:#1e293b!important; }
-        .block { background:#fff!important;color:#1e293b!important;border-color:#c4b5fd!important; }
-        .block strong { color:#6c63ff!important; }
-        .ar { background:#ede9fe!important;color:#6c63ff!important; }
-        .hbox { background:#ede9fe!important;color:#1e293b!important; }
-        .tip { background:#fffbeb!important;color:#92400e!important; }
-        .memo { background:#eff6ff!important;color:#1e40af!important; }
-        td { color:#334155!important; }
-        .section h3 { color:#5b54d9!important; }
-        .footer { color:#94a3b8!important; }` : ''}
-        .cover { border-radius:0;-webkit-print-color-adjust:exact!important; }
-        .content { padding:24px 0 40px; }
+        body { padding:0;max-width:none;font-size:11px; }
+        .cover { border-radius:0;padding:28px 24px 24px; }
+        .content { padding:16px 0 32px; }
         .block,.tip,.memo,.hbox { break-inside:avoid;box-shadow:none!important; }
         table { box-shadow:none!important; }
       }
