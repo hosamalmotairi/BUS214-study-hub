@@ -1217,7 +1217,7 @@ function dlImg(blob) { const u=URL.createObjectURL(blob),a=document.createElemen
 function exportChapterPDF(pageId, chapterName) {
   const page = document.getElementById(pageId);
   if (!page) return;
-  const isDark = document.body.classList.contains('dark');
+  const isDark = false; // PDF always light for clean printing
   const p = isDark ? {
     c1:'#a78bfa',c2:'#8b5cf6',c3:'#c4b5fd',bg1:'#1e1b4b',bg2:'#1a1744',bg3:'#2e1065',
     line:'#312e81',ink:'#e8e4f8',muted:'#a5a0c8',paper:'#1e1b4b',bodyBg:'#0f0d1a',
