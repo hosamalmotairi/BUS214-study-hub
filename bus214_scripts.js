@@ -1223,13 +1223,15 @@ function exportChapterPDF(pageId, chapterName) {
     line:'#312e81',ink:'#e8e4f8',muted:'#a5a0c8',paper:'#1e1b4b',bodyBg:'#0f0d1a',
     tipBg:'#1a1506',tipBorder:'#78350f',tipAccent:'#fbbf24',tipText:'#fde68a',
     memoBg:'#0c1929',memoBorder:'#1e3a5f',memoAccent:'#60a5fa',memoText:'#93c5fd',
-    coverGrad:'linear-gradient(160deg,#0f0520 0%,#1e1b4b 30%,#6c63ff 70%,#a78bfa 100%)'
+    coverGrad:'linear-gradient(160deg,#0f0520 0%,#1e1b4b 30%,#6c63ff 70%,#a78bfa 100%)',
+    svgStops:['#0f0520','#1e1b4b','#6c63ff','#a78bfa']
   } : {
     c1:'#6c63ff',c2:'#5b54d9',c3:'#4338ca',bg1:'#ede9fe',bg2:'#f5f3ff',bg3:'#e0e7ff',
     line:'#c4b5fd',ink:'#1e293b',muted:'#64748b',paper:'#ffffff',bodyBg:'#ffffff',
     tipBg:'#fffbeb',tipBorder:'#fde68a',tipAccent:'#f59e0b',tipText:'#92400e',
     memoBg:'#eff6ff',memoBorder:'#bfdbfe',memoAccent:'#3b82f6',memoText:'#1e40af',
-    coverGrad:'linear-gradient(160deg,#1e1b4b 0%,#312e81 30%,#6c63ff 70%,#a78bfa 100%)'
+    coverGrad:'linear-gradient(160deg,#1e1b4b 0%,#312e81 30%,#6c63ff 70%,#a78bfa 100%)',
+    svgStops:['#1e1b4b','#312e81','#6c63ff','#a78bfa']
   };
   const dateStr = new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
   const shadow = isDark ? 'rgba(0,0,0,.3)' : 'rgba(0,0,0,.06)';
@@ -1246,7 +1248,7 @@ function exportChapterPDF(pageId, chapterName) {
       .toolbar { position:sticky;top:0;z-index:100;background:${isDark?p.paper:'#fff'};padding:14px 32px;border-bottom:1px solid ${isDark?p.line:'#e2e8f0'};display:flex;align-items:center;gap:14px;box-shadow:0 2px 12px rgba(0,0,0,${isDark?'.15':'.04'}); }
       .toolbar-btn { background:linear-gradient(135deg,var(--c1),var(--c2));color:#fff;border:none;padding:10px 28px;border-radius:10px;font-weight:700;cursor:pointer;font-size:.92rem;font-family:inherit;box-shadow:0 4px 14px rgba(108,99,255,.25); }
       .toolbar .hint { color:var(--muted);font-size:.82rem; }
-      .cover { background:${p.coverGrad} !important;color:#fff !important;padding:32px 30px 28px;position:relative;overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,.2);-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important; }
+      .cover { color:#fff !important;padding:32px 30px 28px;position:relative;overflow:hidden; }
       .cover::before { content:'';position:absolute;top:-60px;right:-60px;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.08),transparent 70%); }
       .cover-tag { display:inline-block;background:rgba(255,255,255,.15) !important;padding:5px 16px;border-radius:20px;font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:16px;border:1px solid rgba(255,255,255,.12);color:#fff !important; }
       .cover h1 { font-size:1.4rem;font-weight:900;line-height:1.25;margin-bottom:8px;color:#fff !important; }
@@ -1288,10 +1290,21 @@ function exportChapterPDF(pageId, chapterName) {
       <span class="hint">اختر "Save as PDF" في خيارات الطابعة</span>
     </div>
     <div class="cover">
-      <div class="cover-tag">BUS 214 — Business Ethics</div>
-      <h1>${chapterName}</h1>
-      <div class="sub">Ferrell · Business Ethics: Ethical Decision Making and Cases · 13th Edition</div>
-      <div class="info"><span>📅 ${dateStr}</span><span>📖 ملخص شامل</span><span>🌐 bus-214-study-hub.vercel.app</span></div>
+      <svg style="position:absolute;inset:0;width:100%;height:100%;z-index:0;" preserveAspectRatio="none">
+        <defs><linearGradient id="cg" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="${p.svgStops[0]}"/>
+          <stop offset="30%" stop-color="${p.svgStops[1]}"/>
+          <stop offset="70%" stop-color="${p.svgStops[2]}"/>
+          <stop offset="100%" stop-color="${p.svgStops[3]}"/>
+        </linearGradient></defs>
+        <rect width="100%" height="100%" fill="url(#cg)"/>
+      </svg>
+      <div style="position:relative;z-index:1;">
+        <div class="cover-tag">BUS 214 — Business Ethics</div>
+        <h1>${chapterName}</h1>
+        <div class="sub">Ferrell · Business Ethics: Ethical Decision Making and Cases · 13th Edition</div>
+        <div class="info"><span>📅 ${dateStr}</span><span>📖 ملخص شامل</span><span>🌐 bus-214-study-hub.vercel.app</span></div>
+      </div>
     </div>
     <div class="content">
   `);
