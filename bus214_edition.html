@@ -1400,8 +1400,8 @@
 </div>
 
 <!-- ═══ POMODORO FLOATING WIDGET ═══ -->
-<button id="pomo-fab" onclick="pomoToggleWidget()" style="position:fixed;bottom:270px;right:20px;width:48px;height:48px;border-radius:50%;background:var(--accent);color:#fff;border:none;font-size:1.3rem;cursor:pointer;z-index:9998;box-shadow:0 4px 16px rgba(0,0,0,.2);transition:transform .2s;">🍅</button>
-<div id="pomo-widget" style="display:none;position:fixed;bottom:328px;right:20px;width:260px;background:var(--paper);border:1.5px solid var(--line);border-radius:18px;padding:18px;z-index:9998;box-shadow:0 12px 40px rgba(0,0,0,.15);text-align:center;">
+<button id="pomo-fab" class="fab fab-pomo" onclick="pomoToggleWidget()">🍅</button>
+<div id="pomo-widget" style="display:none;position:fixed;bottom:320px;right:16px;width:260px;background:var(--paper);border:1.5px solid var(--line);border-radius:18px;padding:18px;z-index:9998;box-shadow:0 12px 40px rgba(0,0,0,.15);text-align:center;">
   <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
     <span id="pomo-status" style="font-size:.72rem;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.08em;">جاهز للدراسة</span>
     <button onclick="pomoToggleWidget()" style="background:none;border:none;color:var(--muted);cursor:pointer;font-size:1rem;">✕</button>
@@ -1591,6 +1591,7 @@
   .fab-dark   { bottom: 90px; }
   .fab-search { bottom: 148px; }
   .fab-ar     { bottom: 206px; }
+  .fab-pomo   { bottom: 264px; }
 
   /* active states — glow عند التفعيل */
   .fab-ar.ar-on {
@@ -1612,6 +1613,7 @@
     .fab-dark   { bottom: 16px  !important; }
     .fab-search { bottom: 74px  !important; }
     .fab-ar     { bottom: 132px !important; }
+    .fab-pomo   { bottom: 190px !important; }
   }
   /* ── SEARCH ──────────────────────────────── */
   #search-overlay { display: none; }
@@ -1790,8 +1792,6 @@
 
   /* ── Responsive: Pomodoro + Toast on mobile ── */
   @media (max-width: 768px) {
-    #pomo-fab { right: auto !important; left: 14px !important; bottom: 190px !important; width: 44px !important; height: 44px !important; font-size: 1.1rem !important; opacity: 0.35; transition: opacity 0.2s; }
-    #pomo-fab:hover, #pomo-fab:active { opacity: 1; }
     #pomo-widget { right: auto !important; left: 50% !important; transform: translateX(-50%) !important; width: calc(100vw - 40px) !important; max-width: 280px !important; bottom: 244px !important; }
     #reminder-toast { bottom: 120px !important; }
     .ch-pdf-btn { padding: 10px 16px !important; font-size: .82rem !important; }
