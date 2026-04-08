@@ -1773,3 +1773,191 @@ document.addEventListener('DOMContentLoaded', () => {
   checkReminders();
   updateGameHUD();
 });
+const testBankQ = [
+  { ch:"ch1", q:"Corporate social responsibility is defined as which of the following?", opts:["An organization’s obligation to maximize its positive effects and minimize its negative effects on stakeholders", "Principles, values, and norms that primarily guide individual and group behavior in the world of business", "The institutionalization of business ethics into all levels of business decision making", "A business’s responsibility to manufacture products that function properly", "Charitable contributions made by a business to enhance its reputation with stakeholders"], ans:0 },
+  { ch:"ch1", q:"After the accounting scandals of the early 2000s, which of the following was/were enacted to restore confidence in", opts:["Defense Industry Initiative on Business Ethics and Conduct", "Sarbanes -Oxley Act", "Federal Sentencing Guidelines for Organizations", "Foreign Corrupt Practices Act", "Dodd-Frank Wall Street Reform and Consumer Protection Act"], ans:1 },
+  { ch:"ch1", q:"Which of the following is one of the rights spelled out by John F. Kennedy in his “Consumers’ Bill of Rights”?", opts:["The right to consumerism", "The right to safety", "The right to be protected", "The right to be ethical", "The right to be heard"], ans:1 },
+  { ch:"ch1", q:"During the 1990s, the institutionalization of business ethics was largely driven by which piece of legislation?", opts:["Sarbanes-Oxley Act", "Federal Sentencing Guidelines for Organizations", "Dodd-Frank Wall Street Reform and Consumer Protection Act", "Foreign Corrupt Practices Act", "UN Global Compact"], ans:1 },
+  { ch:"ch1", q:"Environmental Social Governance (ESG) refers to which of the following?", opts:["A framework for evaluation of firm performance in the areas of environmental, social, and governance", "The most far-reaching change in organizational control and accounting regulations since the Securities and", "Guidelines that codified into law incentives to reward organizations for taking action to prevent misconduct", "An organization developed to guide corporate support for ethical conduct", "An organization’s obligation to maximize its positive impact and minimize its negative impact on stakeholders"], ans:0 },
+  { ch:"ch1", q:"The 1960s saw a rise of consumerism. What is consumerism?", opts:["An increase in consumer rights by individuals, organizations, and governments", "The growth of international retail chain stores that served global consumers", "Activities undertaken by independent individuals, groups, and organizations to protect their rights as consumers", "The widespread adoption of consumer-oriented marketing strategies among businesses", "The tendency of organizations to view consumers as their most important stakeholder"], ans:2 },
+  { ch:"ch1", q:"Ethically charged decisions _______.", opts:["are made at all levels of work and management", "are made primarily by top management", "stem from individual moral philosophies", "are less important than other decision-making processes", "are an isolated personal issue"], ans:0 },
+  { ch:"ch1", q:"Which of the following was developed in the 1980s to guide corporate support for ethical conduct by establishing a", opts:["Federal Sentencing Guidelines for Organizations", "Defense Industry Initiative on Business Ethics and Conduct", "Foreign Corrupt Practices Act", "U.S. Sentencing Commission", "The Southern Common Market"], ans:1 },
+  { ch:"ch1", q:"Firms taking action to prevent and detect business misconduct in cooperation with government regulation are", opts:["U.S. Sentencing Commission", "Defense Industry Initiative on Business Ethics and Conduct", "World Trade Organization", "United", "Federal Sentencing Guidelines for Organizations"], ans:4 },
+  { ch:"ch1", q:"Which of the following statements about morals is true?", opts:["Morals are the same as principles and ethics.", "Morals relate to the business's ethical culture.", "Morals are emphasized in business ethics programs.", "Morals relate to you and you alone.", "Morals do not have much influence over individual ethical decision making."], ans:3 },
+  { ch:"ch1", q:"Which of the following statements about values is true?", opts:["Values are specific and pervasive boundaries for behavior that should not be violated.", "Values are acceptable behavior as defined by the company and industry.", "Values are attempts by businesses to minimize their negative impact on society.", "Values", "Values are enduring beliefs and ideals that are socially enforced."], ans:4 },
+  { ch:"ch1", q:"As more than a compliance program, what is business ethics becoming?", opts:["An integral part of management’s efforts to achieve competitive advantage", "A guaranteed way to earn higher financial returns", "Mainly a government regulatory issue", "An initiative led by nonprofit organizations", "A program that decreases profits but increases societal benefits"], ans:0 },
+  { ch:"ch1", q:"Employees who view their organizational culture as ethical are more likely to _______.", opts:["ask for a raise", "use their personal moral philosophies in decision making", "make personal sacrifices for the organization", "gain more organizational training", "have a greater desire to become managers themselves"], ans:2 },
+  { ch:"ch1", q:"President Obama’s administration focused on which of these major ethical issues?", opts:["Decreasing environmental legislation", "Deregulation", "Tax decreases", "Incentives to oil companies", "Healthcare and consumer protection"], ans:4 },
+  { ch:"ch1", q:"Which of the following statements about business ethics is true?", opts:["A firm that has ethical management will succeed financially.", "Codes of ethics should cover every business ethics issue.", "Business ethics focuses more on laws than on values.", "Individuals apply the same ethical rules in business as they do at home.", "Conflict or trade-offs do not exist between profits and business ethics."], ans:4 },
+  { ch:"ch1", q:"A far-reaching change to organizational control and accounting systems, making securities fraud a criminal offense,", opts:["Foreign Corrupt Practices Act", "Sarbanes -Oxley Act", "Consumer Protection Act", "Defense Industry Initiative on Business Ethics and Conduct", "Dodd-Frank Wall Street Reform and Consumer Protection Act"], ans:1 },
+  { ch:"ch1", q:"The Foreign Corrupt Practices Act outlawed which of the following?", opts:["Global accounting fraud", "Price collusion", "Corruption in foreign governments", "Bribery of a foreign public official", "Executive misconduct"], ans:3 },
+  { ch:"ch1", q:"The Sarbanes-Oxley Act resulted in which of the following?", opts:["It stiffened penalties for personal fraud.", "It created an accounting oversight board that requires corporations to establish codes of ethics for financial", "It required stakeholders to approve corporate firms' financial statements.", "It outlawed bribery of officials in other countries.", "It made securities fraud a civil offense."], ans:1 },
+  { ch:"ch1", q:"To survive and contribute to society, which of the following is true?", opts:["Businesses must operate at a loss.", "Businesses must bribe foreign officials with facilitation payments.", "Businesses must ignore the needs and desires of stakeholders.", "Businesses must make a trade-off between profits and business ethics.", "Businesses must earn a profit."], ans:4 },
+  { ch:"ch1", q:"Because of Sarbanes-Oxley, what must publicly traded companies develop in order to assist in maintaining", opts:["Ethics", "Codes of ethics", "Legal", "Accountants"], ans:2 },
+  { ch:"ch1", q:"When building long-term relationships between businesses and consumers, which of the following is essential for", opts:["Profit", "Governance", "Trust", "Knowledge", "A code of ethics"], ans:2 },
+  { ch:"ch1", q:"Which of the following statements about the Dodd-Frank Wall Street Reform and Consumer Protection Act is true?", opts:["It was very popular among Wall Street bankers.", "It represented modest reform to the finance industry.", "It came out of theological discussions in the 1920s.", "It was designed to make the financial services industry more responsible.", "It made it mandatory for public corporations to hire ethics officers."], ans:3 },
+  { ch:"ch1", q:"In the Reagan/Bush eras, the major focus of the business world was on which of the following?", opts:["Self-regulation rather than regulation by government", "Decreasing the number of mergers", "Decreasing the multinational presence in the U.S. marketplace", "Increasing government influence on the economic arena", "Improving business ethics"], ans:0 },
+  { ch:"ch1", q:"The six principles of the Defense Industry Initiative on Business Ethics and Conduct became the foundation for", opts:["The Foreign Corrupt Practices Act", "The Federal Sentencing Guidelines for Organizations", "The Ethical Trading Initiative", "The Federal Trade Commission compliance requirements", "The Sarbanes-Oxley Act"], ans:1 },
+  { ch:"ch1", q:"Ethical culture is defined as which of the following?", opts:["Ethical culture refers to rules, standards, and moral principles regarding what is right or wrong in specific situations.", "Ethical culture is the establishment and enforcement of ethical codes throughout an organization.", "Ethical culture involves the development of rules and norms that are socially enforced.", "Ethical culture refers to the codification of laws to reward organizations for taking action to prevent misconduct.", "Ethical culture is acceptable behavior as defined by the company and industry."], ans:4 },
+  { ch:"ch1", q:"The Federal Sentencing Guidelines for Organizations set the tone for organizational ethics compliance programs", opts:["By codifying into law incentives for organizations to take action such as developing ethical compliance programs to", "By forcing all organizations to develop mandatory reporting systems and ethics programs", "By eliminating most of the federal legislation that created inefficient and time-consuming activities for businesses", "By providing detailed guidelines for how to set up organizational ethics programs to guard against unethical conduct", "By providing a thorough examination of company codes of ethics to determine whether they are sufficient"], ans:0 },
+  { ch:"ch1", q:"The Federal Sentencing Guidelines for Organizations are described by which of the following statements?", opts:["They use a routine mechanical approach that forces all firms to use the same means to avert serious penalties.", "They strive to prosecute misconduct.", "They encourage companies to develop standards and procedures for penalizing misconduct.", "They utilize a carrot-and-stick approach by taking preventive action against misconduct.", "They encourage self-regulation as opposed to oversight of compliance."], ans:3 },
+  { ch:"ch1", q:"Employees' perceptions of their firm as having an ethical climate lead to which of the following?", opts:["Lack of focus on goals", "Greater focus on education", "Increased community involvement", "Improved relationships with competitors", "Performance-enhancing outcomes"], ans:4 },
+  { ch:"ch1", q:"A global compliance management standard that addresses risks, legal requirements, and stakeholder needs is known as", opts:["the Ethical Trading Initiative", "the UN Global Compact", "the Defense Industry Initiative on Business Ethics and Conduct", "stakeholder theory", "ISO 19600"], ans:4 },
+  { ch:"ch1", q:"Investors are concerned about business ethics because they know that misconduct can _______.", opts:["harm the ability to monitor changes", "increase prices of consumer products", "cause delays in government intervention", "lower stock prices", "complicate business financial reporting"], ans:3 },
+  { ch:"ch1", q:"When an organization has a strong ethical environment, it usually focuses on the core value of placing whose interests", opts:["Customers'", "Employees'", "Stockholders'", "Suppliers'", "Distributors'"], ans:0 },
+  { ch:"ch1", q:"Why is the public more tolerant of consumer misconduct than business misconduct?", opts:["Businesses are expected to have a better idea of right and wrong.", "The decisions of individuals have little to do with ethics in the business world.", "There are big differences in wealth and success between businesses and consumers.", "More organizations commit misconduct than individual consumers.", "There is a large income disparity among professional businesspeople."], ans:2 },
+  { ch:"ch1", q:"What happens when society deems a particular business action as wrong or unethical?", opts:["Legislation usually follows.", "The guilty individual is jailed.", "Self-regulation is deemed a failure.", "The company goes bankrupt.", "Fines automatically follow."], ans:0 },
+  { ch:"ch1", q:"Which business ethics issue was a major concern during the 1920s?", opts:["Sustainability", "Consumerism", "Living wage", "Bribery", "Abusive managers"], ans:2 },
+  { ch:"ch1", q:"Specific and pervasive boundaries for behavior that should not be violated are known as _______.", opts:["philosophy", "values", "principles", "business ethics", "morals"], ans:2 },
+  { ch:"ch1", q:"The term that comprises organizational principles, values, and norms that may originate from individuals,", opts:["stakeholder orientation", "values", "principles", "business ethics", "integrity management"], ans:3 },
+  { ch:"ch2", q:"Those who have a claim in some aspect of a firm's products, operations, markets, industry, and outcomes are known as", opts:["shareholders", "stockholders", "stakeholders", "claimholders", "special-interest groups"], ans:2 },
+  { ch:"ch2", q:"Stakeholders' power over businesses stems from their _______.", opts:["ability to withhold organizational resources", "ability to generate profits", "media impact", "political influence", "stock ownership"], ans:0 },
+  { ch:"ch2", q:"Which of the following groups is defined as one that does not typically engage in transactions with a company and", opts:["Employees", "Secondary stakeholders", "Primary stakeholders", "Investors", "Customers"], ans:1 },
+  { ch:"ch2", q:"A firm that recognizes other stakeholders beyond investors, employees, and suppliers, and explicitly acknowledges that", opts:["A stakeholder model of socially responsible corporate governance", "A stakeholder bias", "A code of ethics", "A stakeholder interaction model", "A corporate interface model"], ans:3 },
+  { ch:"ch2", q:"The degree to which a firm understands and addresses stakeholder demands refers to _______.", opts:["a stakeholder orientation", "a shareholder orientation", "the stakeholder interaction model", "a two-way street", "a continuum"], ans:0 },
+  { ch:"ch2", q:"Which of the following industries tends to generate a high level of trust from consumers and stakeholders?", opts:["Insurance", "Technology", "Banks", "Mortgage lenders", "Energy"], ans:1 },
+  { ch:"ch2", q:"Why is it important for businesses to recognize secondary stakeholder groups?", opts:["They are absolutely necessary for the firm's survival.", "They include the employees necessary for the firm's success.", "They always have more power than primary stakeholders.", "They provide vital resources that companies need.", "They have legitimacy and the power to influence outcomes."], ans:4 },
+  { ch:"ch2", q:"A stakeholder group that is absolutely necessary for a firm’s survival is defined as a _______.", opts:["direct stakeholder", "tertiary stakeholder", "secondary stakeholder", "special-interest stakeholder", "primary stakeholder"], ans:4 },
+  { ch:"ch2", q:"When unethical acts are discovered in a firm, which of the following is true in most instances?", opts:["They are caused by unwilling participants.", "The cause is due to external stakeholders.", "The perpetrators are caught and prosecuted.", "Their acceptance and perpetuation were facilitated by cooperation or complicity.", "The cause of the unethical conduct is a corrupt board of directors."], ans:3 },
+  { ch:"ch2", q:"Which of the following statements accurately describes the normative approach?", opts:["It focuses on the firm’s behavior and usually addresses how decisions and strategies are made for stakeholder", "It describes what happens if firms behave in a particular way.", "It is the degree to which a firm understands and addresses stakeholder demands.", "It describes reciprocal relationships between the firm and a host of stakeholders.", "It identifies ethical guidelines that dictate how firms should treat stakeholders."], ans:4 },
+  { ch:"ch2", q:"A stakeholder orientation can be viewed as a(n) _______.", opts:["necessity for business success", "continuum", "polarizing concept", "good marketing ploy", "expensive proposition"], ans:1 },
+  { ch:"ch2", q:"What do suppliers offer that is critical to a firm’s long-term success?", opts:["The promise of customer loyalty", "Material resources and/or intangible knowledge", "Infrastructure", "Revenue", "Leadership skills"], ans:1 },
+  { ch:"ch2", q:"The four levels of social responsibility include which of the following?", opts:["Economic, social, legal, and voluntary", "Economic, legal, environmental, and ethical", "Financial, legal, environmental, and philanthropic", "Economic, financial, legal, and ethical", "Economic, legal, ethical, and philanthropic"], ans:4 },
+  { ch:"ch2", q:"The first of three activities associated with the stakeholder orientation is _______.", opts:["an organization-wide generation of data", "an organization's responsiveness to intelligence", "a set of consumer attributes being identified", "an organizational strategy of target markets", "a human relations department's set of priorities"], ans:0 },
+  { ch:"ch2", q:"Public health and safety and the support of local organizations are issues that are most relevant to which stakeholder", opts:["Investors", "Community", "Suppliers", "Customers", "Employees"], ans:1 },
+  { ch:"ch2", q:"Minimizing the use of energy and reducing emissions and waste are issues of importance to which of the following", opts:["Environmental groups", "Suppliers", "Employees", "Industry leaders", "Investors"], ans:0 },
+  { ch:"ch2", q:"The idea that the basic mission of business is to produce goods and services at a profit, thus maximizing its", opts:["Adam Smith", "Archie Carroll", "Jack Ma", "Karl Marx", "Milton Friedman"], ans:4 },
+  { ch:"ch2", q:"The idea of the invisible hand, which is a fundamental concept in free market capitalism, was developed by which of", opts:["Adam Smith", "John Maynard Keynes", "Janet Yellen", "Noel Biderman", "Milton Friedman"], ans:0 },
+  { ch:"ch2", q:"Some economists believe that if companies address economic and legal issues, they are satisfying the demands of", opts:["John Maynard Keynes", "Janet Yellen", "Adam Smith", "Elinor Ostrom", "Milton Friedman"], ans:4 },
+  { ch:"ch2", q:"The idea that because people live in a community, social rules should benefit the community is known as _______.", opts:["the stakeholder interaction model", "consumer protection", "the common good", "sustainability", "corporate governance"], ans:2 },
+  { ch:"ch2", q:"The extent to which a firm meets the economic, legal, ethical, and philanthropic responsibilities placed on it by", opts:["reputation", "corporate citizenship", "corporate ethical audit", "ethical citizenship", "fiduciary duties"], ans:1 },
+  { ch:"ch2", q:"In corporate governance, the process of auditing and improving organizational decisions and actions is known as", opts:["profit", "loyalty", "accountability", "control", "diligence"], ans:3 },
+  { ch:"ch2", q:"Accountability, oversight, and control all fall under the definition and implementation of corporate _______.", opts:["profit", "loyalty", "care", "governance", "diligence"], ans:3 },
+  { ch:"ch2", q:"Which of the following is a major ethical concern among corporate boards of directors?", opts:["Compensation", "The non-traditional directorship approach", "Dividend reporting", "Secondary stakeholders", "Debt swaps"], ans:0 },
+  { ch:"ch2", q:"Which of the following describes the purpose of a stakeholder orientation?", opts:["To emphasize shareholders and provide them with a return on their investment", "To maximize positive outcomes that meet stakeholder needs", "To diminish the role of stakeholders such as the government and employees", "To determine which stakeholders to address and which to ignore", "To allow stakeholders to determine the limits of executive compensation"], ans:1 },
+  { ch:"ch2", q:"The first step in implementing the stakeholder perspective is _______.", opts:["identifying stakeholder groups", "assessing the corporate culture", "identifying and gaining stakeholder feedback", "identifying stakeholder issues", "assessing organizational commitment to social responsibility groups"], ans:1 },
+  { ch:"ch2", q:"Which model of corporate governance is founded in classic economic precepts?", opts:["Economic", "Shareholder", "Stakeholder", "Board", "ISO"], ans:1 },
+  { ch:"ch2", q:"Which of the following would typically be considered a secondary stakeholder group?", opts:["Suppliers", "Customers", "Special-interest groups", "Government regulatory agencies", "Community"], ans:2 },
+  { ch:"ch2", q:"Which of the following would typically be considered a primary stakeholder group?", opts:["Competitors", "Community", "Trade associations", "Special interest groups", "The mass media"], ans:1 },
+  { ch:"ch2", q:"What do critics of high compensation for boards of directors point to as being problematic?", opts:["The more directors are paid, the more power they have over the organization.", "High compensation could cause a conflict of interest.", "High board member pay leads to poorly compensated employees.", "High pay will render the board less complacent.", "Board of director compensation is negatively related to corporate growth."], ans:1 },
+  { ch:"ch2", q:"Board members being linked to more than one company is defined as which of the following?", opts:["The stakeholder concept", "The stakeholder model of corporate governance", "An interlocking directorate", "A conflict of interest", "A multiple directorate"], ans:2 },
+  { ch:"ch2", q:"The last step in implementing a stakeholder perspective in an organization is _______.", opts:["identifying resources and determining urgency", "assessing the corporate culture", "identifying stakeholder issues", "gaining stakeholder feedback", "assessing organizational commitment to social responsibility"], ans:3 },
+  { ch:"ch2", q:"A stakeholder orientation is not complete unless it includes which of the following?", opts:["Clear accounting procedures", "Major financing activities", "A marketing strategy", "Feedback from special-interest groups", "Activities that address stakeholder issues"], ans:4 },
+  { ch:"ch2", q:"A broader view of social responsibility is one that _______.", opts:["views customers as the most important stakeholder", "takes into account a shareholder orientation", "prioritizes all stakeholders the same way", "considers the long-term welfare of society", "emphasizes adherence to law as the highest priority"], ans:3 },
+  { ch:"ch2", q:"The obligation of individuals to make decisions that are in the best interests of the corporation and its stakeholders is", opts:["duty of loyalty", "duty of oversight", "duty to audit", "duty of control", "duty of cooperation"], ans:0 },
+  { ch:"ch2", q:"Fiduciaries are persons placed in positions of trust that act on behalf of the best interests of the organization. Both", opts:["duty of oversight and loyalty", "duty of care or a duty of diligence", "duty of control and audit", "duty of confidence and leadership", "duty of analysis and insight"], ans:1 },
+  { ch:"ch3", q:"Sustainable development is best defined as which of the following?", opts:["The potential for the long-term well-being of the environment, including all biological entities, as well as", "Socially responsible activities such as sustainable business practices that create competitive advantages", "When an organization uses its products and brand identity to create social value, quality, and consumer loyalty", "A strategy involving stakeholder assessment to create meaningful long-term relationships with customers,", "Meeting the needs of the present without compromising the ability of future generations to meet their own"], ans:4 },
+  { ch:"ch3", q:"One of the biggest factors in land pollution is the dumping of waste into landfills. By far the world’s biggest wasters are", opts:["Europe", "China", "Russia", "the United States", "Canada"], ans:3 },
+  { ch:"ch3", q:"The world’s forests, which cover more than 30 percent of the planet, are being destroyed, with forests shrinking by", opts:["The corn industry", "Beef, soy, palm oil, and wood products", "Human-lit fires", "A lack of rain", "Wildfires"], ans:1 },
+  { ch:"ch3", q:"Many businesses can benefit from urban renewal movements that reduce sprawl, but it can create disadvantages for", opts:["car and oil companies", "the airline industry", "the railroad industry", "service-oriented companies", "humans and animals"], ans:0 },
+  { ch:"ch3", q:"Farmers cannot keep harvested seed from genetically modified crops, but must purchase them each year from", opts:["non-organic", "perishable", "uncollectable", "destructive", "patented"], ans:4 },
+  { ch:"ch3", q:"The first Earth Day increased stakeholder awareness of environmental concerns and the creation of the Environmental", opts:["Corporate social responsibility", "Alternative energy sources", "Diversity", "Sustainability", "Competition"], ans:3 },
+  { ch:"ch3", q:"The Environmental Protection Agency’s primary mission is to _______.", opts:["protect human health and the environment", "ensure all Fortune 500 firms hire a chief sustainability officer", "protect threatened and endangered species", "encourage alternative energy sources", "collect taxes from the chemical and petroleum industries"], ans:0 },
+  { ch:"ch3", q:"Which of the following statements accurately describes the Clean Air Act?", opts:["It allowed the EPA to track industrial chemicals.", "It focused on promoting alternative forms of energy.", "It established national air quality standards.", "It provided tax benefits to consumers who purchase hybrid cars.", "It focused on reducing pollution through cost-effective change."], ans:2 },
+  { ch:"ch3", q:"The Clean Water Act makes it illegal for anyone to discharge any pollutant from a point source directly into navigable", opts:["good reason", "direct order", "permit", "inspector present", "limit"], ans:2 },
+  { ch:"ch3", q:"Which of the following acts focuses on reducing pollution through cost-effective changes in production, operation,", opts:["Pollution Prevention Act", "Toxic Substances Control Act", "Clean Air Act", "Energy Policy Act", "Oil Pollution Act"], ans:0 },
+  { ch:"ch3", q:"Which of the following is considered a misleading practice related to sustainability?", opts:["Designing environmentally friendly buildings", "Recycling", "Greenwashing", "Source reduction", "Sustainable agriculture"], ans:2 },
+  { ch:"ch3", q:"To empower the EPA with the ability to track the 75,000 industrial chemicals currently produced or imported into the", opts:["Federal Water Pollution Control Act", "Federal Insecticide, Fungicide and Rodenticide Act", "Safe Drinking Water Act", "Toxic Substances Control Act", "Food Quality Protection Act"], ans:3 },
+  { ch:"ch3", q:"Wind power holds great promise for the United States because it is home to one of the greatest sources of wind energy", opts:["Rocky Mountains", "Everglades", "Great Lakes", "Pacific Rim", "Great Plains"], ans:4 },
+  { ch:"ch3", q:"A more dependable energy source than some other forms of alternative energy, geothermal energy provides _______.", opts:["heat from the sun", "a radiated heat", "heat from steam", "a constant source of heat", "a dry heat"], ans:3 },
+  { ch:"ch3", q:"Which of these is considered the largest form of renewable energy?", opts:["Hydropower", "Solar power", "Geothermal power", "Biofuels", "Nuclear power"], ans:0 },
+  { ch:"ch3", q:"Which of the following is the most controversial form of alternative energy after nuclear power?", opts:["Hydropower", "Geothermal power", "Solar power", "Wind power", "Ethanol"], ans:4 },
+  { ch:"ch3", q:"Which of the following is the name for a certification program that recognizes sustainable building practices and", opts:["Brundtland Report", "WasteWise", "LEED", "Kyoto Protocol", "USMCA"], ans:2 },
+  { ch:"ch3", q:"To report air, land, and water sustainability issues, most businesses use _______.", opts:["environmental, social, and governance (ESG) factors", "triple bottom line", "green marketing", "LEED", "ISO 14000"], ans:0 },
+  { ch:"ch3", q:"Which type of business describes one that attempts to avoid dealing with environmental issues and hopes nothing bad", opts:["A newly established business", "A socially responsible business", "A low-commitment business", "A single-impact-driven business", "A law-abiding business"], ans:2 },
+  { ch:"ch3", q:"One of the country’s greatest sustainability success stories is _______.", opts:["water conservation", "pollution control", "manufacturing", "composting", "recycling"], ans:4 },
+  { ch:"ch3", q:"Stakeholder assessment is an important part of which type of approach to environmental issues?", opts:["Low-commitment", "Medium-commitment", "High-commitment", "Hands-off", "Hands-on"], ans:2 },
+  { ch:"ch3", q:"It is possible to quantify the trade-offs to determine whether to accept or reject environmentally related activities and", opts:["risk management", "management voting", "board directives", "legal requirements", "customer input"], ans:0 },
+  { ch:"ch3", q:"Which of the following is a comprehensive set of environmental standards developed by the International", opts:["Green Globes", "Kyoto Protocol", "ISO 14000", "Cancun Package", "LEED"], ans:2 },
+  { ch:"ch3", q:"Which of the following includes the assessment and improvement of business strategies, economic sectors, work", opts:["Competitive advantage", "Marketing", "Sustainability", "Greenwashing", "Risk analysis"], ans:2 },
+  { ch:"ch3", q:"Sustainability is defined as the long-term well-being of the natural environment and the mutually beneficial", opts:["customers, investors, managers, and policies", "board members, presidents, managers, and nonprofit organizations", "investors, creditors, suppliers, and the marketing department", "nature and individuals, organizations, and business strategies", "managers, boards, CEOs, and stakeholder strategies"], ans:3 },
+  { ch:"ch3", q:"Which of the following does a cap-and-trade program reduce?", opts:["Carbon emissions", "Waste", "Water pollution", "Deforestation", "Fracking"], ans:0 },
+  { ch:"ch3", q:"Which of the following statements about genetically modified seeds is true?", opts:["They are able to cross-pollinate with other plants.", "They make food more perishable.", "They often result in greater crop yields.", "They have a negative impact on impoverished areas.", "They do not offer crop resistance to pests such as bugs."], ans:2 },
+  { ch:"ch3", q:"Major issues that emerged in the twentieth century include the protection of air, water, land, biodiversity, and", opts:["employee relations", "renewable natural resources", "environmental legal regulations", "consumer protection", "greenwashing"], ans:1 },
+  { ch:"ch3", q:"Which of the following can cause markedly shorter life spans, along with chronic respiratory problems, in humans and", opts:["Water pollution", "Air pollution", "Climate change", "Deforestation", "Acid rain"], ans:1 },
+  { ch:"ch3", q:"Created in 1997, the Kyoto Protocol was an international treaty meant to curb global _______.", opts:["natural resource use", "greenwashing activities", "water pollution", "greenhouse gas emissions", "competition"], ans:3 },
+  { ch:"ch3", q:"Which issue did Rachel Carson's book Silent Spring address that sparked the environmental movement?", opts:["Indiscriminate use of genetically modified seeds", "Deforestation", "Urban sprawl", "Indiscriminate use of pesticides", "Lack of renewable energy"], ans:3 },
+  { ch:"ch3", q:"The biggest contributor of illnesses in developing countries is likely which of the following?", opts:["Acid rain", "Water pollution", "Deforestation", "Climate change", "Landfill waste"], ans:1 },
+  { ch:"ch3", q:"Which of the following is an example of sustainability?", opts:["Recycling", "Donating money", "Building schools", "Helping children learn", "Building roads"], ans:0 },
+  { ch:"ch3", q:"A strategy involving stakeholder assessment to create meaningful long-term relationships with customers while", opts:["green marketing", "recycling initiatives", "stakeholder assessment", "risk analysis", "strategic environmental audit"], ans:0 },
+  { ch:"ch3", q:"The long-term variation in average weather patterns is referred to as _______.", opts:["water pollution", "greenhouse gas", "climate change", "the Kyoto Protocol", "the ozone layer"], ans:2 },
+];
+// ═══════════════════════════════════════════════
+//  TEST BANK QUIZ
+// ═══════════════════════════════════════════════
+let tbState = { questions: [], current: 0, correct: 0, wrong: 0, answered: false };
+
+function startTestBank(ch) {
+  const count = parseInt(document.getElementById('tb-count')?.value || '20');
+  let pool = ch === 'all' ? [...testBankQ] : testBankQ.filter(q => q.ch === ch);
+  pool = pool.sort(() => Math.random() - 0.5).slice(0, Math.min(count, pool.length));
+  tbState = { questions: pool, current: 0, correct: 0, wrong: 0, answered: false };
+  renderTBQuestion();
+}
+
+function renderTBQuestion() {
+  const area = document.getElementById('tb-quiz-area');
+  if (!area) return;
+  if (tbState.current >= tbState.questions.length) {
+    const pct = Math.round((tbState.correct / tbState.questions.length) * 100);
+    const badge = pct >= 90 ? '🏆' : pct >= 75 ? '🥇' : pct >= 60 ? '🥈' : '📚';
+    area.innerHTML = `
+      <div style="text-align:center;padding:30px 20px;">
+        <div style="font-size:3rem;margin-bottom:10px;">${badge}</div>
+        <div style="font-size:2.5rem;font-weight:900;color:var(--accent);">${pct}%</div>
+        <div style="display:flex;justify-content:center;gap:20px;margin:16px 0;">
+          <div><span style="font-size:1.5rem;font-weight:900;color:#1f8f5f;">${tbState.correct}</span><br><span style="font-size:.8rem;color:var(--muted);">Correct</span></div>
+          <div><span style="font-size:1.5rem;font-weight:900;color:#c0392b;">${tbState.wrong}</span><br><span style="font-size:.8rem;color:var(--muted);">Wrong</span></div>
+        </div>
+        <button class="quiz-btn quiz-btn-primary" onclick="document.getElementById('tb-quiz-area').innerHTML='';tbState.current=0;" style="margin-top:12px;">🔄 حاول مرة ثانية</button>
+      </div>`;
+    return;
+  }
+  const q = tbState.questions[tbState.current];
+  const ci = tbState.current + 1;
+  const total = tbState.questions.length;
+  tbState.answered = false;
+  const letters = ['A','B','C','D','E'];
+  const optsHtml = q.opts.map((opt, i) =>
+    `<button class="quiz-mcq-btn" onclick="handleTBAnswer(${i})" style="display:block;width:100%;text-align:left;padding:14px 18px;margin:8px 0;border-radius:12px;border:1.5px solid var(--line);background:var(--paper);color:var(--ink);font-size:.95rem;font-weight:600;cursor:pointer;transition:all .2s;font-family:inherit;">${letters[i]}. ${opt}</button>`
+  ).join('');
+  area.innerHTML = `
+    <div style="background:var(--paper);border:1.5px solid var(--line);border-radius:20px;padding:24px;box-shadow:0 8px 24px rgba(0,0,0,.08);">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
+        <span style="font-size:.82rem;font-weight:700;color:var(--accent);">سؤال ${ci} / ${total}</span>
+        <span style="font-size:.75rem;color:var(--muted);background:var(--accent-soft);padding:3px 10px;border-radius:8px;">${q.ch.toUpperCase()}</span>
+      </div>
+      <div style="width:100%;height:6px;background:var(--line);border-radius:99px;margin-bottom:18px;overflow:hidden;">
+        <div style="width:${Math.round(ci/total*100)}%;height:100%;background:var(--accent);border-radius:99px;transition:width .3s;"></div>
+      </div>
+      <div style="font-size:1.05rem;font-weight:600;line-height:1.7;margin-bottom:18px;color:var(--ink);">${q.q}</div>
+      <div id="tb-opts">${optsHtml}</div>
+      <div id="tb-feedback" style="margin-top:12px;font-weight:700;min-height:24px;"></div>
+      <button id="tb-next-btn" onclick="tbState.current++;renderTBQuestion();" style="display:none;margin-top:14px;background:var(--accent);color:#fff;border:none;padding:10px 28px;border-radius:10px;font-weight:700;font-size:.9rem;cursor:pointer;font-family:inherit;">${ci === total ? 'عرض النتيجة' : 'التالي →'}</button>
+    </div>`;
+}
+
+function handleTBAnswer(chosen) {
+  if (tbState.answered) return;
+  tbState.answered = true;
+  const q = tbState.questions[tbState.current];
+  const isCorrect = chosen === q.ans;
+  if (isCorrect) tbState.correct++; else tbState.wrong++;
+  const btns = document.querySelectorAll('#tb-opts .quiz-mcq-btn');
+  btns.forEach((btn, i) => {
+    btn.style.pointerEvents = 'none';
+    if (i === q.ans) { btn.style.background = '#e6f7ed'; btn.style.borderColor = '#1f8f5f'; btn.style.color = '#1f8f5f'; }
+    else if (i === chosen && !isCorrect) { btn.style.background = '#fdf2f2'; btn.style.borderColor = '#c0392b'; btn.style.color = '#c0392b'; }
+  });
+  const fb = document.getElementById('tb-feedback');
+  fb.textContent = isCorrect ? '✅ صح!' : '❌ خطأ — الإجابة الصحيحة: ' + ['A','B','C','D','E'][q.ans];
+  fb.style.color = isCorrect ? '#1f8f5f' : '#c0392b';
+  document.getElementById('tb-next-btn').style.display = 'inline-block';
+  // Gamification
+  if (typeof updateCombo === 'function') {
+    const combo = updateCombo(isCorrect);
+    const multiplier = getComboMultiplier(combo);
+    if (isCorrect) awardXP(10, multiplier);
+    showQuizEncouragement(isCorrect);
+  }
+}
