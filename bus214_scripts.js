@@ -744,6 +744,7 @@ function handleMockAnswer(chosen) {
     document.getElementById("mock-feedback").className = "quiz-feedback wrong";
   }
   mockAnswers.push({ q: mockQs[mockIdx], chosen });
+  window.mockAnswers = mockAnswers;
   document.getElementById("mock-next-btn").style.display = "block";
 }
 
