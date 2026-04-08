@@ -1373,7 +1373,7 @@ function exportChapterPDF(pageId, chapterName) {
 // ═══════════════════════════════════════════════
 function checkReminders() {
   const LAST_KEY = 'bus214_lastVisit';
-  const EXAM = new Date('2026-04-20T00:00:00');
+  const EXAM = new Date('2026-04-12T00:00:00');
   const last = parseInt(localStorage.getItem(LAST_KEY) || '0');
   const now = Date.now();
   localStorage.setItem(LAST_KEY, now);
