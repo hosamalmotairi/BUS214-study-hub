@@ -571,6 +571,11 @@ function handleQuizAnswer(chosen) {
     fb.textContent = "❌ Wrong — The correct answer is: " + ["A","B","C","D"][q.ans] + ". " + q.opts[q.ans];
     fb.className = "quiz-feedback wrong";
   }
+  // Gamification
+  const combo = updateCombo(isCorrect);
+  const multiplier = getComboMultiplier(combo);
+  if (isCorrect) awardXP(10, multiplier);
+  showQuizEncouragement(isCorrect);
   // Show detailed explanation if available
   const expEl = document.getElementById("quiz-explanation");
   if (expEl && q.exp) {
@@ -624,6 +629,7 @@ function endQuiz() {
     bestScores[chKey] = pct;
     localStorage.setItem('bus214_bestScores', JSON.stringify(bestScores));
   }
+  if (quizWrong === 0) { const gd = getGameData(); gd.perfectQuiz = true; saveGameData(gd); checkBadges(gd); }
   totalQuizzes++;
   totalCorrect += quizCorrect;
   localStorage.setItem('bus214_totalQuizzes', totalQuizzes);
@@ -1396,6 +1402,198 @@ if (_origHandleQuizAnswer) {
 }
 
 // ═══════════════════════════════════════════════
+//  GAMIFICATION SYSTEM
+// ═══════════════════════════════════════════════
+const GAME_KEY = 'bus214_game';
+
+function getGameData() {
+  const defaults = { xp: 0, level: 1, streak: 0, lastDate: null, badges: [], totalCorrect: 0, totalAnswered: 0, combo: 0, maxCombo: 0 };
+  try { return { ...defaults, ...JSON.parse(localStorage.getItem(GAME_KEY)) }; }
+  catch { return defaults; }
+}
+
+function saveGameData(d) { localStorage.setItem(GAME_KEY, JSON.stringify(d)); }
+
+const LEVELS = [
+  { level:1, name:'مبتدئ',    icon:'🌱', xpNeeded:0   },
+  { level:2, name:'طالب',     icon:'📖', xpNeeded:200 },
+  { level:3, name:'متقدم',    icon:'🎯', xpNeeded:500 },
+  { level:4, name:'محترف',    icon:'⚡', xpNeeded:1000},
+  { level:5, name:'خبير',     icon:'🏆', xpNeeded:2000},
+  { level:6, name:'أسطورة',   icon:'👑', xpNeeded:4000},
+];
+
+function getLevelInfo(xp) {
+  let current = LEVELS[0];
+  for (const l of LEVELS) { if (xp >= l.xpNeeded) current = l; }
+  const idx = LEVELS.indexOf(current);
+  const next = LEVELS[idx + 1] || null;
+  const progress = next ? Math.round((xp - current.xpNeeded) / (next.xpNeeded - current.xpNeeded) * 100) : 100;
+  return { ...current, next, progress };
+}
+
+const BADGES = [
+  { id:'first_correct',  icon:'⭐', name:'أول إجابة صح',        check: d => d.totalCorrect >= 1 },
+  { id:'streak_3',       icon:'🔥', name:'3 أيام متتالية',       check: d => d.streak >= 3 },
+  { id:'streak_7',       icon:'🔥🔥',name:'أسبوع كامل',          check: d => d.streak >= 7 },
+  { id:'combo_5',        icon:'⚡', name:'5 صح متتالية',         check: d => d.maxCombo >= 5 },
+  { id:'combo_10',       icon:'💥', name:'10 صح متتالية',        check: d => d.maxCombo >= 10 },
+  { id:'answered_50',    icon:'📚', name:'50 سؤال',              check: d => d.totalAnswered >= 50 },
+  { id:'answered_100',   icon:'💯', name:'100 سؤال',             check: d => d.totalAnswered >= 100 },
+  { id:'answered_500',   icon:'🎓', name:'500 سؤال',             check: d => d.totalAnswered >= 500 },
+  { id:'level_3',        icon:'🎯', name:'وصلت المستوى المتقدم', check: d => d.level >= 3 },
+  { id:'level_5',        icon:'👑', name:'وصلت مستوى الخبير',    check: d => d.level >= 5 },
+  { id:'perfect_quiz',   icon:'🌟', name:'كويز بدون أخطاء',      check: d => d.perfectQuiz },
+];
+
+function awardXP(amount, comboMultiplier) {
+  const d = getGameData();
+  const oldLevel = getLevelInfo(d.xp).level;
+  const earned = Math.round(amount * comboMultiplier);
+  d.xp += earned;
+  const newLevelInfo = getLevelInfo(d.xp);
+  d.level = newLevelInfo.level;
+  saveGameData(d);
+  showXPPop(earned, comboMultiplier > 1);
+  if (newLevelInfo.level > oldLevel) showLevelUp(newLevelInfo);
+  return earned;
+}
+
+function updateCombo(correct) {
+  const d = getGameData();
+  if (correct) {
+    d.combo = (d.combo || 0) + 1;
+    d.maxCombo = Math.max(d.maxCombo || 0, d.combo);
+    d.totalCorrect = (d.totalCorrect || 0) + 1;
+  } else {
+    d.combo = 0;
+  }
+  d.totalAnswered = (d.totalAnswered || 0) + 1;
+  saveGameData(d);
+  updateStreakDaily();
+  checkBadges(d);
+  updateGameHUD();
+  return d.combo;
+}
+
+function getComboMultiplier(combo) {
+  if (combo >= 10) return 3;
+  if (combo >= 5)  return 2;
+  if (combo >= 3)  return 1.5;
+  return 1;
+}
+
+function updateStreakDaily() {
+  const d = getGameData();
+  const today = new Date().toDateString();
+  if (d.lastDate !== today) {
+    const yesterday = new Date(Date.now() - 86400000).toDateString();
+    d.streak = d.lastDate === yesterday ? (d.streak || 0) + 1 : 1;
+    d.lastDate = today;
+    saveGameData(d);
+  }
+}
+
+function checkBadges(d) {
+  let newBadges = [];
+  for (const b of BADGES) {
+    if (!d.badges.includes(b.id) && b.check(d)) {
+      d.badges.push(b.id);
+      newBadges.push(b);
+    }
+  }
+  if (newBadges.length) { saveGameData(d); newBadges.forEach(b => showBadgeToast(b)); }
+}
+
+function showXPPop(amount, isCombo) {
+  const el = document.createElement('div');
+  el.className = 'xp-pop' + (isCombo ? ' xp-pop-combo' : '');
+  el.textContent = (isCombo ? '🔥 ' : '') + '+' + amount + ' XP';
+  document.body.appendChild(el);
+  setTimeout(() => el.remove(), 1200);
+}
+
+const QUIZ_ENCOURAGEMENTS_CORRECT = [
+  'ممتاز! 🌟', 'صح! 💪', 'أحسنت! 🎯',
+  'رائع! ✨', 'بالضبط! 🔥', 'عظيم! 🏆',
+  'واو! 😎', 'صاح! 👏', 'زين! ⭐'
+];
+const QUIZ_ENCOURAGEMENTS_WRONG = [
+  'كمّل 💪', 'المرة الجاية! 💡', 'تقدر! 🌱',
+  'ما يهم، واصل! 🚀', 'الغلط تعلّم 💡', 'ارفع رأسك 👊'
+];
+
+function playAnswerSound(isCorrect) {
+  try {
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    if (isCorrect) {
+      [523.25, 783.99].forEach((freq, i) => {
+        const osc = ctx.createOscillator(); const gain = ctx.createGain();
+        osc.connect(gain); gain.connect(ctx.destination);
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(freq, ctx.currentTime + i * 0.12);
+        gain.gain.setValueAtTime(0.28, ctx.currentTime + i * 0.12);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + i * 0.12 + 0.25);
+        osc.start(ctx.currentTime + i * 0.12);
+        osc.stop(ctx.currentTime + i * 0.12 + 0.25);
+      });
+    } else {
+      const osc = ctx.createOscillator(); const gain = ctx.createGain();
+      osc.connect(gain); gain.connect(ctx.destination);
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(330, ctx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(220, ctx.currentTime + 0.3);
+      gain.gain.setValueAtTime(0.2, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.35);
+      osc.start(ctx.currentTime); osc.stop(ctx.currentTime + 0.35);
+    }
+  } catch (e) {}
+}
+
+function showQuizEncouragement(isCorrect) {
+  playAnswerSound(isCorrect);
+  const pool = isCorrect ? QUIZ_ENCOURAGEMENTS_CORRECT : QUIZ_ENCOURAGEMENTS_WRONG;
+  const msg = pool[Math.floor(Math.random() * pool.length)];
+  const el = document.createElement('div');
+  el.className = 'quiz-encourage' + (isCorrect ? '' : ' quiz-encourage-wrong');
+  el.textContent = msg;
+  document.body.appendChild(el);
+  setTimeout(() => el.remove(), 1400);
+}
+
+function showLevelUp(levelInfo) {
+  const el = document.createElement('div');
+  el.className = 'level-up-toast';
+  el.innerHTML = `<div class="lu-icon">${levelInfo.icon}</div><div class="lu-text"><strong>ترقية!</strong><br>وصلت مستوى <strong>${levelInfo.name}</strong></div>`;
+  document.body.appendChild(el);
+  setTimeout(() => el.remove(), 3000);
+}
+
+function showBadgeToast(badge) {
+  const el = document.createElement('div');
+  el.className = 'badge-toast';
+  el.innerHTML = `<span class="bt-icon">${badge.icon}</span><div><strong>شارة جديدة!</strong><br>${badge.name}</div>`;
+  document.body.appendChild(el);
+  setTimeout(() => el.remove(), 3500);
+}
+
+function updateGameHUD() {
+  const d = getGameData();
+  const li = getLevelInfo(d.xp);
+  const hudLevel = document.getElementById('hud-level');
+  const hudXP    = document.getElementById('hud-xp');
+  const hudStreak = document.getElementById('hud-streak');
+  const hudCombo  = document.getElementById('hud-combo');
+  const hudXPBar  = document.getElementById('hud-xp-bar');
+  if (hudLevel) hudLevel.textContent = li.icon + ' ' + li.name;
+  if (hudXP)    hudXP.textContent    = d.xp + ' XP';
+  if (hudStreak) hudStreak.textContent = '🔥 ' + (d.streak || 0);
+  if (hudCombo && d.combo > 1) { hudCombo.textContent = '⚡ x' + d.combo; hudCombo.style.display = 'flex'; }
+  else if (hudCombo) hudCombo.style.display = 'none';
+  if (hudXPBar) hudXPBar.style.width = li.progress + '%';
+}
+
+// ═══════════════════════════════════════════════
 //  FEATURE: POMODORO TIMER
 // ═══════════════════════════════════════════════
 const POMO_KEY = 'bus214_pomo';
@@ -1507,4 +1705,5 @@ document.addEventListener('DOMContentLoaded', () => {
   renderConceptOfDay();
   updateStreak();
   checkReminders();
+  updateGameHUD();
 });

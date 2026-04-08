@@ -40,6 +40,17 @@
 </head>
 <body>
 
+<!-- GAME HUD -->
+<div class="game-hud" id="game-hud">
+  <div class="hud-item" id="hud-level">🌱 مبتدئ</div>
+  <div class="hud-xp-wrap">
+    <div class="hud-xp-track"><div class="hud-xp-fill" id="hud-xp-bar" style="width:0%"></div></div>
+    <span id="hud-xp" style="font-size:.7rem;color:var(--muted);">0 XP</span>
+  </div>
+  <div class="hud-item" id="hud-streak">🔥 0</div>
+  <div class="hud-item hud-combo" id="hud-combo" style="display:none;">⚡ x1</div>
+</div>
+
 <!-- ── AUTH OVERLAY ────────────────────────── -->
 <div id="auth-overlay" style="position:fixed;inset:0;background:rgba(15,17,30,0.95);z-index:99999;display:flex;align-items:center;justify-content:center;overflow-y:auto;">
   <div id="auth-box" style="background:#1a1d2e;border-radius:20px;padding:24px 28px;width:90%;max-width:420px;box-shadow:0 24px 64px rgba(0,0,0,0.5);margin:16px auto;">
@@ -1835,6 +1846,30 @@
     #reminder-toast { bottom: 120px !important; }
     .ch-pdf-btn { padding: 10px 16px !important; font-size: .82rem !important; }
   }
+
+  /* ── GAME HUD ── */
+  .game-hud { position:fixed; bottom:16px; left:50%; transform:translateX(-50%); background:var(--paper); border:1.5px solid var(--line); border-radius:99px; padding:8px 20px; display:flex; align-items:center; gap:14px; z-index:999; box-shadow:0 4px 20px rgba(0,0,0,.12); font-size:.85rem; font-weight:700; backdrop-filter:blur(10px); }
+  .hud-xp-wrap { display:flex; flex-direction:column; align-items:center; gap:2px; }
+  .hud-xp-track { width:80px; height:6px; background:var(--line); border-radius:99px; overflow:hidden; }
+  .hud-xp-fill { height:100%; background:linear-gradient(90deg,var(--accent),#f59e0b); border-radius:99px; transition:width 0.5s ease; }
+  .hud-item { color:var(--ink); }
+  .hud-combo { background:linear-gradient(135deg,#f59e0b,#ef4444); color:#fff; border-radius:99px; padding:2px 10px; animation:pulse 0.5s infinite alternate; }
+  .xp-pop { position:fixed; bottom:80px; left:50%; transform:translateX(-50%); background:var(--accent); color:#fff; font-weight:800; font-size:1.1rem; padding:8px 20px; border-radius:99px; pointer-events:none; animation:xpFloat 1.2s ease forwards; z-index:9999; }
+  .xp-pop-combo { background:linear-gradient(135deg,#f59e0b,#ef4444); font-size:1.3rem; }
+  @keyframes xpFloat { 0%{opacity:1;transform:translateX(-50%) translateY(0)} 100%{opacity:0;transform:translateX(-50%) translateY(-60px)} }
+  .quiz-encourage { position:fixed; top:38%; left:50%; transform:translateX(-50%); background:#15803d; color:#fff; font-weight:800; font-size:1.4rem; padding:10px 28px; border-radius:99px; pointer-events:none; animation:encourageFloat 1.4s ease forwards; z-index:9999; white-space:nowrap; }
+  .quiz-encourage-wrong { background:#d97706; font-size:1.2rem; }
+  @keyframes encourageFloat { 0%{opacity:0;transform:translateX(-50%) scale(0.7)} 20%{opacity:1;transform:translateX(-50%) scale(1.08)} 70%{opacity:1;transform:translateX(-50%) scale(1)} 100%{opacity:0;transform:translateX(-50%) translateY(-30px) scale(0.9)} }
+  .level-up-toast { position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); background:linear-gradient(135deg,var(--accent),#f59e0b); color:#fff; border-radius:24px; padding:28px 40px; text-align:center; z-index:9999; box-shadow:0 8px 40px rgba(0,0,0,.3); animation:popIn 0.4s cubic-bezier(.175,.885,.32,1.275); }
+  .lu-icon { font-size:3rem; margin-bottom:8px; }
+  .lu-text { font-size:1.1rem; line-height:1.6; }
+  @keyframes popIn { from{opacity:0;transform:translate(-50%,-50%) scale(0.5)} to{opacity:1;transform:translate(-50%,-50%) scale(1)} }
+  .badge-toast { position:fixed; top:20px; right:20px; background:var(--paper); border:2px solid #f59e0b; border-radius:16px; padding:14px 18px; display:flex; align-items:center; gap:12px; z-index:9999; box-shadow:0 4px 20px rgba(0,0,0,.15); animation:slideIn 0.4s ease; font-size:.9rem; }
+  .bt-icon { font-size:1.8rem; }
+  @keyframes slideIn { from{opacity:0;transform:translateX(100px)} to{opacity:1;transform:translateX(0)} }
+  @keyframes pulse { from{transform:scale(1)} to{transform:scale(1.05)} }
+  body.dark .game-hud { background:rgba(30,33,48,.95); border-color:#3a3d54; }
+  @media (max-width:768px) { .game-hud { padding:6px 14px; gap:10px; font-size:.75rem; } .hud-xp-track { width:50px; } }
 </style>
 </body>
 </html>
