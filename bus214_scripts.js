@@ -1494,6 +1494,11 @@ function pomoToggleWidget() {
 }
 
 // ── INIT ──────────────────────────────────────
+// Register Service Worker
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/sw.js').catch(() => {});
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   initDarkMode();
   showPage('page-home');
