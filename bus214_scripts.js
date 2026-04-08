@@ -493,6 +493,7 @@ function startQuiz() {
   let pool = filter === "all" ? allQuizQ : allQuizQ.filter(q => q.ch === filter);
   pool = [...pool].sort(() => Math.random() - 0.5).slice(0, Math.min(count, pool.length));
   quizQs = pool; quizIdx = 0; quizCorrect = 0; quizWrong = 0; quizAnswered = false;
+  window.quizAnswerLog = [];
   quizStartTime = Date.now();
   document.body.classList.add('quiz-mode');
   document.getElementById("quiz-start-screen").classList.add('quiz-screen-hidden');
@@ -558,6 +559,7 @@ function handleQuizAnswer(chosen) {
       btn.classList.add("wrong-anim");
     }
   });
+  window.quizAnswerLog.push({ q, chosen });
   const fb = document.getElementById("quiz-feedback");
   const isCorrect = chosen === q.ans;
   if (isCorrect) {
@@ -1111,6 +1113,297 @@ function handleChQ(btn, isCorrect) {
   }
 }
 
+// ═══════════════════════════════════════════════
+//  FEATURE: PDF EXPORT — Wrong Answers Summary
+// ═══════════════════════════════════════════════
+function exportWrongAnswersPDF(mode) {
+  let wrong = [];
+  if (mode === 'mock') {
+    wrong = (window.mockAnswers || []).filter(a => a.chosen !== a.q.ans);
+  } else {
+    wrong = (window.quizAnswerLog || []).filter(a => a.chosen !== a.q.ans);
+  }
+  const chNames = { ch1:'Chapter 1', ch2:'Chapter 2', ch3:'Chapter 3' };
+  const w = window.open('', '_blank');
+  w.document.write(`<!DOCTYPE html><html dir="ltr"><head><meta charset="UTF-8">
+    <title>BUS 214 — Wrong Answers Review</title>
+    <style>
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      body { font-family: system-ui, sans-serif; padding: 32px; color: #1a1a1a; max-width: 800px; margin: 0 auto; }
+      h1 { font-size: 1.5rem; color: #6c63ff; margin-bottom: 4px; }
+      .meta { color: #666; font-size: .85rem; margin-bottom: 24px; }
+      .card { border: 1.5px solid #e5e7eb; border-radius: 12px; padding: 16px; margin-bottom: 14px; page-break-inside: avoid; box-shadow: 0 3px 10px rgba(0,0,0,.05); }
+      .q-text { font-weight: 600; margin-bottom: 8px; line-height: 1.6; }
+      .opts { list-style: none; }
+      .opts li { padding: 4px 8px; border-radius: 6px; margin: 3px 0; font-size: .9rem; }
+      .opts li.correct { background: #dcfce7; color: #166534; font-weight: 700; }
+      .opts li.wrong { background: #fee2e2; color: #991b1b; text-decoration: line-through; }
+      .ch-tag { display: inline-block; background: #ede9fe; color: #6c63ff; font-size: .75rem; font-weight: 700; padding: 2px 8px; border-radius: 6px; margin-bottom: 8px; }
+      .no-print { margin-bottom: 20px; }
+      @media print { .no-print { display: none; } }
+    </style></head><body>
+    <div class="no-print"><button onclick="window.print()" style="background:#6c63ff;color:#fff;border:none;padding:10px 24px;border-radius:8px;font-weight:600;cursor:pointer;">🖨️ Print / Save as PDF</button></div>
+    <h1>BUS 214 — Wrong Answers Review</h1>
+    <p class="meta">${wrong.length} wrong answers · ${new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'})}</p>`);
+  if (wrong.length === 0) {
+    w.document.write('<p style="text-align:center;padding:40px;color:#16a34a;font-size:1.2rem;font-weight:700;">🎉 No wrong answers!</p>');
+  } else {
+    wrong.forEach(({ q, chosen }, idx) => {
+      const optsHtml = q.opts.map((opt, i) => {
+        let cls = i === q.ans ? 'correct' : (i === chosen ? 'wrong' : '');
+        return `<li class="${cls}">${String.fromCharCode(65+i)}. ${opt}</li>`;
+      }).join('');
+      w.document.write(`<div class="card"><span class="ch-tag">${chNames[q.ch]||q.ch}</span><div class="q-text">${idx+1}. ${q.q}</div><ul class="opts">${optsHtml}</ul></div>`);
+    });
+  }
+  w.document.write('</body></html>');
+  w.document.close();
+}
+
+// ═══════════════════════════════════════════════
+//  FEATURE: SHARE RESULT AS IMAGE
+// ═══════════════════════════════════════════════
+function shareResult(mode) {
+  const canvas = document.getElementById('share-canvas');
+  const ctx = canvas.getContext('2d');
+  const W = 600, H = 400;
+  canvas.width = W; canvas.height = H;
+  let score, correct, wrong;
+  if (mode === 'mock') {
+    score = document.getElementById('mock-final-score')?.textContent || '—';
+    correct = document.getElementById('mock-res-correct')?.textContent || '—';
+    wrong = document.getElementById('mock-res-wrong')?.textContent || '—';
+  } else {
+    score = document.getElementById('quiz-final-score')?.textContent || '—';
+    correct = document.getElementById('res-correct')?.textContent || '—';
+    wrong = document.getElementById('res-wrong')?.textContent || '—';
+  }
+  const scoreNum = parseInt(score) || 0;
+  const grad = ctx.createLinearGradient(0, 0, W, H);
+  grad.addColorStop(0, '#1a1033'); grad.addColorStop(1, '#2d1b69');
+  ctx.fillStyle = grad; ctx.fillRect(0, 0, W, H);
+  ctx.globalAlpha = 0.08; ctx.fillStyle = '#6c63ff';
+  ctx.beginPath(); ctx.arc(500, 80, 120, 0, Math.PI*2); ctx.fill();
+  ctx.beginPath(); ctx.arc(100, 350, 80, 0, Math.PI*2); ctx.fill();
+  ctx.globalAlpha = 1;
+  ctx.fillStyle = '#6c63ff'; ctx.font = 'bold 18px system-ui'; ctx.textAlign = 'center';
+  ctx.fillText('BUS 214 Study Hub', W/2, 45);
+  ctx.fillStyle = '#a78bfa'; ctx.font = '14px system-ui';
+  ctx.fillText((mode === 'mock' ? 'Mock Exam' : 'Quiz') + ' Result', W/2, 70);
+  const cx = W/2, cy = 175, r = 65;
+  const col = scoreNum >= 85 ? '#16a34a' : scoreNum >= 70 ? '#d97706' : scoreNum >= 55 ? '#ea580c' : '#dc2626';
+  ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI*2); ctx.fillStyle = col; ctx.globalAlpha = 0.2; ctx.fill();
+  ctx.globalAlpha = 1; ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI*2); ctx.strokeStyle = col; ctx.lineWidth = 4; ctx.stroke();
+  ctx.fillStyle = '#fff'; ctx.font = 'bold 42px system-ui'; ctx.fillText(score, cx, cy + 12);
+  ctx.font = '13px system-ui'; ctx.fillStyle = '#94a3b8'; ctx.fillText('Score', cx, cy + 32);
+  [{label:'Correct',value:correct,color:'#4ade80'},{label:'Wrong',value:wrong,color:'#f87171'}].forEach((s,i) => {
+    const sx = 180 + i * 240;
+    ctx.fillStyle = s.color; ctx.font = 'bold 28px system-ui'; ctx.fillText(s.value, sx, 300);
+    ctx.fillStyle = '#94a3b8'; ctx.font = '12px system-ui'; ctx.fillText(s.label, sx, 320);
+  });
+  ctx.fillStyle = '#475569'; ctx.font = '11px system-ui'; ctx.fillText('bus-214-study-hub.vercel.app', W/2, 375);
+  canvas.toBlob(async (blob) => {
+    const file = new File([blob], 'bus214-result.png', { type: 'image/png' });
+    if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
+      try { await navigator.share({ files: [file], title: 'BUS 214 Result', text: `حصلت على ${score} في BUS 214! 🎓` }); } catch(e) { dlImg(blob); }
+    } else { dlImg(blob); }
+  }, 'image/png');
+}
+function dlImg(blob) { const u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download='bus214-result.png';document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(u); }
+
+// ═══════════════════════════════════════════════
+//  FEATURE: CHAPTER PDF EXPORT (Summary Booklet)
+// ═══════════════════════════════════════════════
+function exportChapterPDF(pageId, chapterName) {
+  const page = document.getElementById(pageId);
+  if (!page) return;
+  const isDark = document.body.classList.contains('dark');
+  const p = isDark ? {
+    c1:'#a78bfa',c2:'#8b5cf6',c3:'#c4b5fd',bg1:'#1e1b4b',bg2:'#1a1744',bg3:'#2e1065',
+    line:'#312e81',ink:'#e8e4f8',muted:'#a5a0c8',paper:'#1e1b4b',bodyBg:'#0f0d1a',
+    tipBg:'#1a1506',tipBorder:'#78350f',tipAccent:'#fbbf24',tipText:'#fde68a',
+    memoBg:'#0c1929',memoBorder:'#1e3a5f',memoAccent:'#60a5fa',memoText:'#93c5fd',
+    coverGrad:'linear-gradient(160deg,#0f0520 0%,#1e1b4b 30%,#6c63ff 70%,#a78bfa 100%)'
+  } : {
+    c1:'#6c63ff',c2:'#5b54d9',c3:'#4338ca',bg1:'#ede9fe',bg2:'#f5f3ff',bg3:'#e0e7ff',
+    line:'#c4b5fd',ink:'#1e293b',muted:'#64748b',paper:'#ffffff',bodyBg:'#ffffff',
+    tipBg:'#fffbeb',tipBorder:'#fde68a',tipAccent:'#f59e0b',tipText:'#92400e',
+    memoBg:'#eff6ff',memoBorder:'#bfdbfe',memoAccent:'#3b82f6',memoText:'#1e40af',
+    coverGrad:'linear-gradient(160deg,#1e1b4b 0%,#312e81 30%,#6c63ff 70%,#a78bfa 100%)'
+  };
+  const dateStr = new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
+  const shadow = isDark ? 'rgba(0,0,0,.3)' : 'rgba(0,0,0,.06)';
+  const shadowSm = isDark ? 'rgba(0,0,0,.2)' : 'rgba(0,0,0,.04)';
+  const w = window.open('', '_blank');
+  w.document.write(`<!DOCTYPE html><html dir="ltr"><head><meta charset="UTF-8">
+    <title>BUS 214 — ${chapterName}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+      @page { size: A4; margin: 20mm 18mm 22mm 18mm; }
+      :root { --c1:${p.c1};--c2:${p.c2};--c3:${p.c3};--bg1:${p.bg1};--bg2:${p.bg2};--line:${p.line};--ink:${p.ink};--muted:${p.muted}; }
+      * { box-sizing:border-box;margin:0;padding:0; }
+      body { font-family:'Inter',system-ui,sans-serif;color:var(--ink);line-height:1.85;font-size:13.5px;max-width:780px;margin:0 auto;background:${p.bodyBg};-webkit-font-smoothing:antialiased; }
+      .toolbar { position:sticky;top:0;z-index:100;background:${isDark?p.paper:'#fff'};padding:14px 32px;border-bottom:1px solid ${isDark?p.line:'#e2e8f0'};display:flex;align-items:center;gap:14px;box-shadow:0 2px 12px rgba(0,0,0,${isDark?'.15':'.04'}); }
+      .toolbar-btn { background:linear-gradient(135deg,var(--c1),var(--c2));color:#fff;border:none;padding:10px 28px;border-radius:10px;font-weight:700;cursor:pointer;font-size:.92rem;font-family:inherit;box-shadow:0 4px 14px rgba(108,99,255,.25); }
+      .toolbar .hint { color:var(--muted);font-size:.82rem; }
+      .cover { background:${p.coverGrad};color:#fff;padding:56px 44px 44px;position:relative;overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,.2); }
+      .cover::before { content:'';position:absolute;top:-60px;right:-60px;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.08),transparent 70%); }
+      .cover-tag { display:inline-block;background:rgba(255,255,255,.15);padding:5px 16px;border-radius:20px;font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:16px;border:1px solid rgba(255,255,255,.12); }
+      .cover h1 { font-size:1.8rem;font-weight:900;line-height:1.25;margin-bottom:8px; }
+      .cover .sub { font-size:.9rem;opacity:.75; }
+      .cover .info { margin-top:20px;padding-top:16px;border-top:1px solid rgba(255,255,255,.12);display:flex;gap:24px;font-size:.78rem;opacity:.6; }
+      .content { padding:36px 36px 60px; }
+      .section { margin-bottom:28px; }
+      .section h3 { font-size:.95rem;font-weight:700;color:var(--c2);margin:18px 0 10px;padding-bottom:6px;border-bottom:1.5px solid var(--line); }
+      .block { background:${isDark?p.paper:'#fff'};border:1.5px solid var(--line);border-left:5px solid var(--c1);border-radius:12px;padding:16px 20px;margin:14px 0;page-break-inside:avoid;box-shadow:0 4px 16px ${shadow},0 1px 3px ${shadowSm}; }
+      .block strong { color:var(--c1); }
+      .block em { color:var(--muted);font-style:italic; }
+      .ar { direction:rtl;text-align:right;font-family:'Cairo',sans-serif;color:var(--c2);font-size:.82rem;font-weight:600;line-height:1.8;margin-top:8px;padding:8px 14px;background:var(--bg1);border-radius:8px;border-right:3px solid var(--c1); }
+      .tip { background:${p.tipBg};border:1.5px solid ${p.tipBorder};border-left:5px solid ${p.tipAccent};border-radius:12px;padding:14px 18px;margin:14px 0;font-size:.86rem;page-break-inside:avoid;color:${p.tipText};box-shadow:0 4px 16px ${shadow}; }
+      .memo { background:${p.memoBg};border:1.5px solid ${p.memoBorder};border-left:5px solid ${p.memoAccent};border-radius:12px;padding:14px 18px;margin:14px 0;font-size:.86rem;page-break-inside:avoid;color:${p.memoText};box-shadow:0 4px 16px ${shadow}; }
+      .hbox { background:var(--bg1);border:1.5px solid var(--line);border-radius:12px;padding:16px 20px;margin:14px 0;page-break-inside:avoid;box-shadow:0 3px 12px ${shadow}; }
+      .hbox strong { color:var(--c2); }
+      table { width:100%;border-collapse:separate;border-spacing:0;margin:14px 0;font-size:.82rem;border-radius:12px;overflow:hidden;border:1.5px solid var(--line);box-shadow:0 4px 16px ${shadow}; }
+      th { background:var(--c2);color:#fff;padding:10px 14px;text-align:left;font-weight:700;font-size:.78rem; }
+      td { padding:9px 14px;border-bottom:1px solid ${isDark?p.line:'#e5e7eb'};color:${isDark?p.muted:'#334155'};vertical-align:top; }
+      tr:nth-child(even) td { background:var(--bg2); }
+      tr:last-child td { border-bottom:none; }
+      .footer { text-align:center;color:var(--muted);font-size:.72rem;padding:24px 0;border-top:1.5px solid ${isDark?p.line:'#e2e8f0'};margin-top:48px; }
+      @media print {
+        .toolbar { display:none !important; }
+        body { padding:0;max-width:none;font-size:12.5px;-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important; }
+        ${isDark ? `body,.content { background:#fff!important;color:#1e293b!important; }
+        .block { background:#fff!important;color:#1e293b!important;border-color:#c4b5fd!important; }
+        .block strong { color:#6c63ff!important; }
+        .ar { background:#ede9fe!important;color:#6c63ff!important; }
+        .hbox { background:#ede9fe!important;color:#1e293b!important; }
+        .tip { background:#fffbeb!important;color:#92400e!important; }
+        .memo { background:#eff6ff!important;color:#1e40af!important; }
+        td { color:#334155!important; }
+        .section h3 { color:#5b54d9!important; }
+        .footer { color:#94a3b8!important; }` : ''}
+        .cover { border-radius:0;-webkit-print-color-adjust:exact!important; }
+        .content { padding:24px 0 40px; }
+        .block,.tip,.memo,.hbox { break-inside:avoid;box-shadow:none!important; }
+        table { box-shadow:none!important; }
+      }
+    </style></head><body>
+    <div class="toolbar">
+      <button class="toolbar-btn" onclick="window.print()">🖨️ طباعة / حفظ كـ PDF</button>
+      <span class="hint">اختر "Save as PDF" في خيارات الطابعة</span>
+    </div>
+    <div class="cover">
+      <div class="cover-tag">BUS 214 — Business Ethics</div>
+      <h1>${chapterName}</h1>
+      <div class="sub">Ferrell · Business Ethics: Ethical Decision Making and Cases · 13th Edition</div>
+      <div class="info"><span>📅 ${dateStr}</span><span>📖 ملخص شامل</span><span>🌐 bus-214-study-hub.vercel.app</span></div>
+    </div>
+    <div class="content">
+  `);
+
+  // Process chapter content
+  const sections = page.querySelectorAll('.summary-block, .chapter > table, .chapter > .benefits-grid, .chapter > .energy-grid');
+  // Also get direct children of the chapter section
+  const chapter = page.querySelector('.chapter');
+  if (chapter) {
+    const children = chapter.children;
+    for (let i = 0; i < children.length; i++) {
+      const el = children[i];
+      const tag = el.tagName;
+      const cls = el.className || '';
+
+      if (tag === 'H2') continue; // Skip main title
+      if (cls.includes('ch-pdf-btn') || tag === 'BUTTON') continue;
+      if (el.style?.display === 'none') continue;
+
+      if (tag === 'H3') {
+        const arSpan = el.querySelector('.ar-line');
+        const arText = arSpan ? arSpan.textContent : '';
+        const mainText = el.textContent.replace(arText, '').trim();
+        w.document.write('<h3>' + mainText + (arText ? ' <span style="direction:rtl;font-family:Cairo,sans-serif;color:var(--c1);font-size:.8rem;font-weight:600;">' + arText + '</span>' : '') + '</h3>');
+      }
+      else if (cls.includes('summary-block')) {
+        w.document.write('<div class="section">');
+        const h3 = el.querySelector('h3');
+        if (h3) {
+          const arSpan = h3.querySelector('.ar-line');
+          const arText = arSpan ? arSpan.textContent : '';
+          const mainText = h3.textContent.replace(arText, '').trim();
+          w.document.write('<h3>' + mainText + (arText ? ' <span style="direction:rtl;font-family:Cairo,sans-serif;color:var(--c1);font-size:.8rem;font-weight:600;">' + arText + '</span>' : '') + '</h3>');
+        }
+        // Process list items as cards
+        el.querySelectorAll('li').forEach(li => {
+          const arSpan = li.querySelector('.ar-line');
+          const arText = arSpan ? arSpan.textContent : '';
+          let html = li.innerHTML;
+          if (arSpan) html = html.replace(arSpan.outerHTML, '');
+          w.document.write('<div class="block">' + html);
+          if (arText) w.document.write('<div class="ar">' + arText + '</div>');
+          w.document.write('</div>');
+        });
+        // Process tables
+        el.querySelectorAll('table').forEach(t => w.document.write(t.outerHTML));
+        // Process benefit/energy cards
+        el.querySelectorAll('.benefit-card, .energy-card').forEach(card => {
+          w.document.write('<div class="hbox">' + card.innerHTML + '</div>');
+        });
+        w.document.write('</div>');
+      }
+      else if (tag === 'SPAN' && cls.includes('ar-line')) {
+        // Top-level Arabic line (chapter subtitle)
+        continue;
+      }
+      else if (tag === 'P' && el.style?.color) {
+        // Source line
+        continue;
+      }
+      else if (tag === 'TABLE' || cls.includes('summary-table')) {
+        w.document.write(el.outerHTML);
+      }
+    }
+  }
+
+  w.document.write('<div class="footer">BUS 214 Study Hub — ملخص شامل · bus-214-study-hub.vercel.app · ' + dateStr + '</div>');
+  w.document.write('</div></body></html>');
+  w.document.close();
+}
+
+// ═══════════════════════════════════════════════
+//  FEATURE: SMART REMINDERS
+// ═══════════════════════════════════════════════
+function checkReminders() {
+  const LAST_KEY = 'bus214_lastVisit';
+  const EXAM = new Date('2026-04-20T00:00:00');
+  const last = parseInt(localStorage.getItem(LAST_KEY) || '0');
+  const now = Date.now();
+  localStorage.setItem(LAST_KEY, now);
+  if (!last) return;
+  const daysSince = Math.floor((now - last) / (1000*60*60*24));
+  const daysToExam = Math.ceil((EXAM.getTime() - now) / (1000*60*60*24));
+  let msg = '';
+  if (daysToExam <= 0) return;
+  if (daysSince >= 3) msg = `⏰ ما راجعت من ${daysSince} أيام! باقي ${daysToExam} يوم على الاختبار`;
+  else if (daysToExam <= 3) msg = `🔥 باقي ${daysToExam} يوم فقط على الاختبار! وقت المراجعة النهائية`;
+  else if (daysToExam <= 7) msg = `📚 باقي ${daysToExam} أيام على الاختبار — استمر بالمراجعة!`;
+  if (msg) {
+    const toast = document.getElementById('reminder-toast');
+    const textEl = document.getElementById('reminder-toast-text');
+    if (toast && textEl) { textEl.textContent = msg; toast.style.display = 'flex'; setTimeout(() => toast.style.display = 'none', 10000); }
+  }
+}
+
+// ═══════════════════════════════════════════════
+//  HOOK: Track quiz answers for PDF export
+// ═══════════════════════════════════════════════
+window.quizAnswerLog = [];
+window.mockAnswers = window.mockAnswers || [];
+
+// Patch handleQuizAnswer to log answers
+const _origHandleQuizAnswer = typeof handleQuizAnswer === 'function' ? handleQuizAnswer : null;
+if (_origHandleQuizAnswer) {
+  window._origHandleQuizAnswer = _origHandleQuizAnswer;
+}
+
 // ── INIT ──────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
   initDarkMode();
@@ -1119,4 +1412,5 @@ document.addEventListener('DOMContentLoaded', () => {
   renderHomeMastery();
   renderConceptOfDay();
   updateStreak();
+  checkReminders();
 });

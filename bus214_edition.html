@@ -324,6 +324,7 @@
     <h2>📖 Chapter 1 — The Importance of Business Ethics</h2>
     <span class="ar-line" style="font-size:.95rem;font-weight:600;">الفصل الأول — أهمية أخلاقيات الأعمال</span>
     <p style="color:var(--muted);">Source: Ferrell, Business Ethics 13e · Ch. 1</p>
+    <button class="ch-pdf-btn" onclick="exportChapterPDF('page-ch1','Chapter 1 — The Importance of Business Ethics')">📄 تصدير الملخص كـ PDF</button>
 
     <div class="summary-block">
       <h3>1-1 Business Ethics Defined <span class="ar-line">تعريف أخلاقيات الأعمال</span></h3>
@@ -578,6 +579,7 @@
   <section class="chapter">
     <h2>🤝 Chapter 2 — Stakeholder Relationships, Social Responsibility & Corporate Governance</h2>
     <span class="ar-line" style="font-size:.95rem;font-weight:600;">الفصل الثاني — علاقات أصحاب المصلحة والمسؤولية الاجتماعية وحوكمة الشركات</span>
+    <button class="ch-pdf-btn" onclick="exportChapterPDF('page-ch2','Chapter 2 — Stakeholder Relationships & Corporate Governance')">📄 تصدير الملخص كـ PDF</button>
     <p style="color:var(--muted);">Source: Ferrell, Business Ethics 13e · Ch. 2</p>
 
     <div class="summary-block">
@@ -838,6 +840,7 @@
     <h2>🌱 Chapter 3 — Sustainability: Social and Ethical Dimensions</h2>
     <span class="ar-line" style="font-size:.95rem;font-weight:600;">الفصل الثالث — الاستدامة: الأبعاد الاجتماعية والأخلاقية</span>
     <p style="color:var(--muted);">Source: Ferrell, Business Ethics 13e · Ch. 3</p>
+    <button class="ch-pdf-btn" onclick="exportChapterPDF('page-ch3','Chapter 3 — Sustainability: Social and Ethical Dimensions')">📄 تصدير الملخص كـ PDF</button>
 
     <div class="summary-block">
       <h3>3-1 Defining Sustainability <span class="ar-line">تعريف الاستدامة</span></h3>
@@ -1292,6 +1295,8 @@
           </div>
           <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:20px;">
             <button class="quiz-btn quiz-btn-primary" onclick="retakeQuiz()">🔄 Try Again</button>
+            <button class="quiz-btn quiz-btn-secondary" onclick="shareResult('quiz')">📤 مشاركة</button>
+            <button class="quiz-btn quiz-btn-secondary" onclick="exportWrongAnswersPDF('quiz')">📄 PDF</button>
             <button class="quiz-btn quiz-btn-secondary" onclick="showPage('page-dashboard')">📊 Dashboard</button>
           </div>
         </div>
@@ -1349,6 +1354,8 @@
         </div>
         <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:20px;">
           <button class="quiz-btn quiz-btn-primary" onclick="retakeMock()">🔄 Retake</button>
+          <button class="quiz-btn quiz-btn-secondary" onclick="shareResult('mock')">📤 مشاركة</button>
+          <button class="quiz-btn quiz-btn-secondary" onclick="exportWrongAnswersPDF('mock')">📄 PDF</button>
           <button class="quiz-btn quiz-btn-secondary" onclick="showPage('page-dashboard')">📊 Dashboard</button>
         </div>
       </div>
@@ -1419,6 +1426,13 @@
 
 
 
+
+<!-- Reminder Toast -->
+<div id="reminder-toast" style="display:none;position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#6c63ff,#8b5cf6);color:#fff;padding:14px 20px;border-radius:14px;font-size:.9rem;font-weight:600;z-index:10001;box-shadow:0 8px 32px rgba(108,99,255,.35);max-width:90vw;direction:rtl;align-items:center;gap:12px;">
+  <span id="reminder-toast-text"></span>
+  <button onclick="this.parentElement.style.display='none'" style="background:none;border:none;color:#fff;font-size:1.2rem;cursor:pointer;">✕</button>
+</div>
+<canvas id="share-canvas" width="600" height="400" style="display:none;"></canvas>
 
 <!-- Vercel Analytics -->
 <script defer src="/_vercel/insights/script.js"></script>
@@ -1736,6 +1750,17 @@
     font-size: .9rem; border: 1.5px dashed var(--line); border-radius: 14px;
   }
   body.dark .lb-row { background: rgba(255,255,255,.04); }
+
+  /* ── Chapter PDF Export Button ── */
+  .ch-pdf-btn {
+    display: inline-flex; align-items: center; gap: 6px; margin-top: 12px;
+    background: rgba(108,99,255,.12); border: 1.5px solid rgba(108,99,255,.3);
+    color: var(--accent); padding: 8px 20px; border-radius: 50px;
+    font-weight: 600; font-size: .85rem; cursor: pointer;
+    transition: all .2s; font-family: inherit;
+  }
+  .ch-pdf-btn:hover { background: rgba(108,99,255,.2); transform: translateY(-2px); box-shadow: 0 4px 16px rgba(108,99,255,.15); }
+  body.dark .ch-pdf-btn { background: rgba(167,139,250,.12); border-color: rgba(167,139,250,.3); color: #a78bfa; }
 </style>
 </body>
 </html>
