@@ -365,92 +365,131 @@ const mockBank = [
 
 // ── FLASH CARD BANK ────────────────────────────
 const flashCards = [
-  // Chapter 1
-  { ch: "ch1", front: "Business Ethics", back: "Comprises organizational principles, values, and norms that may originate from individuals, organizational statements, or from the legal system that primarily guide individual and group behavior in business." },
-  { ch: "ch1", front: "Morals", back: "A person's personal philosophies about what is right or wrong. They relate to the individual alone." },
-  { ch: "ch1", front: "Ethics", back: "Behavior or decisions made within a group's values or morals. Right or wrong behavior is defined by the group." },
-  { ch: "ch1", front: "Principles", back: "Specific and pervasive boundaries for behavior that should not be violated. Often become the basis for rules (e.g., human rights, freedom of speech)." },
-  { ch: "ch1", front: "Values", back: "Enduring beliefs and ideals that are socially enforced." },
-  { ch: "ch1", front: "Moral Dilemma", back: "A situation where two or more morals are in conflict with one another." },
-  { ch: "ch1", front: "Ethical Culture", back: "Acceptable behavior as defined by the company and industry. Reflects the integrity of decisions made." },
-  { ch: "ch1", front: "Sarbanes-Oxley Act (2002)", back: "Created an accounting oversight board requiring corporations to establish codes of ethics for financial reporting. Made securities fraud a criminal offense." },
-  { ch: "ch1", front: "Federal Sentencing Guidelines for Organizations (FSGO)", back: "Codified into law incentives to reward organizations for taking action to prevent misconduct. Uses a carrot-and-stick approach." },
-  { ch: "ch1", front: "Foreign Corrupt Practices Act", back: "Outlawed bribery of foreign public officials by U.S. companies." },
-  { ch: "ch1", front: "Defense Industry Initiative (DII)", back: "Developed in the 1980s to guide corporate support for ethical conduct. The six principles became the foundation for the FSGO." },
-  { ch: "ch1", front: "ISO 19600", back: "A global compliance management standard that addresses risks, legal requirements, and stakeholder needs." },
-  { ch: "ch1", front: "UN Global Compact", back: "A set of 10 principles concerning human rights, labor, the environment, and anti-corruption." },
-  { ch: "ch1", front: "Consumerism", back: "Activities undertaken by independent individuals, groups, and organizations to protect their rights as consumers. Rose significantly in the 1960s." },
-  { ch: "ch1", front: "Benefits of Business Ethics", back: "Four key benefits: (1) Employee Commitment, (2) Investor Loyalty, (3) Customer Satisfaction, (4) Profits." },
 
-  // Chapter 2
-  { ch: "ch2", front: "Stakeholders", back: "Those who have a 'stake' or claim in some aspect of a company's products, operations, markets, industry, and outcomes." },
-  { ch: "ch2", front: "Primary Stakeholders", back: "Those whose continued association and resources are absolutely necessary for a firm's survival. Include employees, customers, shareholders, governments, and communities." },
-  { ch: "ch2", front: "Secondary Stakeholders", back: "Those who do not typically engage directly in transactions with a company and are not essential to its survival. Include media, trade associations, and special interest groups." },
-  { ch: "ch2", front: "Stakeholder Interaction Model", back: "Recognizes stakeholders beyond primary ones and explicitly acknowledges dialogue between a firm's internal and external environments." },
-  { ch: "ch2", front: "Stakeholder Orientation", back: "The degree to which a firm understands and addresses stakeholder demands. Can be viewed as a continuum." },
-  { ch: "ch2", front: "Social Responsibility", back: "An organization's obligation to maximize its positive impact on stakeholders and minimize its negative impact. Has four levels: economic, legal, ethical, and philanthropic." },
-  { ch: "ch2", front: "Corporate Citizenship", back: "The extent to which businesses strategically meet the economic, legal, ethical, and philanthropic responsibilities placed on them by various stakeholders." },
-  { ch: "ch2", front: "Corporate Governance", back: "The development of formal systems of accountability, oversight, and control. Establishes fundamental systems for preventing and detecting misconduct." },
-  { ch: "ch2", front: "Milton Friedman", back: "Suggested the basic mission of business is to produce goods and services at a profit. Believed the market is a better deterrent to wrongdoing than new laws and regulations." },
-  { ch: "ch2", front: "Adam Smith", back: "Founder of capitalism. Established normative expectations for motives and behaviors through theories about the invisible hand. Said each individual must produce for the common good." },
-  { ch: "ch2", front: "Duty of Care", back: "The legal obligation of an individual or organization to make informed and prudent decisions and avoid behavior that could cause harm to others." },
-  { ch: "ch2", front: "Duty of Loyalty", back: "The obligation of individuals to make decisions that are in the best interest of the corporation and its stakeholders." },
-  { ch: "ch2", front: "Normative Approach", back: "Identifies ethical guidelines that dictate how firms should treat stakeholders." },
-  { ch: "ch2", front: "Descriptive Approach", back: "Focuses on the firm's behavior; addresses how decisions are made for stakeholder relationships." },
-  { ch: "ch2", front: "Interlocking Directorate", back: "The concept of board members being linked to more than one company. Legal unless it involves a direct competitor." },
+  // ════════════════ Chapter 1 — Business Ethics ════════════════
 
-  // Chapter 3
-  { ch: "ch3", front: "Sustainability", back: "The potential for the long-term well-being of the natural environment, including all biological entities, as well as mutually beneficial interactions among nature and individuals, organizations, and business strategies." },
-  { ch: "ch3", front: "Sustainable Development", back: "Meeting the needs of the present without compromising the ability of future generations to meet their own needs, with an emphasis on the natural environment." },
-  { ch: "ch3", front: "Greenwashing", back: "Misleading a consumer into thinking a good or service is more environmentally friendly than it really is." },
-  { ch: "ch3", front: "Green Marketing", back: "A strategy involving stakeholder assessment to create meaningful long-term relationships with customers while maintaining, supporting, and enhancing the natural environment." },
-  { ch: "ch3", front: "Environmental Protection Agency (EPA)", back: "U.S. government agency whose mission is to 'protect human health and the environment.' Most influential regulatory agency dealing with environmental issues." },
-  { ch: "ch3", front: "Clean Air Act", back: "Regulates atmospheric emissions and established national air quality standards. Extended EPA power to regulate greenhouse gas sources." },
-  { ch: "ch3", front: "Pollution Prevention Act", back: "Focuses on reducing pollution through cost-effective changes in production, operation, and raw materials use." },
-  { ch: "ch3", front: "Toxic Substances Control Act", back: "Empowers the EPA to track the 75,000 industrial chemicals currently produced or imported into the United States." },
-  { ch: "ch3", front: "LEED", back: "Leadership in Energy & Environmental Design — A certification program that recognizes sustainable building practices and strategies." },
-  { ch: "ch3", front: "Kyoto Protocol", back: "An international treaty meant to curb global greenhouse gas emissions by having countries voluntarily reduce national outputs." },
-  { ch: "ch3", front: "ISO 14000", back: "A comprehensive set of environmental standards that encourage a cleaner, safer, and healthier world, developed by the International Organization for Standardization." },
-  { ch: "ch3", front: "ESG (Environmental, Social, Governance)", back: "A framework used by most businesses to report air, land, and water sustainability issues and evaluate firm performance in these areas." },
-  { ch: "ch3", front: "Deforestation", back: "Destruction of forests (covering >30% of the planet). Caused predominantly by beef, soy, palm oil, and wood products industries." },
-  { ch: "ch3", front: "Hydropower", back: "The largest form of renewable energy. Uses moving water to generate electricity." },
-  { ch: "ch3", front: "Acid Rain", back: "Caused by nitrous oxides and sulfur dioxides exposed to air and rain. A result of stationary and mobile sources of air pollution." },
+  { ch: "ch1", front: "Business Ethics", back: "Comprises organizational principles, values, and norms that may originate from individuals, organizational statements, or from the legal system that primarily guide individual and group behavior in business. | المبادئ والقيم والمعايير التنظيمية التي توجّه السلوك الفردي والجماعي في الأعمال." },
 
-  // Additional Chapter 1 flashcards
-  { ch: "ch1", front: "FCPA (Foreign Corrupt Practices Act)", back: "Enacted in 1977. Makes it illegal for U.S. persons and companies to bribe foreign government officials to obtain or retain business. First major U.S. law on international business ethics. | صدر عام 1977، يُجرِّم رشوة المسؤولين الحكوميين الأجانب." },
-  { ch: "ch1", front: "Whistleblower", back: "An employee who reports illegal or unethical conduct within their organization. Protected under Dodd-Frank (2010) from retaliation. | موظف يُبلِّغ عن سلوك غير قانوني أو غير أخلاقي ويحميه Dodd-Frank من الانتقام." },
-  { ch: "ch1", front: "DII (Defense Industry Initiative)", back: "Established in 1986 by major defense contractors. First major corporate initiative to establish ethics best practices. Precursor to the FSGO. | أُسست عام 1986 من كبرى مقاولي الدفاع — أول مبادرة شركاتية كبرى لأفضل الممارسات الأخلاقية." },
-  { ch: "ch1", front: "FSGO (Federal Sentencing Guidelines for Organizations)", back: "Enacted in 1991. Uses 'carrot and stick' approach — rewards firms that proactively build ethics programs with reduced penalties; punishes firms that don't. | صدر عام 1991، يكافئ الشركات ذات برامج الأخلاقيات بعقوبات مخففة." },
-  // Additional Chapter 2 flashcards
-  { ch: "ch2", front: "Dodge v. Ford (1919)", back: "Landmark court case ruling that a corporation must operate primarily for the benefit of its SHAREHOLDERS, not for charitable or social purposes. Established shareholder primacy doctrine. | قضية بارزة أرست مبدأ أولوية المساهمين." },
-  { ch: "ch2", front: "Carroll's CSR Pyramid", back: "Four-level model from bottom to top: 1) Economic (be profitable) → 2) Legal (obey the law) → 3) Ethical (be ethical) → 4) Philanthropic (be a good corporate citizen). | هرم من أربع طبقات: اقتصادي → قانوني → أخلاقي → خيري." },
-  { ch: "ch2", front: "Primary Stakeholders", back: "Groups with a DIRECT economic relationship with the firm: employees, customers, shareholders, suppliers, and local communities. Essential to firm survival. | أصحاب علاقة اقتصادية مباشرة: موظفون، عملاء، مساهمون، موردون، مجتمعات محلية." },
-  { ch: "ch2", front: "Secondary Stakeholders", back: "Groups who INDIRECTLY affect or are affected by the firm: government, media, competitors, NGOs, and activist groups. Less essential but still influential. | يؤثرون في الشركة بشكل غير مباشر: الحكومة، الإعلام، المنافسون، المنظمات غير الحكومية." },
-  // Additional Chapter 3 flashcards
-  { ch: "ch3", front: "Triple Bottom Line (TBL)", back: "A sustainability framework measuring performance across three dimensions: People (social equity) + Planet (environmental stewardship) + Profit (economic performance). | إطار استدامة يقيس: الناس + الكوكب + الربح." },
-  { ch: "ch3", front: "Carbon Footprint", back: "The total amount of CO₂ and greenhouse gases emitted by an individual, organization, product, or event — directly or indirectly. Companies aim to reduce it. | إجمالي الغازات الدفيئة المنبعثة — الشركات تسعى لتقليلها." },
-  { ch: "ch3", front: "LEED Certification", back: "Leadership in Energy & Environmental Design. A globally recognized certification program that recognizes sustainable, energy-efficient building practices. | شهادة القيادة في الطاقة والتصميم البيئي للمباني المستدامة." },
-  { ch: "ch3", front: "Cap-and-Trade", back: "A market-based environmental policy that sets a cap (limit) on total carbon emissions and allows companies to buy/sell emission allowances. Designed to reduce greenhouse gases cost-effectively. | سياسة بيئية تضع سقفًا للانبعاثات وتتيح تداولها." },
+  { ch: "ch1", front: "Morals vs. Ethics", back: "Morals: a person's PERSONAL philosophies about what is right or wrong — relates to the individual alone.\nEthics: behavior or decisions made within a GROUP's values — right/wrong is defined by the group, not the individual.\nالأخلاق الفردية (شخصية) ← الأخلاقيات (جماعية — يحددها المجتمع/الشركة)." },
 
-  // ── ملخصات العنود — فلاش كاردز مضافة ────────────────────────────────
-  { ch: "ch1", front: "Value Dilemma", back: "A situation where two or more beliefs or ideals are in conflict with one another. | معضلة القيم: تعارض معتقدين أو مبدأين أو أكثر مع بعضهما." },
-  { ch: "ch1", front: "Workplace Integrity", back: "Includes: pressure to compromise organizational standards, observed misconduct, reporting of misconduct, and retaliation against those who report. | نزاهة مكان العمل تشمل: الضغط للتسوية، مشاهدة المخالفات، الإبلاغ عنها، والانتقام من المُبلِّغين." },
-  { ch: "ch1", front: "4 Factors of Ethical Culture", back: "1) Corporate policies, 2) Top management's leadership on ethical issues, 3) The influence of coworkers, 4) The opportunity for unethical behavior. | 4 عوامل: السياسات، قيادة الإدارة العليا، تأثير الزملاء، وفرصة السلوك غير الأخلاقي." },
-  { ch: "ch2", front: "Instrumental Approach", back: "Describes what happens to a firm if it behaves in a particular way toward stakeholders — focuses on consequences and business outcomes of stakeholder treatment. | يصف ما يحدث للشركة إذا تصرفت بطريقة معينة تجاه أصحاب المصلحة." },
-  { ch: "ch2", front: "Reputation", back: "A corporation's image and an intangible asset with tangible value. Can increase or decrease based on how stakeholders perceive the firm's conduct. | صورة الشركة وأصل غير ملموس ذو قيمة ملموسة." },
-  { ch: "ch2", front: "Shareholder Model of Governance", back: "Founded in classic economic precepts — focuses on maximizing wealth for investors and owners. Performance accountability runs between top management and shareholders. | يركز على تعظيم ثروة المساهمين والمستثمرين." },
-  { ch: "ch2", front: "Stakeholder Model of Governance", back: "A broader view that considers stakeholder welfare in tandem with corporate needs and interests — not just shareholders. | رؤية أوسع تأخذ بعين الاعتبار رفاهية جميع أصحاب المصلحة." },
-  { ch: "ch2", front: "Executive Compensation", back: "Shifted from internal equity (how executive pay relates to employee pay) to external equity (what CEOs at other companies earn) — causing significant increases in executive pay. | تحوّل من العدالة الداخلية إلى الخارجية، مما أدى لارتفاع كبير في تعويضات المديرين." },
-  { ch: "ch2", front: "Fiduciaries", back: "Persons placed in positions of trust who act on behalf of the best interests of the organization. Examples: directors and officers of corporations. | أشخاص في مناصب ثقة يتصرفون نيابةً عن مصالح المنظمة — مثل أعضاء مجلس الإدارة والمسؤولين." },
-  { ch: "ch3", front: "Doha Amendment", back: "An extension of the Kyoto Protocol focused on ensuring the implementation of existing climate agreements. | امتداد لبروتوكول كيوتو ركّز على ضمان تنفيذ الاتفاقيات المناخية القائمة." },
-  { ch: "ch3", front: "3 Sources of Air Pollution", back: "1) Stationary sources — factories, power plants. 2) Mobile sources — cars, trucks, planes, trains. 3) Natural sources — windblown dust, volcanic eruptions. | ثابتة + متحركة + طبيعية." },
-  { ch: "ch3", front: "3 Ways Environmental Performance Increases Revenue", back: "1) Better access to certain markets, 2) Differentiation of products, 3) Sale of pollution-control technology. | الوصول لأسواق + تمييز المنتجات + بيع تقنيات التحكم في التلوث." },
-  { ch: "ch3", front: "Levels of Environmental Commitment", back: "Low: deals with existing problems only. Medium: complies with laws, views environment as threat. High: views environment as OPPORTUNITY, has strategic programs, conducts audits. | منخفض → متوسط → عالي (البيئة = فرصة)." },
-  { ch: "ch1", front: "Pros & Cons of Business Ethics", back: "PROS: employee commitment, customer satisfaction, profits, efficiency, reduced lawsuits. CONS: eats into revenues/sales/profitability; does NOT maximize shareholder benefits. | إيجابيات: الالتزام والرضا والأرباح. سلبيات: تأكل الإيرادات ولا تعظّم فوائد المساهمين." },
-  { ch: "ch1", front: "4 Reasons to Study Business Ethics", back: "1) Identify ethical issues when they arise. 2) Recognize approaches for resolving them. 3) Cope with conflicts between personal and organizational values. 4) Gain knowledge to make more ethical decisions. | تحديد المشكلات · حلها · التعامل مع تضارب القيم · اتخاذ قرارات أفضل." },
-  { ch: "ch1", front: "Potential Risk Areas (Business Ethics)", back: "Misuse of company resources, abusive behavior, harassment, accounting fraud, conflicts of interest, defective products, bribery, product knock-offs, and employee theft. | مجالات الخطر: إساءة الموارد، التحرش، الاحتيال المحاسبي، الرشوة، المنتجات المعيبة والمقلدة، سرقة الموظفين." },
-  { ch: "ch2", front: "Stakeholder Interaction Model", back: "Recognizes multiple stakeholders and explicitly acknowledges that DIALOGUE exists between a firm's internal (employees, management) and external (customers, communities, regulators) environments. | يُقرّ بوجود حوار بين البيئة الداخلية والخارجية للشركة." },
-  { ch: "ch2", front: "Corporate Governance — 3 Core Functions", back: "1) Preventing and detecting misconduct. 2) Investigating and disciplining violations. 3) Recovery and continuous improvement. | منع المخالفات وكشفها · التحقيق والتأديب · التعافي والتحسين المستمر." }
+  { ch: "ch1", front: "Principles", back: "Specific and pervasive boundaries for behavior that should NOT be violated. Often become the basis for rules (e.g., human rights, freedom of speech). | حدود سلوكية محددة وشاملة لا ينبغي انتهاكها." },
+
+  { ch: "ch1", front: "Values", back: "Enduring beliefs and ideals that are socially enforced. | المعتقدات والمُثُل الدائمة التي يُطبِّقها المجتمع." },
+
+  { ch: "ch1", front: "Moral Dilemma", back: "A situation where two or more MORALS are in conflict with one another. | تعارض معيارين أخلاقيين أو أكثر." },
+
+  { ch: "ch1", front: "Value Dilemma", back: "A situation where two or more VALUES or beliefs are in conflict with one another. | تعارض قيمتين أو أكثر مع بعضهما." },
+
+  { ch: "ch1", front: "Ethical Culture", back: "Acceptable behavior as defined by the company and industry. Reflects the integrity of decisions made.\n4 factors that shape it: (1) Corporate policies, (2) Top management leadership, (3) Coworker influence, (4) Opportunity for unethical behavior.\nالثقافة الأخلاقية تُشكّلها 4 عوامل: السياسات · قيادة الإدارة · الزملاء · الفرصة." },
+
+  { ch: "ch1", front: "History of Business Ethics", back: "• Before the 1960s — ethical issues in business were discussed in THEOLOGY & PHILOSOPHY domains.\n• 1920s — major ethical concern was the LIVING WAGE.\n• 1960s — rise of consumerism shaped business ethics as a formal field.\nقبل الستينيات: أُطر دينية/فلسفية · عشرينيات: الأجر المعيشي · ستينيات: حركة المستهلكين." },
+
+  { ch: "ch1", front: "Consumerism", back: "Activities undertaken by independent individuals, groups, and organizations to protect their rights as consumers. Rose significantly in the 1960s. | حركة حماية المستهلك — نشطت في الستينيات." },
+
+  { ch: "ch1", front: "Workplace Integrity", back: "Encompasses four elements: (1) Pressure to compromise organizational standards, (2) Observed misconduct, (3) Reporting of misconduct, (4) Retaliation against those who report. | نزاهة بيئة العمل: الضغط · المشاهدة · الإبلاغ · الانتقام." },
+
+  { ch: "ch1", front: "Potential Risk Areas", back: "Misuse of company resources, abusive behavior, harassment, accounting fraud, conflicts of interest, defective products, bribery, product knock-offs, and employee theft. | إساءة الموارد · التحرش · الاحتيال المحاسبي · الرشوة · المنتجات المعيبة والمقلدة · السرقة." },
+
+  { ch: "ch1", front: "4 Reasons to Study Business Ethics", back: "1. Identify ethical issues when they arise.\n2. Recognize approaches for resolving them.\n3. Cope with conflicts between personal and organizational values.\n4. Gain knowledge to make more ethical decisions.\nتحديد المشكلات · حلها · التعامل مع تضارب القيم · اتخاذ قرارات أفضل." },
+
+  { ch: "ch1", front: "Benefits of Business Ethics", back: "Four key benefits:\n(1) Employee Commitment — willingness to sacrifice for the organization.\n(2) Investor Loyalty — foundation for efficiency and profits.\n(3) Customer Satisfaction — increases trust.\n(4) Profits — ethical conduct leads to better performance.\nالالتزام · الولاء · الرضا · الأرباح." },
+
+  { ch: "ch1", front: "Pros & Cons of Business Ethics", back: "PROS: employee commitment, customer satisfaction, profits, efficiency, reduced lawsuits.\nCONS: eats into revenues/sales/profitability; does NOT maximize shareholder benefits.\nإيجابيات: الالتزام والرضا والأرباح. سلبيات: تأكل الإيرادات ولا تعظّم فوائد المساهمين." },
+
+  { ch: "ch1", front: "DII — Defense Industry Initiative (1986)", back: "Established in 1986 by major defense contractors. The FIRST major corporate initiative to establish ethics best practices. Its six principles became the FOUNDATION for the FSGO. | أُسست 1986 من مقاولي الدفاع — أول مبادرة شركاتية للأخلاقيات — أساس الـ FSGO." },
+
+  { ch: "ch1", front: "FSGO — Federal Sentencing Guidelines (1991)", back: "Enacted in 1991. Uses a 'carrot and stick' approach — REWARDS firms that proactively build ethics programs with reduced penalties; PUNISHES firms that don't. | صدر 1991، يكافئ الشركات ذات برامج الأخلاقيات بعقوبات مخففة (جزرة وعصا)." },
+
+  { ch: "ch1", front: "SOX — Sarbanes-Oxley Act (2002)", back: "Created an accounting oversight board. Required corporations to establish codes of ethics for financial reporting. Made SECURITIES FRAUD a criminal offense. | أنشأ مجلس مراقبة محاسبي وجعل الاحتيال في الأوراق المالية جريمة جنائية." },
+
+  { ch: "ch1", front: "FCPA — Foreign Corrupt Practices Act (1977)", back: "Makes it ILLEGAL for U.S. persons and companies to bribe foreign government officials to obtain or retain business. First major U.S. law on international business ethics. | يُجرِّم رشوة المسؤولين الأجانب من قِبَل شركات أمريكية — أول قانون دولي للأخلاقيات." },
+
+  { ch: "ch1", front: "ISO 19600", back: "A global compliance management standard that addresses risks, legal requirements, and stakeholder needs. Voluntary — not legally binding. | معيار دولي طوعي لإدارة الامتثال يعالج المخاطر والمتطلبات القانونية." },
+
+  { ch: "ch1", front: "UN Global Compact", back: "A set of 10 principles concerning human rights, labor, the environment, and anti-corruption. Purpose: create openness and alignment among business, government, society, labor, and the United Nations. | 10 مبادئ: حقوق الإنسان · العمل · البيئة · مكافحة الفساد." },
+
+  // ════════════════ Chapter 2 — Stakeholders & Social Responsibility ════════════════
+
+  { ch: "ch2", front: "Stakeholders", back: "Those who have a 'stake' or claim in some aspect of a company's products, operations, markets, industry, and outcomes. The relationship is TWO-WAY: businesses influence stakeholders AND stakeholders influence businesses. | العلاقة في الاتجاهين — الشركة تؤثر في أصحاب المصلحة والعكس." },
+
+  { ch: "ch2", front: "Primary vs. Secondary Stakeholders", back: "Primary: DIRECT economic relationship — employees, customers, shareholders, suppliers, communities. ESSENTIAL to survival.\nSecondary: INDIRECT — government, media, competitors, NGOs. Less essential but still influential.\nأولية (مباشرة، ضرورية للبقاء) ← ثانوية (غير مباشرة، مؤثرة)." },
+
+  { ch: "ch2", front: "3 Approaches to Stakeholder Relationships", back: "Normative: identifies ethical guidelines for HOW firms SHOULD treat stakeholders.\nDescriptive: focuses on how decisions ARE MADE for stakeholder relationships.\nInstrumental: describes WHAT HAPPENS to a firm if it behaves in a particular way toward stakeholders.\nمعياري (ينبغي) · وصفي (ما يحدث) · أداتي (النتائج)." },
+
+  { ch: "ch2", front: "Stakeholder Interaction Model", back: "Recognizes multiple stakeholders and explicitly acknowledges that DIALOGUE exists between a firm's INTERNAL (employees, management) and EXTERNAL (customers, communities, regulators) environments. | يُقرّ بوجود حوار بين البيئة الداخلية والخارجية للشركة." },
+
+  { ch: "ch2", front: "Stakeholder Orientation", back: "The degree to which a firm understands and addresses stakeholder demands. Includes: (1) generating data about stakeholders, (2) distributing it throughout the firm, (3) responding to it. | مدى فهم الشركة لمتطلبات أصحاب المصلحة والاستجابة لها." },
+
+  { ch: "ch2", front: "Social Responsibility", back: "An organization's obligation to MAXIMIZE its positive impact on stakeholders and MINIMIZE its negative impact.\nFour levels (Carroll's Pyramid): Economic → Legal → Ethical → Philanthropic.\nتعظيم الأثر الإيجابي وتقليل السلبي. أربعة مستويات." },
+
+  { ch: "ch2", front: "Carroll's CSR Pyramid", back: "Four levels from bottom to top:\n1) Economic — be PROFITABLE (most fundamental)\n2) Legal — OBEY the law\n3) Ethical — do what is RIGHT beyond the law\n4) Philanthropic — be a GOOD CORPORATE CITIZEN (give back)\nهرم: اقتصادي ← قانوني ← أخلاقي ← خيري." },
+
+  { ch: "ch2", front: "Corporate Citizenship", back: "The extent to which businesses strategically meet the economic, legal, ethical, and philanthropic responsibilities placed on them by stakeholders.\nFour dimensions: (1) sustained economic performance, (2) rigorous compliance, (3) ethical actions beyond law, (4) voluntary contributions.\nالمواطنة المؤسسية: الوفاء الاستراتيجي بالمسؤوليات الأربع." },
+
+  { ch: "ch2", front: "Reputation", back: "A corporation's image and an INTANGIBLE ASSET with TANGIBLE value. Can increase or decrease based on how stakeholders perceive the firm's conduct. | صورة الشركة — أصل غير ملموس بقيمة ملموسة حقيقية." },
+
+  { ch: "ch2", front: "Corporate Governance", back: "The development of formal systems of accountability, oversight, and control.\nCore functions: (1) Preventing & detecting misconduct, (2) Investigating & disciplining violations, (3) Recovery & continuous improvement.\nمنظومة رسمية من المساءلة والرقابة والتحكم." },
+
+  { ch: "ch2", front: "Accountability, Oversight & Control", back: "Accountability: workplace decisions align with the firm's strategic direction and ethical/legal standards.\nOversight: system of checks and balances limiting deviation from policies.\nControl: process of auditing and improving organizational decisions.\nمساءلة · رقابة · تحكم — ثلاثة أعمدة لحوكمة الشركات." },
+
+  { ch: "ch2", front: "Shareholder vs. Stakeholder Model of Governance", back: "Shareholder Model: MAXIMIZE WEALTH for investors/owners — accountability runs between management and shareholders.\nStakeholder Model: BROADER view — considers ALL stakeholder welfare alongside corporate needs.\nنموذج المساهم (الربح أولًا) ← نموذج أصحاب المصلحة (رعاية الجميع)." },
+
+  { ch: "ch2", front: "Fiduciaries", back: "Persons placed in positions of TRUST who act on behalf of the best interests of the organization. Examples: board directors and corporate officers.\nBound by: Duty of Care + Duty of Loyalty.\nأشخاص في مناصب ثقة يتصرفون لمصلحة المنظمة." },
+
+  { ch: "ch2", front: "Duty of Care vs. Duty of Loyalty", back: "Duty of Care (Diligence): make INFORMED and PRUDENT decisions; avoid causing harm to others.\nDuty of Loyalty: make decisions in the BEST INTEREST of the corporation and its stakeholders — no self-interest.\nالعناية الواجبة: قرارات مدروسة · الولاء: قرارات تخدم الشركة لا الفرد." },
+
+  { ch: "ch2", front: "Executive Compensation", back: "Shifted from INTERNAL equity (how executive pay relates to employee pay) to EXTERNAL equity (what CEOs at other companies earn), causing significant pay increases.\nStakeholders support high compensation ONLY when linked to strong performance.\nتحوّل من عدالة داخلية إلى خارجية — سبّب ارتفاعًا كبيرًا في رواتب المديرين." },
+
+  { ch: "ch2", front: "Interlocking Directorate", back: "Board members linked to MORE THAN ONE company. LEGAL unless it involves a DIRECT COMPETITOR. | عضو مجلس الإدارة المرتبط بأكثر من شركة — قانوني إلا مع المنافس المباشر." },
+
+  { ch: "ch2", front: "Adam Smith & Milton Friedman", back: "Adam Smith (capitalism founder): each individual must produce for the COMMON GOOD — the 'invisible hand' guides markets.\nMilton Friedman: basic mission of business is to PRODUCE GOODS/SERVICES AT A PROFIT; the market deters wrongdoing better than laws.\nسميث: مصلحة الفرد تخدم المجتمع · فريدمان: مهمة الأعمال الربح فقط." },
+
+  { ch: "ch2", front: "Dodge v. Ford (1919)", back: "Landmark court case: ruled that a corporation must operate primarily for the benefit of its SHAREHOLDERS, NOT for charitable or social purposes. Established the SHAREHOLDER PRIMACY doctrine. | قضية بارزة: الشركة للمساهمين أولًا — أرست مبدأ أولوية المساهمين." },
+
+  { ch: "ch2", front: "6 Steps — Implementing Stakeholder Perspective", back: "1. Assess corporate culture\n2. Identify stakeholder groups\n3. Identify stakeholder issues\n4. Assess organizational commitment to social responsibility\n5. Identify resources and determine urgency\n6. Gain stakeholder feedback\nست خطوات لتطبيق منظور أصحاب المصلحة." },
+
+  // ════════════════ Chapter 3 — Sustainability ════════════════
+
+  { ch: "ch3", front: "Sustainability", back: "The potential for the long-term well-being of the natural environment, including all biological entities, as well as mutually beneficial interactions among nature and individuals, organizations, and business strategies. | الرفاه طويل الأمد للبيئة مع تحقيق مصالح متبادلة بين الطبيعة والأعمال." },
+
+  { ch: "ch3", front: "Sustainable Development", back: "Meeting the needs of the PRESENT without compromising the ability of FUTURE GENERATIONS to meet their own needs. Emphasis on the natural environment. | تلبية احتياجات الحاضر دون المساس بقدرة الأجيال القادمة." },
+
+  { ch: "ch3", front: "Triple Bottom Line (TBL)", back: "A sustainability framework measuring performance across three dimensions:\n• People — social equity\n• Planet — environmental stewardship\n• Profit — economic performance\nإطار يقيس الناس + الكوكب + الربح." },
+
+  { ch: "ch3", front: "Greenwashing", back: "Misleading a consumer into thinking a good or service is MORE environmentally friendly than it really is. | تضليل المستهلك بادعاء صداقة بيئية مبالغ فيها." },
+
+  { ch: "ch3", front: "Green Marketing", back: "A strategy involving stakeholder assessment to create meaningful long-term relationships with customers while MAINTAINING, SUPPORTING, and ENHANCING the natural environment. | استراتيجية تسويقية تُعزز البيئة الطبيعية وتحافظ عليها." },
+
+  { ch: "ch3", front: "ESG", back: "Environmental, Social, Governance. A framework used by most businesses to REPORT air, land, and water sustainability issues and evaluate firm performance in these areas. | إطار تقارير: بيئي + اجتماعي + حوكمة." },
+
+  { ch: "ch3", front: "3 Sources of Air Pollution", back: "1) Stationary — factories, power plants\n2) Mobile — cars, trucks, planes, trains\n3) Natural — windblown dust, volcanic eruptions\nثابتة + متحركة + طبيعية." },
+
+  { ch: "ch3", front: "Acid Rain", back: "Caused by nitrous oxides and sulfur dioxides exposed to air and rain. Result of STATIONARY and MOBILE sources of air pollution. | ناتجة عن أكاسيد النيتروجين والكبريت من المصادر الثابتة والمتحركة." },
+
+  { ch: "ch3", front: "Kyoto Protocol & Doha Amendment", back: "Kyoto Protocol: international treaty to curb greenhouse gas emissions — countries VOLUNTARILY reduce national outputs.\nDoha Amendment: extension of Kyoto Protocol focused on ensuring IMPLEMENTATION of existing climate agreements.\nكيوتو: تقليل طوعي للانبعاثات · دوحة: ضمان تنفيذ الاتفاقيات." },
+
+  { ch: "ch3", front: "Cap-and-Trade", back: "A market-based environmental policy that sets a CAP (limit) on total carbon emissions and allows companies to BUY/SELL emission allowances. Designed to reduce greenhouse gases cost-effectively. | سقف للانبعاثات + تداولها في السوق." },
+
+  { ch: "ch3", front: "EPA — Environmental Protection Agency", back: "U.S. government agency. Mission: 'protect human health and the environment.' The MOST INFLUENTIAL regulatory agency dealing with environmental issues in the U.S. | الوكالة الأمريكية لحماية البيئة — الأكثر تأثيرًا في تطبيق التشريعات البيئية." },
+
+  { ch: "ch3", front: "Key Environmental Laws", back: "• Clean Air Act — regulates atmospheric emissions, national air quality standards\n• Clean Water Act — protects navigable waters from pollution\n• Toxic Substances Control Act — EPA tracks 75,000 industrial chemicals\n• Pollution Prevention Act — cost-effective changes in production\n• Endangered Species Act — protects endangered species & habitats\nخمسة قوانين بيئية رئيسية." },
+
+  { ch: "ch3", front: "ISO 14000", back: "A comprehensive set of environmental standards that encourage a cleaner, safer, and healthier world. Developed by the International Organization for Standardization. | مجموعة شاملة من المعايير البيئية الدولية." },
+
+  { ch: "ch3", front: "LEED Certification", back: "Leadership in Energy & Environmental Design. A globally recognized certification program that recognizes SUSTAINABLE, ENERGY-EFFICIENT building practices and strategies. | شهادة القيادة في الطاقة والتصميم البيئي للمباني المستدامة." },
+
+  { ch: "ch3", front: "Deforestation", back: "Destruction of forests (which cover >30% of the planet). Caused predominantly by BEEF, SOY, PALM OIL, and WOOD PRODUCTS industries. | إزالة الغابات (أكثر من 30% من الكوكب) — بسبب اللحوم وفول الصويا وزيت النخيل والخشب." },
+
+  { ch: "ch3", front: "Rachel Carson — Silent Spring", back: "Rachel Carson's book addressed the INDISCRIMINATE USE OF PESTICIDES and helped SPARK THE MODERN ENVIRONMENTAL MOVEMENT. | كتاب 'الربيع الصامت' فضح الاستخدام العشوائي للمبيدات وأشعل الحركة البيئية الحديثة." },
+
+  { ch: "ch3", front: "GM Organisms & Seeds", back: "Genetically Modified organisms: plant/animal DNA manipulated to produce desired effects (pest resistance, drought resistance, higher yield).\nKey fact: GM seeds are PATENTED — farmers CANNOT keep harvested seed and must purchase new seeds each year.\nالبذور المعدلة وراثيًا مُسجَّلة ببراءة اختراع — لا يمكن للمزارعين الاحتفاظ بها." },
+
+  { ch: "ch3", front: "Hydropower", back: "The LARGEST form of renewable energy. Uses moving water to generate electricity.\nPros: decreases greenhouse gas emissions and air pollution.\nCons: destroys wildlife/human habitats; disrupts aquatic life cycles.\nأكبر مصدر للطاقة المتجددة — فوائد بيئية لكن يضر بالموائل الطبيعية." },
+
+  { ch: "ch3", front: "6 Alternative Energy Sources", back: "1) Wind — could meet 20% of U.S. energy needs\n2) Geothermal — Earth's natural heat (expensive, limited locations)\n3) Solar — 100% renewable but expensive and inefficient\n4) Nuclear — pollution-free but dangerous waste\n5) Biofuels/Ethanol — controversial, may increase food prices\n6) Hydropower — LARGEST renewable, but harms habitats\nستة مصادر طاقة بديلة." },
+
+  { ch: "ch3", front: "3 Ways Environmental Performance Increases Revenue", back: "1) Better ACCESS to certain markets\n2) DIFFERENTIATION of products\n3) SALE of pollution-control technology\nثلاث طرق لزيادة الإيرادات عبر الأداء البيئي." },
+
 ];
 
 // ── QUIZ STATE ────────────────────────────────
