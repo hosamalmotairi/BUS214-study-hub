@@ -1885,13 +1885,9 @@ function tbSelectCount(el, val) {
   body.hide-arabic #page-ch3 .ar-line,
   body.hide-arabic #page-quick .ar-line { display: none !important; }
 
-  /* استثناء: الترجمة تبقى ظاهرة داخل الـ Key Notes والكويز */
-  body.hide-arabic #page-ch1 .keypoints-block .ar-line,
-  body.hide-arabic #page-ch2 .keypoints-block .ar-line,
-  body.hide-arabic #page-ch3 .keypoints-block .ar-line,
-  body.hide-arabic #page-ch1 .ch-quiz-block .ar-line,
-  body.hide-arabic #page-ch2 .ch-quiz-block .ar-line,
-  body.hide-arabic #page-ch3 .ch-quiz-block .ar-line { display: block !important; }
+  /* Key Notes وكويز الشابتر: إنجليزي دايماً — بدون ترجمة */
+  .keypoints-block .ar-line,
+  .ch-quiz-block .ar-line { display: none !important; }
 
   @media (max-width: 768px) {
     .fab-dark   { bottom: 16px  !important; }
