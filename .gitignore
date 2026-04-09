@@ -1,8 +1,11 @@
 *.pptx
 *.pdf
+# Allow course slides PDFs
+!slides/*.pdf
 *.zip
 drive-download-*
 ملخصات*
 ميد*
 .DS_Store
 .claude/
+.gstack/
