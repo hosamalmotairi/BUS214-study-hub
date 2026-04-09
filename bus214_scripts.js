@@ -577,18 +577,25 @@ const SVG_SUN = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" str
 const SVG_MOON_20 = SVG_MOON.replace(/width="16"/g,'width="20"').replace(/height="16"/g,'height="20"');
 const SVG_SUN_20 = SVG_SUN.replace(/width="16"/g,'width="20"').replace(/height="16"/g,'height="20"');
 
+function setHtmlBg(isDark) {
+  document.documentElement.style.backgroundColor = isDark ? '#0B1120' : '#EFF6FF';
+}
 function initDarkMode() {
   if (localStorage.getItem('bus214_dark') === '1') {
     document.body.classList.add('dark');
+    setHtmlBg(true);
     const btn = document.getElementById('dark-btn');
     if (btn) btn.innerHTML = SVG_SUN + ' Light Mode';
     const floatBtn = document.getElementById('dark-btn-float');
     if (floatBtn) floatBtn.innerHTML = SVG_SUN_20;
+  } else {
+    setHtmlBg(false);
   }
 }
 function toggleDark() {
   document.body.classList.toggle('dark');
   const isDark = document.body.classList.contains('dark');
+  setHtmlBg(isDark);
   localStorage.setItem('bus214_dark', isDark ? '1' : '0');
   const btn = document.getElementById('dark-btn');
   if (btn) btn.innerHTML = isDark ? SVG_SUN + ' Light Mode' : SVG_MOON + ' Dark Mode';
