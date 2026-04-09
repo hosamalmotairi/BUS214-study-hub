@@ -817,30 +817,52 @@ function buildWrongReview() {
     const q = a.q;
     const item = document.createElement('div');
     item.className = 'wrev-item';
+    // Number row + question
+    const numRow = document.createElement('div');
+    numRow.className = 'wrev-num-row';
     const num = document.createElement('div');
     num.className = 'wrev-num';
     num.textContent = idx + 1;
-    const body = document.createElement('div');
-    body.className = 'wrev-body';
     const qDiv = document.createElement('div');
     qDiv.className = 'wrev-q';
     qDiv.textContent = q.q;
+    numRow.appendChild(num);
+    numRow.appendChild(qDiv);
+    item.appendChild(numRow);
+    // Choices
+    const choices = document.createElement('div');
+    choices.className = 'wrev-choices';
     const wrongDiv = document.createElement('div');
     wrongDiv.className = 'wrev-ans wrev-wrong';
-    wrongDiv.textContent = '❌ ' + letters[a.chosen] + '. ' + q.opts[a.chosen];
+    wrongDiv.textContent = '✗ ' + letters[a.chosen] + '. ' + q.opts[a.chosen];
     const correctDiv = document.createElement('div');
     correctDiv.className = 'wrev-ans wrev-correct';
-    correctDiv.textContent = '✅ ' + letters[q.ans] + '. ' + q.opts[q.ans];
-    body.appendChild(qDiv);
-    body.appendChild(wrongDiv);
-    body.appendChild(correctDiv);
+    correctDiv.textContent = '✓ ' + letters[q.ans] + '. ' + q.opts[q.ans];
+    choices.appendChild(wrongDiv);
+    choices.appendChild(correctDiv);
+    item.appendChild(choices);
+    const body = document.createElement('div');
+    body.className = 'wrev-body';
     if (q.exp && q.exp[q.ans]) {
-      const expDiv = document.createElement('div');
-      expDiv.className = 'wrev-exp';
-      expDiv.textContent = q.exp[q.ans].replace(/<[^>]+>/g, '');
-      body.appendChild(expDiv);
+      // Extract clean Arabic explanation only (after <br> or <span dir='rtl'>)
+      const raw = q.exp[q.ans];
+      const arMatch = raw.match(/dir=['"]rtl['"][^>]*>([^<]+)/);
+      const enMatch = raw.split('<br>')[0].replace(/<[^>]+>/g, '').replace(/^[✅❌]\s*(Correct\.?\s*)/i, '').trim();
+      const arText = arMatch ? arMatch[1].replace(/^[✅❌]\s*(صح\s*—?\s*)/,'').trim() : '';
+      const showText = arText || enMatch;
+      if (showText) {
+        const expDiv = document.createElement('div');
+        expDiv.className = 'wrev-exp';
+        const label = document.createElement('span');
+        label.className = 'wrev-exp-label';
+        label.textContent = 'لماذا؟ ';
+        const text = document.createElement('span');
+        text.textContent = showText;
+        expDiv.appendChild(label);
+        expDiv.appendChild(text);
+        body.appendChild(expDiv);
+      }
     }
-    item.appendChild(num);
     item.appendChild(body);
     revEl.appendChild(item);
   });
