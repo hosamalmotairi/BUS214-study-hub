@@ -686,12 +686,12 @@ function handleQuizAnswer(chosen) {
   const isCorrect = chosen === q.ans;
   if (isCorrect) {
     quizCorrect++;
-    fb.textContent = "✅ Correct!";
+    fb.textContent = "✅ صحيح!";
     fb.className = "quiz-feedback correct";
     if (window.SFX) SFX.play('correct');
   } else {
     quizWrong++;
-    fb.textContent = "❌ Wrong — The correct answer is: " + ["A","B","C","D","E"][q.ans] + ". " + q.opts[q.ans];
+    fb.textContent = "❌ خطأ — الإجابة الصحيحة: " + ["A","B","C","D","E"][q.ans] + ". " + q.opts[q.ans];
     fb.className = "quiz-feedback wrong";
     if (window.SFX) SFX.play('wrong');
     if (typeof saveWrongAnswer === 'function') saveWrongAnswer(q, chosen);
