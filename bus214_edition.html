@@ -1921,10 +1921,14 @@ function tbSelectCount(el, val) {
 <script src="bus214_firebase.js"></script>
 <style>
   /* ── Additional BUS 214 specific styles ── */
-  .summary-block { background: var(--paper); border-radius: 16px; padding: 20px 24px; margin-bottom: 20px; border: 1px solid var(--line); box-shadow: 0 4px 12px rgba(0,0,0,.04); }
-  .summary-block h3 { margin: 0 0 14px; color: var(--accent); font-size: 1rem; }
+  /* summary-block — overridden by bus214_styles.css comprehensive block */
+  .summary-block { background: var(--paper); border-radius: 0 16px 16px 0; padding: 20px 24px 20px 20px; margin-bottom: 18px; border: 1.5px solid var(--line); border-left: 5px solid var(--accent); box-shadow: 0 2px 12px rgba(37,99,235,0.05); transition: box-shadow 250ms ease; }
+  .summary-block:hover { box-shadow: 0 4px 20px rgba(37,99,235,0.10); }
+  body.dark .summary-block { background: rgba(30,41,59,0.85); border-color: rgba(51,65,85,0.6); border-left-color: #60A5FA; }
+  .summary-block h3 { margin: 0 0 14px; color: var(--accent); font-size: 1.05rem; font-weight: 700; padding-bottom: 10px; border-bottom: 1.5px dashed var(--line); line-height: 1.4; }
   .summary-block ul { margin: 0; padding-left: 20px; }
-  .summary-block ul li { margin-bottom: 8px; }
+  .summary-block li { padding: 7px 0; border-bottom: 1px solid rgba(228,236,252,0.5); font-size: 0.95rem; line-height: 1.65; }
+  .summary-block li:last-child { border-bottom: none; }
   .summary-table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: .9rem; border: 1.5px solid var(--line); border-radius: 10px; overflow: hidden; }
   .summary-table th { background: var(--accent-soft); color: var(--accent); padding: 9px 12px; text-align: left; font-weight: 700; border-bottom: 2px solid var(--accent); border-right: 1px solid rgba(37,99,235,0.2); }
   .summary-table th:last-child { border-right: none; }
@@ -2018,7 +2022,7 @@ function tbSelectCount(el, val) {
     .quick-nav-grid { grid-template-columns: repeat(2, 1fr); }
     .dash-stats-grid { grid-template-columns: repeat(3, 1fr); }
     .benefits-grid, .energy-grid { grid-template-columns: 1fr; }
-    .summary-block { padding: 14px 16px; }
+    .summary-block { padding: 14px 12px 14px 16px; }
   }
   @media (max-width: 480px) {
     .quick-nav-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
@@ -2147,7 +2151,7 @@ function tbSelectCount(el, val) {
   body.dark .mock-sol-opt    { background:rgba(255,255,255,.06); }
 
   /* ── DARK MODE IMPROVEMENTS ──────────────── */
-  body.dark .summary-block  { background:#1a1d2e; border-color:#2a2d3e; }
+  body.dark .summary-block  { background:rgba(30,41,59,0.85); border-color:rgba(51,65,85,0.6); border-left-color:#60A5FA; }
   body.dark .summary-table th { background:#0c2942; color:#7dd3fc; }
   body.dark .summary-table td { color:#cbd5e1; }
   body.dark .summary-table tr:nth-child(even) td { background:rgba(255,255,255,.03); }
