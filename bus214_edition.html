@@ -1772,10 +1772,13 @@ function tbSelectCount(el, val) {
   .summary-block h3 { margin: 0 0 14px; color: var(--accent); font-size: 1rem; }
   .summary-block ul { margin: 0; padding-left: 20px; }
   .summary-block ul li { margin-bottom: 8px; }
-  .summary-table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: .9rem; }
-  .summary-table th { background: var(--accent-soft); color: var(--accent); padding: 8px 12px; text-align: left; font-weight: 700; }
-  .summary-table td { padding: 8px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  .summary-table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: .9rem; border: 1.5px solid var(--line); border-radius: 10px; overflow: hidden; }
+  .summary-table th { background: var(--accent-soft); color: var(--accent); padding: 9px 12px; text-align: left; font-weight: 700; border-bottom: 2px solid var(--accent); border-right: 1px solid rgba(37,99,235,0.2); }
+  .summary-table th:last-child { border-right: none; }
+  .summary-table td { padding: 8px 12px; border-bottom: 1px solid var(--line); border-right: 1px solid var(--line); vertical-align: top; }
+  .summary-table td:last-child { border-right: none; }
   .summary-table tr:last-child td { border-bottom: none; }
+  .summary-table tr:hover td { background: var(--accent-soft); }
   .benefits-grid, .energy-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; margin-top: 14px; }
   .benefit-card, .energy-card { background: var(--accent-soft); border-radius: 14px; padding: 16px; }
   .benefit-card p, .energy-card p { margin: 6px 0 0; font-size: .85rem; color: var(--muted); }
