@@ -8,68 +8,73 @@
   <meta name="author" content="Hosam Almotairi">
   <meta name="robots" content="index, follow">
   <!-- Favicon -->
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%230ea5e9'/><text y='.9em' font-size='72' x='50%' dominant-baseline='auto' text-anchor='middle'>⚖️</text></svg>">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%232563EB'/><text y='.9em' font-size='72' x='50%' dominant-baseline='auto' text-anchor='middle'>⚖️</text></svg>">
   <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#0ea5e9">
+  <meta name="theme-color" content="#2563EB">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="BUS 214">
-  <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%230ea5e9'/><text y='.9em' font-size='72' x='50%' dominant-baseline='auto' text-anchor='middle'>⚖️</text></svg>">
+  <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%232563EB'/><text y='.9em' font-size='72' x='50%' dominant-baseline='auto' text-anchor='middle'>⚖️</text></svg>">
   <!-- Open Graph -->
   <meta property="og:title" content="BUS 214 — HOSAM Study Hub">
   <meta property="og:description" content="دليل دراسي تفاعلي لمادة BUS 214 أخلاقيات الأعمال — فصول 1-3 مع أسئلة تدريبية واختبارات محاكاة وبطاقات تعليمية">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="HOSAM Study Hub">
-  <meta name="theme-color" content="#0ea5e9">
+  <meta name="theme-color" content="#2563EB">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="bus214_styles.css">
   <style>
-    /* BUS 214 accent override — teal/green theme */
+    /* BUS 214 accent override — blue theme */
     :root {
-      --accent: #0ea5e9;
-      --accent-soft: #e0f2fe;
+      --accent: #2563EB;
+      --accent-soft: #DBEAFE;
     }
-    body.dark { --accent-soft: #0c2942; }
-    .hero { background: linear-gradient(135deg, #0c2d4a, #0369a1); }
-    .quiz-progress-fill { background: linear-gradient(90deg, #0ea5e9, #38bdf8); }
-    .quiz-ch-item input:checked + .quiz-ch-card { border-color: #0ea5e9; background: #e0f2fe; box-shadow: 0 8px 16px rgba(14,165,233,0.15); }
-    body.dark .quiz-ch-item input:checked + .quiz-ch-card { background: #0c2942; }
-    .sidebar-logo span { color: #0ea5e9; }
+    body.dark { --accent-soft: #1E3A5F; }
+    .hero { background: linear-gradient(135deg, #1D4ED8, #3B82F6); }
+    .quiz-progress-fill { background: linear-gradient(90deg, #2563EB, #60A5FA); }
+    .quiz-ch-item input:checked + .quiz-ch-card { border-color: #2563EB; background: #DBEAFE; box-shadow: 0 8px 16px rgba(37,99,235,0.15); }
+    body.dark .quiz-ch-item input:checked + .quiz-ch-card { background: #1E3A5F; }
+    /* .sidebar-logo uses gradient text via CSS */
     .tag { background: rgba(255,255,255,0.2); }
-    .toc-item { border-left: 3px solid #0ea5e9; }
+    .toc-item { border-left: 3px solid #2563EB; }
   </style>
 </head>
 <body>
 
+<!-- SKIP TO CONTENT -->
+<a href="#main-content" class="skip-link">تخطي إلى المحتوى الرئيسي</a>
+
 <!-- GAME HUD -->
 <div class="game-hud" id="game-hud">
-  <div class="hud-item" id="hud-level">🌱 مبتدئ</div>
+  <div class="hud-item" id="hud-level"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle"><path d="M12 22c4-3 8-6 8-11a8 8 0 0 0-16 0c0 5 4 8 8 11z"/><circle cx="12" cy="11" r="3"/></svg> مبتدئ</div>
   <div class="hud-xp-wrap">
     <div class="hud-xp-track"><div class="hud-xp-fill" id="hud-xp-bar" style="width:0%"></div></div>
     <span id="hud-xp" style="font-size:.7rem;color:var(--muted);">0 XP</span>
   </div>
-  <div class="hud-item" id="hud-streak">🔥 0</div>
-  <div class="hud-item hud-combo" id="hud-combo" style="display:none;">⚡ x1</div>
+  <div class="hud-item" id="hud-streak"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c-4-3-8-6-8-11a8 8 0 0 1 16 0c0 5-4 8-8 11z"/></svg> 0</div>
+  <div class="hud-item hud-combo" id="hud-combo" style="display:none;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> x1</div>
 </div>
 
 <!-- ── AUTH OVERLAY ────────────────────────── -->
-<div id="auth-overlay" style="position:fixed;inset:0;background:rgba(15,17,30,0.95);z-index:99999;display:flex;align-items:center;justify-content:center;overflow-y:auto;">
-  <div id="auth-box" style="background:#1a1d2e;border-radius:20px;padding:24px 28px;width:90%;max-width:420px;box-shadow:0 24px 64px rgba(0,0,0,0.5);margin:16px auto;">
-    <h2 style="text-align:center;color:#0ea5e9;margin:0 0 4px;">⚖️ BUS 214</h2>
-    <p style="text-align:center;color:#888;margin:0 0 16px;font-size:.85rem;">سجّل دخولك لحفظ تقدمك من أي جهاز</p>
-    <div style="display:flex;gap:8px;margin-bottom:14px;">
-      <button id="tab-login" class="auth-tab-btn" onclick="authTab('login')" style="flex:1;padding:10px;border-radius:10px;font-weight:700;cursor:pointer;font-size:.95rem;background:#0ea5e9;color:#fff;border:none;">دخول</button>
-      <button id="tab-register" class="auth-tab-btn" onclick="authTab('register')" style="flex:1;padding:10px;border-radius:10px;font-weight:700;cursor:pointer;font-size:.95rem;background:transparent;color:#0ea5e9;border:2px solid #1e4060;">حساب جديد</button>
+<div id="auth-overlay" class="auth-overlay">
+  <div id="auth-box" class="auth-box">
+    <div class="auth-logo"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1L1 7l11 6 11-6-11-6z"/><path d="M1 17l11 6 11-6"/><path d="M1 12l11 6 11-6"/></svg></div>
+    <h2 class="auth-title">BUS 214</h2>
+    <p class="auth-subtitle">سجّل دخولك لحفظ تقدمك من أي جهاز</p>
+    <div class="auth-tabs">
+      <button id="tab-login" class="auth-tab-btn active" onclick="authTab('login')">دخول</button>
+      <button id="tab-register" class="auth-tab-btn" onclick="authTab('register')">حساب جديد</button>
     </div>
-    <div id="auth-name-wrap" style="display:none;">
-      <input id="auth-name" type="text" placeholder="اسمك (مثال: Hosam)" style="width:100%;padding:12px 16px;border-radius:12px;border:1.5px solid #1e4060;font-size:.95rem;box-sizing:border-box;margin-bottom:12px;background:#12152a;color:#e8eaf6;">
+    <div id="auth-name-wrap" class="auth-field" style="display:none;">
+      <input id="auth-name" type="text" placeholder="اسمك (مثال: Hosam)" class="auth-input" autocomplete="name">
     </div>
-    <input id="auth-email" type="email" placeholder="البريد الإلكتروني" style="width:100%;padding:10px 14px;border-radius:12px;border:1.5px solid #1e4060;font-size:.92rem;box-sizing:border-box;margin-bottom:10px;background:#12152a;color:#e8eaf6;">
-    <input id="auth-pass" type="password" placeholder="كلمة السر" style="width:100%;padding:10px 14px;border-radius:12px;border:1.5px solid #1e4060;font-size:.92rem;box-sizing:border-box;margin-bottom:10px;background:#12152a;color:#e8eaf6;">
-    <div id="auth-err" style="color:#f87171;font-size:.8rem;text-align:center;min-height:16px;margin-bottom:8px;"></div>
-    <button id="auth-submit" onclick="authSubmit()" data-mode="login" style="width:100%;padding:13px;border-radius:12px;border:none;background:#0ea5e9;color:#fff;font-size:1rem;font-weight:700;cursor:pointer;">دخول</button>
-    <div style="text-align:center;margin-top:12px;">
-      <button onclick="skipAuth()" style="width:100%;padding:11px;border-radius:12px;border:1px dashed #2a3550;background:transparent;color:#888;font-size:.85rem;cursor:pointer;">تصفح بدون حساب</button>
-    </div>
+    <input id="auth-email" type="email" placeholder="البريد الإلكتروني" class="auth-input" autocomplete="email">
+    <input id="auth-pass" type="password" placeholder="كلمة السر" class="auth-input" autocomplete="current-password">
+    <div id="auth-err" class="auth-error" role="alert" aria-live="polite"></div>
+    <button id="auth-submit" onclick="authSubmit()" data-mode="login" class="auth-submit-btn">دخول</button>
+    <button onclick="skipAuth()" class="auth-skip-btn">تصفح بدون حساب</button>
   </div>
 </div>
 
@@ -77,30 +82,34 @@
 <div id="sidebar-overlay" onclick="toggleSidebar()"></div>
 
 <!-- ── SIDEBAR ─────────────────────────────── -->
-<nav class="sidebar-nav" id="sidebar">
+<nav class="sidebar-nav" id="sidebar" aria-label="القائمة الرئيسية">
   <div class="sidebar-header">
     <div class="sidebar-logo">BUS 214</div>
     <div class="sidebar-subtitle">HOSAM Study Hub</div>
   </div>
   <ul class="sidebar-menu">
-    <li><a href="#" onclick="showPage('page-home');if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon">🏠</span> Home</a></li>
+    <li><a href="#" onclick="showPage('page-home');if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span> Home</a></li>
     <li class="sidebar-divider"></li>
-    <li class="sidebar-label">📖 Chapters</li>
-    <li><a href="#" onclick="showPage('page-ch1');if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon">📖</span> Ch 1 — Business Ethics</a></li>
-    <li><a href="#" onclick="showPage('page-ch2');if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon">🤝</span> Ch 2 — Stakeholders</a></li>
-    <li><a href="#" onclick="showPage('page-ch3');if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon">🌱</span> Ch 3 — Sustainability</a></li>
+    <li class="sidebar-label"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg> Chapters</li>
+    <li><a href="#" onclick="showPage('page-ch1');if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></span> Ch 1 — Business Ethics</a></li>
+    <li><a href="#" onclick="showPage('page-ch2');if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span> Ch 2 — Stakeholders</a></li>
+    <li><a href="#" onclick="showPage('page-ch3');if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c4-3 8-6 8-11a8 8 0 0 0-16 0c0 5 4 8 8 11z"/><circle cx="12" cy="11" r="3"/></svg></span> Ch 3 — Sustainability</a></li>
     <li class="sidebar-divider"></li>
-    <li class="sidebar-label">🔍 Review</li>
-    <li><a href="#" onclick="showPage('page-quick');if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon">⚡</span> Quick Review</a></li>
-    <li><a href="#" onclick="showPage('page-flash');initFlashCards();if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon">🃏</span> Flash Cards</a></li>
+    <li class="sidebar-label"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg> Review</li>
+    <li><a href="#" onclick="showPage('page-quick');if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></span> Quick Review</a></li>
+    <li><a href="#" onclick="showPage('page-flash');initFlashCards();if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></span> Flash Cards</a></li>
     <li class="sidebar-divider"></li>
-    <li class="sidebar-label">✏️ Practice</li>
-    <li><a href="#" onclick="showPage('page-quiz');if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon">🎯</span> Quiz Mode</a></li>
-    <li><a href="#" onclick="showPage('page-mock');if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon">📋</span> Mock Exam</a></li>
-    <li><a href="#" onclick="showPage('page-testbank');if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon">📕</span> Test Bank</a></li>
-    <li><a href="#" onclick="showPage('page-dashboard');if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon">📊</span> Dashboard</a></li>
-    <li><a href="#" onclick="showPage('page-badges');renderBadgesPage();if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon">🏅</span> الشارات</a></li>
-    <li><a href="#" onclick="showPage('page-leaderboard');renderLeaderboard();if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon">🏆</span> Leaderboard</a></li>
+    <li class="sidebar-label"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg> Practice</li>
+    <li><a href="#" onclick="showPage('page-quiz');if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></span> Quiz Mode</a></li>
+    <li><a href="#" onclick="showPage('page-mock');if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></span> Mock Exam</a></li>
+    <li><a href="#" onclick="showPage('page-testbank');if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/><line x1="8" y1="7" x2="16" y2="7"/><line x1="8" y1="11" x2="14" y2="11"/></svg></span> Test Bank</a></li>
+    <li><a href="#" onclick="showPage('page-dashboard');if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></span> Dashboard</a></li>
+    <li><a href="#" onclick="showPage('page-badges');renderBadgesPage();if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg></span> الشارات</a></li>
+    <li><a href="#" onclick="showPage('page-leaderboard');renderLeaderboard();if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg></span> Leaderboard</a></li>
+    <li class="sidebar-divider"></li>
+    <li class="sidebar-label"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> Tools</li>
+    <li><a href="#" onclick="showPage('page-pomodoro');if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span> Pomodoro</a></li>
+    <li><a href="#" onclick="showPage('page-wrong-review');renderWrongReview();if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg></span> مراجعة الأخطاء</a></li>
   </ul>
   <!-- Auth UI -->
   <div id="fb-user-info" class="fb-user-info" style="display:none;">
@@ -108,23 +117,23 @@
     <button class="fb-signout-btn" onclick="signOutUser()">خروج</button>
   </div>
   <div class="sidebar-footer">
-    <button class="dark-toggle" onclick="toggleDark()" id="dark-btn">🌙 Dark Mode</button>
+    <button class="dark-toggle" onclick="toggleDark()" id="dark-btn" aria-label="تبديل الوضع المظلم"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg> Dark Mode</button>
   </div>
 </nav>
 
 <!-- ── SIDEBAR TOGGLE ──────────────────────── -->
-<button class="sidebar-toggle" id="sidebar-toggle" onclick="toggleSidebar()">☰</button>
+<button class="sidebar-toggle" id="sidebar-toggle" onclick="toggleSidebar()" aria-label="القائمة الجانبية"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
 
 <!-- ── FLOATING BUTTONS ────────────────────── -->
-<button id="dark-btn-float"   onclick="toggleDark()"    title="وضع الليل" class="fab fab-dark">🌙</button>
-<button id="search-btn-float" onclick="openSearch()"    title="بحث"       class="fab fab-search">🔍</button>
-<button id="ar-btn-float"     onclick="toggleArabic()"  title="إظهار/إخفاء الترجمة" class="fab fab-ar">ع</button>
+<button id="dark-btn-float" onclick="toggleDark()" title="وضع الليل" class="fab fab-dark" aria-label="تبديل الوضع المظلم"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button>
+<button id="search-btn-float" onclick="openSearch()" title="بحث" class="fab fab-search" aria-label="بحث"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></button>
+<button id="ar-btn-float" onclick="toggleArabic()" title="إظهار/إخفاء الترجمة" class="fab fab-ar" aria-label="تبديل الترجمة العربية">ع</button>
 
 <!-- ── SEARCH OVERLAY ─────────────────────── -->
 <div id="search-overlay" onclick="if(event.target===this)closeSearch()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:9999;align-items:flex-start;justify-content:center;padding-top:80px;">
   <div id="search-box" style="background:var(--paper,#fff);border-radius:20px;padding:24px;width:90%;max-width:560px;box-shadow:0 20px 60px rgba(0,0,0,.2);">
     <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;">
-      <span style="font-size:1.2rem;">🔍</span>
+      <span style="font-size:1.2rem;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
       <input id="search-input" type="text" placeholder="ابحث في المحتوى... (Search content)" oninput="runSearch(this.value)" style="flex:1;border:none;outline:none;font-size:1rem;background:transparent;color:var(--ink,#1a1d2e);">
       <button onclick="closeSearch()" style="border:none;background:none;font-size:1.3rem;cursor:pointer;color:var(--muted);">✕</button>
     </div>
@@ -136,7 +145,7 @@
 
 
 <!-- ── MAIN CONTENT ────────────────────────── -->
-<div class="main-content" id="main-content">
+<main class="main-content" id="main-content" role="main">
 
 <!-- ══════════════════════════════════════════
      HOME PAGE
@@ -144,7 +153,7 @@
 <div id="page-home" class="page active">
 
   <!-- الدعاء -->
-  <div style="background:linear-gradient(135deg,#0369a1,#0ea5e9,#06b6d4);color:#fff;text-align:center;border-radius:16px;padding:20px 24px;margin-bottom:12px;box-shadow:0 10px 30px rgba(14,165,233,0.2);">
+  <div style="background:linear-gradient(135deg,#1D4ED8,#2563EB,#06b6d4);color:#fff;text-align:center;border-radius:16px;padding:20px 24px;margin-bottom:12px;box-shadow:0 10px 30px rgba(37,99,235,0.2);">
     <div style="font-size:1.05rem;font-weight:700;line-height:1.6;">
       ✨ زكاة العِلم نشره، لا تنسوني من صالح دعائكم بالتوفيق والتيسير — حسام المطيري ✨
     </div>
@@ -163,8 +172,8 @@
   </section>
 
   <!-- Install App Banner -->
-  <div id="install-banner" style="background:linear-gradient(135deg,#0369a1,#0ea5e9);border-radius:14px;padding:16px 20px;margin-bottom:14px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;box-shadow:0 4px 16px rgba(14,165,233,.2);cursor:pointer;" onclick="document.getElementById('install-guide').style.display=document.getElementById('install-guide').style.display==='none'?'block':'none'">
-    <span style="font-size:1.8rem;">📲</span>
+  <div id="install-banner" style="background:linear-gradient(135deg,#1D4ED8,#2563EB);border-radius:14px;padding:16px 20px;margin-bottom:14px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;box-shadow:0 4px 16px rgba(37,99,235,.2);cursor:pointer;" onclick="document.getElementById('install-guide').style.display=document.getElementById('install-guide').style.display==='none'?'block':'none'">
+    <span style="font-size:1.8rem;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg></span>
     <div style="flex:1;min-width:180px;">
       <div style="font-weight:800;color:#fff;font-size:.92rem;">حمّل التطبيق على جوالك!</div>
       <div style="color:rgba(255,255,255,.7);font-size:.78rem;">يشتغل بدون نت — اضغط هنا للشرح</div>
@@ -172,7 +181,7 @@
     <span style="color:rgba(255,255,255,.5);font-size:1.2rem;">▼</span>
   </div>
   <div id="install-guide" style="display:none;background:var(--paper);border:1.5px solid var(--line);border-radius:14px;padding:20px;margin-bottom:14px;">
-    <h3 style="color:var(--accent);font-size:.95rem;margin-bottom:14px;">📲 طريقة التحميل</h3>
+    <h3 style="color:var(--accent);font-size:.95rem;margin-bottom:14px;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg> طريقة التحميل</h3>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
       <div style="background:var(--accent-soft);border-radius:12px;padding:14px;">
         <div style="font-weight:800;font-size:.85rem;margin-bottom:8px;">🍎 آيفون / آيباد</div>
@@ -193,21 +202,21 @@
         </ol>
       </div>
     </div>
-    <p style="text-align:center;font-size:.75rem;color:var(--muted);margin-top:12px;">بعد التحميل يشتغل بدون انترنت 🔥</p>
+    <p style="text-align:center;font-size:.75rem;color:var(--muted);margin-top:12px;">بعد التحميل يشتغل بدون انترنت <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c-4-3-8-6-8-11a8 8 0 0 1 16 0c0 5-4 8-8 11z"/></svg></p>
   </div>
 
   <div class="quick-nav-grid">
-    <button class="qn-card" onclick="showPage('page-ch1')"><div class="qn-icon">📖</div><div class="qn-label">Chapter 1</div><div class="qn-sub">Business Ethics</div></button>
-    <button class="qn-card" onclick="showPage('page-ch2')"><div class="qn-icon">🤝</div><div class="qn-label">Chapter 2</div><div class="qn-sub">Stakeholders & Governance</div></button>
-    <button class="qn-card" onclick="showPage('page-ch3')"><div class="qn-icon">🌱</div><div class="qn-label">Chapter 3</div><div class="qn-sub">Sustainability</div></button>
-    <button class="qn-card" onclick="showPage('page-quiz')"><div class="qn-icon">🎯</div><div class="qn-label">Quiz Mode</div><div class="qn-sub">Practice Questions</div></button>
-    <button class="qn-card" onclick="showPage('page-flash');initFlashCards()"><div class="qn-icon">🃏</div><div class="qn-label">Flash Cards</div><div class="qn-sub">75 Key Terms</div></button>
-    <button class="qn-card" onclick="showPage('page-mock')"><div class="qn-icon">📋</div><div class="qn-label">Mock Exam</div><div class="qn-sub">30 Questions · 30 min</div></button>
+    <button class="qn-card" onclick="showPage('page-ch1')"><div class="qn-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><div class="qn-label">Chapter 1</div><div class="qn-sub">Business Ethics</div></button>
+    <button class="qn-card" onclick="showPage('page-ch2')"><div class="qn-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div><div class="qn-label">Chapter 2</div><div class="qn-sub">Stakeholders & Governance</div></button>
+    <button class="qn-card" onclick="showPage('page-ch3')"><div class="qn-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c4-3 8-6 8-11a8 8 0 0 0-16 0c0 5 4 8 8 11z"/><circle cx="12" cy="11" r="3"/></svg></div><div class="qn-label">Chapter 3</div><div class="qn-sub">Sustainability</div></button>
+    <button class="qn-card" onclick="showPage('page-quiz')"><div class="qn-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div><div class="qn-label">Quiz Mode</div><div class="qn-sub">Practice Questions</div></button>
+    <button class="qn-card" onclick="showPage('page-flash');initFlashCards()"><div class="qn-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div><div class="qn-label">Flash Cards</div><div class="qn-sub">75 Key Terms</div></button>
+    <button class="qn-card" onclick="showPage('page-mock')"><div class="qn-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div><div class="qn-label">Mock Exam</div><div class="qn-sub">30 Questions · 30 min</div></button>
   </div>
 
   <!-- ── EXAM COUNTDOWN ─────────────────────────── -->
   <section class="chapter" style="margin-top:24px;">
-    <div class="exam-countdown-section" style="background:linear-gradient(135deg,#0c2d4a,#0369a1);border-radius:18px;padding:28px 20px;color:#fff;text-align:center;">
+    <div class="exam-countdown-section" style="background:linear-gradient(135deg,#0B1D3A,#1D4ED8);border-radius:18px;padding:28px 20px;color:#fff;text-align:center;">
       <div style="font-size:.95rem;font-weight:600;opacity:.85;margin-bottom:20px;letter-spacing:.05em;">⏰ الوقت المتبقي للاختبار</div>
       <div style="display:flex;justify-content:center;gap:16px;flex-wrap:wrap;">
         <div style="background:rgba(255,255,255,.15);border-radius:14px;padding:16px 20px;min-width:70px;">
@@ -223,7 +232,7 @@
           <div style="font-size:.78rem;opacity:.75;margin-top:4px;">دقيقة</div>
         </div>
       </div>
-      <div style="margin-top:18px;font-size:.85rem;opacity:.7;">📅 الاختبار: الأحد 12 أبريل 2026</div>
+      <div style="margin-top:18px;font-size:.85rem;opacity:.7;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> الاختبار: الأحد 12 أبريل 2026</div>
     </div>
   </section>
 
@@ -249,7 +258,7 @@
   </script>
 
   <section class="chapter" style="margin-top:24px;">
-    <h2>📚 Course Overview</h2>
+    <h2><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg> Course Overview</h2>
     <p>BUS 214 — Business Ethics covers the ethical dimensions of business decision-making using Ferrell's <em>Business Ethics: Ethical Decision Making and Cases</em> (13th Edition).</p>
     <div class="toc">
       <div class="toc-item" onclick="showPage('page-ch1')"><strong>Chapter 1:</strong> The Importance of Business Ethics — Definitions, History, Benefits</div>
@@ -260,28 +269,28 @@
 
   <!-- ── CHAPTER MASTERY ──────────────────────── -->
   <section class="chapter" style="margin-top:24px;">
-    <h2>🎯 إتقان الفصول <span style="font-size:.8rem;font-weight:400;color:var(--muted);margin-right:8px;">Chapter Mastery</span></h2>
+    <h2><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg> إتقان الفصول <span style="font-size:.8rem;font-weight:400;color:var(--muted);margin-right:8px;">Chapter Mastery</span></h2>
     <p style="color:var(--muted);font-size:.85rem;margin-bottom:16px;">بناءً على أعلى نتيجة في الكويز لكل فصل</p>
     <div class="mastery-bars">
       <div class="mastery-row">
-        <div class="mastery-label"><span class="mastery-icon">📖</span><span>الفصل الأول — Business Ethics</span><span id="home-pct-ch1" class="mastery-pct">—</span></div>
+        <div class="mastery-label"><span class="mastery-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></span><span>الفصل الأول — Business Ethics</span><span id="home-pct-ch1" class="mastery-pct">—</span></div>
         <div class="mastery-track"><div id="home-bar-ch1" class="mastery-fill" style="width:0%"></div></div>
       </div>
       <div class="mastery-row">
-        <div class="mastery-label"><span class="mastery-icon">🤝</span><span>الفصل الثاني — Stakeholders</span><span id="home-pct-ch2" class="mastery-pct">—</span></div>
+        <div class="mastery-label"><span class="mastery-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span><span>الفصل الثاني — Stakeholders</span><span id="home-pct-ch2" class="mastery-pct">—</span></div>
         <div class="mastery-track"><div id="home-bar-ch2" class="mastery-fill" style="width:0%"></div></div>
       </div>
       <div class="mastery-row">
-        <div class="mastery-label"><span class="mastery-icon">🌱</span><span>الفصل الثالث — Sustainability</span><span id="home-pct-ch3" class="mastery-pct">—</span></div>
+        <div class="mastery-label"><span class="mastery-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle"><path d="M12 22c4-3 8-6 8-11a8 8 0 0 0-16 0c0 5 4 8 8 11z"/><circle cx="12" cy="11" r="3"/></svg></span><span>الفصل الثالث — Sustainability</span><span id="home-pct-ch3" class="mastery-pct">—</span></div>
         <div class="mastery-track"><div id="home-bar-ch3" class="mastery-fill" style="width:0%"></div></div>
       </div>
     </div>
-    <p style="color:var(--muted);font-size:.78rem;margin-top:12px;">💡 حل كويز لكل فصل عشان تشوف نسبة إتقانك</p>
+    <p style="color:var(--muted);font-size:.78rem;margin-top:12px;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2z"/></svg> حل كويز لكل فصل عشان تشوف نسبة إتقانك</p>
   </section>
 
   <!-- ── CONCEPT OF THE DAY ────────────────────── -->
   <section class="chapter" style="margin-top:24px;">
-    <h2>💡 مفهوم اليوم <span style="font-size:.8rem;font-weight:400;color:var(--muted);margin-right:8px;">Concept of the Day</span></h2>
+    <h2><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2z"/></svg> مفهوم اليوم <span style="font-size:.8rem;font-weight:400;color:var(--muted);margin-right:8px;">Concept of the Day</span></h2>
     <div id="cotd-card" class="cotd-card">
       <div class="cotd-chapter" id="cotd-chapter"></div>
       <div class="cotd-term" id="cotd-term"></div>
@@ -292,7 +301,7 @@
 
   <!-- ── EXAM MUST-KNOWS ───────────────────────── -->
   <section class="chapter" style="margin-top:24px;">
-    <h2>⚠️ لازم تحفظ <span style="font-size:.8rem;font-weight:400;color:var(--muted);margin-right:8px;">Exam Must-Knows</span></h2>
+    <h2><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> لازم تحفظ <span style="font-size:.8rem;font-weight:400;color:var(--muted);margin-right:8px;">Exam Must-Knows</span></h2>
     <p style="color:var(--muted);font-size:.85rem;margin-bottom:20px;">أبرز النقاط اللي تخرج في الاختبار — مرتّبة بالفصل</p>
 
     <!-- Ch1 -->
@@ -353,7 +362,7 @@
 
   <!-- ── CONTACT ────────────────────────────────── -->
   <section class="chapter" style="margin-top:24px;text-align:center;">
-    <h2>📞 تواصل معي</h2>
+    <h2><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg> تواصل معي</h2>
     <p style="color:var(--muted);margin-bottom:20px;">أسئلة؟ ملاحظات؟ راسلني مباشرة</p>
     <div style="display:flex;justify-content:center;gap:14px;flex-wrap:wrap;">
       <a href="https://wa.me/966594555022" target="_blank" class="social-btn whatsapp">
@@ -373,10 +382,10 @@
 ═══════════════════════════════════════════ -->
 <div id="page-ch1" class="page">
   <section class="chapter">
-    <h2>📖 Chapter 1 — The Importance of Business Ethics</h2>
+    <h2><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg> Chapter 1 — The Importance of Business Ethics</h2>
     <span class="ar-line" style="font-size:.95rem;font-weight:600;">الفصل الأول — أهمية أخلاقيات الأعمال</span>
     <p style="color:var(--muted);">Source: Ferrell, Business Ethics 13e · Ch. 1</p>
-    <button class="ch-pdf-btn" onclick="exportChapterPDF('page-ch1','Chapter 1 — The Importance of Business Ethics')">📄 تصدير الملخص كـ PDF</button>
+    <button class="ch-pdf-btn" onclick="exportChapterPDF('page-ch1','Chapter 1 — The Importance of Business Ethics')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> تصدير الملخص كـ PDF</button>
 
     <div class="summary-block">
       <h3>1-1 Business Ethics Defined <span class="ar-line">تعريف أخلاقيات الأعمال</span></h3>
@@ -402,7 +411,7 @@
         <li><strong>Note:</strong> Normally, a business does NOT dictate a person's morals — such policies would be illegal. Only when morals affect job performance does it become a business ethics issue.<span class="ar-line">ملاحظة: الشركات لا تفرض مبادئ الفرد — غير قانوني. يُعتبر ضمن أخلاقيات العمل فقط حين تؤثر مبادئ الفرد على أدائه الوظيفي.</span></li>
         <li><strong>Potential Risk Areas:</strong> Misuse of company resources, abusive behavior, harassment, accounting fraud, conflicts of interest, defective products, bribery, product knock-offs, and employee theft.<span class="ar-line">مجالات الخطر المحتملة: إساءة استخدام الموارد، التحرش، الاحتيال المحاسبي، تضارب المصالح، المنتجات المعيبة، الرشوة، المنتجات المقلدة، سرقة الموظفين.</span></li>
       </ul>
-      <p style="margin-top:10px;font-weight:600;">📋 Studying business ethics helps you: <span class="ar-line">دراسة أخلاقيات الأعمال تساعدك على:</span></p>
+      <p style="margin-top:10px;font-weight:600;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg> Studying business ethics helps you: <span class="ar-line">دراسة أخلاقيات الأعمال تساعدك على:</span></p>
       <ol style="margin:8px 0 0 18px;line-height:1.9;">
         <li>Identify ethical issues when they arise.<span class="ar-line">تحديد المشكلات الأخلاقية عند ظهورها.</span></li>
         <li>Recognize approaches for resolving ethical issues.<span class="ar-line">التعرف على أساليب حل المشكلات الأخلاقية.</span></li>
@@ -492,7 +501,7 @@
     <div class="ch-quiz-block">
       <div class="chq-header" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
         <span>❓ <span class="ar-line">أسئلة الفصل الأول —</span> Chapter 1 Quiz</span>
-        <button class="quiz-btn quiz-btn-primary" style="font-size:.78rem;padding:6px 14px;" onclick="startQuickCheck('ch1')">⚡ Quick Check — 5 أسئلة</button>
+        <button class="quiz-btn quiz-btn-primary" style="font-size:.78rem;padding:6px 14px;" onclick="startQuickCheck('ch1')"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> Quick Check — 5 أسئلة</button>
       </div>
       <div class="chq-list" id="chq-ch1">
 
@@ -629,9 +638,9 @@
 ═══════════════════════════════════════════ -->
 <div id="page-ch2" class="page">
   <section class="chapter">
-    <h2>🤝 Chapter 2 — Stakeholder Relationships, Social Responsibility & Corporate Governance</h2>
+    <h2><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> Chapter 2 — Stakeholder Relationships, Social Responsibility & Corporate Governance</h2>
     <span class="ar-line" style="font-size:.95rem;font-weight:600;">الفصل الثاني — علاقات أصحاب المصلحة والمسؤولية الاجتماعية وحوكمة الشركات</span>
-    <button class="ch-pdf-btn" onclick="exportChapterPDF('page-ch2','Chapter 2 — Stakeholder Relationships & Corporate Governance')">📄 تصدير الملخص كـ PDF</button>
+    <button class="ch-pdf-btn" onclick="exportChapterPDF('page-ch2','Chapter 2 — Stakeholder Relationships & Corporate Governance')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> تصدير الملخص كـ PDF</button>
     <p style="color:var(--muted);">Source: Ferrell, Business Ethics 13e · Ch. 2</p>
 
     <div class="summary-block">
@@ -754,7 +763,7 @@
     <div class="ch-quiz-block">
       <div class="chq-header" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
         <span>❓ <span class="ar-line">أسئلة الفصل الثاني —</span> Chapter 2 Quiz</span>
-        <button class="quiz-btn quiz-btn-primary" style="font-size:.78rem;padding:6px 14px;" onclick="startQuickCheck('ch2')">⚡ Quick Check — 5 أسئلة</button>
+        <button class="quiz-btn quiz-btn-primary" style="font-size:.78rem;padding:6px 14px;" onclick="startQuickCheck('ch2')"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> Quick Check — 5 أسئلة</button>
       </div>
       <div class="chq-list" id="chq-ch2">
 
@@ -891,10 +900,10 @@
 ═══════════════════════════════════════════ -->
 <div id="page-ch3" class="page">
   <section class="chapter">
-    <h2>🌱 Chapter 3 — Sustainability: Social and Ethical Dimensions</h2>
+    <h2><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle"><path d="M12 22c4-3 8-6 8-11a8 8 0 0 0-16 0c0 5 4 8 8 11z"/><circle cx="12" cy="11" r="3"/></svg> Chapter 3 — Sustainability: Social and Ethical Dimensions</h2>
     <span class="ar-line" style="font-size:.95rem;font-weight:600;">الفصل الثالث — الاستدامة: الأبعاد الاجتماعية والأخلاقية</span>
     <p style="color:var(--muted);">Source: Ferrell, Business Ethics 13e · Ch. 3</p>
-    <button class="ch-pdf-btn" onclick="exportChapterPDF('page-ch3','Chapter 3 — Sustainability: Social and Ethical Dimensions')">📄 تصدير الملخص كـ PDF</button>
+    <button class="ch-pdf-btn" onclick="exportChapterPDF('page-ch3','Chapter 3 — Sustainability: Social and Ethical Dimensions')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> تصدير الملخص كـ PDF</button>
 
     <div class="summary-block">
       <h3>3-1 Defining Sustainability <span class="ar-line">تعريف الاستدامة</span></h3>
@@ -1035,7 +1044,7 @@
     <div class="ch-quiz-block">
       <div class="chq-header" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
         <span>❓ <span class="ar-line">أسئلة الفصل الثالث —</span> Chapter 3 Quiz</span>
-        <button class="quiz-btn quiz-btn-primary" style="font-size:.78rem;padding:6px 14px;" onclick="startQuickCheck('ch3')">⚡ Quick Check — 5 أسئلة</button>
+        <button class="quiz-btn quiz-btn-primary" style="font-size:.78rem;padding:6px 14px;" onclick="startQuickCheck('ch3')"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> Quick Check — 5 أسئلة</button>
       </div>
       <div class="chq-list" id="chq-ch3">
 
@@ -1152,11 +1161,11 @@
 ═══════════════════════════════════════════ -->
 <div id="page-quick" class="page">
   <section class="chapter">
-    <h2>⚡ Quick Review</h2>
+    <h2><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> Quick Review</h2>
     <p style="color:var(--muted);">All key definitions and concepts at a glance.</p>
 
     <div class="qr-section">
-      <h3>📖 Chapter 1 — Key Definitions</h3>
+      <h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg> Chapter 1 — Key Definitions</h3>
       <div class="qr-grid">
         <div class="qr-card"><div class="qr-term">Morals</div><div class="qr-def">A person's personal philosophies about what is right or wrong. Relate to the individual alone.</div></div>
         <div class="qr-card"><div class="qr-term">Ethics</div><div class="qr-def">Behavior or decisions made within a group's values or morals. Right or wrong is defined by the group.</div></div>
@@ -1174,7 +1183,7 @@
     </div>
 
     <div class="qr-section">
-      <h3>🤝 Chapter 2 — Key Definitions</h3>
+      <h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> Chapter 2 — Key Definitions</h3>
       <div class="qr-grid">
         <div class="qr-card"><div class="qr-term">Stakeholders</div><div class="qr-def">Those with a claim in some aspect of a company's products, operations, markets, industry, and outcomes.</div></div>
         <div class="qr-card"><div class="qr-term">Primary Stakeholders</div><div class="qr-def">Those absolutely necessary for a firm's survival (employees, customers, shareholders, governments, communities).</div></div>
@@ -1192,7 +1201,7 @@
     </div>
 
     <div class="qr-section">
-      <h3>🌱 Chapter 3 — Key Definitions</h3>
+      <h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle"><path d="M12 22c4-3 8-6 8-11a8 8 0 0 0-16 0c0 5 4 8 8 11z"/><circle cx="12" cy="11" r="3"/></svg> Chapter 3 — Key Definitions</h3>
       <div class="qr-grid">
         <div class="qr-card"><div class="qr-term">Sustainability</div><div class="qr-def">Potential for the long-term well-being of the natural environment, including all biological entities, and mutually beneficial interactions among nature and individuals.</div></div>
         <div class="qr-card"><div class="qr-term">Sustainable Development</div><div class="qr-def">Meeting present needs without compromising future generations' ability to meet their own needs.</div></div>
@@ -1221,9 +1230,9 @@
 
     <div class="fc-filter-row">
       <button class="fc-filter-btn active" data-fc="all" onclick="setFCFilter('all')">All (75)</button>
-      <button class="fc-filter-btn" data-fc="ch1" onclick="setFCFilter('ch1')">📖 Ch 1</button>
-      <button class="fc-filter-btn" data-fc="ch2" onclick="setFCFilter('ch2')">🤝 Ch 2</button>
-      <button class="fc-filter-btn" data-fc="ch3" onclick="setFCFilter('ch3')">🌱 Ch 3</button>
+      <button class="fc-filter-btn" data-fc="ch1" onclick="setFCFilter('ch1')"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg> Ch 1</button>
+      <button class="fc-filter-btn" data-fc="ch2" onclick="setFCFilter('ch2')"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> Ch 2</button>
+      <button class="fc-filter-btn" data-fc="ch3" onclick="setFCFilter('ch3')"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle"><path d="M12 22c4-3 8-6 8-11a8 8 0 0 0-16 0c0 5 4 8 8 11z"/><circle cx="12" cy="11" r="3"/></svg> Ch 3</button>
     </div>
 
     <div class="fc-progress-wrap">
@@ -1266,30 +1275,30 @@
 ═══════════════════════════════════════════ -->
 <div id="page-quiz" class="page quiz-page">
   <section class="chapter" id="quiz-section">
-    <h2>🎯 Quiz Mode</h2>
+    <h2><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg> Quiz Mode</h2>
     <p style="color:var(--muted);margin-bottom:16px;">Test yourself with random questions from all chapters. Your best scores are saved!</p>
     <div class="quiz-wrap">
       <div id="quiz-start-screen" class="quiz-card" style="text-align:center;">
-        <div style="font-size:3rem;margin-bottom:5px;">🎯</div>
+        <div style="font-size:3rem;margin-bottom:5px;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div>
         <h3 style="margin-top:0;">Quiz Setup</h3>
         <p style="font-size:.9rem;color:var(--muted);margin-bottom:20px;">Choose a chapter to start your practice session.</p>
 
         <div class="quiz-chapter-grid">
           <label class="quiz-ch-item">
             <input type="radio" name="quiz-filter" value="all" checked>
-            <div class="quiz-ch-card"><div class="icon">📚</div><div class="label">All Chapters</div><div class="q-count-badge" id="count-all"></div></div>
+            <div class="quiz-ch-card"><div class="icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><div class="label">All Chapters</div><div class="q-count-badge" id="count-all"></div></div>
           </label>
           <label class="quiz-ch-item">
             <input type="radio" name="quiz-filter" value="ch1">
-            <div class="quiz-ch-card"><div class="icon">📖</div><div class="label">Chapter 1</div><div class="mastery-badge" id="mastery-ch1"></div><div class="q-count-badge" id="count-ch1"></div></div>
+            <div class="quiz-ch-card"><div class="icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div><div class="label">Chapter 1</div><div class="mastery-badge" id="mastery-ch1"></div><div class="q-count-badge" id="count-ch1"></div></div>
           </label>
           <label class="quiz-ch-item">
             <input type="radio" name="quiz-filter" value="ch2">
-            <div class="quiz-ch-card"><div class="icon">🤝</div><div class="label">Chapter 2</div><div class="mastery-badge" id="mastery-ch2"></div><div class="q-count-badge" id="count-ch2"></div></div>
+            <div class="quiz-ch-card"><div class="icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div><div class="label">Chapter 2</div><div class="mastery-badge" id="mastery-ch2"></div><div class="q-count-badge" id="count-ch2"></div></div>
           </label>
           <label class="quiz-ch-item">
             <input type="radio" name="quiz-filter" value="ch3">
-            <div class="quiz-ch-card"><div class="icon">🌱</div><div class="label">Chapter 3</div><div class="mastery-badge" id="mastery-ch3"></div><div class="q-count-badge" id="count-ch3"></div></div>
+            <div class="quiz-ch-card"><div class="icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle"><path d="M12 22c4-3 8-6 8-11a8 8 0 0 0-16 0c0 5 4 8 8 11z"/><circle cx="12" cy="11" r="3"/></svg></div><div class="label">Chapter 3</div><div class="mastery-badge" id="mastery-ch3"></div><div class="q-count-badge" id="count-ch3"></div></div>
           </label>
         </div>
 
@@ -1317,7 +1326,7 @@
           </div>
         </div>
 
-        <button class="quiz-btn quiz-btn-primary" onclick="startQuiz()" style="padding:16px 48px;font-size:1.1rem;border-radius:16px;margin-top:10px;width:100%;max-width:400px;">Start Practice 🚀</button>
+        <button class="quiz-btn quiz-btn-primary" onclick="startQuiz()" style="padding:16px 48px;font-size:1.1rem;border-radius:16px;margin-top:10px;width:100%;max-width:400px;">Start Practice <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/></svg></button>
       </div>
 
       <div id="quiz-game-screen" class="quiz-screen-hidden">
@@ -1346,15 +1355,15 @@
           <div class="quiz-score-big" id="quiz-final-score">0%</div>
           <div class="quiz-score-label" id="quiz-final-label"></div>
           <div class="quiz-stats-row">
-            <div class="quiz-stat-item"><div class="quiz-stat-val" id="res-correct" style="color:#1f8f5f">-</div><div class="quiz-stat-lbl">Correct</div></div>
-            <div class="quiz-stat-item"><div class="quiz-stat-val" id="res-wrong" style="color:#c0392b">-</div><div class="quiz-stat-lbl">Wrong</div></div>
+            <div class="quiz-stat-item"><div class="quiz-stat-val" id="res-correct" style="color:var(--good)">-</div><div class="quiz-stat-lbl">Correct</div></div>
+            <div class="quiz-stat-item"><div class="quiz-stat-val" id="res-wrong" style="color:var(--destructive, #DC2626)">-</div><div class="quiz-stat-lbl">Wrong</div></div>
             <div class="quiz-stat-item"><div class="quiz-stat-val" id="res-time" style="color:var(--accent)">-</div><div class="quiz-stat-lbl">Time</div></div>
           </div>
           <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:20px;">
-            <button class="quiz-btn quiz-btn-primary" onclick="retakeQuiz()">🔄 Try Again</button>
-            <button class="quiz-btn quiz-btn-secondary" onclick="shareResult('quiz')">📤 مشاركة</button>
-            <button class="quiz-btn quiz-btn-secondary" onclick="exportWrongAnswersPDF('quiz')">📄 PDF</button>
-            <button class="quiz-btn quiz-btn-secondary" onclick="showPage('page-dashboard')">📊 Dashboard</button>
+            <button class="quiz-btn quiz-btn-primary" onclick="retakeQuiz()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg> Try Again</button>
+            <button class="quiz-btn quiz-btn-secondary" onclick="shareResult('quiz')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> مشاركة</button>
+            <button class="quiz-btn quiz-btn-secondary" onclick="exportWrongAnswersPDF('quiz')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> PDF</button>
+            <button class="quiz-btn quiz-btn-secondary" onclick="showPage('page-dashboard')"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg> Dashboard</button>
           </div>
         </div>
       </div>
@@ -1367,11 +1376,11 @@
 ═══════════════════════════════════════════ -->
 <div id="page-mock" class="page mock-page">
   <section class="chapter">
-    <h2>📋 Mock Exam</h2>
+    <h2><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg> Mock Exam</h2>
 
     <div id="mock-start-screen">
       <div class="mock-start-card">
-        <div style="font-size:3rem;margin-bottom:12px;">📋</div>
+        <div style="font-size:3rem;margin-bottom:12px;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>
         <h3>BUS 214 Mock Exam</h3>
         <p class="m-desc">Simulate a real exam with 30 questions covering all chapters. You have 30 minutes.</p>
         <div style="display:flex;gap:20px;justify-content:center;flex-wrap:wrap;margin:20px 0;">
@@ -1379,7 +1388,7 @@
           <div style="text-align:center;"><div style="font-size:1.8rem;font-weight:800;color:#d93025;">30</div><div style="font-size:.8rem;color:var(--muted);">Minutes</div></div>
           <div style="text-align:center;"><div style="font-size:1.8rem;font-weight:800;color:#d93025;">3</div><div style="font-size:.8rem;color:var(--muted);">Chapters</div></div>
         </div>
-        <button class="quiz-btn quiz-btn-primary" onclick="startMock()" style="width:100%;max-width:360px;padding:16px;font-size:1.1rem;">Start Mock Exam 🎯</button>
+        <button class="quiz-btn quiz-btn-primary" onclick="startMock()" style="width:100%;max-width:360px;padding:16px;font-size:1.1rem;">Start Mock Exam <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></button>
       </div>
     </div>
 
@@ -1406,19 +1415,19 @@
         <div id="mock-grade" class="quiz-grade-badge" style="font-size:2.5rem;">?</div>
         <div class="quiz-score-big" id="mock-final-score">0%</div>
         <div class="quiz-stats-row">
-          <div class="quiz-stat-item"><div class="quiz-stat-val" id="mock-res-correct" style="color:#1f8f5f">-</div><div class="quiz-stat-lbl">Correct</div></div>
-          <div class="quiz-stat-item"><div class="quiz-stat-val" id="mock-res-wrong" style="color:#c0392b">-</div><div class="quiz-stat-lbl">Wrong</div></div>
+          <div class="quiz-stat-item"><div class="quiz-stat-val" id="mock-res-correct" style="color:var(--good)">-</div><div class="quiz-stat-lbl">Correct</div></div>
+          <div class="quiz-stat-item"><div class="quiz-stat-val" id="mock-res-wrong" style="color:var(--destructive, #DC2626)">-</div><div class="quiz-stat-lbl">Wrong</div></div>
         </div>
         <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:20px;">
-          <button class="quiz-btn quiz-btn-primary" onclick="retakeMock()">🔄 Retake</button>
-          <button class="quiz-btn quiz-btn-secondary" onclick="shareResult('mock')">📤 مشاركة</button>
-          <button class="quiz-btn quiz-btn-secondary" onclick="exportWrongAnswersPDF('mock')">📄 PDF</button>
-          <button class="quiz-btn quiz-btn-secondary" onclick="showPage('page-dashboard')">📊 Dashboard</button>
+          <button class="quiz-btn quiz-btn-primary" onclick="retakeMock()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg> Retake</button>
+          <button class="quiz-btn quiz-btn-secondary" onclick="shareResult('mock')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> مشاركة</button>
+          <button class="quiz-btn quiz-btn-secondary" onclick="exportWrongAnswersPDF('mock')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> PDF</button>
+          <button class="quiz-btn quiz-btn-secondary" onclick="showPage('page-dashboard')"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg> Dashboard</button>
         </div>
       </div>
       <!-- Solutions -->
       <div style="margin-top:20px;">
-        <button class="quiz-btn quiz-btn-primary" style="width:100%;margin-bottom:16px;" onclick="this.style.display='none';document.getElementById('mock-solutions').style.display='block'">📋 عرض الحلول التفصيلية</button>
+        <button class="quiz-btn quiz-btn-primary" style="width:100%;margin-bottom:16px;" onclick="this.style.display='none';document.getElementById('mock-solutions').style.display='block'"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg> عرض الحلول التفصيلية</button>
         <div id="mock-solutions" style="display:none;"></div>
       </div>
     </div>
@@ -1430,13 +1439,13 @@
 ═══════════════════════════════════════════ -->
 <div id="page-dashboard" class="page">
   <section class="chapter">
-    <h2>📊 Your Dashboard</h2>
+    <h2><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg> Your Dashboard</h2>
     <p style="color:var(--muted);">Track your progress across all chapters.</p>
 
     <div class="dash-stats-grid">
-      <div class="dash-stat-card"><div class="dash-stat-icon">🔥</div><div class="dash-stat-val" id="dash-streak">0</div><div class="dash-stat-lbl">Day Streak</div></div>
-      <div class="dash-stat-card"><div class="dash-stat-icon">🎯</div><div class="dash-stat-val" id="dash-accuracy">0%</div><div class="dash-stat-lbl">Accuracy</div></div>
-      <div class="dash-stat-card"><div class="dash-stat-icon">📝</div><div class="dash-stat-val" id="dash-quizzes">0</div><div class="dash-stat-lbl">Quizzes Done</div></div>
+      <div class="dash-stat-card"><div class="dash-stat-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c-4-3-8-6-8-11a8 8 0 0 1 16 0c0 5-4 8-8 11z"/></svg></div><div class="dash-stat-val" id="dash-streak">0</div><div class="dash-stat-lbl">Day Streak</div></div>
+      <div class="dash-stat-card"><div class="dash-stat-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div><div class="dash-stat-val" id="dash-accuracy">0%</div><div class="dash-stat-lbl">Accuracy</div></div>
+      <div class="dash-stat-card"><div class="dash-stat-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></div><div class="dash-stat-val" id="dash-quizzes">0</div><div class="dash-stat-lbl">Quizzes Done</div></div>
     </div>
 
     <h3 style="margin-top:28px;">Best Scores</h3>
@@ -1450,7 +1459,7 @@
     <div id="dash-weak-alert" style="display:none;gap:10px;align-items:center;margin-top:24px;padding:14px 18px;border-radius:14px;border:1.5px solid var(--line);"></div>
 
     <div style="text-align:center;margin-top:24px;">
-      <button class="quiz-btn quiz-btn-primary" onclick="showPage('page-quiz')">🎯 Start Quiz</button>
+      <button class="quiz-btn quiz-btn-primary" onclick="showPage('page-quiz')"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg> Start Quiz</button>
       <button class="quiz-btn quiz-btn-secondary" onclick="showPage('page-flash');initFlashCards()" style="margin-left:12px;">🃏 Flash Cards</button>
     </div>
   </section>
@@ -1460,33 +1469,110 @@
      TEST BANK PAGE
 ═══════════════════════════════════════════ -->
 <div id="page-testbank" class="page">
-  <section class="chapter">
-    <h2>📕 Test Bank — أسئلة التست بانك</h2>
-    <p style="color:var(--muted);margin-bottom:16px;">أسئلة من التست بانك الرسمي — Ferrell, Business Ethics 13e · Chapters 1-3</p>
-    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px;">
-      <button class="quiz-btn quiz-btn-primary" onclick="startTestBank('all')" style="flex:1;min-width:120px;">📚 الكل <span style="opacity:.7;font-size:.8rem;">(126 Q)</span></button>
-      <button class="quiz-btn quiz-btn-secondary" onclick="startTestBank('ch1')" style="flex:1;min-width:100px;">📖 Ch1 <span style="opacity:.7;font-size:.8rem;">(44)</span></button>
-      <button class="quiz-btn quiz-btn-secondary" onclick="startTestBank('ch2')" style="flex:1;min-width:100px;">🤝 Ch2 <span style="opacity:.7;font-size:.8rem;">(41)</span></button>
-      <button class="quiz-btn quiz-btn-secondary" onclick="startTestBank('ch3')" style="flex:1;min-width:100px;">🌱 Ch3 <span style="opacity:.7;font-size:.8rem;">(41)</span></button>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="tag">BUS 214 · Official Test Bank</div>
+    <h1><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-left:8px"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/><line x1="8" y1="7" x2="16" y2="7"/><line x1="8" y1="11" x2="14" y2="11"/></svg> Test Bank</h1>
+    <p>أسئلة من التست بانك الرسمي — Ferrell, Business Ethics 13e · Chapters 1–3</p>
+    <div class="cover-meta">
+      <div class="cover-box"><span class="cover-label">Total</span><span class="cover-value">129 Q</span></div>
+      <div class="cover-box"><span class="cover-label">Chapters</span><span class="cover-value">1 — 3</span></div>
+      <div class="cover-box"><span class="cover-label">Source</span><span class="cover-value">Ferrell 13e</span></div>
     </div>
-    <div style="display:flex;gap:14px;align-items:center;margin-bottom:20px;flex-wrap:wrap;">
-      <div>
-        <label style="font-size:.82rem;color:var(--muted);font-weight:600;">عدد الأسئلة</label>
-        <select id="tb-count" style="display:block;margin-top:4px;padding:8px 14px;border-radius:10px;border:1.5px solid var(--line);background:var(--paper);color:var(--ink);font-size:.9rem;font-family:inherit;">
-          <option value="10">10 أسئلة</option>
-          <option value="20" selected>20 سؤال</option>
-          <option value="30">30 سؤال</option>
-          <option value="50">50 سؤال</option>
-          <option value="999">الكل</option>
-        </select>
-      </div>
-    </div>
-    <div id="tb-quiz-area"></div>
   </section>
+
+  <!-- Chapter Selection -->
+  <section id="tb-setup-chapters" class="chapter" style="margin-top:20px;">
+    <h2 style="font-size:1.1rem;margin-bottom:16px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-left:6px"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg> اختر الفصل</h2>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;" class="tb-ch-grid">
+      <button onclick="tbSelectCh('all')" class="tb-ch-btn tb-ch-active" data-ch="all" style="background:var(--accent);color:#fff;border:none;padding:14px 10px;border-radius:14px;font-weight:800;font-size:.88rem;cursor:pointer;transition:all .2s;font-family:inherit;text-align:center;">
+        <div style="font-size:1.3rem;margin-bottom:4px;">129</div>
+        <div>الكل</div>
+      </button>
+      <button onclick="tbSelectCh('ch1')" class="tb-ch-btn" data-ch="ch1" style="background:var(--paper);color:var(--ink);border:1.5px solid var(--line);padding:14px 10px;border-radius:14px;font-weight:700;font-size:.88rem;cursor:pointer;transition:all .2s;font-family:inherit;text-align:center;">
+        <div style="font-size:1.3rem;margin-bottom:4px;color:var(--accent);">45</div>
+        <div>Ch 1</div>
+      </button>
+      <button onclick="tbSelectCh('ch2')" class="tb-ch-btn" data-ch="ch2" style="background:var(--paper);color:var(--ink);border:1.5px solid var(--line);padding:14px 10px;border-radius:14px;font-weight:700;font-size:.88rem;cursor:pointer;transition:all .2s;font-family:inherit;text-align:center;">
+        <div style="font-size:1.3rem;margin-bottom:4px;color:var(--accent);">43</div>
+        <div>Ch 2</div>
+      </button>
+      <button onclick="tbSelectCh('ch3')" class="tb-ch-btn" data-ch="ch3" style="background:var(--paper);color:var(--ink);border:1.5px solid var(--line);padding:14px 10px;border-radius:14px;font-weight:700;font-size:.88rem;cursor:pointer;transition:all .2s;font-family:inherit;text-align:center;">
+        <div style="font-size:1.3rem;margin-bottom:4px;color:var(--accent);">41</div>
+        <div>Ch 3</div>
+      </button>
+    </div>
+  </section>
+
+  <!-- Settings + Start -->
+  <section id="tb-setup-settings" class="chapter" style="margin-top:14px;">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+      <span style="font-weight:700;font-size:.9rem;color:var(--ink);">عدد الأسئلة</span>
+    </div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px;">
+      <button onclick="tbSelectCount(this,10)" class="tb-count-btn" style="padding:10px 20px;border-radius:10px;border:1.5px solid var(--line);background:var(--paper);color:var(--ink);font-weight:600;font-size:.88rem;cursor:pointer;font-family:inherit;transition:all .15s;">10</button>
+      <button onclick="tbSelectCount(this,20)" class="tb-count-btn tb-count-active" style="padding:10px 20px;border-radius:10px;border:1.5px solid var(--accent);background:var(--accent-soft);color:var(--accent);font-weight:700;font-size:.88rem;cursor:pointer;font-family:inherit;transition:all .15s;">20</button>
+      <button onclick="tbSelectCount(this,30)" class="tb-count-btn" style="padding:10px 20px;border-radius:10px;border:1.5px solid var(--line);background:var(--paper);color:var(--ink);font-weight:600;font-size:.88rem;cursor:pointer;font-family:inherit;transition:all .15s;">30</button>
+      <button onclick="tbSelectCount(this,50)" class="tb-count-btn" style="padding:10px 20px;border-radius:10px;border:1.5px solid var(--line);background:var(--paper);color:var(--ink);font-weight:600;font-size:.88rem;cursor:pointer;font-family:inherit;transition:all .15s;">50</button>
+      <button onclick="tbSelectCount(this,999)" class="tb-count-btn" style="padding:10px 20px;border-radius:10px;border:1.5px solid var(--line);background:var(--paper);color:var(--ink);font-weight:600;font-size:.88rem;cursor:pointer;font-family:inherit;transition:all .15s;">الكل</button>
+    </div>
+    <select id="tb-count" style="display:none;">
+      <option value="10">10</option>
+      <option value="20" selected>20</option>
+      <option value="30">30</option>
+      <option value="50">50</option>
+      <option value="999">999</option>
+    </select>
+    <button onclick="startTestBank(window._tbSelectedCh||'all')" style="width:100%;padding:14px;border-radius:14px;border:none;background:linear-gradient(135deg,#2563EB,#3B82F6);color:#fff;font-size:1.05rem;font-weight:800;cursor:pointer;font-family:inherit;transition:all .2s;box-shadow:0 4px 16px rgba(37,99,235,.25);">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:middle;margin-left:8px"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+      ابدأ التست بانك
+    </button>
+  </section>
+
+  <!-- Quiz Area -->
+  <div id="tb-quiz-area" style="margin-top:14px;"></div>
+
 </div>
 
+<script>
+window._tbSelectedCh = 'all';
+
+function tbSelectCh(ch) {
+  window._tbSelectedCh = ch;
+  document.querySelectorAll('.tb-ch-btn').forEach(b => {
+    if (b.dataset.ch === ch) {
+      b.style.background = 'var(--accent)';
+      b.style.color = '#fff';
+      b.style.border = 'none';
+      b.classList.add('tb-ch-active');
+    } else {
+      b.style.background = 'var(--paper)';
+      b.style.color = 'var(--ink)';
+      b.style.border = '1.5px solid var(--line)';
+      b.classList.remove('tb-ch-active');
+    }
+  });
+}
+
+function tbSelectCount(el, val) {
+  document.getElementById('tb-count').value = val;
+  document.querySelectorAll('.tb-count-btn').forEach(b => {
+    b.style.borderColor = 'var(--line)';
+    b.style.background = 'var(--paper)';
+    b.style.color = 'var(--ink)';
+    b.style.fontWeight = '600';
+  });
+  el.style.borderColor = 'var(--accent)';
+  el.style.background = 'var(--accent-soft)';
+  el.style.color = 'var(--accent)';
+  el.style.fontWeight = '700';
+}
+</script>
+
 <!-- ═══ POMODORO FLOATING WIDGET ═══ -->
-<button id="pomo-fab" class="fab fab-pomo" onclick="pomoToggleWidget()">🍅</button>
+<button id="pomo-fab" class="fab fab-pomo" onclick="pomoToggleWidget()" aria-label="مؤقت بومودورو"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></button>
 <div id="pomo-widget" style="display:none;position:fixed;bottom:320px;right:16px;width:260px;background:var(--paper);border:1.5px solid var(--line);border-radius:18px;padding:18px;z-index:9998;box-shadow:0 12px 40px rgba(0,0,0,.15);text-align:center;">
   <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
     <span id="pomo-status" style="font-size:.72rem;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.08em;">جاهز للدراسة</span>
@@ -1496,8 +1582,8 @@
   <div id="pomo-session-count" style="font-size:.72rem;color:var(--muted);margin-top:4px;">الجلسة 1 من 4</div>
   <div style="display:flex;justify-content:center;gap:5px;margin-top:8px;" id="pomo-dots"></div>
   <div style="display:flex;gap:8px;justify-content:center;margin-top:14px;">
-    <button onclick="pomoToggle()" id="pomo-start-btn" style="background:var(--accent);color:#fff;border:none;padding:7px 20px;border-radius:8px;font-weight:700;font-size:.82rem;cursor:pointer;font-family:inherit;">▶️ ابدأ</button>
-    <button onclick="pomoReset()" style="background:none;border:1px solid var(--line);color:var(--muted);padding:7px 12px;border-radius:8px;font-size:.82rem;cursor:pointer;font-family:inherit;">🔄</button>
+    <button onclick="pomoToggle()" id="pomo-widget-start" style="background:var(--accent);color:#fff;border:none;padding:7px 20px;border-radius:8px;font-weight:700;font-size:.82rem;cursor:pointer;font-family:inherit;">▶️ ابدأ</button>
+    <button onclick="pomoReset()" style="background:none;border:1px solid var(--line);color:var(--muted);padding:7px 12px;border-radius:8px;font-size:.82rem;cursor:pointer;font-family:inherit;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg></button>
   </div>
   <div style="display:flex;gap:4px;justify-content:center;margin-top:10px;">
     <button onclick="pomoSetMode('work')" id="pomo-btn-work" style="font-size:.68rem;padding:3px 8px;border-radius:6px;border:1px solid var(--accent);color:var(--accent);background:none;cursor:pointer;font-family:inherit;">25د</button>
@@ -1516,31 +1602,31 @@
 ═══════════════════════════════════════════ -->
 <div id="page-badges" class="page">
   <section class="chapter">
-    <h2>🏅 الشارات والإنجازات</h2>
+    <h2><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg> الشارات والإنجازات</h2>
     <p style="color:var(--muted);margin-bottom:20px;">حقق إنجازات واحصل على شارات — تابع تقدمك هنا</p>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:14px;margin-bottom:24px;">
       <div style="background:var(--accent-soft);border-radius:14px;padding:16px;text-align:center;">
-        <div id="badge-level-icon" style="font-size:2rem;">🌱</div>
+        <div id="badge-level-icon" style="font-size:2rem;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle"><path d="M12 22c4-3 8-6 8-11a8 8 0 0 0-16 0c0 5 4 8 8 11z"/><circle cx="12" cy="11" r="3"/></svg></div>
         <div id="badge-level-name" style="font-weight:800;font-size:.85rem;margin-top:4px;">مبتدئ</div>
         <div id="badge-xp-text" style="font-size:.75rem;color:var(--muted);">0 XP</div>
       </div>
       <div style="background:var(--accent-soft);border-radius:14px;padding:16px;text-align:center;">
-        <div style="font-size:2rem;">🔥</div>
+        <div style="font-size:2rem;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c-4-3-8-6-8-11a8 8 0 0 1 16 0c0 5-4 8-8 11z"/></svg></div>
         <div id="badge-streak-text" style="font-weight:800;font-size:.85rem;margin-top:4px;">0 أيام</div>
         <div style="font-size:.75rem;color:var(--muted);">ستريك</div>
       </div>
       <div style="background:var(--accent-soft);border-radius:14px;padding:16px;text-align:center;">
-        <div style="font-size:2rem;">⚡</div>
+        <div style="font-size:2rem;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
         <div id="badge-combo-text" style="font-weight:800;font-size:.85rem;margin-top:4px;">0</div>
         <div style="font-size:.75rem;color:var(--muted);">أعلى كومبو</div>
       </div>
       <div style="background:var(--accent-soft);border-radius:14px;padding:16px;text-align:center;">
-        <div style="font-size:2rem;">📚</div>
+        <div style="font-size:2rem;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div>
         <div id="badge-answered-text" style="font-weight:800;font-size:.85rem;margin-top:4px;">0</div>
         <div style="font-size:.75rem;color:var(--muted);">أسئلة أجبتها</div>
       </div>
     </div>
-    <h3 style="margin-bottom:14px;font-size:.95rem;">🏅 شاراتك</h3>
+    <h3 style="margin-bottom:14px;font-size:.95rem;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg> شاراتك</h3>
     <div id="badges-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;"></div>
   </section>
 </div>
@@ -1551,20 +1637,85 @@
 <div id="page-leaderboard" class="page">
   <section class="hero">
     <div class="tag">BUS 214 · Live Rankings</div>
-    <h1>🏆 Leaderboard</h1>
+    <h1><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-left:8px"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg> Leaderboard</h1>
     <p>ترتيب الطلاب حسب أفضل نتائج الكويز</p>
   </section>
   <div style="margin-top:20px;">
     <div id="leaderboard-list" class="lb-list">
-      <div class="lb-signin">سجّل دخولك بـ Google لترى الـ Leaderboard 🔒</div>
+      <div class="lb-signin"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-left:6px"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> سجّل دخولك لترى الـ Leaderboard</div>
     </div>
     <div style="text-align:center;margin-top:16px;">
-      <button class="cotd-btn" onclick="renderLeaderboard()">🔄 تحديث</button>
+      <button class="cotd-btn" onclick="renderLeaderboard()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-left:6px"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg> تحديث</button>
     </div>
   </div>
 </div>
 
-</div><!-- /main-content -->
+<!-- ══════════════════════════════════════════
+     POMODORO TIMER
+═══════════════════════════════════════════ -->
+<div id="page-pomodoro" class="page">
+  <section class="hero">
+    <div class="tag">BUS 214 · Focus Mode</div>
+    <h1><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-left:8px"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> Pomodoro Timer</h1>
+    <p>ركّز على دراستك — 25 دقيقة دراسة، 5 دقائق استراحة</p>
+  </section>
+
+  <section class="chapter" style="margin-top:20px;text-align:center;">
+    <div id="pomo-display" style="font-size:4.5rem;font-weight:900;color:var(--accent);font-family:'Inter',monospace;letter-spacing:0.05em;margin:20px 0;">25:00</div>
+    <div id="pomo-label" style="font-size:1rem;color:var(--muted);margin-bottom:24px;font-weight:600;">وقت الدراسة</div>
+    <div id="pomo-progress-track" style="width:100%;max-width:400px;margin:0 auto 24px;height:8px;background:var(--line);border-radius:99px;overflow:hidden;">
+      <div id="pomo-progress-fill" style="height:100%;width:0%;background:linear-gradient(90deg,#2563EB,#60A5FA);border-radius:99px;transition:width 1s linear;"></div>
+    </div>
+    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+      <button onclick="pomoToggle()" id="pomo-page-start" style="padding:12px 32px;border-radius:12px;border:none;background:#059669;color:#fff;font-size:1rem;font-weight:700;cursor:pointer;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:middle;margin-left:6px"><polygon points="5 3 19 12 5 21 5 3"/></svg> ابدأ
+      </button>
+      <button onclick="pomoToggle()" style="padding:12px 24px;border-radius:12px;border:1.5px solid var(--line);background:var(--paper);color:var(--ink);font-size:1rem;font-weight:700;cursor:pointer;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:middle;margin-left:6px"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg> وقف
+      </button>
+      <button onclick="pomoReset()" style="padding:12px 24px;border-radius:12px;border:1.5px solid var(--line);background:var(--paper);color:var(--muted);font-size:1rem;font-weight:700;cursor:pointer;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;margin-left:6px"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg> إعادة
+      </button>
+    </div>
+    <div style="margin-top:24px;display:flex;gap:16px;justify-content:center;">
+      <div style="background:var(--accent-soft);border-radius:12px;padding:12px 20px;text-align:center;">
+        <div style="font-size:1.8rem;font-weight:900;color:var(--accent);" id="pomo-sessions">0</div>
+        <div style="font-size:.75rem;color:var(--muted);">جلسات مكتملة</div>
+      </div>
+      <div style="background:var(--accent-soft);border-radius:12px;padding:12px 20px;text-align:center;">
+        <div style="font-size:1.8rem;font-weight:900;color:var(--accent);" id="pomo-total-min">0</div>
+        <div style="font-size:.75rem;color:var(--muted);">دقيقة دراسة</div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ══════════════════════════════════════════
+     WRONG ANSWER REVIEW
+═══════════════════════════════════════════ -->
+<div id="page-wrong-review" class="page">
+  <section class="hero">
+    <div class="tag">BUS 214 · Learn from Mistakes</div>
+    <h1><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-left:8px"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg> مراجعة الأخطاء</h1>
+    <p>راجع الأسئلة اللي غلطت فيها عشان ما تغلط فيها مرة ثانية</p>
+  </section>
+
+  <section class="chapter" style="margin-top:20px;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:8px;">
+      <h2 style="margin:0;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-left:6px"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> الإجابات الخاطئة</h2>
+      <button onclick="clearWrongAnswers()" style="padding:8px 16px;border-radius:10px;border:1.5px solid var(--destructive,#DC2626);background:transparent;color:var(--destructive,#DC2626);font-size:.82rem;font-weight:700;cursor:pointer;">مسح الكل</button>
+    </div>
+    <div id="wrong-review-list">
+      <div style="text-align:center;padding:40px 20px;color:var(--muted);">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="opacity:.4;margin-bottom:12px"><circle cx="12" cy="12" r="10"/><path d="M8 15h8"/><circle cx="9" cy="9" r="1"/><circle cx="15" cy="9" r="1"/></svg>
+        <p style="font-weight:600;">ما فيه أخطاء بعد!</p>
+        <p style="font-size:.82rem;">حل كويز وبترجع هنا الأسئلة اللي غلطت فيها</p>
+      </div>
+    </div>
+  </section>
+</div>
+
+</main><!-- /main-content -->
 
 <div style="text-align:center;padding:16px 10px 20px;font-size:0.8rem;opacity:0.45;color:var(--ink,#1a1d2e);font-weight:700;letter-spacing:0.03em;">
   🤍 لا تنسون العنود وأمها من دعواتكم 🤍
@@ -1574,7 +1725,7 @@
 
 
 <!-- Reminder Toast -->
-<div id="reminder-toast" style="display:none;position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#6c63ff,#8b5cf6);color:#fff;padding:14px 20px;border-radius:14px;font-size:.9rem;font-weight:600;z-index:10001;box-shadow:0 8px 32px rgba(108,99,255,.35);max-width:90vw;direction:rtl;align-items:center;gap:12px;">
+<div id="reminder-toast" style="display:none;position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#2563EB,#3B82F6);color:#fff;padding:14px 20px;border-radius:14px;font-size:.9rem;font-weight:600;z-index:10001;box-shadow:0 8px 32px rgba(37,99,235,.35);max-width:90vw;direction:rtl;align-items:center;gap:12px;">
   <span id="reminder-toast-text"></span>
   <button onclick="this.parentElement.style.display='none'" style="background:none;border:none;color:#fff;font-size:1.2rem;cursor:pointer;">✕</button>
 </div>
@@ -1640,12 +1791,12 @@
     border: 2px solid var(--accent);
   }
   .flash-card-back {
-    background: linear-gradient(145deg, var(--accent) 0%, #0369a1 100%);
+    background: linear-gradient(145deg, var(--accent) 0%, #1D4ED8 100%);
     transform: rotateY(180deg);
     border: none;
   }
   body.dark .flash-card-front { background: linear-gradient(145deg, #0f2035 0%, #0c2942 100%); }
-  body.dark .flash-card-back  { background: linear-gradient(145deg, #0369a1 0%, #023e72 100%); }
+  body.dark .flash-card-back  { background: linear-gradient(145deg, #1D4ED8 0%, #023e72 100%); }
   .flash-card-front .fc-label { color: var(--accent); }
   .flash-card-back .fc-label  { color: rgba(255,255,255,.7); }
   .flash-card-back .fc-text   { color: #fff; }
@@ -1673,9 +1824,11 @@
   .dash-score-label { font-size: .8rem; color: var(--muted); margin-bottom: 4px; }
   .dash-score-val { font-size: 1.6rem; font-weight: 800; color: var(--accent); }
   .quick-nav-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 20px; }
-  .qn-card { background: var(--paper); border: 1.5px solid var(--line); border-radius: 16px; padding: 18px 14px; text-align: center; cursor: pointer; transition: all .2s; box-shadow: 0 2px 8px rgba(0,0,0,.04); }
-  .qn-card:hover { transform: translateY(-3px); border-color: var(--accent); box-shadow: 0 8px 24px rgba(14,165,233,.12); }
-  .qn-icon { font-size: 1.8rem; margin-bottom: 6px; }
+  .qn-card { background: rgba(255,255,255,0.6); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1.5px solid rgba(228,236,252,0.5); border-radius: 16px; padding: 18px 14px; text-align: center; cursor: pointer; transition: all .25s cubic-bezier(.4,0,.2,1); box-shadow: 0 2px 8px rgba(0,0,0,.04); }
+  .qn-card:hover { transform: translateY(-4px) scale(1.02); border-color: var(--accent); box-shadow: 0 12px 32px rgba(37,99,235,.18); }
+  body.dark .qn-card { background: rgba(30,41,59,0.6); border-color: rgba(51,65,85,0.5); }
+  .qn-icon { font-size: 1.8rem; margin-bottom: 6px; color: var(--accent); display: flex; align-items: center; justify-content: center; }
+  .qn-icon svg { width: 28px; height: 28px; }
   .qn-label { font-weight: 800; font-size: .95rem; color: var(--ink); }
   .qn-sub { font-size: .75rem; color: var(--muted); margin-top: 2px; }
   .toc { display: flex; flex-direction: column; gap: 10px; margin-top: 16px; }
@@ -1699,7 +1852,7 @@
     width: 44px; height: 44px; border-radius: 50%;
     border: 1.5px solid #e1e4f3;
     background: var(--paper, #fff);
-    color: var(--accent, #0ea5e9);
+    color: var(--accent, #2563EB);
     cursor: pointer; display: flex; align-items: center; justify-content: center;
     font-size: 1.2rem; font-weight: 800; font-family: system-ui;
     box-shadow: 0 6px 16px rgba(0,0,0,.08);
@@ -1726,8 +1879,19 @@
   body.dark .fab { background: #1e2130; border-color: #3a3d54; }
 
   /* إخفاء الترجمة العربية */
-  body.hide-arabic .ar-line { display: none !important; }
-  body.hide-arabic #quiz-explanation [dir='rtl'] { display: none !important; }
+  /* Hide Arabic in chapter summaries (all content including key points) */
+  body.hide-arabic #page-ch1 .ar-line,
+  body.hide-arabic #page-ch2 .ar-line,
+  body.hide-arabic #page-ch3 .ar-line,
+  body.hide-arabic #page-quick .ar-line { display: none !important; }
+
+  /* استثناء: الترجمة تبقى ظاهرة داخل الـ Key Notes والكويز */
+  body.hide-arabic #page-ch1 .keypoints-block .ar-line,
+  body.hide-arabic #page-ch2 .keypoints-block .ar-line,
+  body.hide-arabic #page-ch3 .keypoints-block .ar-line,
+  body.hide-arabic #page-ch1 .ch-quiz-block .ar-line,
+  body.hide-arabic #page-ch2 .ch-quiz-block .ar-line,
+  body.hide-arabic #page-ch3 .ch-quiz-block .ar-line { display: block !important; }
 
   @media (max-width: 768px) {
     .fab-dark   { bottom: 16px  !important; }
@@ -1738,7 +1902,7 @@
   /* ── SEARCH ──────────────────────────────── */
   #search-overlay { display: none; }
   #search-overlay.open { display: flex !important; }
-  #search-input { caret-color: var(--accent, #0ea5e9); }
+  #search-input { caret-color: var(--accent, #2563EB); }
   #search-box { background: var(--paper); }
   body.dark #search-box { background: #1e2130; }
   body.dark #search-input { color: var(--ink); }
@@ -1752,8 +1916,7 @@
   .search-result-text mark { background: #fef08a; border-radius: 3px; padding: 0 2px; color: #1a1d2e; }
   body.dark .search-result-text mark { background: #854d0e; color: #fef9c3; }
   /* Arabic line style */
-  .ar-line { direction:rtl; text-align:right; color:#4c5268; font-size:.85rem; margin:2px 0 0; display:block; }
-  body.dark .ar-line { color: var(--muted); }
+  /* .ar-line styling moved to bus214_styles.css */
 
   /* ── MASTERY BARS ────────────────────────── */
   .mastery-bars { display:flex; flex-direction:column; gap:14px; }
@@ -1762,7 +1925,7 @@
   .mastery-icon { font-size:1.1rem; }
   .mastery-pct { margin-right:auto; font-size:.82rem; font-weight:700; color:var(--accent); }
   .mastery-track { height:10px; background:var(--line,#e1e4f3); border-radius:99px; overflow:hidden; }
-  .mastery-fill { height:100%; background:linear-gradient(90deg,#0ea5e9,#38bdf8); border-radius:99px; transition:width 1s cubic-bezier(.4,0,.2,1); }
+  .mastery-fill { height:100%; background:linear-gradient(90deg,#2563EB,#60A5FA); border-radius:99px; transition:width 1s cubic-bezier(.4,0,.2,1); }
 
   /* ── CONCEPT OF THE DAY ──────────────────── */
   .cotd-card { background:linear-gradient(135deg,#f0f9ff,#e0f2fe); border:1.5px solid #bae6fd; border-radius:16px; padding:20px 24px; }
@@ -1907,8 +2070,8 @@
     font-weight: 600; font-size: .85rem; cursor: pointer;
     transition: all .2s; font-family: inherit;
   }
-  .ch-pdf-btn:hover { background: rgba(108,99,255,.2); transform: translateY(-2px); box-shadow: 0 4px 16px rgba(108,99,255,.15); }
-  body.dark .ch-pdf-btn { background: rgba(167,139,250,.12); border-color: rgba(167,139,250,.3); color: #a78bfa; }
+  .ch-pdf-btn:hover { background: rgba(37,99,235,.2); transform: translateY(-2px); box-shadow: 0 4px 16px rgba(37,99,235,.15); }
+  body.dark .ch-pdf-btn { background: rgba(96,165,250,.12); border-color: rgba(96,165,250,.3); color: #60A5FA; }
 
   /* ── Responsive: Pomodoro + Toast on mobile ── */
   @media (max-width: 768px) {
@@ -1941,5 +2104,137 @@
   body.dark .game-hud { background:rgba(30,33,48,.95); border-color:#3a3d54; }
   @media (max-width:768px) { .game-hud { padding:6px 14px; gap:10px; font-size:.75rem; } .hud-xp-track { width:50px; } }
 </style>
+
+<!-- ── SCROLL ANIMATIONS ─────────────────── -->
+<style>
+  /* Scroll reveal is handled purely via JS — no opacity:0 default to avoid hiding content */
+
+  /* Confetti canvas */
+  #confetti-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 99998;
+  }
+</style>
+
+<canvas id="confetti-canvas"></canvas>
+
+<script>
+// ── SCROLL REVEAL (safe — never hides content) ──
+window.refreshScrollReveal = function() {};
+
+// ── CONFETTI EFFECT ──────────────────────
+const confettiCanvas = document.getElementById('confetti-canvas');
+const confettiCtx = confettiCanvas.getContext('2d');
+let confettiPieces = [];
+let confettiRunning = false;
+
+function resizeConfetti() {
+  confettiCanvas.width = window.innerWidth;
+  confettiCanvas.height = window.innerHeight;
+}
+window.addEventListener('resize', resizeConfetti);
+resizeConfetti();
+
+function launchConfetti() {
+  if (confettiRunning) return;
+  confettiRunning = true;
+  confettiPieces = [];
+  const colors = ['#2563EB','#7C3AED','#F59E0B','#059669','#60A5FA','#FBBF24','#34D399'];
+
+  for (let i = 0; i < 120; i++) {
+    confettiPieces.push({
+      x: Math.random() * confettiCanvas.width,
+      y: -10 - Math.random() * 200,
+      w: 6 + Math.random() * 6,
+      h: 4 + Math.random() * 4,
+      color: colors[Math.floor(Math.random() * colors.length)],
+      vx: (Math.random() - 0.5) * 4,
+      vy: 2 + Math.random() * 4,
+      rot: Math.random() * 360,
+      rotV: (Math.random() - 0.5) * 10,
+      opacity: 1
+    });
+  }
+
+  function animate() {
+    confettiCtx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+    let alive = 0;
+    confettiPieces.forEach(p => {
+      p.x += p.vx;
+      p.y += p.vy;
+      p.vy += 0.08;
+      p.rot += p.rotV;
+      if (p.y > confettiCanvas.height - 100) p.opacity -= 0.02;
+      if (p.opacity <= 0) return;
+      alive++;
+      confettiCtx.save();
+      confettiCtx.translate(p.x, p.y);
+      confettiCtx.rotate(p.rot * Math.PI / 180);
+      confettiCtx.globalAlpha = Math.max(0, p.opacity);
+      confettiCtx.fillStyle = p.color;
+      confettiCtx.fillRect(-p.w/2, -p.h/2, p.w, p.h);
+      confettiCtx.restore();
+    });
+    if (alive > 0) {
+      requestAnimationFrame(animate);
+    } else {
+      confettiCtx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+      confettiRunning = false;
+    }
+  }
+  requestAnimationFrame(animate);
+}
+
+// Expose globally for quiz to call
+window.launchConfetti = launchConfetti;
+
+// ── SOUND EFFECTS ────────────────────────
+const SFX = {
+  _ctx: null,
+  _getCtx() {
+    if (!this._ctx) this._ctx = new (window.AudioContext || window.webkitAudioContext)();
+    return this._ctx;
+  },
+  play(type) {
+    try {
+      const ctx = this._getCtx();
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      gain.gain.value = 0.08;
+
+      if (type === 'correct') {
+        osc.frequency.value = 600;
+        osc.type = 'sine';
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.25);
+        osc.start(ctx.currentTime);
+        osc.stop(ctx.currentTime + 0.25);
+      } else if (type === 'wrong') {
+        osc.frequency.value = 250;
+        osc.type = 'square';
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.2);
+        osc.start(ctx.currentTime);
+        osc.stop(ctx.currentTime + 0.2);
+      } else if (type === 'complete') {
+        osc.frequency.value = 523;
+        osc.type = 'sine';
+        osc.start(ctx.currentTime);
+        osc.frequency.setValueAtTime(659, ctx.currentTime + 0.12);
+        osc.frequency.setValueAtTime(784, ctx.currentTime + 0.24);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.5);
+        osc.stop(ctx.currentTime + 0.5);
+      }
+    } catch(e) {}
+  }
+};
+window.SFX = SFX;
+</script>
+
 </body>
 </html>
