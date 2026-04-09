@@ -3937,3 +3937,28 @@ kbd {
 body.dark .wrev-item { background: var(--paper); }
 body.dark .wrev-wrong { background: rgba(220,38,38,0.12); }
 body.dark .wrev-correct { background: rgba(5,150,105,0.12); }
+
+/* ── SPACED REPETITION RETRY BANNER ─────────────── */
+.quiz-retry-banner {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, rgba(245,158,11,0.12), rgba(245,158,11,0.06));
+  border: 1.5px solid rgba(245,158,11,0.35);
+  border-radius: 10px;
+  padding: 9px 14px;
+  font-size: .83rem;
+  font-weight: 700;
+  color: #b45309;
+  margin-bottom: 14px;
+  animation: retryPulse .4s ease;
+}
+body.dark .quiz-retry-banner {
+  background: rgba(245,158,11,0.1);
+  color: #fbbf24;
+  border-color: rgba(245,158,11,0.3);
+}
+@keyframes retryPulse {
+  from { transform: scale(.97); opacity: .6; }
+  to   { transform: scale(1);   opacity: 1; }
+}

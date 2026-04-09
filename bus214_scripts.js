@@ -655,6 +655,9 @@ function renderQuizQ() {
     btn.onclick = () => handleQuizAnswer(i);
     optsDiv.appendChild(btn);
   });
+  // Retry banner
+  const retryBanner = document.getElementById('quiz-retry-banner');
+  if (retryBanner) retryBanner.style.display = q._isRetry ? 'flex' : 'none';
   document.getElementById("quiz-feedback").textContent = "";
   document.getElementById("quiz-feedback").className = "quiz-feedback";
   document.getElementById("quiz-next-btn").style.display = "none";
@@ -692,6 +695,12 @@ function handleQuizAnswer(chosen) {
     fb.className = "quiz-feedback wrong";
     if (window.SFX) SFX.play('wrong');
     if (typeof saveWrongAnswer === 'function') saveWrongAnswer(q, chosen);
+    // Spaced repetition: re-insert question after 5 questions (max 2 retries)
+    if ((q._retryCount || 0) < 2) {
+      const retryQ = Object.assign({}, q, { _isRetry: true, _retryCount: (q._retryCount || 0) + 1 });
+      const insertAt = Math.min(quizIdx + 5, quizQs.length);
+      quizQs.splice(insertAt, 0, retryQ);
+    }
   }
   // Gamification
   const combo = updateCombo(isCorrect);
@@ -793,7 +802,10 @@ function endQuiz() {
 function buildWrongReview() {
   const revEl = document.getElementById('quiz-wrong-review');
   if (!revEl) return;
-  const wrongs = (window.quizAnswerLog || []).filter(a => a.chosen !== a.q.ans);
+  // Deduplicate by question text — keep last attempt (so if retry was correct, it's removed)
+  const lastAttempt = new Map();
+  (window.quizAnswerLog || []).forEach(a => lastAttempt.set(a.q.q, a));
+  const wrongs = Array.from(lastAttempt.values()).filter(a => a.chosen !== a.q.ans);
   revEl.textContent = '';
   if (!wrongs.length) return;
   const letters = ['A','B','C','D','E'];
