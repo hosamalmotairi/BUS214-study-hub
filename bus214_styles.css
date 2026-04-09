@@ -2002,44 +2002,28 @@
       to   { opacity:1; transform: translateY(0); }
     }
     .quiz-explanation {
-      margin-top: 16px;
-      border-radius: 16px;
-      overflow: hidden;
-      animation: exp-slide-in .3s ease both;
+      margin-top: 14px;
+      border-radius: 12px;
+      animation: exp-slide-in .25s ease both;
+      font-size: .88rem;
+      line-height: 1.65;
+      padding: 11px 15px;
       border: 1.5px solid var(--line);
+      color: var(--muted);
+      background: var(--paper);
     }
-    .exp-header {
-      padding: 12px 16px;
-      font-weight: 800;
-      font-size: .9rem;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      background: #f0fdf4;
-      color: #15803d;
-      border-bottom: 1.5px solid #bbf7d0;
+    .quiz-explanation.exp-clean.correct {
+      background: rgba(5,150,105,0.07);
+      border-color: rgba(5,150,105,0.2);
+      color: #065f46;
     }
-    .exp-header.wrong-header {
-      background: #fef2f2;
-      color: #b91c1c;
-      border-bottom-color: #fecaca;
+    .quiz-explanation.exp-clean.wrong {
+      background: rgba(245,158,11,0.07);
+      border-color: rgba(245,158,11,0.25);
+      color: #92400e;
     }
-    body.dark .exp-header        { background: #052e16; color: #4ade80; border-bottom-color: #166534; }
-    body.dark .exp-header.wrong-header { background: #2d0a0a; color: #f87171; border-bottom-color: #7f1d1d; }
-    .exp-options { padding: 12px 16px; display: flex; flex-direction: column; gap: 8px; }
-    .exp-opt {
-      display: flex; gap: 10px; align-items: flex-start;
-      font-size: .88rem; line-height: 1.5;
-      padding: 8px 12px; border-radius: 10px;
-    }
-    .exp-opt.exp-correct { background: #f0fdf4; color: #15803d; }
-    .exp-opt.exp-wrong   { background: #fef2f2; color: #b91c1c; }
-    body.dark .exp-opt.exp-correct { background: #052e16; color: #86efac; }
-    body.dark .exp-opt.exp-wrong   { background: #2d0a0a; color: #fca5a5; }
-    .exp-opt-letter { font-weight: 800; min-width: 22px; }
-    .exp-opt-text   { flex: 1; }
-    .exp-opt-text strong { display: block; font-weight: 700; }
-    .exp-opt-text span   { opacity: .85; }
+    body.dark .quiz-explanation.exp-clean.correct { background: rgba(5,150,105,0.1); color: #6ee7b7; border-color: rgba(5,150,105,0.2); }
+    body.dark .quiz-explanation.exp-clean.wrong   { background: rgba(245,158,11,0.1); color: #fcd34d; border-color: rgba(245,158,11,0.2); }
 
     .quiz-answer-wrap {
       margin-top: 14px;

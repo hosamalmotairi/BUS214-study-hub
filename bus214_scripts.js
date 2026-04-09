@@ -707,24 +707,28 @@ function handleQuizAnswer(chosen) {
   const multiplier = getComboMultiplier(combo);
   if (isCorrect) awardXP(10, multiplier);
   showQuizEncouragement(isCorrect);
-  // Show detailed explanation if available
+  // Show explanation for correct answer only — clean Arabic text
   const expEl = document.getElementById("quiz-explanation");
-  if (expEl && q.exp) {
-    const letters = ["A","B","C","D","E"];
-    const headerClass = isCorrect ? "" : " wrong-header";
-    const headerText = isCorrect ? "✅ إجابة صحيحة — إليك لماذا" : "❌ إجابة خاطئة — إليك الشرح";
-    let optsHtml = q.opts.map((opt, i) => {
-      const isAnsOpt = i === q.ans;
-      const cls = isAnsOpt ? "exp-correct" : "exp-wrong";
-      const icon = isAnsOpt ? "✅" : "❌";
-      const expText = q.exp[i] || "";
-      return `<div class="exp-opt ${cls}">
-        <span class="exp-opt-letter">${icon} ${letters[i]}.</span>
-        <div class="exp-opt-text"><strong>${opt}</strong><span>${expText}</span></div>
-      </div>`;
-    }).join("");
-    expEl.innerHTML = `<div class="exp-header${headerClass}">${headerText}</div><div class="exp-options">${optsHtml}</div>`;
-    expEl.style.display = "block";
+  if (expEl && q.exp && q.exp[q.ans]) {
+    const raw = q.exp[q.ans];
+    // Extract Arabic sentence (inside dir=rtl span), strip emoji prefixes
+    const arMatch = raw.match(/dir=['"]rtl['"][^>]*>([^<]+)/);
+    const arText = arMatch ? arMatch[1].replace(/^[✅❌]\s*(صح\s*—?\s*|Correct\.?\s*)/i, '').trim() : '';
+    const enText = raw.split('<br>')[0].replace(/<[^>]+>/g, '').replace(/^[✅❌]\s*(Correct\.?\s*)/i, '').trim();
+    const showText = arText || enText;
+    expEl.textContent = '';
+    if (showText) {
+      const icon = document.createElement('span');
+      icon.textContent = isCorrect ? '💡 ' : '📖 ';
+      const txt = document.createElement('span');
+      txt.textContent = showText;
+      expEl.appendChild(icon);
+      expEl.appendChild(txt);
+      expEl.className = isCorrect ? 'quiz-explanation exp-clean correct' : 'quiz-explanation exp-clean wrong';
+      expEl.style.display = 'block';
+    }
+  } else if (expEl) {
+    expEl.style.display = 'none';
   }
   const nextBtn = document.getElementById("quiz-next-btn");
   nextBtn.style.display = "block";
