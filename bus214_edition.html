@@ -1356,24 +1356,33 @@
 
       <div id="quiz-game-screen" class="quiz-screen-hidden">
         <div class="quiz-progress-bar"><div class="quiz-progress-fill" id="qpf" style="width:0%"></div></div>
-        <div style="display:flex;justify-content:space-between;margin-bottom:14px;font-size:.85rem;color:var(--muted);">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;font-size:.85rem;color:var(--muted);">
           <span id="q-counter">Question 1 / 10</span>
-          <span id="quiz-timer-display"></span>
+          <div style="display:flex;align-items:center;gap:12px;">
+            <label id="quiz-aa-label" title="انتقال تلقائي عند الإجابة الصحيحة" style="cursor:pointer;display:flex;align-items:center;gap:5px;font-size:.78rem;user-select:none;">
+              <input type="checkbox" id="quiz-aa-toggle" style="width:13px;height:13px;cursor:pointer;" onchange="localStorage.setItem('bus214_autoAdvance',this.checked?'1':'0')">
+              <span>⚡ Auto</span>
+            </label>
+            <span id="quiz-timer-display"></span>
+          </div>
         </div>
         <div class="quiz-card">
           <div class="quiz-q-num" id="quiz-chapter-tag"></div>
           <div class="quiz-q-text" id="quiz-q-text"></div>
           <div class="quiz-opts" id="quiz-opts"></div>
+          <div class="kbd-hint" id="quiz-kbd-hint">⌨️ <kbd>A</kbd> <kbd>B</kbd> <kbd>C</kbd> <kbd>D</kbd> للإجابة &nbsp;·&nbsp; <kbd>Space</kbd> للتالي</div>
           <div class="quiz-feedback" id="quiz-feedback"></div>
           <div id="quiz-explanation" class="quiz-explanation" style="display:none;"></div>
           <div class="quiz-actions" style="margin-top:18px;">
-            <button class="quiz-btn quiz-btn-primary" id="quiz-next-btn" onclick="nextQuizQ()" style="display:none;">Next →</button>
-            <button class="quiz-btn quiz-btn-secondary" onclick="endQuiz()">End Quiz</button>
+            <button class="quiz-btn quiz-btn-primary" id="quiz-next-btn" onclick="nextQuizQ()" style="display:none;">التالي →</button>
+            <button class="quiz-btn quiz-btn-secondary" onclick="endQuiz()">إنهاء</button>
           </div>
+          <div id="quiz-aa-bar" style="display:none;height:3px;background:var(--accent);border-radius:3px;margin-top:10px;width:100%;transition:none;"></div>
         </div>
       </div>
 
       <div id="quiz-result-screen" class="quiz-screen-hidden">
+        <div id="quiz-wrong-review"></div>
         <div class="quiz-card quiz-result-card">
           <div id="quiz-final-badge" class="quiz-grade-badge">?</div>
           <div id="quiz-confetti-msg" style="font-size:1.2rem;font-weight:700;margin-bottom:8px;color:var(--accent);"></div>

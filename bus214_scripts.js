@@ -610,6 +610,9 @@ function startQuiz() {
   pool = [...pool].sort(() => Math.random() - 0.5).slice(0, Math.min(count, pool.length));
   quizQs = pool; quizIdx = 0; quizCorrect = 0; quizWrong = 0; quizAnswered = false;
   window.quizAnswerLog = [];
+  // Sync auto-advance toggle state from localStorage
+  const aaToggle = document.getElementById('quiz-aa-toggle');
+  if (aaToggle) aaToggle.checked = localStorage.getItem('bus214_autoAdvance') === '1';
   quizStartTime = Date.now();
   document.body.classList.add('quiz-mode');
   document.getElementById("quiz-start-screen").classList.add('quiz-screen-hidden');
@@ -717,9 +720,27 @@ function handleQuizAnswer(chosen) {
   const nextBtn = document.getElementById("quiz-next-btn");
   nextBtn.style.display = "block";
   setTimeout(() => nextBtn.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 50);
+  // Auto-advance on correct answer
+  if (isCorrect && localStorage.getItem('bus214_autoAdvance') === '1') {
+    clearTimeout(window._autoAdvTimer);
+    const bar = document.getElementById('quiz-aa-bar');
+    if (bar) {
+      bar.style.transition = 'none';
+      bar.style.width = '100%';
+      bar.style.display = 'block';
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        bar.style.transition = 'width 1.3s linear';
+        bar.style.width = '0%';
+      }));
+    }
+    window._autoAdvTimer = setTimeout(() => { if (quizAnswered) nextQuizQ(); }, 1400);
+  }
 }
 
 function nextQuizQ() {
+  clearTimeout(window._autoAdvTimer);
+  const bar = document.getElementById('quiz-aa-bar');
+  if (bar) { bar.style.display = 'none'; bar.style.width = '100%'; }
   quizIdx++;
   renderQuizQ();
 }
@@ -765,6 +786,77 @@ function endQuiz() {
   if (typeof saveQuizResult === 'function') {
     saveQuizResult(chKey, pct, quizCorrect, quizWrong, elapsed);
   }
+  // Inline wrong-answers review
+  buildWrongReview();
+}
+
+function buildWrongReview() {
+  const revEl = document.getElementById('quiz-wrong-review');
+  if (!revEl) return;
+  const wrongs = (window.quizAnswerLog || []).filter(a => a.chosen !== a.q.ans);
+  revEl.textContent = '';
+  if (!wrongs.length) return;
+  const letters = ['A','B','C','D','E'];
+  const header = document.createElement('div');
+  header.className = 'wrev-header';
+  header.textContent = '📋 مراجعة الأخطاء — ' + wrongs.length + ' سؤال';
+  revEl.appendChild(header);
+  wrongs.forEach(function(a, idx) {
+    const q = a.q;
+    const item = document.createElement('div');
+    item.className = 'wrev-item';
+    const num = document.createElement('div');
+    num.className = 'wrev-num';
+    num.textContent = idx + 1;
+    const body = document.createElement('div');
+    body.className = 'wrev-body';
+    const qDiv = document.createElement('div');
+    qDiv.className = 'wrev-q';
+    qDiv.textContent = q.q;
+    const wrongDiv = document.createElement('div');
+    wrongDiv.className = 'wrev-ans wrev-wrong';
+    wrongDiv.textContent = '❌ ' + letters[a.chosen] + '. ' + q.opts[a.chosen];
+    const correctDiv = document.createElement('div');
+    correctDiv.className = 'wrev-ans wrev-correct';
+    correctDiv.textContent = '✅ ' + letters[q.ans] + '. ' + q.opts[q.ans];
+    body.appendChild(qDiv);
+    body.appendChild(wrongDiv);
+    body.appendChild(correctDiv);
+    if (q.exp && q.exp[q.ans]) {
+      const expDiv = document.createElement('div');
+      expDiv.className = 'wrev-exp';
+      expDiv.textContent = q.exp[q.ans].replace(/<[^>]+>/g, '');
+      body.appendChild(expDiv);
+    }
+    item.appendChild(num);
+    item.appendChild(body);
+    revEl.appendChild(item);
+  });
+  const retryBtn = document.createElement('button');
+  retryBtn.className = 'quiz-btn quiz-btn-primary wrev-retry-btn';
+  retryBtn.textContent = '🔄 أعد تجربة الأخطاء (' + wrongs.length + ')';
+  retryBtn.onclick = retryWrongOnly;
+  revEl.appendChild(retryBtn);
+  setTimeout(function() { revEl.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 200);
+}
+
+function retryWrongOnly() {
+  const wrongs = (window.quizAnswerLog || []).filter(function(a) { return a.chosen !== a.q.ans; }).map(function(a) { return a.q; });
+  if (!wrongs.length) return;
+  quizQs = wrongs.slice().sort(function() { return Math.random() - 0.5; });
+  quizIdx = 0; quizCorrect = 0; quizWrong = 0; quizAnswered = false;
+  window.quizAnswerLog = [];
+  quizStartTime = Date.now();
+  quizTimeLimit = 0;
+  document.body.classList.add('quiz-mode');
+  document.getElementById('quiz-start-screen').classList.add('quiz-screen-hidden');
+  document.getElementById('quiz-game-screen').classList.remove('quiz-screen-hidden');
+  document.getElementById('quiz-result-screen').classList.add('quiz-screen-hidden');
+  const revEl = document.getElementById('quiz-wrong-review');
+  if (revEl) revEl.textContent = '';
+  clearInterval(quizTimerInt);
+  window.scrollTo({ top: (document.getElementById('quiz-section') || document.body).offsetTop - 20, behavior: 'smooth' });
+  renderQuizQ();
 }
 
 function renderMasteryBadges() {
@@ -2249,3 +2341,24 @@ function clearWrongAnswers() {
   localStorage.removeItem('bus214_wrongAnswers');
   renderWrongReview();
 }
+
+// ── QUIZ KEYBOARD SHORTCUTS ────────────────────────────────
+document.addEventListener("keydown", function(e) {
+  if (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA" || e.target.isContentEditable) return;
+  const gameScreen = document.getElementById("quiz-game-screen");
+  if (!gameScreen || gameScreen.classList.contains("quiz-screen-hidden")) return;
+  const key = e.key.toLowerCase();
+  const keyMap = { "a": 0, "1": 0, "b": 1, "2": 1, "c": 2, "3": 2, "d": 3, "4": 3, "e": 4, "5": 4 };
+  if (key in keyMap && !quizAnswered) {
+    e.preventDefault();
+    const idx = keyMap[key];
+    const btns = document.querySelectorAll("#quiz-opts .quiz-mcq-btn");
+    if (btns[idx]) handleQuizAnswer(idx);
+  } else if ((key === " " || key === "enter" || key === "arrowright") && quizAnswered) {
+    e.preventDefault();
+    clearTimeout(window._autoAdvTimer);
+    const bar = document.getElementById("quiz-aa-bar");
+    if (bar) { bar.style.display = "none"; bar.style.width = "100%"; }
+    nextQuizQ();
+  }
+});

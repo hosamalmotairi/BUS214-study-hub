@@ -3829,3 +3829,111 @@ button, .qn-card, .quiz-mcq-btn, .mob-bar-btn {
   }
 }
 
+
+/* ── KEYBOARD HINT ──────────────────────────────── */
+.kbd-hint {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-wrap: wrap;
+  font-size: .72rem;
+  color: var(--muted);
+  margin: 10px 0 4px;
+  opacity: .7;
+}
+kbd {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 22px;
+  height: 20px;
+  padding: 0 5px;
+  font-size: .7rem;
+  font-family: system-ui, sans-serif;
+  font-weight: 700;
+  background: var(--paper);
+  border: 1.5px solid var(--line);
+  border-radius: 5px;
+  box-shadow: 0 1px 0 var(--line);
+  color: var(--ink);
+}
+@media (max-width: 768px) { .kbd-hint { display: none; } }
+
+/* ── WRONG ANSWERS REVIEW ────────────────────────── */
+#quiz-wrong-review {
+  margin-bottom: 20px;
+}
+.wrev-header {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 12px;
+  padding: 12px 16px;
+  background: var(--accent-soft);
+  border-radius: 12px;
+  border-left: 4px solid var(--accent);
+}
+.wrev-item {
+  display: flex;
+  gap: 12px;
+  background: var(--paper);
+  border: 1.5px solid var(--line);
+  border-radius: 12px;
+  padding: 14px;
+  margin-bottom: 10px;
+}
+.wrev-num {
+  min-width: 28px;
+  height: 28px;
+  background: var(--accent);
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: .78rem;
+  font-weight: 800;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.wrev-body { flex: 1; }
+.wrev-q {
+  font-size: .88rem;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 8px;
+  line-height: 1.5;
+}
+.wrev-ans {
+  font-size: .83rem;
+  padding: 5px 10px;
+  border-radius: 7px;
+  margin-bottom: 4px;
+}
+.wrev-wrong {
+  background: rgba(220,38,38,0.07);
+  color: #DC2626;
+  text-decoration: line-through;
+}
+.wrev-correct {
+  background: rgba(5,150,105,0.09);
+  color: var(--good);
+  font-weight: 700;
+}
+.wrev-exp {
+  font-size: .78rem;
+  color: var(--muted);
+  margin-top: 6px;
+  padding: 6px 10px;
+  background: var(--accent-soft);
+  border-radius: 7px;
+  line-height: 1.5;
+}
+.wrev-retry-btn {
+  width: 100%;
+  margin-top: 12px;
+  font-size: .95rem;
+}
+body.dark .wrev-item { background: var(--paper); }
+body.dark .wrev-wrong { background: rgba(220,38,38,0.12); }
+body.dark .wrev-correct { background: rgba(5,150,105,0.12); }
