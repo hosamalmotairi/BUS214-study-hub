@@ -501,7 +501,7 @@
     <div class="ch-quiz-block">
       <div class="chq-header" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
         <span>❓ <span class="ar-line">أسئلة الفصل الأول —</span> Chapter 1 Quiz</span>
-        <button class="quiz-btn quiz-btn-primary" style="font-size:.78rem;padding:6px 14px;" onclick="startQuickCheck('ch1')"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> Quick Check — 5 أسئلة</button>
+        <button class="quiz-btn quiz-btn-primary" style="font-size:.78rem;padding:10px 14px;min-height:44px;" onclick="startQuickCheck('ch1')"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> Quick Check — 5 أسئلة</button>
       </div>
       <div class="chq-list" id="chq-ch1">
 
@@ -763,7 +763,7 @@
     <div class="ch-quiz-block">
       <div class="chq-header" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
         <span>❓ <span class="ar-line">أسئلة الفصل الثاني —</span> Chapter 2 Quiz</span>
-        <button class="quiz-btn quiz-btn-primary" style="font-size:.78rem;padding:6px 14px;" onclick="startQuickCheck('ch2')"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> Quick Check — 5 أسئلة</button>
+        <button class="quiz-btn quiz-btn-primary" style="font-size:.78rem;padding:10px 14px;min-height:44px;" onclick="startQuickCheck('ch2')"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> Quick Check — 5 أسئلة</button>
       </div>
       <div class="chq-list" id="chq-ch2">
 
@@ -1044,7 +1044,7 @@
     <div class="ch-quiz-block">
       <div class="chq-header" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
         <span>❓ <span class="ar-line">أسئلة الفصل الثالث —</span> Chapter 3 Quiz</span>
-        <button class="quiz-btn quiz-btn-primary" style="font-size:.78rem;padding:6px 14px;" onclick="startQuickCheck('ch3')"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> Quick Check — 5 أسئلة</button>
+        <button class="quiz-btn quiz-btn-primary" style="font-size:.78rem;padding:10px 14px;min-height:44px;" onclick="startQuickCheck('ch3')"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> Quick Check — 5 أسئلة</button>
       </div>
       <div class="chq-list" id="chq-ch3">
 
@@ -1929,7 +1929,7 @@ function tbSelectCount(el, val) {
   .cotd-chapter { font-size:.72rem; font-weight:700; color:var(--accent); text-transform:uppercase; letter-spacing:.05em; margin-bottom:8px; }
   .cotd-term { font-size:1.3rem; font-weight:800; color:var(--ink); margin-bottom:10px; }
   .cotd-def { font-size:.9rem; color:var(--ink); line-height:1.6; margin-bottom:16px; }
-  .cotd-btn { background:var(--accent); color:#fff; border:none; border-radius:10px; padding:8px 18px; font-size:.85rem; font-weight:700; cursor:pointer; transition:opacity .2s; }
+  .cotd-btn { background:var(--accent); color:#fff; border:none; border-radius:10px; padding:12px 18px; min-height:44px; font-size:.85rem; font-weight:700; cursor:pointer; transition:opacity .2s; }
   .cotd-btn:hover { opacity:.85; }
 
   /* ── MUST KNOW LIST ──────────────────────── */
@@ -1987,7 +1987,7 @@ function tbSelectCount(el, val) {
   body.dark .kp-header { color: #4ade80; }
   .kp-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; }
   .kp-list li { display: block; font-size: .88rem; color: var(--ink); line-height: 1.6; overflow-wrap: break-word; word-break: break-word; }
-  .kp-tag { display: inline-block; vertical-align: top; background: #15803d; color: #fff; font-size: .68rem; font-weight: 800; padding: 2px 8px; border-radius: 6px; margin-right: 6px; margin-bottom: 2px; }
+  .kp-tag { display: inline-block; vertical-align: top; background: #15803d; color: #fff; font-size: 0.75rem; font-weight: 800; padding: 3px 8px; border-radius: 6px; margin-right: 6px; margin-bottom: 2px; }
   body.dark .kp-tag { background: #166534; }
 
   /* ── CHAPTER QUIZ ────────────────────────── */
@@ -1998,7 +1998,7 @@ function tbSelectCount(el, val) {
   body.dark .chq-item { background: rgba(255,255,255,.04); }
   .chq-q { font-size: .92rem; font-weight: 700; color: var(--ink); margin-bottom: 12px; line-height: 1.5; }
   .chq-opts { display: flex; flex-direction: column; gap: 8px; }
-  .chq-btn { text-align: right; padding: 10px 14px; border-radius: 10px; border: 1.5px solid var(--line); background: var(--paper); color: var(--ink); font-size: .86rem; cursor: pointer; transition: all .15s; font-family: inherit; width: 100%; box-sizing: border-box; overflow-wrap: break-word; word-break: break-word; }
+  .chq-btn { text-align: right; padding: 12px 14px; min-height: 44px; border-radius: 10px; border: 1.5px solid var(--line); background: var(--paper); color: var(--ink); font-size: .86rem; cursor: pointer; transition: all .15s; font-family: inherit; width: 100%; box-sizing: border-box; overflow-wrap: break-word; word-break: break-word; }
   .chq-btn:hover:not(:disabled) { border-color: var(--accent); background: var(--accent-soft); }
   .chq-btn.chq-correct { background: #d1fae5 !important; border-color: #34d399 !important; color: #065f46 !important; font-weight: 700; }
   .chq-btn.chq-wrong   { background: #fee2e2 !important; border-color: #f87171 !important; color: #991b1b !important; }
@@ -2062,7 +2062,7 @@ function tbSelectCount(el, val) {
   .ch-pdf-btn {
     display: inline-flex; align-items: center; gap: 6px; margin-top: 12px;
     background: rgba(108,99,255,.12); border: 1.5px solid rgba(108,99,255,.3);
-    color: var(--accent); padding: 8px 20px; border-radius: 50px;
+    color: var(--accent); padding: 12px 20px; min-height: 44px; border-radius: 50px;
     font-weight: 600; font-size: .85rem; cursor: pointer;
     transition: all .2s; font-family: inherit;
   }
