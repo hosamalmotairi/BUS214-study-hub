@@ -517,9 +517,7 @@
       background: rgba(37,99,235,0.03);
     }
 
-    .summary-table tr:hover td {
-      background: rgba(37,99,235,0.06);
-    }
+    /* .summary-table tr:hover td { background: rgba(37,99,235,0.06); } */
 
     body.dark .summary-table th {
       background: #2563EB;
@@ -533,9 +531,7 @@
       background: rgba(96,165,250,0.05);
     }
 
-    body.dark .summary-table tr:hover td {
-      background: rgba(96,165,250,0.08);
-    }
+    /* body.dark .summary-table tr:hover td { background: rgba(96,165,250,0.08); } */
 
     /* Chapter PDF export button */
     .ch-pdf-btn {
