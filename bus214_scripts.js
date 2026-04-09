@@ -196,6 +196,64 @@ const allQuizQ = [
   { ch: "ch3", q: "TRUE or FALSE: Acid rain, waste management, urban sprawl, and deforestation are all environmental issues related to LAND.", opts: ["True — all four are land-based environmental problems", "True — acid rain falls on land so it is a land issue", "False — acid rain is an AIR pollution issue, not a land issue", "False — none of these are land issues; they are all water issues"], ans: 2, exp: ["❌ Acid rain is NOT a land issue — it originates from air pollutants (sulfur dioxide and nitrogen oxides) and is classified under air pollution.<br><span dir='rtl'>❌ المطر الحمضي ليس قضية أرض — ينشأ من ملوثات جوية (ثاني أكسيد الكبريت وأكاسيد النيتروجين) ويُصنَّف ضمن تلوث الهواء.</span>", "❌ Where rain falls does not determine its classification — acid rain is classified by its SOURCE (air pollutants), not where it lands.<br><span dir='rtl'>❌ مكان سقوط المطر لا يُحدد تصنيفه — يُصنَّف المطر الحمضي بناءً على مصدره (ملوثات جوية)، وليس أين يسقط.</span>", "✅ Correct. Classic exam trap. Waste management, urban sprawl, and deforestation are LAND issues — but acid rain is an AIR pollution issue caused by sulfur dioxides and nitrous oxides in the atmosphere.<br><span dir='rtl'>✅ صح — فخ اختبار كلاسيكي. إدارة النفايات والتمدد العمراني وإزالة الغابات قضايا أرض — لكن المطر الحمضي قضية تلوث هواء ناجمة عن ثاني أكسيد الكبريت وأكاسيد النيتروجين في الغلاف الجوي.</span>", "❌ Waste management, urban sprawl, and deforestation are clearly land issues — only acid rain is misclassified in the statement.<br><span dir='rtl'>❌ إدارة النفايات والتمدد العمراني وإزالة الغابات قضايا أرض بوضوح — المطر الحمضي فقط هو المُصنَّف بشكل خاطئ في العبارة.</span>"] },
   { ch: "ch3", q: "Recycling is best defined as which of the following?", opts: ["Reducing the total amount of waste produced by consumers", "The reprocessing of materials — especially steel, aluminum, paper, glass, rubber, and some plastics — for reuse", "Donating used goods to charity organizations for redistribution", "Burning waste materials to generate energy"], ans: 1, exp: ["❌ Reducing waste production is 'waste reduction' or 'source reduction' — a different concept from recycling.<br><span dir='rtl'>❌ تقليل إنتاج النفايات هو 'تقليل النفايات' — مفهوم مختلف عن إعادة التدوير.</span>", "✅ Correct. Recycling = the reprocessing of materials — especially steel, aluminum, paper, glass, rubber, and some plastics — into new products for reuse. This is the precise textbook definition.<br><span dir='rtl'>✅ صح — إعادة التدوير = إعادة معالجة المواد — خاصةً الصلب والألومنيوم والورق والزجاج والمطاط وبعض البلاستيك — في منتجات جديدة لإعادة الاستخدام.</span>", "❌ Donating goods is 'reuse' or 'charitable giving' — not recycling. Recycling involves reprocessing the material itself.<br><span dir='rtl'>❌ التبرع بالسلع هو 'إعادة الاستخدام' أو 'العطاء الخيري' — وليس إعادة التدوير. إعادة التدوير تنطوي على إعادة معالجة المادة نفسها.</span>", "❌ Burning waste for energy is 'waste-to-energy' or 'incineration' — a completely different process from recycling.<br><span dir='rtl'>❌ حرق النفايات لتوليد الطاقة هو 'النفايات إلى طاقة' — عملية مختلفة تمامًا عن إعادة التدوير.</span>"] },
   { ch: "ch3", q: "Which of the following is an example of sustainability?", opts: ["Donating money to a local school", "Building new roads to reduce traffic congestion", "Recycling", "Increasing employee salaries"], ans: 2, exp: ["❌ Donating to schools is philanthropic (Carroll's 4th level) — a good act, but not specifically an example of environmental sustainability.<br><span dir='rtl'>❌ التبرع للمدارس خيري (المستوى الرابع في هرم كارول) — عمل طيب، لكنه ليس مثالًا محددًا على الاستدامة البيئية.</span>", "❌ Building roads may reduce emissions locally but often induces more driving — not a clear sustainability example and may worsen environmental impact overall.<br><span dir='rtl'>❌ بناء الطرق قد يُقلل الانبعاثات محليًا لكنه كثيرًا ما يُحفّز المزيد من القيادة — وليس مثالًا واضحًا على الاستدامة.</span>", "✅ Correct. Recycling is one of the country's greatest sustainability success stories — it directly reduces resource extraction, energy use, and waste, supporting long-term environmental well-being.<br><span dir='rtl'>✅ صح — إعادة التدوير من أبرز قصص نجاح الاستدامة — تُقلل مباشرةً من استخراج الموارد واستهلاك الطاقة والنفايات، مما يدعم الرفاه البيئي طويل الأمد.</span>", "❌ Increasing salaries is an economic/social responsibility — not specifically an environmental sustainability practice.<br><span dir='rtl'>❌ رفع الرواتب مسؤولية اقتصادية/اجتماعية — وليست ممارسة استدامة بيئية تحديدًا.</span>"] }
+
+,
+  // ── Added from Test Bank PDF (MCQ + T/F) ──
+  { ch: "ch1", q: "Which of the following is one of the rights spelled out by John F. Kennedy in his Consumers' Bill of Rights?", opts: ["The right to consumerism", "The right to safety", "The right to be protected", "The right to be ethical", "The right to be heard"], ans: 1 },
+  { ch: "ch1", q: "Which of the following was developed in the 1980s to guide corporate support for ethical conduct by establishing a set of principles?", opts: ["Federal Sentencing Guidelines for Organizations", "Defense Industry Initiative on Business Ethics and Conduct", "Foreign Corrupt Practices Act", "U.S. Sentencing Commission", "The Southern Common Market"], ans: 1 },
+  { ch: "ch1", q: "President Obama's administration focused on which of these major ethical issues?", opts: ["Decreasing environmental legislation", "Deregulation", "Tax decreases", "Incentives to oil companies", "Healthcare and consumer protection"], ans: 4 },
+  { ch: "ch1", q: "Which of the following statements about business ethics is true?", opts: ["A firm that has ethical management will succeed financially.", "Codes of ethics should cover every business ethics issue.", "Business ethics focuses more on laws than on values.", "Individuals apply the same ethical rules in business as they do at home.", "Conflict or trade-offs do not exist between profits and business ethics."], ans: 4 },
+  { ch: "ch1", q: "Because of Sarbanes-Oxley, what must publicly traded companies develop in order to assist in maintaining", opts: ["Ethics", "Codes of ethics", "Legal", "Accountants"], ans: 2 },
+  { ch: "ch1", q: "Which of the following statements about the Dodd-Frank Wall Street Reform and Consumer Protection Act is true?", opts: ["It was very popular among Wall Street bankers.", "It represented modest reform to the finance industry.", "It came out of theological discussions in the 1920s.", "It was designed to make the financial services industry more responsible.", "It made it mandatory for public corporations to hire ethics officers."], ans: 3 },
+  { ch: "ch1", q: "The term that comprises organizational principles, values, and norms that may originate from individuals, organizational statements, or from the legal system that primarily guides individual and group behavior in business is defined as _______.", opts: ["stakeholder orientation", "values", "principles", "business ethics", "integrity management"], ans: 3 },
+  { ch: "ch1", q: "Which of the following concepts refers to a person's personal philosophy about what is right or wrong?", opts: ["Philosophy", "Values", "Principles", "Integrity", "Morals"], ans: 4 },
+  { ch: "ch1", q: "A situation where a person is faced with multiple choices, all of which are undesirable as defined by that person, is known as a(n) _______.", opts: ["value dilemma", "integrity management", "philosophical dilemma", "legal dilemma", "moral dilemma"], ans: 4 },
+  { ch: "ch1", q: "Every organization has the potential for unethical behavior, even if it is not a business.", opts: ["True", "False"], ans: 0 },
+  { ch: "ch1", q: "Morals are enduring beliefs and ideals that are socially enforced.", opts: ["True", "False"], ans: 1 },
+  { ch: "ch1", q: "The Consumers' Bill of Rights developed by John F. Kennedy maintains that consumers have the right to safety, the right to be heard, the right to free speech, and the right to choose.", opts: ["True", "False"], ans: 1 },
+  { ch: "ch1", q: "A majority of consumers believe it is a company's responsibility to have a moral or ethical viewpoint.", opts: ["True", "False"], ans: 0 },
+  { ch: "ch2", q: "Which of the following groups is defined as one that does not typically engage in transactions with a company and is not affected by its actions?", opts: ["Employees", "Secondary stakeholders", "Primary stakeholders", "Investors", "Customers"], ans: 1 },
+  { ch: "ch2", q: "A firm that recognizes other stakeholders beyond investors, employees, and suppliers, and explicitly acknowledges that business must attend to the bottom line?", opts: ["A stakeholder model of socially responsible corporate governance", "A stakeholder bias", "A code of ethics", "A stakeholder interaction model", "A corporate interface model"], ans: 3 },
+  { ch: "ch2", q: "When unethical acts are discovered in a firm, which of the following is true in most instances?", opts: ["They are caused by unwilling participants.", "The cause is due to external stakeholders.", "The perpetrators are caught and prosecuted.", "Their acceptance and perpetuation were facilitated by cooperation or complicity.", "The cause of the unethical conduct is a corrupt board of directors."], ans: 3 },
+  { ch: "ch2", q: "Which of the following statements accurately describes the normative approach?", opts: ["It focuses on the firm's behavior and usually addresses how decisions and strategies are made for stakeholder", "It describes what happens if firms behave in a particular way.", "It is the degree to which a firm understands and addresses stakeholder demands.", "It describes reciprocal relationships between the firm and a host of stakeholders.", "It identifies ethical guidelines that dictate how firms should treat stakeholders."], ans: 4 },
+  { ch: "ch2", q: "The idea of the invisible hand, which is a fundamental concept in free market capitalism, was developed by which of the following?", opts: ["Adam Smith", "John Maynard Keynes", "Janet Yellen", "Noel Biderman", "Milton Friedman"], ans: 0 },
+  { ch: "ch2", q: "The idea that because people live in a community, social rules should benefit the community is known as _______.", opts: ["the stakeholder interaction model", "consumer protection", "the common good", "sustainability", "corporate governance"], ans: 2 },
+  { ch: "ch2", q: "The extent to which a firm meets the economic, legal, ethical, and philanthropic responsibilities placed on it by its stakeholders?", opts: ["reputation", "corporate citizenship", "corporate ethical audit", "ethical citizenship", "fiduciary duties"], ans: 1 },
+  { ch: "ch2", q: "Which of the following is a major ethical concern among corporate boards of directors?", opts: ["Compensation", "The non-traditional directorship approach", "Dividend reporting", "Secondary stakeholders", "Debt swaps"], ans: 0 },
+  { ch: "ch2", q: "Which model of corporate governance is founded in classic economic precepts?", opts: ["Economic", "Shareholder", "Stakeholder", "Board", "ISO"], ans: 1 },
+  { ch: "ch2", q: "Board members being linked to more than one company is defined as which of the following?", opts: ["The stakeholder concept", "The stakeholder model of corporate governance", "An interlocking directorate", "A conflict of interest", "A multiple directorate"], ans: 2 },
+  { ch: "ch2", q: "The obligation of individuals to make decisions that are in the best interests of the corporation and its stakeholders is known as which of the following?", opts: ["duty of loyalty", "duty of oversight", "duty to audit", "duty of control", "duty of cooperation"], ans: 0 },
+  { ch: "ch2", q: "In Dodge vs. Ford Motor Co., the court ruled that a business exists for the profit of shareholders, and the board of directors should focus on that objective.", opts: ["True", "False"], ans: 0 },
+  { ch: "ch2", q: "The final step in implementing a stakeholder perspective is identifying stakeholders.", opts: ["True", "False"], ans: 1 },
+  { ch: "ch2", q: "Evidence suggests that caring about the well-being of stakeholders leads to increased profits.", opts: ["True", "False"], ans: 0 },
+  { ch: "ch2", q: "Ethics and social responsibility can be used interchangeably.", opts: ["True", "False"], ans: 1 },
+  { ch: "ch2", q: "Government regulatory agencies are considered a secondary stakeholder group.", opts: ["True", "False"], ans: 1 },
+  { ch: "ch2", q: "A board of directors' fiduciary duty to a company refers to an assumed position of trust and confidence that entails certain responsibilities.", opts: ["True", "False"], ans: 0 },
+  { ch: "ch3", q: "One of the biggest factors in land pollution is the dumping of waste into landfills. By far the world's biggest wasters are", opts: ["Europe", "China", "Russia", "the United States", "Canada"], ans: 3 },
+  { ch: "ch3", q: "The world's forests, which cover more than 30 percent of the planet, are being destroyed, with forests shrinking by approximately how many acres each year?", opts: ["The corn industry", "Beef, soy, palm oil, and wood products", "Human-lit fires", "A lack of rain", "Wildfires"], ans: 1 },
+  { ch: "ch3", q: "Many businesses can benefit from urban renewal movements that reduce sprawl, but it can create disadvantages for which of the following?", opts: ["car and oil companies", "the airline industry", "the railroad industry", "service-oriented companies", "humans and animals"], ans: 0 },
+  { ch: "ch3", q: "The Environmental Protection Agency's primary mission is to _______.", opts: ["protect human health and the environment", "ensure all Fortune 500 firms hire a chief sustainability officer", "protect threatened and endangered species", "encourage alternative energy sources", "collect taxes from the chemical and petroleum industries"], ans: 0 },
+  { ch: "ch3", q: "The Clean Water Act makes it illegal for anyone to discharge any pollutant from a point source directly into navigable", opts: ["good reason", "direct order", "permit", "inspector present", "limit"], ans: 2 },
+  { ch: "ch3", q: "Which of the following acts focuses on reducing pollution through cost-effective changes in production, operation,", opts: ["Pollution Prevention Act", "Toxic Substances Control Act", "Clean Air Act", "Energy Policy Act", "Oil Pollution Act"], ans: 0 },
+  { ch: "ch3", q: "Which of the following is considered a misleading practice related to sustainability?", opts: ["Designing environmentally friendly buildings", "Recycling", "Greenwashing", "Source reduction", "Sustainable agriculture"], ans: 2 },
+  { ch: "ch3", q: "To empower the EPA with the ability to track the 75,000 industrial chemicals currently produced or imported into the United States, Congress enacted which of the following?", opts: ["Federal Water Pollution Control Act", "Federal Insecticide, Fungicide and Rodenticide Act", "Safe Drinking Water Act", "Toxic Substances Control Act", "Food Quality Protection Act"], ans: 3 },
+  { ch: "ch3", q: "Wind power holds great promise for the United States because it is home to one of the greatest sources of wind energy", opts: ["Rocky Mountains", "Everglades", "Great Lakes", "Pacific Rim", "Great Plains"], ans: 4 },
+  { ch: "ch3", q: "A more dependable energy source than some other forms of alternative energy, geothermal energy provides _______.", opts: ["heat from the sun", "a radiated heat", "heat from steam", "a constant source of heat", "a dry heat"], ans: 3 },
+  { ch: "ch3", q: "Which of these is considered the largest form of renewable energy?", opts: ["Hydropower", "Solar power", "Geothermal power", "Biofuels", "Nuclear power"], ans: 0 },
+  { ch: "ch3", q: "Which of the following is the most controversial form of alternative energy after nuclear power?", opts: ["Hydropower", "Geothermal power", "Solar power", "Wind power", "Ethanol"], ans: 4 },
+  { ch: "ch3", q: "Which of the following is the name for a certification program that recognizes sustainable building practices and promotes green design?", opts: ["Brundtland Report", "WasteWise", "LEED", "Kyoto Protocol", "USMCA"], ans: 2 },
+  { ch: "ch3", q: "Which type of business describes one that attempts to avoid dealing with environmental issues and hopes nothing bad", opts: ["A newly established business", "A socially responsible business", "A low-commitment business", "A single-impact-driven business", "A law-abiding business"], ans: 2 },
+  { ch: "ch3", q: "One of the country's greatest sustainability success stories is _______.", opts: ["water conservation", "pollution control", "manufacturing", "composting", "recycling"], ans: 4 },
+  { ch: "ch3", q: "Which of the following is a comprehensive set of environmental standards developed by the International", opts: ["Green Globes", "Kyoto Protocol", "ISO 14000", "Cancun Package", "LEED"], ans: 2 },
+  { ch: "ch3", q: "Sustainability is defined as the long-term well-being of the natural environment and the mutually beneficial", opts: ["customers, investors, managers, and policies", "board members, presidents, managers, and nonprofit organizations", "investors, creditors, suppliers, and the marketing department", "nature and individuals, organizations, and business strategies", "managers, boards, CEOs, and stakeholder strategies"], ans: 3 },
+  { ch: "ch3", q: "Created in 1997, the Kyoto Protocol was an international treaty meant to curb global _______.", opts: ["natural resource use", "greenwashing activities", "water pollution", "greenhouse gas emissions", "competition"], ans: 3 },
+  { ch: "ch3", q: "A strategy involving stakeholder assessment to create meaningful long-term relationships with customers while maintaining, supporting, and enhancing the natural environment is known as _______.", opts: ["green marketing", "recycling initiatives", "stakeholder assessment", "risk analysis", "strategic environmental audit"], ans: 0 },
+  { ch: "ch3", q: "The long-term variation in average weather patterns is referred to as _______.", opts: ["water pollution", "greenhouse gas", "climate change", "the Kyoto Protocol", "the ozone layer"], ans: 2 },
+  { ch: "ch3", q: "Because ethanol is created from corn in the United States, there are concerns that the increased use of ethanol will decrease food supplies.", opts: ["True", "False"], ans: 0 },
+  { ch: "ch3", q: "Greenwashing is a strategy involving stakeholder assessment to create meaningful long-term relationships with customers, while maintaining, supporting, and enhancing the natural environment.", opts: ["True", "False"], ans: 1 },
+  { ch: "ch3", q: "Green Globes and LEED are certification groups that authorize buildings as 'green.'", opts: ["True", "False"], ans: 0 },
+  { ch: "ch3", q: "Acid rain, waste management, urban sprawl, and deforestation are all environmental issues related to land.", opts: ["True", "False"], ans: 1 },
+  { ch: "ch3", q: "Recycling is the reprocessing of materials—especially steel, aluminum, paper, glass, rubber, and some plastics—for reuse.", opts: ["True", "False"], ans: 0 }
 ];
 
 // ── MOCK EXAM BANK ─────────────────────────────
@@ -203,9 +261,9 @@ const mockBank = [
   { ch: "ch1", q: "Corporate social responsibility is defined as an organization's obligation to _______ its positive effects and _______ its negative effects on stakeholders.", opts: ["Maximize... minimize", "Minimize... maximize", "Ignore... address", "Report... hide"], ans: 0 },
 
   // ════════════ TEST BANK — MISSING QUESTIONS (40 new) ════════════
-  { ch: "ch1", q: "Which of the following is one of the rights spelled out by John F. Kennedy in his “Consumers’ Bill of Rights”?", opts: ["The right to consumerism", "The right to safety", "The right to be protected", "The right to be ethical", "The right to be heard"], ans: 1, exp: ["❌ A. The right to consumerism", "✅ B. The right to safety — Correct.", "❌ C. The right to be protected", "❌ D. The right to be ethical", "❌ E. The right to be heard"] },
+  { ch: "ch1", q: "Which of the following is one of the rights spelled out by John F. Kennedy in his Consumers' Bill of Rights?", opts: ["The right to consumerism", "The right to safety", "The right to be protected", "The right to be ethical", "The right to be heard"], ans: 1, exp: ["❌ A. The right to consumerism", "✅ B. The right to safety — Correct.", "❌ C. The right to be protected", "❌ D. The right to be ethical", "❌ E. The right to be heard"] },
   { ch: "ch1", q: "Which of the following was developed in the 1980s to guide corporate support for ethical conduct by establishing a method for discussing best practices?", opts: ["Federal Sentencing Guidelines for Organizations", "Defense Industry Initiative on Business Ethics and Conduct", "Foreign Corrupt Practices Act", "U.S. Sentencing Commission", "The Southern Common Market"], ans: 1, exp: ["❌ A. Federal Sentencing Guidelines for Organizations", "✅ B. Defense Industry Initiative on Business Ethics and Conduct — Correct.", "❌ C. Foreign Corrupt Practices Act", "❌ D. U.S. Sentencing Commission", "❌ E. The Southern Common Market"] },
-  { ch: "ch1", q: "President Obama’s administration focused on which of these major ethical issues?", opts: ["Decreasing environmental legislation", "Deregulation", "Tax decreases", "Incentives to oil companies", "Healthcare and consumer protection"], ans: 4, exp: ["❌ A. Decreasing environmental legislation", "❌ B. Deregulation", "❌ C. Tax decreases", "❌ D. Incentives to oil companies", "✅ E. Healthcare and consumer protection — Correct."] },
+  { ch: "ch1", q: "President Obama's administration focused on which of these major ethical issues?", opts: ["Decreasing environmental legislation", "Deregulation", "Tax decreases", "Incentives to oil companies", "Healthcare and consumer protection"], ans: 4, exp: ["❌ A. Decreasing environmental legislation", "❌ B. Deregulation", "❌ C. Tax decreases", "❌ D. Incentives to oil companies", "✅ E. Healthcare and consumer protection — Correct."] },
   { ch: "ch1", q: "Which of the following statements about business ethics is true?", opts: ["A firm that has ethical management will succeed financially.", "Codes of ethics should cover every business ethics issue.", "Business ethics focuses more on laws than on values.", "Individuals apply the same ethical rules in business as they do at home.", "Conflict or trade-offs do not exist between profits and business ethics."], ans: 4, exp: ["❌ A. A firm that has ethical management will succeed financially.", "❌ B. Codes of ethics should cover every business ethics issue.", "❌ C. Business ethics focuses more on laws than on values.", "❌ D. Individuals apply the same ethical rules in business as they do at home.", "✅ E. Conflict or trade-offs do not exist between profits and business ethics. — Correct."] },
   { ch: "ch1", q: "Because of Sarbanes-Oxley, what must publicly traded companies develop in order to assist in maintaining transparency in financial reporting?", opts: ["Ethics officers", "Ethics programs", "Codes of ethics", "Legal counsel", "Accountants"], ans: 2, exp: ["❌ A. Ethics officers", "❌ B. Ethics programs", "✅ C. Codes of ethics — Correct.", "❌ D. Legal counsel", "❌ E. Accountants"] },
   { ch: "ch1", q: "Which of the following statements about the Dodd-Frank Wall Street Reform and Consumer Protection Act is true?", opts: ["It was very popular among Wall Street bankers.", "It represented modest reform to the finance industry.", "It came out of theological discussions in the 1920s.", "It was designed to make the financial services industry more responsible.", "It made it mandatory for public corporations to hire ethics officers."], ans: 3, exp: ["❌ A. It was very popular among Wall Street bankers.", "❌ B. It represented modest reform to the finance industry.", "❌ C. It came out of theological discussions in the 1920s.", "✅ D. It was designed to make the financial services industry more responsible. — Correct.", "❌ E. It made it mandatory for public corporations to hire ethics officers."] },
@@ -214,7 +272,7 @@ const mockBank = [
   { ch: "ch2", q: "Which of the following groups is defined as one that does not typically engage in transactions with a company and therefore is not essential for its survival?", opts: ["Employees", "Secondary stakeholders", "Primary stakeholders", "Investors", "Customers"], ans: 1, exp: ["❌ A. Employees", "✅ B. Secondary stakeholders — Correct.", "❌ C. Primary stakeholders", "❌ D. Investors", "❌ E. Customers"] },
   { ch: "ch2", q: "A firm that recognizes other stakeholders beyond investors, employees, and suppliers, and explicitly acknowledges that dialogue exists between a firm\'s internal and external environments, has adopted which of the following?", opts: ["A stakeholder model of socially responsible corporate governance", "A stakeholder bias", "A code of ethics", "A stakeholder interaction model", "A corporate interface model"], ans: 3, exp: ["❌ A. A stakeholder model of socially responsible corporate governance", "❌ B. A stakeholder bias", "❌ C. A code of ethics", "✅ D. A stakeholder interaction model — Correct.", "❌ E. A corporate interface model"] },
   { ch: "ch2", q: "When unethical acts are discovered in a firm, which of the following is true in most instances?", opts: ["They are caused by unwilling participants.", "The cause is due to external stakeholders.", "The perpetrators are caught and prosecuted.", "Their acceptance and perpetuation were facilitated by cooperation or complicity.", "The cause of the unethical conduct is a corrupt board of directors."], ans: 3, exp: ["❌ A. They are caused by unwilling participants.", "❌ B. The cause is due to external stakeholders.", "❌ C. The perpetrators are caught and prosecuted.", "✅ D. Their acceptance and perpetuation were facilitated by cooperation or complicity. — Correct.", "❌ E. The cause of the unethical conduct is a corrupt board of directors."] },
-  { ch: "ch2", q: "Which of the following statements accurately describes the normative approach?", opts: ["It focuses on the firm’s behavior and usually addresses how decisions and strategies are made for stakeholder relationships.", "It describes what happens if firms behave in a particular way.", "It is the degree to which a firm understands and addresses stakeholder demands.", "It describes reciprocal relationships between the firm and a host of stakeholders.", "It identifies ethical guidelines that dictate how firms should treat stakeholders."], ans: 4, exp: ["❌ A. It focuses on the firm’s behavior and usually addresses how decisions and strategies are made for stakeholder relationships.", "❌ B. It describes what happens if firms behave in a particular way.", "❌ C. It is the degree to which a firm understands and addresses stakeholder demands.", "❌ D. It describes reciprocal relationships between the firm and a host of stakeholders.", "✅ E. It identifies ethical guidelines that dictate how firms should treat stakeholders. — Correct."] },
+  { ch: "ch2", q: "Which of the following statements accurately describes the normative approach?", opts: ["It focuses on the firm's behavior and usually addresses how decisions and strategies are made for stakeholder relationships.", "It describes what happens if firms behave in a particular way.", "It is the degree to which a firm understands and addresses stakeholder demands.", "It describes reciprocal relationships between the firm and a host of stakeholders.", "It identifies ethical guidelines that dictate how firms should treat stakeholders."], ans: 4, exp: ["❌ A. It focuses on the firm's behavior and usually addresses how decisions and strategies are made for stakeholder relationships.", "❌ B. It describes what happens if firms behave in a particular way.", "❌ C. It is the degree to which a firm understands and addresses stakeholder demands.", "❌ D. It describes reciprocal relationships between the firm and a host of stakeholders.", "✅ E. It identifies ethical guidelines that dictate how firms should treat stakeholders. — Correct."] },
   { ch: "ch2", q: "The idea of the invisible hand, which is a fundamental concept in free market capitalism, was developed by which of the following individuals?", opts: ["Adam Smith", "John Maynard Keynes", "Janet Yellen", "Noel Biderman", "Milton Friedman"], ans: 0, exp: ["✅ A. Adam Smith — Correct.", "❌ B. John Maynard Keynes", "❌ C. Janet Yellen", "❌ D. Noel Biderman", "❌ E. Milton Friedman"] },
   { ch: "ch2", q: "The idea that because people live in a community, social rules should benefit the community is known as _______.", opts: ["the stakeholder interaction model", "consumer protection", "the common good", "sustainability", "corporate governance"], ans: 2, exp: ["❌ A. the stakeholder interaction model", "❌ B. consumer protection", "✅ C. the common good — Correct.", "❌ D. sustainability", "❌ E. corporate governance"] },
   { ch: "ch2", q: "The extent to which a firm meets the economic, legal, ethical, and philanthropic responsibilities placed on it by various stakeholders is referred to as its _______.", opts: ["reputation", "corporate citizenship", "corporate ethical audit", "ethical citizenship", "fiduciary duties"], ans: 1, exp: ["❌ A. reputation", "✅ B. corporate citizenship — Correct.", "❌ C. corporate ethical audit", "❌ D. ethical citizenship", "❌ E. fiduciary duties"] },
@@ -222,10 +280,10 @@ const mockBank = [
   { ch: "ch2", q: "Which model of corporate governance is founded in classic economic precepts?", opts: ["Economic", "Shareholder", "Stakeholder", "Board", "ISO"], ans: 1, exp: ["❌ A. Economic", "✅ B. Shareholder — Correct.", "❌ C. Stakeholder", "❌ D. Board", "❌ E. ISO"] },
   { ch: "ch2", q: "Board members being linked to more than one company is defined as which of the following?", opts: ["The stakeholder concept", "The stakeholder model of corporate governance", "An interlocking directorate", "A conflict of interest", "A multiple directorate"], ans: 2, exp: ["❌ A. The stakeholder concept", "❌ B. The stakeholder model of corporate governance", "✅ C. An interlocking directorate — Correct.", "❌ D. A conflict of interest", "❌ E. A multiple directorate"] },
   { ch: "ch2", q: "The obligation of individuals to make decisions that are in the best interests of the corporation and its stakeholders is known as a _______.", opts: ["duty of loyalty", "duty of oversight", "duty to audit", "duty of control", "duty of cooperation"], ans: 0, exp: ["✅ A. duty of loyalty — Correct.", "❌ B. duty of oversight", "❌ C. duty to audit", "❌ D. duty of control", "❌ E. duty of cooperation"] },
-  { ch: "ch3", q: "One of the biggest factors in land pollution is the dumping of waste into landfills. By far the world’s biggest wasters are consumers in _______.", opts: ["Europe", "China", "Russia", "the United States", "Canada"], ans: 3, exp: ["❌ A. Europe", "❌ B. China", "❌ C. Russia", "✅ D. the United States — Correct.", "❌ E. Canada"] },
-  { ch: "ch3", q: "The world’s forests, which cover more than 30 percent of the planet, are being destroyed, with forests shrinking by 502,000 square miles over the past 25 years. Wide-spread deforestation is caused predominantly by which of the following?", opts: ["The corn industry", "Beef, soy, palm oil, and wood products", "Human-lit fires", "A lack of rain", "Wildfires"], ans: 1, exp: ["❌ A. The corn industry", "✅ B. Beef, soy, palm oil, and wood products — Correct.", "❌ C. Human-lit fires", "❌ D. A lack of rain", "❌ E. Wildfires"] },
+  { ch: "ch3", q: "One of the biggest factors in land pollution is the dumping of waste into landfills. By far the world's biggest wasters are consumers in _______.", opts: ["Europe", "China", "Russia", "the United States", "Canada"], ans: 3, exp: ["❌ A. Europe", "❌ B. China", "❌ C. Russia", "✅ D. the United States — Correct.", "❌ E. Canada"] },
+  { ch: "ch3", q: "The world's forests, which cover more than 30 percent of the planet, are being destroyed, with forests shrinking by 502,000 square miles over the past 25 years. Wide-spread deforestation is caused predominantly by which of the following?", opts: ["The corn industry", "Beef, soy, palm oil, and wood products", "Human-lit fires", "A lack of rain", "Wildfires"], ans: 1, exp: ["❌ A. The corn industry", "✅ B. Beef, soy, palm oil, and wood products — Correct.", "❌ C. Human-lit fires", "❌ D. A lack of rain", "❌ E. Wildfires"] },
   { ch: "ch3", q: "Many businesses can benefit from urban renewal movements that reduce sprawl, but it can create disadvantages for _______.", opts: ["car and oil companies", "the airline industry", "the railroad industry", "service-oriented companies", "humans and animals"], ans: 0, exp: ["✅ A. car and oil companies — Correct.", "❌ B. the airline industry", "❌ C. the railroad industry", "❌ D. service-oriented companies", "❌ E. humans and animals"] },
-  { ch: "ch3", q: "The Environmental Protection Agency’s primary mission is to _______.", opts: ["protect human health and the environment", "ensure all Fortune 500 firms hire a chief sustainability officer", "protect threatened and endangered species", "encourage alternative energy sources", "collect taxes from the chemical and petroleum industries"], ans: 0, exp: ["✅ A. protect human health and the environment — Correct.", "❌ B. ensure all Fortune 500 firms hire a chief sustainability officer", "❌ C. protect threatened and endangered species", "❌ D. encourage alternative energy sources", "❌ E. collect taxes from the chemical and petroleum industries"] },
+  { ch: "ch3", q: "The Environmental Protection Agency's primary mission is to _______.", opts: ["protect human health and the environment", "ensure all Fortune 500 firms hire a chief sustainability officer", "protect threatened and endangered species", "encourage alternative energy sources", "collect taxes from the chemical and petroleum industries"], ans: 0, exp: ["✅ A. protect human health and the environment — Correct.", "❌ B. ensure all Fortune 500 firms hire a chief sustainability officer", "❌ C. protect threatened and endangered species", "❌ D. encourage alternative energy sources", "❌ E. collect taxes from the chemical and petroleum industries"] },
   { ch: "ch3", q: "Which of the following statements accurately describes the Clean Air Act?", opts: ["It allowed the EPA to track industrial chemicals.", "It focused on promoting alternative forms of energy.", "It established national air quality standards.", "It provided tax benefits to consumers who purchase hybrid cars.", "It focused on reducing pollution through cost-effective change."], ans: 2, exp: ["❌ A. It allowed the EPA to track industrial chemicals.", "❌ B. It focused on promoting alternative forms of energy.", "✅ C. It established national air quality standards. — Correct.", "❌ D. It provided tax benefits to consumers who purchase hybrid cars.", "❌ E. It focused on reducing pollution through cost-effective change."] },
   { ch: "ch3", q: "The Clean Water Act makes it illegal for anyone to discharge any pollutant from a point source directly into navigable waters without a(n) _______.", opts: ["good reason", "direct order", "permit", "inspector present", "limit"], ans: 2, exp: ["❌ A. good reason", "❌ B. direct order", "✅ C. permit — Correct.", "❌ D. inspector present", "❌ E. limit"] },
   { ch: "ch3", q: "Which of the following acts focuses on reducing pollution through cost-effective changes in production, operation, and raw materials use?", opts: ["Pollution Prevention Act", "Toxic Substances Control Act", "Clean Air Act", "Energy Policy Act", "Oil Pollution Act"], ans: 0, exp: ["✅ A. Pollution Prevention Act — Correct.", "❌ B. Toxic Substances Control Act", "❌ C. Clean Air Act", "❌ D. Energy Policy Act", "❌ E. Oil Pollution Act"] },
@@ -237,7 +295,7 @@ const mockBank = [
   { ch: "ch3", q: "Which of the following is the most controversial form of alternative energy after nuclear power?", opts: ["Hydropower", "Geothermal power", "Solar power", "Wind power", "Ethanol"], ans: 4, exp: ["❌ A. Hydropower", "❌ B. Geothermal power", "❌ C. Solar power", "❌ D. Wind power", "✅ E. Ethanol — Correct."] },
   { ch: "ch3", q: "Which of the following is the name for a certification program that recognizes sustainable building practices and strategies?", opts: ["Brundtland Report", "WasteWise", "LEED", "Kyoto Protocol", "USMCA"], ans: 2, exp: ["❌ A. Brundtland Report", "❌ B. WasteWise", "✅ C. LEED — Correct.", "❌ D. Kyoto Protocol", "❌ E. USMCA"] },
   { ch: "ch3", q: "Which type of business describes one that attempts to avoid dealing with environmental issues and hopes nothing bad happens or no one ever finds out about an environmental accident or abuse?", opts: ["A newly established business", "A socially responsible business", "A low-commitment business", "A single-impact-driven business", "A law-abiding business"], ans: 2, exp: ["❌ A. A newly established business", "❌ B. A socially responsible business", "✅ C. A low-commitment business — Correct.", "❌ D. A single-impact-driven business", "❌ E. A law-abiding business"] },
-  { ch: "ch3", q: "One of the country’s greatest sustainability success stories is _______.", opts: ["water conservation", "pollution control", "manufacturing", "composting", "recycling"], ans: 4, exp: ["❌ A. water conservation", "❌ B. pollution control", "❌ C. manufacturing", "❌ D. composting", "✅ E. recycling — Correct."] },
+  { ch: "ch3", q: "One of the country's greatest sustainability success stories is _______.", opts: ["water conservation", "pollution control", "manufacturing", "composting", "recycling"], ans: 4, exp: ["❌ A. water conservation", "❌ B. pollution control", "❌ C. manufacturing", "❌ D. composting", "✅ E. recycling — Correct."] },
   { ch: "ch3", q: "Which of the following is a comprehensive set of environmental standards developed by the International Organization for Standardization to encourage a cleaner, safer, healthier world?", opts: ["Green Globes", "Kyoto Protocol", "ISO 14000", "Cancun Package", "LEED"], ans: 2, exp: ["❌ A. Green Globes", "❌ B. Kyoto Protocol", "✅ C. ISO 14000 — Correct.", "❌ D. Cancun Package", "❌ E. LEED"] },
   { ch: "ch3", q: "Sustainability is defined as the long-term well-being of the natural environment and the mutually beneficial interactions among _______.", opts: ["customers, investors, managers, and policies", "board members, presidents, managers, and nonprofit organizations", "investors, creditors, suppliers, and the marketing department", "nature and individuals, organizations, and business strategies", "managers, boards, CEOs, and stakeholder strategies"], ans: 3, exp: ["❌ A. customers, investors, managers, and policies", "❌ B. board members, presidents, managers, and nonprofit organizations", "❌ C. investors, creditors, suppliers, and the marketing department", "✅ D. nature and individuals, organizations, and business strategies — Correct.", "❌ E. managers, boards, CEOs, and stakeholder strategies"] },
   { ch: "ch3", q: "Created in 1997, the Kyoto Protocol was an international treaty meant to curb global _______.", opts: ["natural resource use", "greenwashing activities", "water pollution", "greenhouse gas emissions", "competition"], ans: 3, exp: ["❌ A. natural resource use", "❌ B. greenwashing activities", "❌ C. water pollution", "✅ D. greenhouse gas emissions — Correct.", "❌ E. competition"] },
@@ -407,6 +465,7 @@ let streakData = JSON.parse(localStorage.getItem('bus214_streak') || '{"count":0
 let bestScores = JSON.parse(localStorage.getItem('bus214_bestScores') || '{}');
 let totalQuizzes = parseInt(localStorage.getItem('bus214_totalQuizzes') || '0');
 let totalCorrect = parseInt(localStorage.getItem('bus214_totalCorrect') || '0');
+let totalWrong   = parseInt(localStorage.getItem('bus214_totalWrong')   || '0');
 
 function updateStreak() {
   const today = new Date().toISOString().split('T')[0];
@@ -423,10 +482,16 @@ function updateStreak() {
 
 // ── NAVIGATION ────────────────────────────────
 function showPage(id) {
+  // Clear any running quiz/mock timers and lockdown modes
+  if (typeof quizTimerInt !== 'undefined') clearInterval(quizTimerInt);
+  if (typeof mockTimerInt !== 'undefined') clearInterval(mockTimerInt);
+  document.body.classList.remove('quiz-mode', 'mock-mode');
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.nav-link, .bottom-nav-item').forEach(l => l.classList.remove('active'));
   const page = document.getElementById(id);
   if (page) { page.classList.add('active'); window.scrollTo(0,0); }
+  // Refresh scroll reveal for newly visible page
+  if (typeof window.refreshScrollReveal === 'function') setTimeout(window.refreshScrollReveal, 50);
   document.querySelectorAll(`[data-page="${id}"]`).forEach(l => l.classList.add('active'));
   if (id === 'page-dashboard') renderDashboard();
   if (id === 'page-quiz') renderMasteryBadges();
@@ -459,17 +524,27 @@ function toggleSidebar() {
     sidebar.classList.toggle('closed');
     if (main) main.classList.toggle('expanded');
   }
-  if (toggle) toggle.textContent = (sidebar.classList.contains('closed') || !sidebar.classList.contains('open')) ? '☰' : '✕';
+  if (toggle) {
+    const isOpen = sidebar.classList.contains('open') || (window.innerWidth > 768 && !sidebar.classList.contains('closed'));
+    toggle.innerHTML = isOpen
+      ? '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>'
+      : '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>';
+  }
 }
 
 // ── DARK MODE ────────────────────────────────
+const SVG_MOON = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';
+const SVG_SUN = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>';
+const SVG_MOON_20 = SVG_MOON.replace(/width="16"/g,'width="20"').replace(/height="16"/g,'height="20"');
+const SVG_SUN_20 = SVG_SUN.replace(/width="16"/g,'width="20"').replace(/height="16"/g,'height="20"');
+
 function initDarkMode() {
   if (localStorage.getItem('bus214_dark') === '1') {
     document.body.classList.add('dark');
     const btn = document.getElementById('dark-btn');
-    if (btn) btn.textContent = '☀️ Light Mode';
+    if (btn) btn.innerHTML = SVG_SUN + ' Light Mode';
     const floatBtn = document.getElementById('dark-btn-float');
-    if (floatBtn) floatBtn.textContent = '☀️';
+    if (floatBtn) floatBtn.innerHTML = SVG_SUN_20;
   }
 }
 function toggleDark() {
@@ -477,11 +552,9 @@ function toggleDark() {
   const isDark = document.body.classList.contains('dark');
   localStorage.setItem('bus214_dark', isDark ? '1' : '0');
   const btn = document.getElementById('dark-btn');
-  if (btn) btn.textContent = isDark ? '☀️ Light Mode' : '🌙 Dark Mode';
+  if (btn) btn.innerHTML = isDark ? SVG_SUN + ' Light Mode' : SVG_MOON + ' Dark Mode';
   const floatBtn = document.getElementById('dark-btn-float');
-  if (floatBtn) {
-    floatBtn.textContent = isDark ? '☀️' : '🌙';
-  }
+  if (floatBtn) floatBtn.innerHTML = isDark ? SVG_SUN_20 : SVG_MOON_20;
 }
 
 // ── ARABIC TOGGLE ────────────────────────────
@@ -567,15 +640,15 @@ function renderQuizQ() {
   document.getElementById("qpf").style.width = pct + "%";
   document.getElementById("q-counter").textContent = `Question ${quizIdx + 1} / ${quizQs.length}`;
   const chLabels = { ch1: "Chapter 1 — Business Ethics", ch2: "Chapter 2 — Stakeholders & Governance", ch3: "Chapter 3 — Sustainability" };
-  const chColors = { ch1: "#6c63ff", ch2: "#0ea5e9", ch3: "#10b981" };
-  document.getElementById("quiz-chapter-tag").innerHTML = `<span style="background:${chColors[q.ch] || '#6c63ff'};color:#fff;padding:3px 10px;border-radius:999px;font-size:.78rem;">${chLabels[q.ch] || q.ch}</span>`;
+  const chColors = { ch1: "#2563EB", ch2: "#7C3AED", ch3: "#10b981" };
+  document.getElementById("quiz-chapter-tag").innerHTML = `<span style="background:${chColors[q.ch] || '#2563EB'};color:#fff;padding:3px 10px;border-radius:999px;font-size:.78rem;">${chLabels[q.ch] || q.ch}</span>`;
   document.getElementById("quiz-q-text").textContent = q.q;
   const optsDiv = document.getElementById("quiz-opts");
   optsDiv.innerHTML = "";
   q.opts.forEach((o, i) => {
     const btn = document.createElement("button");
     btn.className = "quiz-mcq-btn";
-    btn.textContent = ["A","B","C","D"][i] + ". " + o;
+    btn.textContent = ["A","B","C","D","E"][i] + ". " + o;
     btn.onclick = () => handleQuizAnswer(i);
     optsDiv.appendChild(btn);
   });
@@ -591,7 +664,7 @@ function handleQuizAnswer(chosen) {
   if (quizAnswered) return;
   quizAnswered = true;
   const q = quizQs[quizIdx];
-  const allBtns = document.querySelectorAll(".quiz-mcq-btn");
+  const allBtns = document.querySelectorAll("#quiz-opts .quiz-mcq-btn");
   allBtns.forEach((btn, i) => {
     btn.disabled = true;
     if (i === q.ans) {
@@ -609,10 +682,13 @@ function handleQuizAnswer(chosen) {
     quizCorrect++;
     fb.textContent = "✅ Correct!";
     fb.className = "quiz-feedback correct";
+    if (window.SFX) SFX.play('correct');
   } else {
     quizWrong++;
-    fb.textContent = "❌ Wrong — The correct answer is: " + ["A","B","C","D"][q.ans] + ". " + q.opts[q.ans];
+    fb.textContent = "❌ Wrong — The correct answer is: " + ["A","B","C","D","E"][q.ans] + ". " + q.opts[q.ans];
     fb.className = "quiz-feedback wrong";
+    if (window.SFX) SFX.play('wrong');
+    if (typeof saveWrongAnswer === 'function') saveWrongAnswer(q, chosen);
   }
   // Gamification
   const combo = updateCombo(isCorrect);
@@ -672,14 +748,19 @@ function endQuiz() {
     bestScores[chKey] = pct;
     localStorage.setItem('bus214_bestScores', JSON.stringify(bestScores));
   }
-  if (quizWrong === 0) { const gd = getGameData(); gd.perfectQuiz = true; saveGameData(gd); checkBadges(gd); }
+  if (quizWrong === 0 && quizCorrect >= quizQs.length && quizQs.length > 0) { const gd = getGameData(); gd.perfectQuiz = true; saveGameData(gd); checkBadges(gd); }
   totalQuizzes++;
   totalCorrect += quizCorrect;
+  totalWrong += quizWrong;
   localStorage.setItem('bus214_totalQuizzes', totalQuizzes);
   localStorage.setItem('bus214_totalCorrect', totalCorrect);
+  localStorage.setItem('bus214_totalWrong', totalWrong);
   updateStreak();
   renderMasteryBadges();
   renderHomeMastery();
+  // Confetti + sound for high scores
+  if (pct >= 80 && window.launchConfetti) launchConfetti();
+  if (window.SFX) SFX.play('complete');
   // Save to Firebase if signed in
   if (typeof saveQuizResult === 'function') {
     saveQuizResult(chKey, pct, quizCorrect, quizWrong, elapsed);
@@ -693,7 +774,7 @@ function renderMasteryBadges() {
     const score = bestScores[ch];
     if (score === undefined) { el.textContent = ""; return; }
     if (score >= 90) el.innerHTML = '<span style="color:#f59e0b;font-size:.75rem;">⭐ ' + score + '%</span>';
-    else if (score >= 75) el.innerHTML = '<span style="color:#6c63ff;font-size:.75rem;">✓ ' + score + '%</span>';
+    else if (score >= 75) el.innerHTML = '<span style="color:#2563EB;font-size:.75rem;">✓ ' + score + '%</span>';
     else el.innerHTML = '<span style="color:#94a3b8;font-size:.75rem;">' + score + '%</span>';
   });
   // Update question count badges
@@ -735,7 +816,7 @@ function startQuickCheck(ch) {
 
 // ── MOCK EXAM ─────────────────────────────────
 function startMock() {
-  const pool = [...mockBank].sort(() => Math.random() - 0.5).slice(0, 30);
+  const pool = [...testBankQ].sort(() => Math.random() - 0.5).slice(0, 30);
   mockQs = pool; mockIdx = 0; mockCorrect = 0; mockWrong = 0; mockAnswers = [];
   mockTimeRemaining = mockTimeLimit;
   document.body.classList.add('mock-mode');
@@ -753,6 +834,7 @@ function startMock() {
 }
 
 function renderMockQ() {
+  mockAnswered = false;
   if (mockIdx >= mockQs.length) { endMock(); return; }
   const q = mockQs[mockIdx];
   const pct = (mockIdx / mockQs.length) * 100;
@@ -766,7 +848,7 @@ function renderMockQ() {
   q.opts.forEach((o, i) => {
     const btn = document.createElement("button");
     btn.className = "quiz-mcq-btn";
-    btn.textContent = ["A","B","C","D"][i] + ". " + o;
+    btn.textContent = ["A","B","C","D","E"][i] + ". " + o;
     btn.onclick = () => handleMockAnswer(i);
     optsDiv.appendChild(btn);
   });
@@ -775,7 +857,10 @@ function renderMockQ() {
   document.getElementById("mock-next-btn").style.display = "none";
 }
 
+let mockAnswered = false;
 function handleMockAnswer(chosen) {
+  if (mockAnswered) return;
+  mockAnswered = true;
   const q = mockQs[mockIdx];
   const allBtns = document.querySelectorAll("#mock-opts .quiz-mcq-btn");
   allBtns.forEach((btn, i) => {
@@ -787,10 +872,13 @@ function handleMockAnswer(chosen) {
     mockCorrect++;
     document.getElementById("mock-feedback").textContent = "✅ Correct!";
     document.getElementById("mock-feedback").className = "quiz-feedback correct";
+    if (window.SFX) SFX.play('correct');
   } else {
     mockWrong++;
-    document.getElementById("mock-feedback").textContent = "❌ Wrong — The correct answer is: " + ["A","B","C","D"][q.ans] + ". " + q.opts[q.ans];
+    document.getElementById("mock-feedback").textContent = "❌ Wrong — The correct answer is: " + ["A","B","C","D","E"][q.ans] + ". " + q.opts[q.ans];
     document.getElementById("mock-feedback").className = "quiz-feedback wrong";
+    if (window.SFX) SFX.play('wrong');
+    if (typeof saveWrongAnswer === 'function') saveWrongAnswer(q, chosen);
   }
   mockAnswers.push({ q: mockQs[mockIdx], chosen });
   window.mockAnswers = mockAnswers;
@@ -814,13 +902,23 @@ function endMock() {
   document.getElementById("mock-grade").textContent = grade;
   document.getElementById("mock-res-correct").textContent = mockCorrect;
   document.getElementById("mock-res-wrong").textContent = mockWrong;
+  // Update best scores
+  if (!bestScores['all'] || pct > bestScores['all']) bestScores['all'] = pct;
+  localStorage.setItem('bus214_bestScores', JSON.stringify(bestScores));
   totalQuizzes++;
   totalCorrect += mockCorrect;
+  totalWrong += mockWrong;
   localStorage.setItem('bus214_totalQuizzes', totalQuizzes);
   localStorage.setItem('bus214_totalCorrect', totalCorrect);
+  localStorage.setItem('bus214_totalWrong', totalWrong);
+  // Confetti + sound for high scores
+  if (pct >= 80 && window.launchConfetti) launchConfetti();
+  if (window.SFX) SFX.play('complete');
   updateStreak();
+  if (typeof renderMasteryBadges === 'function') renderMasteryBadges();
+  if (typeof renderHomeMastery === 'function') renderHomeMastery();
   // Render solutions
-  const letters = ["A","B","C","D"];
+  const letters = ["A","B","C","D","E"];
   let solHtml = mockAnswers.map((a, i) => {
     const isCorrect = a.chosen === a.q.ans;
     return `<div class="mock-sol-item ${isCorrect ? 'mock-sol-ok' : 'mock-sol-wrong'}">
@@ -986,7 +1084,7 @@ function resetMastered() {
 
 // ── DASHBOARD ────────────────────────────────
 function renderDashboard() {
-  const totalQ = totalCorrect + parseInt(localStorage.getItem('bus214_totalWrong') || '0');
+  const totalQ = totalCorrect + totalWrong;
   const acc = totalQ ? Math.round(totalCorrect / totalQ * 100) : 0;
   const el = document.getElementById("dash-streak");
   if (el) el.textContent = streakData.count + " 🔥";
@@ -1013,17 +1111,31 @@ function renderDashboard() {
     } else {
       const weakest = scores.reduce((a, b) => a.score < b.score ? a : b);
       const strongest = scores.reduce((a, b) => a.score > b.score ? a : b);
-      let msg = '', color = '', icon = '';
+      let msg = '', bg = '', textColor = '', icon = '';
+      const isDark = document.body.classList.contains('dark');
       if (weakest.score < 60) {
-        icon = '🔴'; color = '#fef2f2'; msg = `ركز على <strong>${chNames[weakest.ch]}</strong> — درجتك ${weakest.score}% تحتاج تحسين`;
+        icon = '🔴';
+        bg = isDark ? 'rgba(220,38,38,0.12)' : '#fef2f2';
+        textColor = isDark ? '#F87171' : '#991B1B';
+        msg = `ركز على <strong>${chNames[weakest.ch]}</strong> — درجتك ${weakest.score}% تحتاج تحسين`;
       } else if (weakest.score < 80) {
-        icon = '🟡'; color = '#fffbeb'; msg = `<strong>${chNames[weakest.ch]}</strong> هو أضعف فصل لديك (${weakest.score}%) — راجعه قبل الاختبار`;
+        icon = '🟡';
+        bg = isDark ? 'rgba(245,158,11,0.12)' : '#fffbeb';
+        textColor = isDark ? '#FBBF24' : '#92400E';
+        msg = `<strong>${chNames[weakest.ch]}</strong> هو أضعف فصل لديك (${weakest.score}%) — راجعه قبل الاختبار`;
       } else {
-        icon = '🟢'; color = '#f0fdf4'; msg = `أداء ممتاز! أعلى درجة في <strong>${chNames[strongest.ch]}</strong> (${strongest.score}%)`;
+        icon = '🟢';
+        bg = isDark ? 'rgba(5,150,105,0.12)' : '#f0fdf4';
+        textColor = isDark ? '#34D399' : '#065F46';
+        msg = `أداء ممتاز! أعلى درجة في <strong>${chNames[strongest.ch]}</strong> (${strongest.score}%)`;
       }
       weakEl.style.display = 'flex';
-      weakEl.style.background = color;
-      weakEl.innerHTML = `<span style="font-size:1.2rem;">${icon}</span><span style="font-size:.88rem;line-height:1.5;">${msg}</span>`;
+      weakEl.style.background = bg;
+      weakEl.style.borderRadius = '14px';
+      weakEl.style.padding = '14px 18px';
+      weakEl.style.alignItems = 'center';
+      weakEl.style.gap = '12px';
+      weakEl.innerHTML = `<span style="font-size:1.2rem;">${icon}</span><span style="font-size:.88rem;line-height:1.6;color:${textColor};font-weight:600;">${msg}</span>`;
     }
   }
 }
@@ -1175,12 +1287,13 @@ function exportWrongAnswersPDF(mode) {
   }
   const chNames = { ch1:'Chapter 1', ch2:'Chapter 2', ch3:'Chapter 3' };
   const w = window.open('', '_blank');
+  if (!w) { alert('فعّل النوافذ المنبثقة للتصدير'); return; }
   w.document.write(`<!DOCTYPE html><html dir="ltr"><head><meta charset="UTF-8">
     <title>BUS 214 — Wrong Answers Review</title>
     <style>
       * { box-sizing: border-box; margin: 0; padding: 0; }
       body { font-family: system-ui, sans-serif; padding: 32px; color: #1a1a1a; max-width: 800px; margin: 0 auto; }
-      h1 { font-size: 1.5rem; color: #6c63ff; margin-bottom: 4px; }
+      h1 { font-size: 1.5rem; color: #2563EB; margin-bottom: 4px; }
       .meta { color: #666; font-size: .85rem; margin-bottom: 24px; }
       .card { border: 1.5px solid #e5e7eb; border-radius: 12px; padding: 16px; margin-bottom: 14px; page-break-inside: avoid; box-shadow: 0 3px 10px rgba(0,0,0,.05); }
       .q-text { font-weight: 600; margin-bottom: 8px; line-height: 1.6; }
@@ -1188,11 +1301,11 @@ function exportWrongAnswersPDF(mode) {
       .opts li { padding: 4px 8px; border-radius: 6px; margin: 3px 0; font-size: .9rem; }
       .opts li.correct { background: #dcfce7; color: #166534; font-weight: 700; }
       .opts li.wrong { background: #fee2e2; color: #991b1b; text-decoration: line-through; }
-      .ch-tag { display: inline-block; background: #ede9fe; color: #6c63ff; font-size: .75rem; font-weight: 700; padding: 2px 8px; border-radius: 6px; margin-bottom: 8px; }
+      .ch-tag { display: inline-block; background: #ede9fe; color: #2563EB; font-size: .75rem; font-weight: 700; padding: 2px 8px; border-radius: 6px; margin-bottom: 8px; }
       .no-print { margin-bottom: 20px; }
       @media print { .no-print { display: none; } }
     </style></head><body>
-    <div class="no-print"><button onclick="window.print()" style="background:#6c63ff;color:#fff;border:none;padding:10px 24px;border-radius:8px;font-weight:600;cursor:pointer;">🖨️ Print / Save as PDF</button></div>
+    <div class="no-print"><button onclick="window.print()" style="background:#2563EB;color:#fff;border:none;padding:10px 24px;border-radius:8px;font-weight:600;cursor:pointer;">🖨️ Print / Save as PDF</button></div>
     <h1>BUS 214 — Wrong Answers Review</h1>
     <p class="meta">${wrong.length} wrong answers · ${new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'})}</p>`);
   if (wrong.length === 0) {
@@ -1230,15 +1343,15 @@ function shareResult(mode) {
   }
   const scoreNum = parseInt(score) || 0;
   const grad = ctx.createLinearGradient(0, 0, W, H);
-  grad.addColorStop(0, '#1a1033'); grad.addColorStop(1, '#2d1b69');
+  grad.addColorStop(0, '#0B1120'); grad.addColorStop(1, '#1E3A5F');
   ctx.fillStyle = grad; ctx.fillRect(0, 0, W, H);
-  ctx.globalAlpha = 0.08; ctx.fillStyle = '#6c63ff';
+  ctx.globalAlpha = 0.08; ctx.fillStyle = '#2563EB';
   ctx.beginPath(); ctx.arc(500, 80, 120, 0, Math.PI*2); ctx.fill();
   ctx.beginPath(); ctx.arc(100, 350, 80, 0, Math.PI*2); ctx.fill();
   ctx.globalAlpha = 1;
-  ctx.fillStyle = '#6c63ff'; ctx.font = 'bold 18px system-ui'; ctx.textAlign = 'center';
+  ctx.fillStyle = '#60A5FA'; ctx.font = 'bold 18px system-ui'; ctx.textAlign = 'center';
   ctx.fillText('BUS 214 Study Hub', W/2, 45);
-  ctx.fillStyle = '#a78bfa'; ctx.font = '14px system-ui';
+  ctx.fillStyle = '#93C5FD'; ctx.font = '14px system-ui';
   ctx.fillText((mode === 'mock' ? 'Mock Exam' : 'Quiz') + ' Result', W/2, 70);
   const cx = W/2, cy = 175, r = 65;
   const col = scoreNum >= 85 ? '#16a34a' : scoreNum >= 70 ? '#d97706' : scoreNum >= 55 ? '#ea580c' : '#dc2626';
@@ -1269,19 +1382,19 @@ function exportChapterPDF(pageId, chapterName) {
   if (!page) return;
   const isDark = document.body.classList.contains('dark');
   const p = isDark ? {
-    c1:'#a78bfa',c2:'#8b5cf6',c3:'#c4b5fd',bg1:'#1e1b4b',bg2:'#1a1744',bg3:'#2e1065',
-    line:'#312e81',ink:'#e8e4f8',muted:'#a5a0c8',paper:'#1e1b4b',bodyBg:'#0f0d1a',
+    c1:'#60A5FA',c2:'#3B82F6',c3:'#93C5FD',bg1:'#0B1D3A',bg2:'#1a1744',bg3:'#2e1065',
+    line:'#1E3A5F',ink:'#e8e4f8',muted:'#a5a0c8',paper:'#0B1D3A',bodyBg:'#0f0d1a',
     tipBg:'#1a1506',tipBorder:'#78350f',tipAccent:'#fbbf24',tipText:'#fde68a',
     memoBg:'#0c1929',memoBorder:'#1e3a5f',memoAccent:'#60a5fa',memoText:'#93c5fd',
-    coverGrad:'linear-gradient(160deg,#0f0520 0%,#1e1b4b 30%,#6c63ff 70%,#a78bfa 100%)',
-    svgStops:['#0f0520','#1e1b4b','#6c63ff','#a78bfa']
+    coverGrad:'linear-gradient(160deg,#0f0520 0%,#0B1D3A 30%,#2563EB 70%,#60A5FA 100%)',
+    svgStops:['#0f0520','#0B1D3A','#2563EB','#60A5FA']
   } : {
-    c1:'#6c63ff',c2:'#5b54d9',c3:'#4338ca',bg1:'#ede9fe',bg2:'#f5f3ff',bg3:'#e0e7ff',
-    line:'#c4b5fd',ink:'#1e293b',muted:'#64748b',paper:'#ffffff',bodyBg:'#ffffff',
+    c1:'#2563EB',c2:'#5b54d9',c3:'#4338ca',bg1:'#ede9fe',bg2:'#f5f3ff',bg3:'#e0e7ff',
+    line:'#93C5FD',ink:'#1e293b',muted:'#64748b',paper:'#ffffff',bodyBg:'#ffffff',
     tipBg:'#fffbeb',tipBorder:'#fde68a',tipAccent:'#f59e0b',tipText:'#92400e',
     memoBg:'#eff6ff',memoBorder:'#bfdbfe',memoAccent:'#3b82f6',memoText:'#1e40af',
-    coverGrad:'linear-gradient(160deg,#1e1b4b 0%,#312e81 30%,#6c63ff 70%,#a78bfa 100%)',
-    svgStops:['#1e1b4b','#312e81','#6c63ff','#a78bfa']
+    coverGrad:'linear-gradient(160deg,#0B1D3A 0%,#1E3A5F 30%,#2563EB 70%,#60A5FA 100%)',
+    svgStops:['#0B1D3A','#1E3A5F','#2563EB','#60A5FA']
   };
   const dateStr = new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
   const shadow = isDark ? 'rgba(0,0,0,.3)' : 'rgba(0,0,0,.06)';
@@ -1690,9 +1803,11 @@ function pomoRenderStats() {
 function pomoUpdateDisplay() {
   const m = Math.floor(pomoState.timeLeft / 60);
   const s = pomoState.timeLeft % 60;
+  const timeStr = String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
+  // Update widget elements
   const el = document.getElementById('pomo-time');
-  if (el) el.textContent = String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
-  const btn = document.getElementById('pomo-start-btn');
+  if (el) el.textContent = timeStr;
+  const btn = document.getElementById('pomo-widget-start');
   if (btn) btn.textContent = pomoState.running ? '⏸️ إيقاف' : '▶️ ابدأ';
   const statusEl = document.getElementById('pomo-status');
   if (statusEl) {
@@ -1702,6 +1817,21 @@ function pomoUpdateDisplay() {
   }
   const countEl = document.getElementById('pomo-session-count');
   if (countEl) countEl.textContent = `الجلسة ${pomoState.session} من ${pomoState.totalSessions}`;
+  // Update full page Pomodoro elements
+  const pageDisplay = document.getElementById('pomo-display');
+  if (pageDisplay) pageDisplay.textContent = timeStr;
+  const pageLabel = document.getElementById('pomo-label');
+  if (pageLabel) pageLabel.textContent = pomoState.mode === 'work' ? 'وقت الدراسة' : pomoState.mode === 'short' ? 'استراحة قصيرة' : 'استراحة طويلة';
+  const pageFill = document.getElementById('pomo-progress-fill');
+  if (pageFill) {
+    const total = POMO_DURATIONS[pomoState.mode];
+    const pct = ((total - pomoState.timeLeft) / total) * 100;
+    pageFill.style.width = pct + '%';
+  }
+  const pageSessions = document.getElementById('pomo-sessions');
+  if (pageSessions) pageSessions.textContent = pomoGetStats().sessions;
+  const pageMinutes = document.getElementById('pomo-total-min');
+  if (pageMinutes) pageMinutes.textContent = pomoGetStats().minutes;
 }
 
 function pomoToggle() {
@@ -1774,64 +1904,75 @@ document.addEventListener('DOMContentLoaded', () => {
   updateGameHUD();
 });
 const testBankQ = [
-  { ch:"ch1", q:"Corporate social responsibility is defined as which of the following?", opts:["An organization’s obligation to maximize its positive effects and minimize its negative effects on stakeholders", "Principles, values, and norms that primarily guide individual and group behavior in the world of business", "The institutionalization of business ethics into all levels of business decision making", "A business’s responsibility to manufacture products that function properly", "Charitable contributions made by a business to enhance its reputation with stakeholders"], ans:0 },
-  { ch:"ch1", q:"After the accounting scandals of the early 2000s, which of the following was/were enacted to restore confidence in", opts:["Defense Industry Initiative on Business Ethics and Conduct", "Sarbanes -Oxley Act", "Federal Sentencing Guidelines for Organizations", "Foreign Corrupt Practices Act", "Dodd-Frank Wall Street Reform and Consumer Protection Act"], ans:1 },
-  { ch:"ch1", q:"Which of the following is one of the rights spelled out by John F. Kennedy in his “Consumers’ Bill of Rights”?", opts:["The right to consumerism", "The right to safety", "The right to be protected", "The right to be ethical", "The right to be heard"], ans:1 },
+  { ch:"ch1", q:"Corporate social responsibility is defined as which of the following?", opts:["An organization's obligation to maximize its positive effects and minimize its negative effects on stakeholders", "Principles, values, and norms that primarily guide individual and group behavior in the world of business", "The institutionalization of business ethics into all levels of business decision making", "A business's responsibility to manufacture products that function properly", "Charitable contributions made by a business to enhance its reputation with stakeholders"], ans:0 },
+  { ch:"ch1", q:"After the accounting scandals of the early 2000s, which of the following was/were enacted to restore confidence in financial reporting?", opts:["Defense Industry Initiative on Business Ethics and Conduct", "Sarbanes -Oxley Act", "Federal Sentencing Guidelines for Organizations", "Foreign Corrupt Practices Act", "Dodd-Frank Wall Street Reform and Consumer Protection Act"], ans:1 },
+  { ch:"ch1", q:"Which of the following is one of the rights spelled out by John F. Kennedy in his Consumers' Bill of Rights?", opts:["The right to consumerism", "The right to safety", "The right to be protected", "The right to be ethical", "The right to be heard"], ans:1 },
   { ch:"ch1", q:"During the 1990s, the institutionalization of business ethics was largely driven by which piece of legislation?", opts:["Sarbanes-Oxley Act", "Federal Sentencing Guidelines for Organizations", "Dodd-Frank Wall Street Reform and Consumer Protection Act", "Foreign Corrupt Practices Act", "UN Global Compact"], ans:1 },
-  { ch:"ch1", q:"Environmental Social Governance (ESG) refers to which of the following?", opts:["A framework for evaluation of firm performance in the areas of environmental, social, and governance", "The most far-reaching change in organizational control and accounting regulations since the Securities and", "Guidelines that codified into law incentives to reward organizations for taking action to prevent misconduct", "An organization developed to guide corporate support for ethical conduct", "An organization’s obligation to maximize its positive impact and minimize its negative impact on stakeholders"], ans:0 },
+  { ch:"ch1", q:"Environmental Social Governance (ESG) refers to which of the following?", opts:["A framework for evaluation of firm performance in the areas of environmental, social, and governance", "The most far-reaching change in organizational control and accounting regulations since the Securities and Exchange Acts of the 1930s", "Guidelines that codified into law incentives to reward organizations for taking action to prevent misconduct", "An organization developed to guide corporate support for ethical conduct", "An organization's obligation to maximize its positive impact and minimize its negative impact on stakeholders"], ans:0 },
   { ch:"ch1", q:"The 1960s saw a rise of consumerism. What is consumerism?", opts:["An increase in consumer rights by individuals, organizations, and governments", "The growth of international retail chain stores that served global consumers", "Activities undertaken by independent individuals, groups, and organizations to protect their rights as consumers", "The widespread adoption of consumer-oriented marketing strategies among businesses", "The tendency of organizations to view consumers as their most important stakeholder"], ans:2 },
   { ch:"ch1", q:"Ethically charged decisions _______.", opts:["are made at all levels of work and management", "are made primarily by top management", "stem from individual moral philosophies", "are less important than other decision-making processes", "are an isolated personal issue"], ans:0 },
-  { ch:"ch1", q:"Which of the following was developed in the 1980s to guide corporate support for ethical conduct by establishing a", opts:["Federal Sentencing Guidelines for Organizations", "Defense Industry Initiative on Business Ethics and Conduct", "Foreign Corrupt Practices Act", "U.S. Sentencing Commission", "The Southern Common Market"], ans:1 },
+  { ch:"ch1", q:"Which of the following was developed in the 1980s to guide corporate support for ethical conduct by establishing a set of principles?", opts:["Federal Sentencing Guidelines for Organizations", "Defense Industry Initiative on Business Ethics and Conduct", "Foreign Corrupt Practices Act", "U.S. Sentencing Commission", "The Southern Common Market"], ans:1 },
   { ch:"ch1", q:"Firms taking action to prevent and detect business misconduct in cooperation with government regulation are", opts:["U.S. Sentencing Commission", "Defense Industry Initiative on Business Ethics and Conduct", "World Trade Organization", "United", "Federal Sentencing Guidelines for Organizations"], ans:4 },
   { ch:"ch1", q:"Which of the following statements about morals is true?", opts:["Morals are the same as principles and ethics.", "Morals relate to the business's ethical culture.", "Morals are emphasized in business ethics programs.", "Morals relate to you and you alone.", "Morals do not have much influence over individual ethical decision making."], ans:3 },
   { ch:"ch1", q:"Which of the following statements about values is true?", opts:["Values are specific and pervasive boundaries for behavior that should not be violated.", "Values are acceptable behavior as defined by the company and industry.", "Values are attempts by businesses to minimize their negative impact on society.", "Values", "Values are enduring beliefs and ideals that are socially enforced."], ans:4 },
-  { ch:"ch1", q:"As more than a compliance program, what is business ethics becoming?", opts:["An integral part of management’s efforts to achieve competitive advantage", "A guaranteed way to earn higher financial returns", "Mainly a government regulatory issue", "An initiative led by nonprofit organizations", "A program that decreases profits but increases societal benefits"], ans:0 },
+  { ch:"ch1", q:"As more than a compliance program, what is business ethics becoming?", opts:["An integral part of management's efforts to achieve competitive advantage", "A guaranteed way to earn higher financial returns", "Mainly a government regulatory issue", "An initiative led by nonprofit organizations", "A program that decreases profits but increases societal benefits"], ans:0 },
   { ch:"ch1", q:"Employees who view their organizational culture as ethical are more likely to _______.", opts:["ask for a raise", "use their personal moral philosophies in decision making", "make personal sacrifices for the organization", "gain more organizational training", "have a greater desire to become managers themselves"], ans:2 },
-  { ch:"ch1", q:"President Obama’s administration focused on which of these major ethical issues?", opts:["Decreasing environmental legislation", "Deregulation", "Tax decreases", "Incentives to oil companies", "Healthcare and consumer protection"], ans:4 },
+  { ch:"ch1", q:"President Obama's administration focused on which of these major ethical issues?", opts:["Decreasing environmental legislation", "Deregulation", "Tax decreases", "Incentives to oil companies", "Healthcare and consumer protection"], ans:4 },
   { ch:"ch1", q:"Which of the following statements about business ethics is true?", opts:["A firm that has ethical management will succeed financially.", "Codes of ethics should cover every business ethics issue.", "Business ethics focuses more on laws than on values.", "Individuals apply the same ethical rules in business as they do at home.", "Conflict or trade-offs do not exist between profits and business ethics."], ans:4 },
   { ch:"ch1", q:"A far-reaching change to organizational control and accounting systems, making securities fraud a criminal offense,", opts:["Foreign Corrupt Practices Act", "Sarbanes -Oxley Act", "Consumer Protection Act", "Defense Industry Initiative on Business Ethics and Conduct", "Dodd-Frank Wall Street Reform and Consumer Protection Act"], ans:1 },
   { ch:"ch1", q:"The Foreign Corrupt Practices Act outlawed which of the following?", opts:["Global accounting fraud", "Price collusion", "Corruption in foreign governments", "Bribery of a foreign public official", "Executive misconduct"], ans:3 },
   { ch:"ch1", q:"The Sarbanes-Oxley Act resulted in which of the following?", opts:["It stiffened penalties for personal fraud.", "It created an accounting oversight board that requires corporations to establish codes of ethics for financial", "It required stakeholders to approve corporate firms' financial statements.", "It outlawed bribery of officials in other countries.", "It made securities fraud a civil offense."], ans:1 },
   { ch:"ch1", q:"To survive and contribute to society, which of the following is true?", opts:["Businesses must operate at a loss.", "Businesses must bribe foreign officials with facilitation payments.", "Businesses must ignore the needs and desires of stakeholders.", "Businesses must make a trade-off between profits and business ethics.", "Businesses must earn a profit."], ans:4 },
   { ch:"ch1", q:"Because of Sarbanes-Oxley, what must publicly traded companies develop in order to assist in maintaining", opts:["Ethics", "Codes of ethics", "Legal", "Accountants"], ans:2 },
-  { ch:"ch1", q:"When building long-term relationships between businesses and consumers, which of the following is essential for", opts:["Profit", "Governance", "Trust", "Knowledge", "A code of ethics"], ans:2 },
+  { ch:"ch1", q:"When building long-term relationships between businesses and consumers, which of the following is essential for maintaining the relationship?", opts:["Profit", "Governance", "Trust", "Knowledge", "A code of ethics"], ans:2 },
   { ch:"ch1", q:"Which of the following statements about the Dodd-Frank Wall Street Reform and Consumer Protection Act is true?", opts:["It was very popular among Wall Street bankers.", "It represented modest reform to the finance industry.", "It came out of theological discussions in the 1920s.", "It was designed to make the financial services industry more responsible.", "It made it mandatory for public corporations to hire ethics officers."], ans:3 },
   { ch:"ch1", q:"In the Reagan/Bush eras, the major focus of the business world was on which of the following?", opts:["Self-regulation rather than regulation by government", "Decreasing the number of mergers", "Decreasing the multinational presence in the U.S. marketplace", "Increasing government influence on the economic arena", "Improving business ethics"], ans:0 },
-  { ch:"ch1", q:"The six principles of the Defense Industry Initiative on Business Ethics and Conduct became the foundation for", opts:["The Foreign Corrupt Practices Act", "The Federal Sentencing Guidelines for Organizations", "The Ethical Trading Initiative", "The Federal Trade Commission compliance requirements", "The Sarbanes-Oxley Act"], ans:1 },
+  { ch:"ch1", q:"The six principles of the Defense Industry Initiative on Business Ethics and Conduct became the foundation for which of the following?", opts:["The Foreign Corrupt Practices Act", "The Federal Sentencing Guidelines for Organizations", "The Ethical Trading Initiative", "The Federal Trade Commission compliance requirements", "The Sarbanes-Oxley Act"], ans:1 },
   { ch:"ch1", q:"Ethical culture is defined as which of the following?", opts:["Ethical culture refers to rules, standards, and moral principles regarding what is right or wrong in specific situations.", "Ethical culture is the establishment and enforcement of ethical codes throughout an organization.", "Ethical culture involves the development of rules and norms that are socially enforced.", "Ethical culture refers to the codification of laws to reward organizations for taking action to prevent misconduct.", "Ethical culture is acceptable behavior as defined by the company and industry."], ans:4 },
-  { ch:"ch1", q:"The Federal Sentencing Guidelines for Organizations set the tone for organizational ethics compliance programs", opts:["By codifying into law incentives for organizations to take action such as developing ethical compliance programs to", "By forcing all organizations to develop mandatory reporting systems and ethics programs", "By eliminating most of the federal legislation that created inefficient and time-consuming activities for businesses", "By providing detailed guidelines for how to set up organizational ethics programs to guard against unethical conduct", "By providing a thorough examination of company codes of ethics to determine whether they are sufficient"], ans:0 },
+  { ch:"ch1", q:"The Federal Sentencing Guidelines for Organizations set the tone for organizational ethics compliance programs", opts:["By codifying into law incentives for organizations to take action such as developing ethical compliance programs to prevent misconduct", "By forcing all organizations to develop mandatory reporting systems and ethics programs", "By eliminating most of the federal legislation that created inefficient and time-consuming activities for businesses", "By providing detailed guidelines for how to set up organizational ethics programs to guard against unethical conduct", "By providing a thorough examination of company codes of ethics to determine whether they are sufficient"], ans:0 },
   { ch:"ch1", q:"The Federal Sentencing Guidelines for Organizations are described by which of the following statements?", opts:["They use a routine mechanical approach that forces all firms to use the same means to avert serious penalties.", "They strive to prosecute misconduct.", "They encourage companies to develop standards and procedures for penalizing misconduct.", "They utilize a carrot-and-stick approach by taking preventive action against misconduct.", "They encourage self-regulation as opposed to oversight of compliance."], ans:3 },
   { ch:"ch1", q:"Employees' perceptions of their firm as having an ethical climate lead to which of the following?", opts:["Lack of focus on goals", "Greater focus on education", "Increased community involvement", "Improved relationships with competitors", "Performance-enhancing outcomes"], ans:4 },
-  { ch:"ch1", q:"A global compliance management standard that addresses risks, legal requirements, and stakeholder needs is known as", opts:["the Ethical Trading Initiative", "the UN Global Compact", "the Defense Industry Initiative on Business Ethics and Conduct", "stakeholder theory", "ISO 19600"], ans:4 },
+  { ch:"ch1", q:"A global compliance management standard that addresses risks, legal requirements, and stakeholder needs is known as which of the following?", opts:["the Ethical Trading Initiative", "the UN Global Compact", "the Defense Industry Initiative on Business Ethics and Conduct", "stakeholder theory", "ISO 19600"], ans:4 },
   { ch:"ch1", q:"Investors are concerned about business ethics because they know that misconduct can _______.", opts:["harm the ability to monitor changes", "increase prices of consumer products", "cause delays in government intervention", "lower stock prices", "complicate business financial reporting"], ans:3 },
   { ch:"ch1", q:"When an organization has a strong ethical environment, it usually focuses on the core value of placing whose interests", opts:["Customers'", "Employees'", "Stockholders'", "Suppliers'", "Distributors'"], ans:0 },
   { ch:"ch1", q:"Why is the public more tolerant of consumer misconduct than business misconduct?", opts:["Businesses are expected to have a better idea of right and wrong.", "The decisions of individuals have little to do with ethics in the business world.", "There are big differences in wealth and success between businesses and consumers.", "More organizations commit misconduct than individual consumers.", "There is a large income disparity among professional businesspeople."], ans:2 },
   { ch:"ch1", q:"What happens when society deems a particular business action as wrong or unethical?", opts:["Legislation usually follows.", "The guilty individual is jailed.", "Self-regulation is deemed a failure.", "The company goes bankrupt.", "Fines automatically follow."], ans:0 },
   { ch:"ch1", q:"Which business ethics issue was a major concern during the 1920s?", opts:["Sustainability", "Consumerism", "Living wage", "Bribery", "Abusive managers"], ans:2 },
   { ch:"ch1", q:"Specific and pervasive boundaries for behavior that should not be violated are known as _______.", opts:["philosophy", "values", "principles", "business ethics", "morals"], ans:2 },
-  { ch:"ch1", q:"The term that comprises organizational principles, values, and norms that may originate from individuals,", opts:["stakeholder orientation", "values", "principles", "business ethics", "integrity management"], ans:3 },
-  { ch:"ch2", q:"Those who have a claim in some aspect of a firm's products, operations, markets, industry, and outcomes are known as", opts:["shareholders", "stockholders", "stakeholders", "claimholders", "special-interest groups"], ans:2 },
+  { ch:"ch1", q:"The term that comprises organizational principles, values, and norms that may originate from individuals, organizational statements, or from the legal system that primarily guides individual and group behavior in business is defined as _______.", opts:["stakeholder orientation", "values", "principles", "business ethics", "integrity management"], ans:3 },
+  // ── Ch1 Missing MCQ ──
+  { ch:"ch1", q:"Employees' perceptions of their firm as having an ethical climate lead to which of the following?", opts:["Lack of focus on goals", "Greater focus on education", "Increased community involvement", "Improved relationships with competitors", "Performance-enhancing outcomes"], ans:4 },
+  { ch:"ch1", q:"Which of the following concepts refers to a person's personal philosophy about what is right or wrong?", opts:["Philosophy", "Values", "Principles", "Integrity", "Morals"], ans:4 },
+  { ch:"ch1", q:"A situation where a person is faced with multiple choices, all of which are undesirable as defined by that person, is known as a(n) _______.", opts:["value dilemma", "integrity management", "philosophical dilemma", "legal dilemma", "moral dilemma"], ans:4 },
+  // ── Ch1 True/False ──
+  { ch:"ch1", q:"Prior to the 1960s, ethical issues related to business were often discussed in the domain of theology or philosophy.", opts:["True", "False"], ans:0 },
+  { ch:"ch1", q:"ISO 19600 is a set of 10 principles concerning human rights, labor, the environment, and anti-corruption.", opts:["True", "False"], ans:1 },
+  { ch:"ch1", q:"Every organization has the potential for unethical behavior, even if it is not a business.", opts:["True", "False"], ans:0 },
+  { ch:"ch1", q:"Morals are enduring beliefs and ideals that are socially enforced.", opts:["True", "False"], ans:1 },
+  { ch:"ch1", q:"The Consumers' Bill of Rights developed by John F. Kennedy maintains that consumers have the right to safety, the right to be heard, the right to free speech, and the right to choose.", opts:["True", "False"], ans:1 },
+  { ch:"ch1", q:"A majority of consumers believe it is a company's responsibility to have a moral or ethical viewpoint.", opts:["True", "False"], ans:0 },
+  { ch:"ch2", q:"Those who have a claim in some aspect of a firm's products, operations, markets, industry, and outcomes are known as which of the following?", opts:["shareholders", "stockholders", "stakeholders", "claimholders", "special-interest groups"], ans:2 },
   { ch:"ch2", q:"Stakeholders' power over businesses stems from their _______.", opts:["ability to withhold organizational resources", "ability to generate profits", "media impact", "political influence", "stock ownership"], ans:0 },
-  { ch:"ch2", q:"Which of the following groups is defined as one that does not typically engage in transactions with a company and", opts:["Employees", "Secondary stakeholders", "Primary stakeholders", "Investors", "Customers"], ans:1 },
-  { ch:"ch2", q:"A firm that recognizes other stakeholders beyond investors, employees, and suppliers, and explicitly acknowledges that", opts:["A stakeholder model of socially responsible corporate governance", "A stakeholder bias", "A code of ethics", "A stakeholder interaction model", "A corporate interface model"], ans:3 },
+  { ch:"ch2", q:"Which of the following groups is defined as one that does not typically engage in transactions with a company and is not affected by its actions?", opts:["Employees", "Secondary stakeholders", "Primary stakeholders", "Investors", "Customers"], ans:1 },
+  { ch:"ch2", q:"A firm that recognizes other stakeholders beyond investors, employees, and suppliers, and explicitly acknowledges that business must attend to the bottom line?", opts:["A stakeholder model of socially responsible corporate governance", "A stakeholder bias", "A code of ethics", "A stakeholder interaction model", "A corporate interface model"], ans:3 },
   { ch:"ch2", q:"The degree to which a firm understands and addresses stakeholder demands refers to _______.", opts:["a stakeholder orientation", "a shareholder orientation", "the stakeholder interaction model", "a two-way street", "a continuum"], ans:0 },
   { ch:"ch2", q:"Which of the following industries tends to generate a high level of trust from consumers and stakeholders?", opts:["Insurance", "Technology", "Banks", "Mortgage lenders", "Energy"], ans:1 },
   { ch:"ch2", q:"Why is it important for businesses to recognize secondary stakeholder groups?", opts:["They are absolutely necessary for the firm's survival.", "They include the employees necessary for the firm's success.", "They always have more power than primary stakeholders.", "They provide vital resources that companies need.", "They have legitimacy and the power to influence outcomes."], ans:4 },
-  { ch:"ch2", q:"A stakeholder group that is absolutely necessary for a firm’s survival is defined as a _______.", opts:["direct stakeholder", "tertiary stakeholder", "secondary stakeholder", "special-interest stakeholder", "primary stakeholder"], ans:4 },
+  { ch:"ch2", q:"A stakeholder group that is absolutely necessary for a firm's survival is defined as a _______.", opts:["direct stakeholder", "tertiary stakeholder", "secondary stakeholder", "special-interest stakeholder", "primary stakeholder"], ans:4 },
   { ch:"ch2", q:"When unethical acts are discovered in a firm, which of the following is true in most instances?", opts:["They are caused by unwilling participants.", "The cause is due to external stakeholders.", "The perpetrators are caught and prosecuted.", "Their acceptance and perpetuation were facilitated by cooperation or complicity.", "The cause of the unethical conduct is a corrupt board of directors."], ans:3 },
-  { ch:"ch2", q:"Which of the following statements accurately describes the normative approach?", opts:["It focuses on the firm’s behavior and usually addresses how decisions and strategies are made for stakeholder", "It describes what happens if firms behave in a particular way.", "It is the degree to which a firm understands and addresses stakeholder demands.", "It describes reciprocal relationships between the firm and a host of stakeholders.", "It identifies ethical guidelines that dictate how firms should treat stakeholders."], ans:4 },
+  { ch:"ch2", q:"Which of the following statements accurately describes the normative approach?", opts:["It focuses on the firm's behavior and usually addresses how decisions and strategies are made for stakeholder", "It describes what happens if firms behave in a particular way.", "It is the degree to which a firm understands and addresses stakeholder demands.", "It describes reciprocal relationships between the firm and a host of stakeholders.", "It identifies ethical guidelines that dictate how firms should treat stakeholders."], ans:4 },
   { ch:"ch2", q:"A stakeholder orientation can be viewed as a(n) _______.", opts:["necessity for business success", "continuum", "polarizing concept", "good marketing ploy", "expensive proposition"], ans:1 },
-  { ch:"ch2", q:"What do suppliers offer that is critical to a firm’s long-term success?", opts:["The promise of customer loyalty", "Material resources and/or intangible knowledge", "Infrastructure", "Revenue", "Leadership skills"], ans:1 },
+  { ch:"ch2", q:"What do suppliers offer that is critical to a firm's long-term success?", opts:["The promise of customer loyalty", "Material resources and/or intangible knowledge", "Infrastructure", "Revenue", "Leadership skills"], ans:1 },
   { ch:"ch2", q:"The four levels of social responsibility include which of the following?", opts:["Economic, social, legal, and voluntary", "Economic, legal, environmental, and ethical", "Financial, legal, environmental, and philanthropic", "Economic, financial, legal, and ethical", "Economic, legal, ethical, and philanthropic"], ans:4 },
   { ch:"ch2", q:"The first of three activities associated with the stakeholder orientation is _______.", opts:["an organization-wide generation of data", "an organization's responsiveness to intelligence", "a set of consumer attributes being identified", "an organizational strategy of target markets", "a human relations department's set of priorities"], ans:0 },
   { ch:"ch2", q:"Public health and safety and the support of local organizations are issues that are most relevant to which stakeholder", opts:["Investors", "Community", "Suppliers", "Customers", "Employees"], ans:1 },
   { ch:"ch2", q:"Minimizing the use of energy and reducing emissions and waste are issues of importance to which of the following", opts:["Environmental groups", "Suppliers", "Employees", "Industry leaders", "Investors"], ans:0 },
   { ch:"ch2", q:"The idea that the basic mission of business is to produce goods and services at a profit, thus maximizing its", opts:["Adam Smith", "Archie Carroll", "Jack Ma", "Karl Marx", "Milton Friedman"], ans:4 },
-  { ch:"ch2", q:"The idea of the invisible hand, which is a fundamental concept in free market capitalism, was developed by which of", opts:["Adam Smith", "John Maynard Keynes", "Janet Yellen", "Noel Biderman", "Milton Friedman"], ans:0 },
-  { ch:"ch2", q:"Some economists believe that if companies address economic and legal issues, they are satisfying the demands of", opts:["John Maynard Keynes", "Janet Yellen", "Adam Smith", "Elinor Ostrom", "Milton Friedman"], ans:4 },
+  { ch:"ch2", q:"The idea of the invisible hand, which is a fundamental concept in free market capitalism, was developed by which of the following?", opts:["Adam Smith", "John Maynard Keynes", "Janet Yellen", "Noel Biderman", "Milton Friedman"], ans:0 },
+  { ch:"ch2", q:"Some economists believe that if companies address economic and legal issues, they are satisfying the demands of society. This view is associated with which of the following?", opts:["John Maynard Keynes", "Janet Yellen", "Adam Smith", "Elinor Ostrom", "Milton Friedman"], ans:4 },
   { ch:"ch2", q:"The idea that because people live in a community, social rules should benefit the community is known as _______.", opts:["the stakeholder interaction model", "consumer protection", "the common good", "sustainability", "corporate governance"], ans:2 },
-  { ch:"ch2", q:"The extent to which a firm meets the economic, legal, ethical, and philanthropic responsibilities placed on it by", opts:["reputation", "corporate citizenship", "corporate ethical audit", "ethical citizenship", "fiduciary duties"], ans:1 },
-  { ch:"ch2", q:"In corporate governance, the process of auditing and improving organizational decisions and actions is known as", opts:["profit", "loyalty", "accountability", "control", "diligence"], ans:3 },
+  { ch:"ch2", q:"The extent to which a firm meets the economic, legal, ethical, and philanthropic responsibilities placed on it by its stakeholders?", opts:["reputation", "corporate citizenship", "corporate ethical audit", "ethical citizenship", "fiduciary duties"], ans:1 },
+  { ch:"ch2", q:"In corporate governance, the process of auditing and improving organizational decisions and actions is known as which of the following?", opts:["profit", "loyalty", "accountability", "control", "diligence"], ans:3 },
   { ch:"ch2", q:"Accountability, oversight, and control all fall under the definition and implementation of corporate _______.", opts:["profit", "loyalty", "care", "governance", "diligence"], ans:3 },
   { ch:"ch2", q:"Which of the following is a major ethical concern among corporate boards of directors?", opts:["Compensation", "The non-traditional directorship approach", "Dividend reporting", "Secondary stakeholders", "Debt swaps"], ans:0 },
   { ch:"ch2", q:"Which of the following describes the purpose of a stakeholder orientation?", opts:["To emphasize shareholders and provide them with a return on their investment", "To maximize positive outcomes that meet stakeholder needs", "To diminish the role of stakeholders such as the government and employees", "To determine which stakeholders to address and which to ignore", "To allow stakeholders to determine the limits of executive compensation"], ans:1 },
@@ -1844,43 +1985,60 @@ const testBankQ = [
   { ch:"ch2", q:"The last step in implementing a stakeholder perspective in an organization is _______.", opts:["identifying resources and determining urgency", "assessing the corporate culture", "identifying stakeholder issues", "gaining stakeholder feedback", "assessing organizational commitment to social responsibility"], ans:3 },
   { ch:"ch2", q:"A stakeholder orientation is not complete unless it includes which of the following?", opts:["Clear accounting procedures", "Major financing activities", "A marketing strategy", "Feedback from special-interest groups", "Activities that address stakeholder issues"], ans:4 },
   { ch:"ch2", q:"A broader view of social responsibility is one that _______.", opts:["views customers as the most important stakeholder", "takes into account a shareholder orientation", "prioritizes all stakeholders the same way", "considers the long-term welfare of society", "emphasizes adherence to law as the highest priority"], ans:3 },
-  { ch:"ch2", q:"The obligation of individuals to make decisions that are in the best interests of the corporation and its stakeholders is", opts:["duty of loyalty", "duty of oversight", "duty to audit", "duty of control", "duty of cooperation"], ans:0 },
-  { ch:"ch2", q:"Fiduciaries are persons placed in positions of trust that act on behalf of the best interests of the organization. Both", opts:["duty of oversight and loyalty", "duty of care or a duty of diligence", "duty of control and audit", "duty of confidence and leadership", "duty of analysis and insight"], ans:1 },
-  { ch:"ch3", q:"Sustainable development is best defined as which of the following?", opts:["The potential for the long-term well-being of the environment, including all biological entities, as well as", "Socially responsible activities such as sustainable business practices that create competitive advantages", "When an organization uses its products and brand identity to create social value, quality, and consumer loyalty", "A strategy involving stakeholder assessment to create meaningful long-term relationships with customers,", "Meeting the needs of the present without compromising the ability of future generations to meet their own"], ans:4 },
-  { ch:"ch3", q:"One of the biggest factors in land pollution is the dumping of waste into landfills. By far the world’s biggest wasters are", opts:["Europe", "China", "Russia", "the United States", "Canada"], ans:3 },
-  { ch:"ch3", q:"The world’s forests, which cover more than 30 percent of the planet, are being destroyed, with forests shrinking by", opts:["The corn industry", "Beef, soy, palm oil, and wood products", "Human-lit fires", "A lack of rain", "Wildfires"], ans:1 },
-  { ch:"ch3", q:"Many businesses can benefit from urban renewal movements that reduce sprawl, but it can create disadvantages for", opts:["car and oil companies", "the airline industry", "the railroad industry", "service-oriented companies", "humans and animals"], ans:0 },
-  { ch:"ch3", q:"Farmers cannot keep harvested seed from genetically modified crops, but must purchase them each year from", opts:["non-organic", "perishable", "uncollectable", "destructive", "patented"], ans:4 },
+  { ch:"ch2", q:"The obligation of individuals to make decisions that are in the best interests of the corporation and its stakeholders is known as which of the following?", opts:["duty of loyalty", "duty of oversight", "duty to audit", "duty of control", "duty of cooperation"], ans:0 },
+  { ch:"ch2", q:"Fiduciaries are persons placed in positions of trust that act on behalf of the best interests of the organization. Both directors and officers of corporations are fiduciaries for their shareholders, tasked with making informed and prudent decisions, referred to as a _______.", opts:["duty of oversight and loyalty", "duty of care or a duty of diligence", "duty of control and audit", "duty of confidence and leadership", "duty of analysis and insight"], ans:1 },
+  // ── Ch2 Missing MCQ ──
+  { ch:"ch2", q:"The obligation of individuals to make decisions that are in the best interests of the corporation and its stakeholders is known as a _______.", opts:["duty of loyalty", "duty of oversight", "duty to audit", "duty of control", "duty of cooperation"], ans:0 },
+  // ── Ch2 True/False ──
+  { ch:"ch2", q:"In Dodge vs. Ford Motor Co., the court ruled that a business exists for the profit of shareholders, and the board of directors should focus on that objective.", opts:["True", "False"], ans:0 },
+  { ch:"ch2", q:"The final step in implementing a stakeholder perspective is identifying stakeholders.", opts:["True", "False"], ans:1 },
+  { ch:"ch2", q:"Evidence suggests that caring about the well-being of stakeholders leads to increased profits.", opts:["True", "False"], ans:0 },
+  { ch:"ch2", q:"Ethics and social responsibility can be used interchangeably.", opts:["True", "False"], ans:1 },
+  { ch:"ch2", q:"Government regulatory agencies are considered a secondary stakeholder group.", opts:["True", "False"], ans:1 },
+  { ch:"ch2", q:"A board of directors' fiduciary duty to a company refers to an assumed position of trust and confidence that entails certain responsibilities.", opts:["True", "False"], ans:0 },
+  { ch:"ch3", q:"Sustainable development is best defined as which of the following?", opts:["The potential for the long-term well-being of the environment, including all biological entities, as well as", "Socially responsible activities such as sustainable business practices that create competitive advantages", "When an organization uses its products and brand identity to create social value, quality, and consumer loyalty", "A strategy involving stakeholder assessment to create meaningful long-term relationships with customers, employees, and suppliers", "Meeting the needs of the present without compromising the ability of future generations to meet their own"], ans:4 },
+  { ch:"ch3", q:"One of the biggest factors in land pollution is the dumping of waste into landfills. By far the world's biggest wasters are", opts:["Europe", "China", "Russia", "the United States", "Canada"], ans:3 },
+  { ch:"ch3", q:"The world's forests, which cover more than 30 percent of the planet, are being destroyed, with forests shrinking by approximately how many acres each year?", opts:["The corn industry", "Beef, soy, palm oil, and wood products", "Human-lit fires", "A lack of rain", "Wildfires"], ans:1 },
+  { ch:"ch3", q:"Many businesses can benefit from urban renewal movements that reduce sprawl, but it can create disadvantages for which of the following?", opts:["car and oil companies", "the airline industry", "the railroad industry", "service-oriented companies", "humans and animals"], ans:0 },
+  { ch:"ch3", q:"Farmers cannot keep harvested seed from genetically modified crops, but must purchase them each year from the seed company?", opts:["non-organic", "perishable", "uncollectable", "destructive", "patented"], ans:4 },
   { ch:"ch3", q:"The first Earth Day increased stakeholder awareness of environmental concerns and the creation of the Environmental", opts:["Corporate social responsibility", "Alternative energy sources", "Diversity", "Sustainability", "Competition"], ans:3 },
-  { ch:"ch3", q:"The Environmental Protection Agency’s primary mission is to _______.", opts:["protect human health and the environment", "ensure all Fortune 500 firms hire a chief sustainability officer", "protect threatened and endangered species", "encourage alternative energy sources", "collect taxes from the chemical and petroleum industries"], ans:0 },
+  { ch:"ch3", q:"The Environmental Protection Agency's primary mission is to _______.", opts:["protect human health and the environment", "ensure all Fortune 500 firms hire a chief sustainability officer", "protect threatened and endangered species", "encourage alternative energy sources", "collect taxes from the chemical and petroleum industries"], ans:0 },
   { ch:"ch3", q:"Which of the following statements accurately describes the Clean Air Act?", opts:["It allowed the EPA to track industrial chemicals.", "It focused on promoting alternative forms of energy.", "It established national air quality standards.", "It provided tax benefits to consumers who purchase hybrid cars.", "It focused on reducing pollution through cost-effective change."], ans:2 },
   { ch:"ch3", q:"The Clean Water Act makes it illegal for anyone to discharge any pollutant from a point source directly into navigable", opts:["good reason", "direct order", "permit", "inspector present", "limit"], ans:2 },
   { ch:"ch3", q:"Which of the following acts focuses on reducing pollution through cost-effective changes in production, operation,", opts:["Pollution Prevention Act", "Toxic Substances Control Act", "Clean Air Act", "Energy Policy Act", "Oil Pollution Act"], ans:0 },
   { ch:"ch3", q:"Which of the following is considered a misleading practice related to sustainability?", opts:["Designing environmentally friendly buildings", "Recycling", "Greenwashing", "Source reduction", "Sustainable agriculture"], ans:2 },
-  { ch:"ch3", q:"To empower the EPA with the ability to track the 75,000 industrial chemicals currently produced or imported into the", opts:["Federal Water Pollution Control Act", "Federal Insecticide, Fungicide and Rodenticide Act", "Safe Drinking Water Act", "Toxic Substances Control Act", "Food Quality Protection Act"], ans:3 },
+  { ch:"ch3", q:"To empower the EPA with the ability to track the 75,000 industrial chemicals currently produced or imported into the United States, Congress enacted which of the following?", opts:["Federal Water Pollution Control Act", "Federal Insecticide, Fungicide and Rodenticide Act", "Safe Drinking Water Act", "Toxic Substances Control Act", "Food Quality Protection Act"], ans:3 },
   { ch:"ch3", q:"Wind power holds great promise for the United States because it is home to one of the greatest sources of wind energy", opts:["Rocky Mountains", "Everglades", "Great Lakes", "Pacific Rim", "Great Plains"], ans:4 },
   { ch:"ch3", q:"A more dependable energy source than some other forms of alternative energy, geothermal energy provides _______.", opts:["heat from the sun", "a radiated heat", "heat from steam", "a constant source of heat", "a dry heat"], ans:3 },
   { ch:"ch3", q:"Which of these is considered the largest form of renewable energy?", opts:["Hydropower", "Solar power", "Geothermal power", "Biofuels", "Nuclear power"], ans:0 },
   { ch:"ch3", q:"Which of the following is the most controversial form of alternative energy after nuclear power?", opts:["Hydropower", "Geothermal power", "Solar power", "Wind power", "Ethanol"], ans:4 },
-  { ch:"ch3", q:"Which of the following is the name for a certification program that recognizes sustainable building practices and", opts:["Brundtland Report", "WasteWise", "LEED", "Kyoto Protocol", "USMCA"], ans:2 },
+  { ch:"ch3", q:"Which of the following is the name for a certification program that recognizes sustainable building practices and promotes green design?", opts:["Brundtland Report", "WasteWise", "LEED", "Kyoto Protocol", "USMCA"], ans:2 },
   { ch:"ch3", q:"To report air, land, and water sustainability issues, most businesses use _______.", opts:["environmental, social, and governance (ESG) factors", "triple bottom line", "green marketing", "LEED", "ISO 14000"], ans:0 },
   { ch:"ch3", q:"Which type of business describes one that attempts to avoid dealing with environmental issues and hopes nothing bad", opts:["A newly established business", "A socially responsible business", "A low-commitment business", "A single-impact-driven business", "A law-abiding business"], ans:2 },
-  { ch:"ch3", q:"One of the country’s greatest sustainability success stories is _______.", opts:["water conservation", "pollution control", "manufacturing", "composting", "recycling"], ans:4 },
+  { ch:"ch3", q:"One of the country's greatest sustainability success stories is _______.", opts:["water conservation", "pollution control", "manufacturing", "composting", "recycling"], ans:4 },
   { ch:"ch3", q:"Stakeholder assessment is an important part of which type of approach to environmental issues?", opts:["Low-commitment", "Medium-commitment", "High-commitment", "Hands-off", "Hands-on"], ans:2 },
-  { ch:"ch3", q:"It is possible to quantify the trade-offs to determine whether to accept or reject environmentally related activities and", opts:["risk management", "management voting", "board directives", "legal requirements", "customer input"], ans:0 },
+  { ch:"ch3", q:"It is possible to quantify the trade-offs to determine whether to accept or reject environmentally related activities and policies?", opts:["risk management", "management voting", "board directives", "legal requirements", "customer input"], ans:0 },
   { ch:"ch3", q:"Which of the following is a comprehensive set of environmental standards developed by the International", opts:["Green Globes", "Kyoto Protocol", "ISO 14000", "Cancun Package", "LEED"], ans:2 },
   { ch:"ch3", q:"Which of the following includes the assessment and improvement of business strategies, economic sectors, work", opts:["Competitive advantage", "Marketing", "Sustainability", "Greenwashing", "Risk analysis"], ans:2 },
   { ch:"ch3", q:"Sustainability is defined as the long-term well-being of the natural environment and the mutually beneficial", opts:["customers, investors, managers, and policies", "board members, presidents, managers, and nonprofit organizations", "investors, creditors, suppliers, and the marketing department", "nature and individuals, organizations, and business strategies", "managers, boards, CEOs, and stakeholder strategies"], ans:3 },
   { ch:"ch3", q:"Which of the following does a cap-and-trade program reduce?", opts:["Carbon emissions", "Waste", "Water pollution", "Deforestation", "Fracking"], ans:0 },
   { ch:"ch3", q:"Which of the following statements about genetically modified seeds is true?", opts:["They are able to cross-pollinate with other plants.", "They make food more perishable.", "They often result in greater crop yields.", "They have a negative impact on impoverished areas.", "They do not offer crop resistance to pests such as bugs."], ans:2 },
-  { ch:"ch3", q:"Major issues that emerged in the twentieth century include the protection of air, water, land, biodiversity, and", opts:["employee relations", "renewable natural resources", "environmental legal regulations", "consumer protection", "greenwashing"], ans:1 },
-  { ch:"ch3", q:"Which of the following can cause markedly shorter life spans, along with chronic respiratory problems, in humans and", opts:["Water pollution", "Air pollution", "Climate change", "Deforestation", "Acid rain"], ans:1 },
+  { ch:"ch3", q:"Major issues that emerged in the twentieth century include the protection of air, water, land, biodiversity, and renewable natural resources?", opts:["employee relations", "renewable natural resources", "environmental legal regulations", "consumer protection", "greenwashing"], ans:1 },
+  { ch:"ch3", q:"Which of the following can cause markedly shorter life spans, along with chronic respiratory problems, in humans and animals?", opts:["Water pollution", "Air pollution", "Climate change", "Deforestation", "Acid rain"], ans:1 },
   { ch:"ch3", q:"Created in 1997, the Kyoto Protocol was an international treaty meant to curb global _______.", opts:["natural resource use", "greenwashing activities", "water pollution", "greenhouse gas emissions", "competition"], ans:3 },
   { ch:"ch3", q:"Which issue did Rachel Carson's book Silent Spring address that sparked the environmental movement?", opts:["Indiscriminate use of genetically modified seeds", "Deforestation", "Urban sprawl", "Indiscriminate use of pesticides", "Lack of renewable energy"], ans:3 },
   { ch:"ch3", q:"The biggest contributor of illnesses in developing countries is likely which of the following?", opts:["Acid rain", "Water pollution", "Deforestation", "Climate change", "Landfill waste"], ans:1 },
   { ch:"ch3", q:"Which of the following is an example of sustainability?", opts:["Recycling", "Donating money", "Building schools", "Helping children learn", "Building roads"], ans:0 },
-  { ch:"ch3", q:"A strategy involving stakeholder assessment to create meaningful long-term relationships with customers while", opts:["green marketing", "recycling initiatives", "stakeholder assessment", "risk analysis", "strategic environmental audit"], ans:0 },
+  { ch:"ch3", q:"A strategy involving stakeholder assessment to create meaningful long-term relationships with customers while maintaining, supporting, and enhancing the natural environment is known as _______.", opts:["green marketing", "recycling initiatives", "stakeholder assessment", "risk analysis", "strategic environmental audit"], ans:0 },
   { ch:"ch3", q:"The long-term variation in average weather patterns is referred to as _______.", opts:["water pollution", "greenhouse gas", "climate change", "the Kyoto Protocol", "the ozone layer"], ans:2 },
+  // ── Ch3 Missing MCQ ──
+  { ch:"ch3", q:"Which of the following is a comprehensive set of environmental standards developed by the International Organization for Standardization to encourage a cleaner, safer, healthier world?", opts:["Green Globes", "Kyoto Protocol", "ISO 14000", "Cancun Package", "LEED"], ans:2 },
+  // ── Ch3 True/False ──
+  { ch:"ch3", q:"Because ethanol is created from corn in the United States, there are concerns that the increased use of ethanol will decrease food supplies.", opts:["True", "False"], ans:0 },
+  { ch:"ch3", q:"Greenwashing is a strategy involving stakeholder assessment to create meaningful long-term relationships with customers, while maintaining, supporting, and enhancing the natural environment.", opts:["True", "False"], ans:1 },
+  { ch:"ch3", q:"Green Globes and LEED are certification groups that authorize buildings as 'green.'", opts:["True", "False"], ans:0 },
+  { ch:"ch3", q:"Acid rain, waste management, urban sprawl, and deforestation are all environmental issues related to land.", opts:["True", "False"], ans:1 },
+  { ch:"ch3", q:"Recycling is the reprocessing of materials—especially steel, aluminum, paper, glass, rubber, and some plastics—for reuse.", opts:["True", "False"], ans:0 },
 ];
 // ═══════════════════════════════════════════════
 //  TEST BANK QUIZ
@@ -1888,11 +2046,28 @@ const testBankQ = [
 let tbState = { questions: [], current: 0, correct: 0, wrong: 0, answered: false };
 
 function startTestBank(ch) {
+  const selectedCh = ch || window._tbSelectedCh || 'all';
   const count = parseInt(document.getElementById('tb-count')?.value || '20');
-  let pool = ch === 'all' ? [...testBankQ] : testBankQ.filter(q => q.ch === ch);
+  let pool = selectedCh === 'all' ? [...testBankQ] : testBankQ.filter(q => q.ch === selectedCh);
   pool = pool.sort(() => Math.random() - 0.5).slice(0, Math.min(count, pool.length));
   tbState = { questions: pool, current: 0, correct: 0, wrong: 0, answered: false };
+  // Hide setup sections
+  const chSec = document.getElementById('tb-setup-chapters');
+  const setSec = document.getElementById('tb-setup-settings');
+  if (chSec) chSec.style.display = 'none';
+  if (setSec) setSec.style.display = 'none';
   renderTBQuestion();
+  // Scroll to quiz area
+  const area = document.getElementById('tb-quiz-area');
+  if (area) area.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function tbShowSetup() {
+  const chSec = document.getElementById('tb-setup-chapters');
+  const setSec = document.getElementById('tb-setup-settings');
+  if (chSec) chSec.style.display = '';
+  if (setSec) setSec.style.display = '';
+  document.getElementById('tb-quiz-area').innerHTML = '';
 }
 
 function renderTBQuestion() {
@@ -1901,15 +2076,40 @@ function renderTBQuestion() {
   if (tbState.current >= tbState.questions.length) {
     const pct = Math.round((tbState.correct / tbState.questions.length) * 100);
     const badge = pct >= 90 ? '🏆' : pct >= 75 ? '🥇' : pct >= 60 ? '🥈' : '📚';
+    // Save to dashboard stats
+    totalQuizzes++;
+    totalCorrect += tbState.correct;
+    totalWrong += tbState.wrong;
+    localStorage.setItem('bus214_totalQuizzes', totalQuizzes);
+    localStorage.setItem('bus214_totalCorrect', totalCorrect);
+    localStorage.setItem('bus214_totalWrong', totalWrong);
+    if (typeof updateStreak === 'function') updateStreak();
+    // Confetti + sound for high scores
+    if (pct >= 80 && window.launchConfetti) launchConfetti();
+    if (window.SFX) SFX.play('complete');
     area.innerHTML = `
-      <div style="text-align:center;padding:30px 20px;">
-        <div style="font-size:3rem;margin-bottom:10px;">${badge}</div>
-        <div style="font-size:2.5rem;font-weight:900;color:var(--accent);">${pct}%</div>
-        <div style="display:flex;justify-content:center;gap:20px;margin:16px 0;">
-          <div><span style="font-size:1.5rem;font-weight:900;color:#1f8f5f;">${tbState.correct}</span><br><span style="font-size:.8rem;color:var(--muted);">Correct</span></div>
-          <div><span style="font-size:1.5rem;font-weight:900;color:#c0392b;">${tbState.wrong}</span><br><span style="font-size:.8rem;color:var(--muted);">Wrong</span></div>
+      <div class="chapter" style="text-align:center;padding:36px 24px;animation:pageFadeSlide .3s ease both;">
+        <div style="width:80px;height:80px;border-radius:50%;background:${pct >= 80 ? 'linear-gradient(135deg,#059669,#34D399)' : pct >= 60 ? 'linear-gradient(135deg,#F59E0B,#FBBF24)' : 'linear-gradient(135deg,#DC2626,#F87171)'};display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:2.2rem;">${badge}</div>
+        <div style="font-size:3rem;font-weight:900;color:var(--accent);line-height:1;">${pct}%</div>
+        <div style="font-size:.95rem;font-weight:700;color:${pct >= 60 ? 'var(--good)' : 'var(--destructive, #DC2626)'};margin-top:6px;">${pct >= 80 ? 'ممتاز!' : pct >= 60 ? 'جيد!' : 'تحتاج مراجعة'}</div>
+        <div style="display:flex;justify-content:center;gap:24px;margin:24px 0;">
+          <div style="background:rgba(5,150,105,0.08);border-radius:14px;padding:14px 24px;">
+            <div style="font-size:1.8rem;font-weight:900;color:var(--good);">${tbState.correct}</div>
+            <div style="font-size:.78rem;color:var(--muted);font-weight:600;">صح</div>
+          </div>
+          <div style="background:rgba(220,38,38,0.08);border-radius:14px;padding:14px 24px;">
+            <div style="font-size:1.8rem;font-weight:900;color:var(--destructive, #DC2626);">${tbState.wrong}</div>
+            <div style="font-size:.78rem;color:var(--muted);font-weight:600;">غلط</div>
+          </div>
+          <div style="background:var(--accent-soft);border-radius:14px;padding:14px 24px;">
+            <div style="font-size:1.8rem;font-weight:900;color:var(--accent);">${tbState.questions.length}</div>
+            <div style="font-size:.78rem;color:var(--muted);font-weight:600;">إجمالي</div>
+          </div>
         </div>
-        <button class="quiz-btn quiz-btn-primary" onclick="document.getElementById('tb-quiz-area').innerHTML='';tbState.current=0;" style="margin-top:12px;">🔄 حاول مرة ثانية</button>
+        <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+          <button onclick="tbShowSetup()" style="padding:12px 28px;border-radius:12px;border:none;background:var(--accent);color:#fff;font-weight:700;font-size:.9rem;cursor:pointer;font-family:inherit;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;margin-left:6px"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg> حاول مرة ثانية</button>
+          <button onclick="tbShowSetup();showPage('page-home')" style="padding:12px 28px;border-radius:12px;border:1.5px solid var(--line);background:var(--paper);color:var(--ink);font-weight:700;font-size:.9rem;cursor:pointer;font-family:inherit;">الرئيسية</button>
+        </div>
       </div>`;
     return;
   }
@@ -1917,23 +2117,42 @@ function renderTBQuestion() {
   const ci = tbState.current + 1;
   const total = tbState.questions.length;
   tbState.answered = false;
+  const isTF = q.opts.length === 2 && (q.opts[0] === 'True' || q.opts[0] === 'صح');
   const letters = ['A','B','C','D','E'];
-  const optsHtml = q.opts.map((opt, i) =>
-    `<button class="quiz-mcq-btn" onclick="handleTBAnswer(${i})" style="display:block;width:100%;text-align:left;padding:14px 18px;margin:8px 0;border-radius:12px;border:1.5px solid var(--line);background:var(--paper);color:var(--ink);font-size:.95rem;font-weight:600;cursor:pointer;transition:all .2s;font-family:inherit;">${letters[i]}. ${opt}</button>`
-  ).join('');
+  const optsHtml = q.opts.map((opt, i) => {
+    if (isTF) {
+      const icon = opt === 'True' || opt === 'صح'
+        ? '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>'
+        : '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>';
+      const color = opt === 'True' || opt === 'صح' ? 'var(--good)' : 'var(--destructive, #DC2626)';
+      return `<button class="quiz-mcq-btn" onclick="handleTBAnswer(${i})" style="display:flex;align-items:center;gap:12px;flex:1;justify-content:center;padding:16px 20px;border-radius:14px;border:1.5px solid var(--line);background:var(--paper);color:var(--ink);font-size:1rem;font-weight:700;cursor:pointer;transition:all .2s;font-family:inherit;">
+        <span style="color:${color}">${icon}</span>
+        <span>${opt === 'True' ? 'صح (True)' : 'خطأ (False)'}</span>
+      </button>`;
+    }
+    return `<button class="quiz-mcq-btn" onclick="handleTBAnswer(${i})" style="display:flex;align-items:flex-start;gap:12px;width:100%;text-align:left;padding:14px 18px;border-radius:14px;border:1.5px solid var(--line);background:var(--paper);color:var(--ink);font-size:.92rem;font-weight:500;cursor:pointer;transition:all .2s;font-family:inherit;line-height:1.6;">
+      <span style="background:var(--accent-soft);color:var(--accent);font-weight:800;font-size:.8rem;min-width:28px;height:28px;display:flex;align-items:center;justify-content:center;border-radius:8px;flex-shrink:0;">${letters[i]}</span>
+      <span>${opt}</span>
+    </button>`;
+  }).join('');
   area.innerHTML = `
-    <div style="background:var(--paper);border:1.5px solid var(--line);border-radius:20px;padding:24px;box-shadow:0 8px 24px rgba(0,0,0,.08);">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
-        <span style="font-size:.82rem;font-weight:700;color:var(--accent);">سؤال ${ci} / ${total}</span>
-        <span style="font-size:.75rem;color:var(--muted);background:var(--accent-soft);padding:3px 10px;border-radius:8px;">${q.ch.toUpperCase()}</span>
+    <div class="chapter" style="margin-bottom:0;padding:24px;animation:pageFadeSlide .3s ease both;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+        <span style="font-size:.9rem;font-weight:800;color:var(--accent);">سؤال ${ci} <span style="font-weight:400;color:var(--muted);">/ ${total}</span></span>
+        <div style="display:flex;gap:6px;">
+          ${isTF ? '<span style="font-size:.72rem;font-weight:700;color:var(--cta,#F59E0B);background:var(--cta-soft,#FEF3C7);padding:4px 10px;border-radius:8px;">T/F</span>' : ''}
+          <span style="font-size:.72rem;font-weight:700;color:#fff;background:var(--accent);padding:4px 12px;border-radius:8px;letter-spacing:.03em;">${q.ch.toUpperCase()}</span>
+        </div>
       </div>
-      <div style="width:100%;height:6px;background:var(--line);border-radius:99px;margin-bottom:18px;overflow:hidden;">
-        <div style="width:${Math.round(ci/total*100)}%;height:100%;background:var(--accent);border-radius:99px;transition:width .3s;"></div>
+      <div style="width:100%;height:5px;background:var(--line);border-radius:99px;margin-bottom:20px;overflow:hidden;">
+        <div style="width:${Math.round(ci/total*100)}%;height:100%;background:linear-gradient(90deg,var(--accent),#60A5FA);border-radius:99px;transition:width .4s cubic-bezier(.4,0,.2,1);"></div>
       </div>
-      <div style="font-size:1.05rem;font-weight:600;line-height:1.7;margin-bottom:18px;color:var(--ink);">${q.q}</div>
-      <div id="tb-opts">${optsHtml}</div>
-      <div id="tb-feedback" style="margin-top:12px;font-weight:700;min-height:24px;"></div>
-      <button id="tb-next-btn" onclick="tbState.current++;renderTBQuestion();" style="display:none;margin-top:14px;background:var(--accent);color:#fff;border:none;padding:10px 28px;border-radius:10px;font-weight:700;font-size:.9rem;cursor:pointer;font-family:inherit;">${ci === total ? 'عرض النتيجة' : 'التالي →'}</button>
+      <div style="font-size:1.05rem;font-weight:600;line-height:1.75;margin-bottom:20px;color:var(--ink);">${q.q}</div>
+      <div id="tb-opts" style="display:flex;${isTF ? 'flex-direction:row;' : 'flex-direction:column;'}gap:${isTF ? '12px' : '8px'};">${optsHtml}</div>
+      <div id="tb-feedback" style="margin-top:14px;font-weight:700;min-height:24px;font-size:.95rem;"></div>
+      <div style="display:flex;gap:10px;margin-top:16px;">
+        <button id="tb-next-btn" onclick="tbState.current++;renderTBQuestion();" style="display:none;background:var(--accent);color:#fff;border:none;padding:12px 32px;border-radius:12px;font-weight:700;font-size:.9rem;cursor:pointer;font-family:inherit;transition:all .15s;">${ci === total ? 'عرض النتيجة' : 'التالي ←'}</button>
+      </div>
     </div>`;
 }
 
@@ -1944,14 +2163,28 @@ function handleTBAnswer(chosen) {
   const isCorrect = chosen === q.ans;
   if (isCorrect) tbState.correct++; else tbState.wrong++;
   const btns = document.querySelectorAll('#tb-opts .quiz-mcq-btn');
+  const isDark = document.body.classList.contains('dark');
   btns.forEach((btn, i) => {
     btn.style.pointerEvents = 'none';
-    if (i === q.ans) { btn.style.background = '#e6f7ed'; btn.style.borderColor = '#1f8f5f'; btn.style.color = '#1f8f5f'; }
-    else if (i === chosen && !isCorrect) { btn.style.background = '#fdf2f2'; btn.style.borderColor = '#c0392b'; btn.style.color = '#c0392b'; }
+    if (i === q.ans) {
+      btn.style.background = isDark ? 'rgba(5,150,105,0.15)' : '#e6f7ed';
+      btn.style.borderColor = 'var(--good)';
+      btn.style.color = isDark ? '#34D399' : '#059669';
+      btn.style.fontWeight = '800';
+    } else if (i === chosen && !isCorrect) {
+      btn.style.background = isDark ? 'rgba(220,38,38,0.12)' : '#fdf2f2';
+      btn.style.borderColor = isDark ? '#F87171' : '#DC2626';
+      btn.style.color = isDark ? '#F87171' : '#DC2626';
+      btn.style.textDecoration = 'line-through';
+    }
   });
   const fb = document.getElementById('tb-feedback');
   fb.textContent = isCorrect ? '✅ صح!' : '❌ خطأ — الإجابة الصحيحة: ' + ['A','B','C','D','E'][q.ans];
-  fb.style.color = isCorrect ? '#1f8f5f' : '#c0392b';
+  fb.style.color = isCorrect ? 'var(--good)' : 'var(--destructive, #DC2626)';
+  // Sound effects
+  if (window.SFX) SFX.play(isCorrect ? 'correct' : 'wrong');
+  // Save wrong answers
+  if (!isCorrect && typeof saveWrongAnswer === 'function') saveWrongAnswer(q, chosen);
   document.getElementById('tb-next-btn').style.display = 'inline-block';
   // Gamification
   if (typeof updateCombo === 'function') {
@@ -1960,4 +2193,59 @@ function handleTBAnswer(chosen) {
     if (isCorrect) awardXP(10, multiplier);
     showQuizEncouragement(isCorrect);
   }
+}
+
+// System B Pomodoro removed — using System A (pomoToggle/pomoSetMode/pomoReset above)
+
+// ══════════════════════════════════════════════
+//  WRONG ANSWER REVIEW
+// ══════════════════════════════════════════════
+function saveWrongAnswer(q, chosen) {
+  const wrongs = JSON.parse(localStorage.getItem('bus214_wrongAnswers') || '[]');
+  wrongs.push({
+    question: q.q,
+    opts: q.opts,
+    correct: q.ans,
+    chosen: chosen,
+    ch: q.ch,
+    exp: q.exp || '',
+    date: new Date().toISOString()
+  });
+  // Keep only last 100
+  if (wrongs.length > 100) wrongs.splice(0, wrongs.length - 100);
+  localStorage.setItem('bus214_wrongAnswers', JSON.stringify(wrongs));
+}
+
+function renderWrongReview() {
+  const container = document.getElementById('wrong-review-list');
+  if (!container) return;
+  const wrongs = JSON.parse(localStorage.getItem('bus214_wrongAnswers') || '[]');
+  if (wrongs.length === 0) {
+    container.innerHTML = '<div style="text-align:center;padding:40px 20px;color:var(--muted);"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="opacity:.4;margin-bottom:12px"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><circle cx="9" cy="9" r="1"/><circle cx="15" cy="9" r="1"/></svg><p style="font-weight:600;">ما فيه أخطاء! ممتاز</p></div>';
+    return;
+  }
+  const letters = ['A','B','C','D','E'];
+  let html = '<div style="font-size:.85rem;color:var(--muted);margin-bottom:16px;">عدد الأخطاء: <strong>' + wrongs.length + '</strong></div>';
+  wrongs.slice().reverse().forEach((w, i) => {
+    html += '<div class="wrong-review-card" style="background:var(--bg);border:1.5px solid var(--line);border-radius:14px;padding:16px;margin-bottom:12px;">';
+    html += '<div style="font-size:.72rem;color:var(--muted);margin-bottom:6px;">Ch ' + w.ch + ' · ' + new Date(w.date).toLocaleDateString('ar-SA') + '</div>';
+    html += '<div style="font-weight:700;margin-bottom:10px;line-height:1.6;">' + w.question + '</div>';
+    w.opts.forEach((opt, j) => {
+      const isCorrect = j === w.correct;
+      const isChosen = j === w.chosen;
+      let style = 'padding:8px 12px;border-radius:8px;margin-bottom:4px;font-size:.88rem;';
+      if (isCorrect) style += 'background:rgba(5,150,105,0.12);border:1px solid rgba(5,150,105,0.3);color:var(--good);font-weight:700;';
+      else if (isChosen) style += 'background:rgba(220,38,38,0.08);border:1px solid rgba(220,38,38,0.2);color:var(--destructive,#DC2626);text-decoration:line-through;';
+      else style += 'color:var(--muted);';
+      html += '<div style="' + style + '">' + letters[j] + '. ' + opt + (isCorrect ? ' ✓' : '') + '</div>';
+    });
+    if (w.exp) html += '<div style="margin-top:8px;padding:8px 12px;background:var(--accent-soft);border-radius:8px;font-size:.82rem;color:var(--accent);">' + w.exp + '</div>';
+    html += '</div>';
+  });
+  container.innerHTML = html;
+}
+
+function clearWrongAnswers() {
+  localStorage.removeItem('bus214_wrongAnswers');
+  renderWrongReview();
 }

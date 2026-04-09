@@ -21,8 +21,10 @@ let currentUser = null;
 // ── AUTH OVERLAY FUNCTIONS ────────────────────
 function authTab(tab) {
   const isLogin = tab === "login";
-  document.getElementById("tab-login").style.cssText    = isLogin  ? "flex:1;padding:10px;border-radius:10px;font-weight:700;cursor:pointer;font-size:.95rem;background:#0ea5e9;color:#fff;border:none;" : "flex:1;padding:10px;border-radius:10px;font-weight:700;cursor:pointer;font-size:.95rem;background:transparent;color:#0ea5e9;border:2px solid #1e4060;";
-  document.getElementById("tab-register").style.cssText = !isLogin ? "flex:1;padding:10px;border-radius:10px;font-weight:700;cursor:pointer;font-size:.95rem;background:#0ea5e9;color:#fff;border:none;" : "flex:1;padding:10px;border-radius:10px;font-weight:700;cursor:pointer;font-size:.95rem;background:transparent;color:#0ea5e9;border:2px solid #1e4060;";
+  const loginBtn = document.getElementById("tab-login");
+  const regBtn = document.getElementById("tab-register");
+  loginBtn.classList.toggle("active", isLogin);
+  regBtn.classList.toggle("active", !isLogin);
   document.getElementById("auth-name-wrap").style.display = isLogin ? "none" : "block";
   document.getElementById("auth-submit").textContent = isLogin ? "دخول" : "إنشاء حساب";
   document.getElementById("auth-submit").dataset.mode = tab;
@@ -186,7 +188,7 @@ async function renderLeaderboard() {
       const initials = displayName.charAt(0).toUpperCase();
       const totalAnswered = (d.totalCorrect || 0) + (d.totalWrong || 0);
       const accuracy = totalAnswered > 0 ? Math.round((d.totalCorrect || 0) / totalAnswered * 100) : 0;
-      const rankColor = rank === 1 ? '#FFD700' : rank === 2 ? '#C0C0C0' : rank === 3 ? '#CD7F32' : '#0ea5e9';
+      const rankColor = rank === 1 ? '#FFD700' : rank === 2 ? '#C0C0C0' : rank === 3 ? '#CD7F32' : '#2563EB';
       html += `<div class="lb-row${isMe?' lb-me':''}">
         <div class="lb-rank" style="color:${rankColor};font-weight:700;">${icon}</div>
         <div class="lb-avatar lb-avatar-ph" style="background:${rankColor};color:#fff;font-weight:700;font-size:.9rem;">${initials}</div>
