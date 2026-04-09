@@ -2369,7 +2369,22 @@ function renderWrongReview() {
       else style += 'color:var(--muted);';
       html += '<div style="' + style + '">' + letters[j] + '. ' + opt + (isCorrect ? ' ✓' : '') + '</div>';
     });
-    if (w.exp) html += '<div style="margin-top:8px;padding:8px 12px;background:var(--accent-soft);border-radius:8px;font-size:.82rem;color:var(--accent);">' + w.exp + '</div>';
+    if (w.exp) {
+      // exp can be an array (per-option) or a plain string
+      let expText = '';
+      if (Array.isArray(w.exp)) {
+        // Show only the correct answer's explanation, strip emoji prefixes
+        expText = (w.exp[w.correct] || '').replace(/^[✅❌⚠️]\s*/u, '').trim();
+      } else {
+        expText = String(w.exp).replace(/^[✅❌⚠️]\s*/u, '').trim();
+      }
+      if (expText) {
+        html += '<div style="margin-top:10px;padding:10px 14px;background:var(--accent-soft);border-radius:10px;font-size:.84rem;line-height:1.6;">'
+          + '<span style="font-weight:700;color:var(--accent);">💡 لماذا؟ </span>'
+          + '<span style="color:var(--ink);">' + expText + '</span>'
+          + '</div>';
+      }
+    }
     html += '</div>';
   });
   container.innerHTML = html;
