@@ -1796,78 +1796,196 @@
     }
 
     @media print {
-      /* Hide all UI elements and non-essential sections */
+      /* ── Hide all UI chrome ── */
       .sidebar-nav,
       .sidebar-toggle,
+      .sidebar-header,
       #quick-search-bar,
+      #mobile-bottom-bar,
+      #section-indicator,
+      #ai-chat-fab,
+      #ai-chat-panel,
+      #eli5-btn,
       .no-print,
-      .hero,
       .notice,
       .print-btn,
+      .ch-pdf-btn,
       .tab-nav,
       .gp-ch-wrap,
-      #section-indicator,
-      #mobile-bottom-bar,
-      .chapter:not(#cheatsheet-section),
-      #quick-review-section,
-      #flash-section,
-      #mistakes-section,
-      #exam-section,
-      #practice-section,
-      #quiz-section,
-      #calc-section,
-      #glossary-section,
-      #plan-section,
-      .page > div:not(#cheatsheet-section) {
+      .hero,
+      .cotd-btn,
+      .chq-header,
+      .chq-opts,
+      .chq-result,
+      .chq-score-bar,
+      button:not(.chq-q) {
         display: none !important;
       }
 
-      /* Isolate the Formula Sheet */
+      /* ── Hide all pages except the active/visible one ── */
+      .page {
+        display: none !important;
+      }
+      .page.active {
+        display: block !important;
+      }
+
+      /* ── Body & layout reset ── */
+      * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
       body {
-        background: white !important;
-        color: black !important;
+        background: #fff !important;
+        color: #000 !important;
         margin: 0 !important;
         padding: 0 !important;
+        font-size: 11pt !important;
       }
-
+      body.dark {
+        background: #fff !important;
+        color: #000 !important;
+      }
       #main-content {
         margin-left: 0 !important;
-        padding: 0 !important;
+        padding: 8mm 10mm !important;
         width: 100% !important;
+        max-width: 100% !important;
       }
-
-      .page {
+      .page[style*="display"] {
         padding: 0 !important;
         margin: 0 !important;
         max-width: 100% !important;
       }
 
-      #cheatsheet-section {
+      /* ── Summary blocks ── */
+      .chapter {
         display: block !important;
-        box-shadow: none !important;
-        border: none !important;
-        padding: 0 !important;
-        margin: 0 !important;
       }
-
-      .cs-grid {
-        display: grid !important;
-        grid-template-columns: 1fr 1fr !important;
-        gap: 20px !important;
+      .chapter h2 {
+        font-size: 14pt !important;
+        font-weight: 800 !important;
+        color: #1e3a5f !important;
+        border-bottom: 2px solid #2563eb !important;
+        padding-bottom: 6px !important;
+        margin-bottom: 10px !important;
       }
-
-      .cs-card {
-        box-shadow: none !important;
-        border: 1px solid #ddd !important;
+      .chapter h2 svg { display: none !important; }
+      .summary-block {
+        display: block !important;
+        margin-bottom: 14px !important;
         break-inside: avoid;
-        background: #fff !important;
-        color: #000 !important;
+        border: 1px solid #c7d2f0 !important;
+        border-left: 4px solid #2563eb !important;
+        border-radius: 6px !important;
+        padding: 8px 12px !important;
+        background: #f8faff !important;
+        box-shadow: none !important;
+      }
+      .summary-block h3 {
+        font-size: 10.5pt !important;
+        font-weight: 700 !important;
+        color: #1e3a5f !important;
+        margin-bottom: 6px !important;
+        border-bottom: 1px solid #e0e7ff !important;
+        padding-bottom: 4px !important;
+      }
+      .summary-block ul {
+        margin: 4px 0 0 14px !important;
+        padding: 0 !important;
+      }
+      .summary-block li {
+        margin-bottom: 5px !important;
+        line-height: 1.5 !important;
+        font-size: 9.5pt !important;
+        color: #1e293b !important;
+      }
+      .summary-block li strong {
+        color: #2563eb !important;
       }
 
-      /* Ensure text is black and sharp */
-      .cs-title, .cs-key, .cs-val {
-        color: #000 !important;
+      /* ── Arabic lines ── */
+      .ar-line {
+        display: block !important;
+        direction: rtl !important;
+        text-align: right !important;
+        font-size: 8.5pt !important;
+        color: #374151 !important;
+        font-family: 'Cairo', sans-serif !important;
+        margin-top: 2px !important;
+        padding: 2px 8px !important;
+        background: #eff6ff !important;
+        border-radius: 4px !important;
+        border-right: 3px solid #2563eb !important;
       }
+
+      /* ── Key Word tags ── */
+      .key-word {
+        display: block !important;
+        font-size: 7.5pt !important;
+        color: #374151 !important;
+        margin-top: 3px !important;
+      }
+      .key-word b {
+        display: inline-block !important;
+        background: #dbeafe !important;
+        color: #1d4ed8 !important;
+        padding: 1px 7px !important;
+        border-radius: 12px !important;
+        font-weight: 700 !important;
+        font-size: 7.5pt !important;
+      }
+
+      /* ── Inline keyword highlights ── */
+      mark.kw {
+        background: #dbeafe !important;
+        color: #1d4ed8 !important;
+        border-radius: 3px !important;
+        padding: 0 3px !important;
+      }
+
+      /* ── Summary tables ── */
+      .summary-table {
+        width: 100% !important;
+        border-collapse: collapse !important;
+        font-size: 8.5pt !important;
+        margin: 6px 0 !important;
+        break-inside: avoid;
+      }
+      .summary-table th {
+        background: #2563eb !important;
+        color: #fff !important;
+        padding: 5px 8px !important;
+        text-align: left !important;
+        font-weight: 700 !important;
+      }
+      .summary-table td {
+        padding: 5px 8px !important;
+        border: 1px solid #c7d2f0 !important;
+        color: #1e293b !important;
+        vertical-align: top !important;
+      }
+      .summary-table tr:nth-child(even) td {
+        background: #f0f6ff !important;
+      }
+
+      /* ── Chapter review questions (show Q text, hide buttons) ── */
+      .chq-item { break-inside: avoid; margin-bottom: 8px !important; }
+      .chq-q { font-size: 9pt !important; font-weight: 600 !important; color: #1e293b !important; }
+      .chq-btn { display: none !important; }
+
+      /* ── Tip/memo boxes ── */
+      .tip-box, .memo-box, .highlight-box {
+        border: 1px solid #fde68a !important;
+        border-left: 4px solid #f59e0b !important;
+        background: #fffbeb !important;
+        padding: 6px 10px !important;
+        margin: 4px 0 !important;
+        border-radius: 4px !important;
+        break-inside: avoid;
+        box-shadow: none !important;
+      }
+
+      /* ── Page break helpers ── */
+      .summary-block { page-break-inside: avoid; }
+      h3 { page-break-after: avoid; }
     }
 
     /* ── SIDEBAR NAVIGATION ── */
