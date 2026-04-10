@@ -575,6 +575,30 @@
       color: #93C5FD;
     }
 
+    /* ── Key Word tag under each bullet ── */
+    .key-word {
+      display: block;
+      margin-top: 4px;
+      font-size: .75rem;
+      color: var(--muted);
+      font-weight: 600;
+      letter-spacing: .02em;
+    }
+    .key-word b {
+      display: inline-block;
+      background: var(--accent-soft);
+      color: var(--accent);
+      padding: 1px 10px;
+      border-radius: 20px;
+      font-weight: 700;
+      margin-left: 4px;
+      font-size: .78rem;
+    }
+    body.dark .key-word b {
+      background: #1E3A5F;
+      color: #93C5FD;
+    }
+
     .slide-card {
       display: flex;
       align-items: center;
