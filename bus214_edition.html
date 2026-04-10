@@ -104,7 +104,6 @@
     <li><a href="#" onclick="showPage('page-testbank');if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/><line x1="8" y1="7" x2="16" y2="7"/><line x1="8" y1="11" x2="14" y2="11"/></svg></span> Test Bank</a></li>
     <li><a href="#" onclick="showPage('page-dashboard');if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></span> Dashboard</a></li>
     <li><a href="#" onclick="showPage('page-badges');renderBadgesPage();if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg></span> الشارات</a></li>
-    <li><a href="#" onclick="showPage('page-leaderboard');renderLeaderboard();if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg></span> Leaderboard</a></li>
     <li class="sidebar-divider"></li>
     <li class="sidebar-label"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> Tools</li>
     <li><a href="#" onclick="showPage('page-pomodoro');if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span> Pomodoro</a></li>
@@ -1820,24 +1819,6 @@ function tbSelectCount(el, val) {
   </section>
 </div>
 
-<!-- ══════════════════════════════════════════
-     LEADERBOARD PAGE
-═══════════════════════════════════════════ -->
-<div id="page-leaderboard" class="page">
-  <section class="hero">
-    <div class="tag">BUS 214 · Live Rankings</div>
-    <h1><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-left:8px"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg> Leaderboard</h1>
-    <p>ترتيب الطلاب حسب أفضل نتائج الكويز</p>
-  </section>
-  <div style="margin-top:20px;">
-    <div id="leaderboard-list" class="lb-list">
-      <div class="lb-signin"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-left:6px"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> سجّل دخولك لترى الـ Leaderboard</div>
-    </div>
-    <div style="text-align:center;margin-top:16px;">
-      <button class="cotd-btn" onclick="renderLeaderboard()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-left:6px"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg> تحديث</button>
-    </div>
-  </div>
-</div>
 
 <!-- ══════════════════════════════════════════
      POMODORO TIMER

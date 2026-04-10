@@ -90,7 +90,6 @@ auth.onAuthStateChanged(async user => {
     if (userInfo) userInfo.style.display = "flex";
     if (userName) userName.textContent = user.displayName || user.email.split("@")[0];
     await syncUserProgress(user);
-    renderLeaderboard();
   } else {
     document.getElementById("auth-overlay").style.display = "flex";
     const userInfo = document.getElementById("fb-user-info");
@@ -156,52 +155,6 @@ async function saveQuizResult(ch, score, correct, wrong, elapsed) {
       bestScores: localBest, totalQuizzes: localTotal, totalCorrect: localCorrect,
       lastSeen: firebase.firestore.FieldValue.serverTimestamp()
     }, { merge: true });
-    renderLeaderboard();
   } catch(e) { console.error('Save quiz error:', e); }
 }
 
-// ── LEADERBOARD ───────────────────────────────
-async function renderLeaderboard() {
-  const container = document.getElementById('leaderboard-list');
-  if (!container) return;
-  if (!currentUser) {
-    container.innerHTML = '<div class="lb-signin">سجّل دخولك لترى الـ Leaderboard 🔒</div>';
-    return;
-  }
-  container.innerHTML = '<div class="lb-loading">⏳ جاري التحميل...</div>';
-  try {
-    const snap = await db.collection('users').orderBy('bestScores.all', 'desc').limit(20).get();
-    if (snap.empty) {
-      container.innerHTML = '<div class="lb-empty">لا يوجد طلاب بعد 🚀</div>';
-      return;
-    }
-    const medals = ['🥇','🥈','🥉'];
-    let html = '', rank = 1;
-    snap.forEach(doc => {
-      const d = doc.data(), p = d.profile || {}, b = d.bestScores || {};
-      const bestAll = b.all !== undefined ? b.all + '%' : '—';
-      const isMe = doc.id === currentUser.uid;
-      const icon = medals[rank-1] || ('#'+rank);
-      const rawName = p.name || p.email || 'طالب';
-      const displayName = (rawName.toLowerCase().includes('hosam') || rawName.toLowerCase().includes('hosamalmotairi')) ? null : rawName;
-      if (!displayName) { rank--; return; }
-      const initials = displayName.charAt(0).toUpperCase();
-      const totalAnswered = (d.totalCorrect || 0) + (d.totalWrong || 0);
-      const accuracy = totalAnswered > 0 ? Math.round((d.totalCorrect || 0) / totalAnswered * 100) : 0;
-      const rankColor = rank === 1 ? '#FFD700' : rank === 2 ? '#C0C0C0' : rank === 3 ? '#CD7F32' : '#2563EB';
-      html += `<div class="lb-row${isMe?' lb-me':''}">
-        <div class="lb-rank" style="color:${rankColor};font-weight:700;">${icon}</div>
-        <div class="lb-avatar lb-avatar-ph" style="background:${rankColor};color:#fff;font-weight:700;font-size:.9rem;">${initials}</div>
-        <div class="lb-info">
-          <div class="lb-name">${displayName}${isMe?' <span class="lb-you">(أنت)</span>':''}</div>
-          <div class="lb-sub">${d.totalQuizzes||0} كويز · دقة: ${accuracy}% · F1:${b.ch1!==undefined?b.ch1+'%':'—'} · F2:${b.ch2!==undefined?b.ch2+'%':'—'} · F3:${b.ch3!==undefined?b.ch3+'%':'—'}</div>
-        </div>
-        <div class="lb-score">${bestAll}</div>
-      </div>`;
-      rank++;
-    });
-    container.innerHTML = html;
-  } catch(e) {
-    container.innerHTML = '<div class="lb-error">تعذّر التحميل</div>';
-  }
-}
