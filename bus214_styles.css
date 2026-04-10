@@ -561,6 +561,20 @@
     }
 
     /* ── Slide Cards ── */
+    /* ── Keyword highlight ── */
+    .kw {
+      background: #DBEAFE;
+      color: #1D4ED8;
+      font-weight: 700;
+      padding: 1px 5px;
+      border-radius: 4px;
+      white-space: nowrap;
+    }
+    body.dark .kw {
+      background: #1E3A5F;
+      color: #93C5FD;
+    }
+
     .slide-card {
       display: flex;
       align-items: center;
