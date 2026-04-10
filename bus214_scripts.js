@@ -579,6 +579,8 @@ const SVG_SUN_20 = SVG_SUN.replace(/width="16"/g,'width="20"').replace(/height="
 
 function setHtmlBg(isDark) {
   document.documentElement.style.backgroundColor = isDark ? '#0B1120' : '#EFF6FF';
+  const tc = document.querySelector('meta[name="theme-color"]');
+  if (tc) tc.setAttribute('content', isDark ? '#0B1120' : '#2563EB');
 }
 function initDarkMode() {
   if (localStorage.getItem('bus214_dark') === '1') {
