@@ -1597,7 +1597,14 @@ function exportChapterPDF(pageId, chapterName) {
       .block em { color:var(--muted);font-style:italic; }
       .ar { direction:rtl;text-align:right;font-family:'Cairo',sans-serif;color:var(--c2);font-size:.82rem;font-weight:600;line-height:1.8;margin-top:4px;padding:4px 10px;background:var(--bg1);border-radius:8px;border-right:3px solid var(--c1); }
       .tip { background:${p.tipBg};border:1.5px solid ${p.tipBorder};border-left:5px solid ${p.tipAccent};border-radius:12px;padding:8px 14px;margin:6px 0;font-size:.86rem;page-break-inside:avoid;color:${p.tipText};box-shadow:0 4px 16px ${shadow}; }
+      .tip strong { color:${p.tipAccent};font-weight:700; }
       .memo { background:${p.memoBg};border:1.5px solid ${p.memoBorder};border-left:5px solid ${p.memoAccent};border-radius:12px;padding:8px 14px;margin:6px 0;font-size:.86rem;page-break-inside:avoid;color:${p.memoText};box-shadow:0 4px 16px ${shadow}; }
+      .note { background:${p.tipBg};border:1.5px solid ${p.tipBorder};border-left:5px solid ${p.tipAccent};border-radius:12px;padding:8px 14px;margin:6px 0;font-size:.86rem;page-break-inside:avoid;color:${p.tipText};box-shadow:0 4px 16px ${shadow}; }
+      .note strong { color:${p.tipAccent};font-weight:700; }
+      .step-wrap { margin:6px 0; }
+      .step-card { display:flex;align-items:flex-start;gap:12px;background:${isDark?p.paper:'#fff'};border:1.5px solid var(--line);border-left:5px solid var(--c1);border-radius:12px;padding:10px 14px;margin:5px 0;page-break-inside:avoid;box-shadow:0 4px 16px ${shadow}; }
+      .step-badge { background:var(--c1);color:#fff;width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.85rem;flex-shrink:0;margin-top:1px; }
+      .step-body { flex:1; }
       .hbox { background:var(--bg1);border:1.5px solid var(--line);border-radius:12px;padding:10px 14px;margin:6px 0;page-break-inside:avoid;box-shadow:0 3px 12px ${shadow}; }
       .hbox strong { color:var(--c2); }
       table { width:100%;border-collapse:separate;border-spacing:0;margin:6px 0;font-size:.82rem;border-radius:12px;overflow:hidden;border:1.5px solid var(--line);box-shadow:0 4px 16px ${shadow}; }
@@ -1662,22 +1669,46 @@ function exportChapterPDF(pageId, chapterName) {
           const mainText = h3.textContent.replace(arText, '').trim();
           w.document.write('<h3>' + mainText + (arText ? ' <span style="direction:rtl;font-family:Cairo,sans-serif;color:var(--c1);font-size:.8rem;font-weight:600;">' + arText + '</span>' : '') + '</h3>');
         }
-        // Process list items as cards
-        el.querySelectorAll('li').forEach(li => {
-          const arSpan = li.querySelector('.ar-line');
-          const arText = arSpan ? arSpan.textContent : '';
-          let html = li.innerHTML;
-          if (arSpan) html = html.replace(arSpan.outerHTML, '');
-          w.document.write('<div class="block">' + html);
-          if (arText) w.document.write('<div class="ar">' + arText + '</div>');
-          w.document.write('</div>');
+        // Process children in order to preserve note-boxes and steps
+        let sectionHtml = '';
+        Array.from(el.children).forEach(child => {
+          const cc = child.className || '';
+          const ct = child.tagName;
+          if (ct === 'H3') return;
+          if (cc.includes('note-box')) {
+            const arS = child.querySelector('.ar-line');
+            const arT = arS ? arS.textContent : '';
+            let nh = child.innerHTML;
+            if (arS) nh = nh.replace(arS.outerHTML, '');
+            sectionHtml += '<div class="tip">' + nh + (arT ? '<div class="ar">' + arT + '</div>' : '') + '</div>';
+          } else if (cc.includes('steps-list')) {
+            sectionHtml += '<div>';
+            Array.from(child.querySelectorAll('.step-item')).forEach(item => {
+              const numEl = item.querySelector('.step-num');
+              const num = numEl ? numEl.textContent.trim() : '';
+              const arS = item.querySelector('.ar-line');
+              const arT = arS ? arS.textContent : '';
+              let bh = item.innerHTML;
+              if (numEl) bh = bh.replace(numEl.outerHTML, '');
+              if (arS) bh = bh.replace(arS.outerHTML, '');
+              sectionHtml += '<div class="block" style="display:flex;gap:10px;align-items:flex-start;"><div style="background:var(--c1);color:#fff;width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.8rem;flex-shrink:0;">' + num + '</div><div>' + bh + (arT ? '<div class="ar">' + arT + '</div>' : '') + '</div></div>';
+            });
+            sectionHtml += '</div>';
+          } else if (ct === 'UL' || ct === 'OL') {
+            Array.from(child.querySelectorAll('li')).forEach(li => {
+              const arS = li.querySelector('.ar-line');
+              const arT = arS ? arS.textContent : '';
+              let lh = li.innerHTML;
+              if (arS) lh = lh.replace(arS.outerHTML, '');
+              sectionHtml += '<div class="block">' + lh + (arT ? '<div class="ar">' + arT + '</div>' : '') + '</div>';
+            });
+          } else if (ct === 'TABLE' || cc.includes('summary-table')) {
+            sectionHtml += child.outerHTML;
+          } else if (cc.includes('benefit-card') || cc.includes('energy-card')) {
+            sectionHtml += '<div class="hbox">' + child.innerHTML + '</div>';
+          }
         });
-        // Process tables
-        el.querySelectorAll('table').forEach(t => w.document.write(t.outerHTML));
-        // Process benefit/energy cards
-        el.querySelectorAll('.benefit-card, .energy-card').forEach(card => {
-          w.document.write('<div class="hbox">' + card.innerHTML + '</div>');
-        });
+        w.document.write(sectionHtml);
         w.document.write('</div>');
       }
       else if (tag === 'SPAN' && cls.includes('ar-line')) {
