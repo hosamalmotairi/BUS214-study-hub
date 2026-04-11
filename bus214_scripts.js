@@ -791,7 +791,7 @@ function handleQuizAnswer(chosen) {
     if (window.SFX) SFX.play('wrong');
     if (typeof saveWrongAnswer === 'function') saveWrongAnswer(q, origChosen);
     // Spaced repetition: re-insert question after 5 questions (max 2 retries)
-    if ((q._retryCount || 0) < 2) {
+    if ((q._retryCount || 0) < 3) {
       const retryQ = Object.assign({}, q, { _isRetry: true, _retryCount: (q._retryCount || 0) + 1, _disp: null });
       const insertAt = Math.min(quizIdx + 5, quizQs.length);
       quizQs.splice(insertAt, 0, retryQ);
@@ -2548,14 +2548,14 @@ function handleTBAnswer(chosen) {
   // ── Spaced repetition: re-queue wrong questions 4 positions later ──
   if (!isCorrect) {
     // Only re-queue if not already a retry (limit to one retry)
-    if (!q._isRetry) {
-      const retryQ = Object.assign({}, q, { _isRetry: true });
+    if ((q._retryCount || 0) < 3) {
+      const retryQ = Object.assign({}, q, { _isRetry: true, _retryCount: (q._retryCount || 0) + 1 });
       delete retryQ._tbDisp; // re-shuffle on retry
       const insertAt = Math.min(tbState.current + 4, tbState.questions.length);
       tbState.questions.splice(insertAt, 0, retryQ);
       fb.innerHTML = '❌ خطأ — سيرجع السؤال بعد <strong>3 أسئلة</strong> 🔄<br><span style="font-size:.85rem;">الإجابة الصحيحة: ' + ['A','B','C','D','E'][dispAns] + '</span>';
     } else {
-      fb.textContent = '❌ خطأ مرة ثانية — الإجابة الصحيحة: ' + ['A','B','C','D','E'][dispAns];
+      fb.textContent = '❌ خطأ — الإجابة الصحيحة: ' + ['A','B','C','D','E'][dispAns];
     }
     tbState.wrongList.push({ q, chosen });
     if (typeof saveWrongAnswer === 'function') saveWrongAnswer(q, chosen);
