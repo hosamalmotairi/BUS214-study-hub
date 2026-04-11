@@ -1509,6 +1509,51 @@ function handleChQ(btn, isCorrect) {
 }
 
 // ═══════════════════════════════════════════════
+//  FEATURE: PDF EXPORT — Test Bank
+// ═══════════════════════════════════════════════
+function exportTestBankPDF(ch) {
+  const letters = ['A','B','C','D','E'];
+  const pool = ch === 'all' ? testBankQ : testBankQ.filter(q => q.ch === ch);
+  const chNames = { ch1: 'Chapter 1 — Business Ethics', ch2: 'Chapter 2 — Stakeholders & Governance', ch3: 'Chapter 3 — Sustainability', all: 'Chapters 1–3' };
+  const chColors = { ch1: '#2563EB', ch2: '#7C3AED', ch3: '#10b981', all: '#1e293b' };
+  const color = chColors[ch] || '#1e293b';
+  const w = window.open('', '_blank');
+  let html = `<!DOCTYPE html><html dir="ltr"><head><meta charset="UTF-8">
+  <title>Test Bank — ${chNames[ch]}</title>
+  <style>
+    body { font-family: Arial, sans-serif; font-size: 11pt; margin: 20mm 15mm; color: #1e293b; }
+    h1 { font-size: 16pt; color: ${color}; border-bottom: 2px solid ${color}; padding-bottom: 8px; margin-bottom: 4px; }
+    .meta { font-size: 9pt; color: #64748b; margin-bottom: 20px; }
+    .q-block { margin-bottom: 18px; break-inside: avoid; }
+    .q-num { font-weight: 800; color: ${color}; margin-bottom: 4px; font-size: 10pt; }
+    .q-text { font-weight: 600; margin-bottom: 6px; line-height: 1.5; }
+    .opt { padding: 2px 0 2px 12px; font-size: 10.5pt; line-height: 1.5; }
+    .opt.correct { font-weight: 700; color: #16a34a; }
+    .divider { border: none; border-top: 1px solid #e2e8f0; margin: 14px 0; }
+    @media print { body { margin: 10mm 12mm; } }
+  </style></head><body>
+  <h1>📋 Test Bank — ${chNames[ch]}</h1>
+  <div class="meta">Ferrell, Business Ethics 13e &nbsp;·&nbsp; ${pool.length} Questions &nbsp;·&nbsp; BUS 214</div>`;
+
+  pool.forEach((q, idx) => {
+    const isTF = q.opts.length <= 2;
+    html += `<div class="q-block">
+      <div class="q-num">Q${idx + 1}${isTF ? ' [T/F]' : ''}</div>
+      <div class="q-text">${q.q}</div>`;
+    q.opts.forEach((o, i) => {
+      const isAns = i === q.ans;
+      html += `<div class="opt${isAns ? ' correct' : ''}">${letters[i]}. ${o}${isAns ? ' ✓' : ''}</div>`;
+    });
+    html += `</div><hr class="divider">`;
+  });
+
+  html += `</body></html>`;
+  w.document.write(html);
+  w.document.close();
+  setTimeout(() => w.print(), 500);
+}
+
+// ═══════════════════════════════════════════════
 //  FEATURE: PDF EXPORT — Wrong Answers Summary
 // ═══════════════════════════════════════════════
 function exportWrongAnswersPDF(mode) {
