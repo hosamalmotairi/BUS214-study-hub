@@ -896,6 +896,9 @@ function endQuiz() {
   }
   // Inline wrong-answers review (built below score card)
   buildWrongReview();
+  // Show "عرض الأخطاء" button only if there are wrongs
+  const revBtnWrap = document.getElementById('quiz-review-btn-wrap');
+  if (revBtnWrap) revBtnWrap.style.display = quizWrong > 0 ? 'block' : 'none';
   // Scroll to score card
   setTimeout(() => {
     const resultEl = document.getElementById('quiz-result-screen');
