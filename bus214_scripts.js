@@ -2352,14 +2352,16 @@ const testBankQ = [
 // ═══════════════════════════════════════════════
 //  TEST BANK QUIZ
 // ═══════════════════════════════════════════════
-let tbState = { questions: [], current: 0, correct: 0, wrong: 0, answered: false };
+let tbState = { questions: [], current: 0, correct: 0, wrong: 0, answered: false, wrongList: [] };
 
 function startTestBank(ch) {
   const selectedCh = ch || window._tbSelectedCh || 'all';
   const count = parseInt(document.getElementById('tb-count')?.value || '20');
   let pool = selectedCh === 'all' ? [...testBankQ] : testBankQ.filter(q => q.ch === selectedCh);
   pool = pool.sort(() => Math.random() - 0.5).slice(0, Math.min(count, pool.length));
-  tbState = { questions: pool, current: 0, correct: 0, wrong: 0, answered: false };
+  // Clear previous shuffle cache so options re-shuffle each new session
+  pool.forEach(q => delete q._tbDisp);
+  tbState = { questions: pool, current: 0, correct: 0, wrong: 0, answered: false, wrongList: [] };
   // Hide setup sections
   const chSec = document.getElementById('tb-setup-chapters');
   const setSec = document.getElementById('tb-setup-settings');
@@ -2396,6 +2398,38 @@ function renderTBQuestion() {
     // Confetti + sound for high scores
     if (pct >= 80 && window.launchConfetti) launchConfetti();
     if (window.SFX) SFX.play('complete');
+    // Build wrong review HTML
+    const hasWrong = tbState.wrongList.length > 0;
+    const letters = ['A','B','C','D','E'];
+    let wrongReviewHtml = '';
+    if (hasWrong) {
+      wrongReviewHtml = `
+        <div id="tb-wrong-review-wrap" style="margin-top:18px;">
+          <button onclick="(function(){var el=document.getElementById('tb-wrong-review');if(el.style.display==='none'){el.style.display='block';this.textContent='▲ إخفاء الأسئلة الغلط'}else{el.style.display='none';this.textContent='📋 عرض الأسئلة الغلط ↓'}}).call(this)"
+            style="width:100%;padding:12px 20px;border-radius:12px;border:1.5px solid #F59E0B;background:#FFFBEB;color:#92400E;font-weight:700;font-size:.9rem;cursor:pointer;font-family:inherit;margin-bottom:8px;">
+            📋 عرض الأسئلة الغلط ↓ (${tbState.wrongList.length})
+          </button>
+          <div id="tb-wrong-review" style="display:none;">
+            ${tbState.wrongList.map((w, wi) => `
+              <div style="background:var(--paper);border:1.5px solid var(--line);border-radius:16px;padding:18px;margin-bottom:12px;text-align:right;">
+                <div style="font-size:.72rem;font-weight:700;color:var(--accent);margin-bottom:8px;">${w.q.ch.toUpperCase()}</div>
+                <div style="font-weight:700;font-size:.95rem;color:var(--ink);margin-bottom:14px;line-height:1.6;">${w.q.q}</div>
+                ${(w.q._tbDisp ? w.q._tbDisp.opts : w.q.opts).map((opt, oi) => {
+                  const origIdx = w.q._tbDisp ? w.q._tbDisp.indices[oi] : oi;
+                  const isCorrect = origIdx === w.q.ans;
+                  const isChosen = w.chosen !== null && (w.q._tbDisp ? w.q._tbDisp.indices[w.chosen] : w.chosen) === origIdx;
+                  let bg = 'var(--paper)', border = 'var(--line)', color = 'var(--ink)', extra = '';
+                  if (isCorrect) { bg = '#e6f7ed'; border = 'var(--good)'; color = '#059669'; extra = ' ✓'; }
+                  else if (isChosen) { bg = '#fdf2f2'; border = '#DC2626'; color = '#DC2626'; extra = ' ✗'; }
+                  return `<div style="display:flex;gap:10px;padding:10px 14px;border-radius:10px;border:1.5px solid ${border};background:${bg};color:${color};font-size:.88rem;margin-bottom:6px;font-weight:${isCorrect ? '700' : '400'};line-height:1.5;">
+                    <span style="font-weight:800;min-width:22px;">${letters[oi]}${extra}</span>
+                    <span>${opt}</span>
+                  </div>`;
+                }).join('')}
+              </div>`).join('')}
+          </div>
+        </div>`;
+    }
     area.innerHTML = `
       <div class="chapter" style="text-align:center;padding:36px 24px;animation:pageFadeSlide .3s ease both;">
         <div style="width:80px;height:80px;border-radius:50%;background:${pct >= 80 ? 'linear-gradient(135deg,#059669,#34D399)' : pct >= 60 ? 'linear-gradient(135deg,#F59E0B,#FBBF24)' : 'linear-gradient(135deg,#DC2626,#F87171)'};display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:2.2rem;">${badge}</div>
@@ -2419,6 +2453,7 @@ function renderTBQuestion() {
           <button onclick="tbShowSetup()" style="padding:12px 28px;border-radius:12px;border:none;background:var(--accent);color:#fff;font-weight:700;font-size:.9rem;cursor:pointer;font-family:inherit;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;margin-left:6px"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg> حاول مرة ثانية</button>
           <button onclick="tbShowSetup();showPage('page-home')" style="padding:12px 28px;border-radius:12px;border:1.5px solid var(--line);background:var(--paper);color:var(--ink);font-weight:700;font-size:.9rem;cursor:pointer;font-family:inherit;">الرئيسية</button>
         </div>
+        ${wrongReviewHtml}
       </div>`;
     return;
   }
@@ -2426,9 +2461,27 @@ function renderTBQuestion() {
   const ci = tbState.current + 1;
   const total = tbState.questions.length;
   tbState.answered = false;
+  window._tbPendingAnswer = null;
+
+  // ── Shuffle options (skip T/F) ──
   const isTF = q.opts.length === 2 && (q.opts[0] === 'True' || q.opts[0] === 'صح');
+  if (!q._tbDisp) {
+    if (isTF) {
+      q._tbDisp = { opts: q.opts, ans: q.ans, indices: q.opts.map((_, i) => i) };
+    } else {
+      const idx = q.opts.map((_, i) => i);
+      for (let k = idx.length - 1; k > 0; k--) {
+        const j = Math.floor(Math.random() * (k + 1));
+        [idx[k], idx[j]] = [idx[j], idx[k]];
+      }
+      q._tbDisp = { opts: idx.map(i => q.opts[i]), ans: idx.indexOf(q.ans), indices: idx };
+    }
+  }
+  const dispOpts = q._tbDisp.opts;
+  const dispAns  = q._tbDisp.ans;
+
   const letters = ['A','B','C','D','E'];
-  const optsHtml = q.opts.map((opt, i) => {
+  const optsHtml = dispOpts.map((opt, i) => {
     if (isTF) {
       const icon = opt === 'True' || opt === 'صح'
         ? '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>'
@@ -2444,11 +2497,13 @@ function renderTBQuestion() {
       <span>${opt}</span>
     </button>`;
   }).join('');
+  const retryBadge = q._isRetry ? '<span style="font-size:.72rem;font-weight:700;color:#fff;background:#F59E0B;padding:4px 10px;border-radius:8px;">🔄 إعادة</span>' : '';
   area.innerHTML = `
-    <div class="chapter" style="margin-bottom:0;padding:24px;animation:pageFadeSlide .3s ease both;">
+    <div class="chapter" style="margin-bottom:0;padding:24px;animation:pageFadeSlide .3s ease both;${q._isRetry ? 'border:2px solid #F59E0B;' : ''}">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
         <span style="font-size:.9rem;font-weight:800;color:var(--accent);">سؤال ${ci} <span style="font-weight:400;color:var(--muted);">/ ${total}</span></span>
         <div style="display:flex;gap:6px;">
+          ${retryBadge}
           ${isTF ? '<span style="font-size:.72rem;font-weight:700;color:var(--cta,#F59E0B);background:var(--cta-soft,#FEF3C7);padding:4px 10px;border-radius:8px;">T/F</span>' : ''}
           <span style="font-size:.72rem;font-weight:700;color:#fff;background:var(--accent);padding:4px 12px;border-radius:8px;letter-spacing:.03em;">${q.ch.toUpperCase()}</span>
         </div>
@@ -2469,13 +2524,15 @@ function handleTBAnswer(chosen) {
   if (tbState.answered) return;
   tbState.answered = true;
   const q = tbState.questions[tbState.current];
-  const isCorrect = chosen === q.ans;
+  // Map display index → original index via _tbDisp
+  const dispAns = q._tbDisp ? q._tbDisp.ans : q.ans;
+  const isCorrect = chosen === dispAns;
   if (isCorrect) tbState.correct++; else tbState.wrong++;
   const btns = document.querySelectorAll('#tb-opts .quiz-mcq-btn');
   const isDark = document.body.classList.contains('dark');
   btns.forEach((btn, i) => {
     btn.style.pointerEvents = 'none';
-    if (i === q.ans) {
+    if (i === dispAns) {
       btn.style.background = isDark ? 'rgba(5,150,105,0.15)' : '#e6f7ed';
       btn.style.borderColor = 'var(--good)';
       btn.style.color = isDark ? '#34D399' : '#059669';
@@ -2488,14 +2545,30 @@ function handleTBAnswer(chosen) {
     }
   });
   const fb = document.getElementById('tb-feedback');
-  fb.textContent = isCorrect ? '✅ صح!' : '❌ خطأ — الإجابة الصحيحة: ' + ['A','B','C','D','E'][q.ans];
+  // ── Spaced repetition: re-queue wrong questions 4 positions later ──
+  if (!isCorrect) {
+    // Only re-queue if not already a retry (limit to one retry)
+    if (!q._isRetry) {
+      const retryQ = Object.assign({}, q, { _isRetry: true });
+      delete retryQ._tbDisp; // re-shuffle on retry
+      const insertAt = Math.min(tbState.current + 4, tbState.questions.length);
+      tbState.questions.splice(insertAt, 0, retryQ);
+      fb.innerHTML = '❌ خطأ — سيرجع السؤال بعد <strong>3 أسئلة</strong> 🔄<br><span style="font-size:.85rem;">الإجابة الصحيحة: ' + ['A','B','C','D','E'][dispAns] + '</span>';
+    } else {
+      fb.textContent = '❌ خطأ مرة ثانية — الإجابة الصحيحة: ' + ['A','B','C','D','E'][dispAns];
+    }
+    tbState.wrongList.push({ q, chosen });
+    if (typeof saveWrongAnswer === 'function') saveWrongAnswer(q, chosen);
+  } else {
+    fb.textContent = q._isRetry ? '✅ صح! أحسنت — تذكرتها 💪' : '✅ صح!';
+  }
   fb.style.color = isCorrect ? 'var(--good)' : 'var(--destructive, #DC2626)';
-  // Sound effects
   if (window.SFX) SFX.play(isCorrect ? 'correct' : 'wrong');
-  // Save wrong answers
-  if (!isCorrect && typeof saveWrongAnswer === 'function') saveWrongAnswer(q, chosen);
-  document.getElementById('tb-next-btn').style.display = 'inline-block';
-  // Gamification
+  // Update next button text dynamically (total may have grown)
+  const nextBtn = document.getElementById('tb-next-btn');
+  nextBtn.style.display = 'inline-block';
+  const remaining = tbState.questions.length - tbState.current - 1;
+  nextBtn.textContent = remaining === 0 ? 'عرض النتيجة' : 'التالي ←';
   if (typeof updateCombo === 'function') {
     const combo = updateCombo(isCorrect);
     const multiplier = getComboMultiplier(combo);
