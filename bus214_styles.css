@@ -3762,6 +3762,20 @@
     .quiz-mcq-btn.correct-anim { animation: correctPop .35s ease forwards; }
     .quiz-mcq-btn.wrong-anim   { animation: wrongShake .4s ease forwards; }
 
+/* ── PENDING SELECTION (confirm mode) ──── */
+.quiz-mcq-btn.pending-selected {
+  border-color: #f59e0b !important;
+  background: #fffbeb !important;
+  color: #92400e !important;
+  font-weight: 700;
+  box-shadow: 0 0 0 3px rgba(245,158,11,.25);
+}
+body.dark .quiz-mcq-btn.pending-selected {
+  background: #292011 !important;
+  color: #fbbf24 !important;
+  border-color: #f59e0b !important;
+}
+
     /* ── TIMER PULSE (low time warning) ─────── */
     @keyframes timerPulse {
       0%, 100% { opacity: 1; transform: scale(1); }

@@ -658,9 +658,11 @@ function startQuiz() {
   pool = [...pool].sort(() => Math.random() - 0.5).slice(0, Math.min(count, pool.length));
   quizQs = pool; quizIdx = 0; quizCorrect = 0; quizWrong = 0; quizAnswered = false;
   window.quizAnswerLog = [];
-  // Sync auto-advance toggle state from localStorage
+  // Sync toggle states from localStorage
   const aaToggle = document.getElementById('quiz-aa-toggle');
   if (aaToggle) aaToggle.checked = localStorage.getItem('bus214_autoAdvance') === '1';
+  const confirmToggle = document.getElementById('quiz-confirm-toggle');
+  if (confirmToggle) confirmToggle.checked = localStorage.getItem('bus214_confirmMode') === '1';
   quizStartTime = Date.now();
   document.body.classList.add('quiz-mode');
   document.getElementById("quiz-start-screen").classList.add('quiz-screen-hidden');
@@ -687,6 +689,7 @@ function renderQuizQ() {
   if (quizIdx >= quizQs.length) { endQuiz(); return; }
   const q = quizQs[quizIdx];
   quizAnswered = false;
+  window._pendingAnswer = -1;
   const pct = (quizIdx / quizQs.length) * 100;
   document.getElementById("qpf").style.width = pct + "%";
   document.getElementById("q-counter").textContent = `Question ${quizIdx + 1} / ${quizQs.length}`;
@@ -694,34 +697,76 @@ function renderQuizQ() {
   const chColors = { ch1: "#2563EB", ch2: "#7C3AED", ch3: "#10b981" };
   document.getElementById("quiz-chapter-tag").innerHTML = `<span style="background:${chColors[q.ch] || '#2563EB'};color:#fff;padding:3px 10px;border-radius:999px;font-size:.78rem;">${chLabels[q.ch] || q.ch}</span>`;
   document.getElementById("quiz-q-text").textContent = q.q;
+
+  // ── Shuffle options (once per question, skip True/False) ──
+  if (!q._disp) {
+    if (q.opts.length <= 2) {
+      q._disp = { opts: q.opts, ans: q.ans, indices: q.opts.map((_, i) => i) };
+    } else {
+      const idx = q.opts.map((_, i) => i);
+      for (let k = idx.length - 1; k > 0; k--) {
+        const j = Math.floor(Math.random() * (k + 1));
+        [idx[k], idx[j]] = [idx[j], idx[k]];
+      }
+      q._disp = { opts: idx.map(i => q.opts[i]), ans: idx.indexOf(q.ans), indices: idx };
+    }
+  }
+
   const optsDiv = document.getElementById("quiz-opts");
   optsDiv.innerHTML = "";
-  q.opts.forEach((o, i) => {
+  const confirmMode = localStorage.getItem('bus214_confirmMode') === '1';
+  q._disp.opts.forEach((o, i) => {
     const btn = document.createElement("button");
     btn.className = "quiz-mcq-btn";
     btn.textContent = ["A","B","C","D","E"][i] + ". " + o;
-    btn.onclick = () => handleQuizAnswer(i);
+    btn.onclick = confirmMode ? () => selectPendingAnswer(i) : () => handleQuizAnswer(i);
     optsDiv.appendChild(btn);
   });
+
+  // Sync confirm toggle state
+  const confirmToggle = document.getElementById('quiz-confirm-toggle');
+  if (confirmToggle) confirmToggle.checked = confirmMode;
+
   // Retry banner
   const retryBanner = document.getElementById('quiz-retry-banner');
   if (retryBanner) retryBanner.style.display = q._isRetry ? 'flex' : 'none';
   document.getElementById("quiz-feedback").textContent = "";
   document.getElementById("quiz-feedback").className = "quiz-feedback";
   document.getElementById("quiz-next-btn").style.display = "none";
+  const confirmBtn = document.getElementById('quiz-confirm-btn');
+  if (confirmBtn) confirmBtn.style.display = 'none';
   const expEl = document.getElementById("quiz-explanation");
   if (expEl) { expEl.style.display = "none"; expEl.innerHTML = ""; }
   if (quizTimeLimit === 0) document.getElementById("quiz-timer-display").textContent = "";
 }
 
+function selectPendingAnswer(i) {
+  if (quizAnswered) return;
+  window._pendingAnswer = i;
+  document.querySelectorAll("#quiz-opts .quiz-mcq-btn").forEach((btn, idx) => {
+    btn.classList.toggle('pending-selected', idx === i);
+  });
+  const confirmBtn = document.getElementById('quiz-confirm-btn');
+  if (confirmBtn) confirmBtn.style.display = 'block';
+}
+
+function confirmPendingAnswer() {
+  if (window._pendingAnswer >= 0) handleQuizAnswer(window._pendingAnswer);
+}
+
 function handleQuizAnswer(chosen) {
   if (quizAnswered) return;
   quizAnswered = true;
+  window._pendingAnswer = -1;
   const q = quizQs[quizIdx];
+  const disp = q._disp || { opts: q.opts, ans: q.ans, indices: q.opts.map((_, i) => i) };
+  const confirmBtn = document.getElementById('quiz-confirm-btn');
+  if (confirmBtn) confirmBtn.style.display = 'none';
   const allBtns = document.querySelectorAll("#quiz-opts .quiz-mcq-btn");
   allBtns.forEach((btn, i) => {
     btn.disabled = true;
-    if (i === q.ans) {
+    btn.classList.remove('pending-selected');
+    if (i === disp.ans) {
       btn.classList.add("correct");
       btn.classList.add("correct-anim");
     } else if (i === chosen) {
@@ -729,9 +774,11 @@ function handleQuizAnswer(chosen) {
       btn.classList.add("wrong-anim");
     }
   });
-  window.quizAnswerLog.push({ q, chosen });
+  // Log using original index so buildWrongReview works correctly
+  const origChosen = disp.indices[chosen];
+  window.quizAnswerLog.push({ q, chosen: origChosen });
   const fb = document.getElementById("quiz-feedback");
-  const isCorrect = chosen === q.ans;
+  const isCorrect = chosen === disp.ans;
   if (isCorrect) {
     quizCorrect++;
     fb.textContent = "✅ صحيح!";
@@ -739,13 +786,13 @@ function handleQuizAnswer(chosen) {
     if (window.SFX) SFX.play('correct');
   } else {
     quizWrong++;
-    fb.textContent = "❌ خطأ — الإجابة الصحيحة: " + ["A","B","C","D","E"][q.ans] + ". " + q.opts[q.ans];
+    fb.textContent = "❌ خطأ — الإجابة الصحيحة: " + ["A","B","C","D","E"][disp.ans] + ". " + disp.opts[disp.ans];
     fb.className = "quiz-feedback wrong";
     if (window.SFX) SFX.play('wrong');
-    if (typeof saveWrongAnswer === 'function') saveWrongAnswer(q, chosen);
+    if (typeof saveWrongAnswer === 'function') saveWrongAnswer(q, origChosen);
     // Spaced repetition: re-insert question after 5 questions (max 2 retries)
     if ((q._retryCount || 0) < 2) {
-      const retryQ = Object.assign({}, q, { _isRetry: true, _retryCount: (q._retryCount || 0) + 1 });
+      const retryQ = Object.assign({}, q, { _isRetry: true, _retryCount: (q._retryCount || 0) + 1, _disp: null });
       const insertAt = Math.min(quizIdx + 5, quizQs.length);
       quizQs.splice(insertAt, 0, retryQ);
     }
@@ -847,8 +894,13 @@ function endQuiz() {
   if (typeof saveQuizResult === 'function') {
     saveQuizResult(chKey, pct, quizCorrect, quizWrong, elapsed);
   }
-  // Inline wrong-answers review
+  // Inline wrong-answers review (built below score card)
   buildWrongReview();
+  // Scroll to score card
+  setTimeout(() => {
+    const resultEl = document.getElementById('quiz-result-screen');
+    if (resultEl) resultEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 100);
 }
 
 function buildWrongReview() {

@@ -1516,6 +1516,10 @@
               <input type="checkbox" id="quiz-aa-toggle" style="width:13px;height:13px;cursor:pointer;" onchange="localStorage.setItem('bus214_autoAdvance',this.checked?'1':'0')">
               <span>⚡ Auto</span>
             </label>
+            <label title="تأكيد الإجابة قبل القفل" style="cursor:pointer;display:flex;align-items:center;gap:5px;font-size:.78rem;user-select:none;">
+              <input type="checkbox" id="quiz-confirm-toggle" style="width:13px;height:13px;cursor:pointer;" onchange="localStorage.setItem('bus214_confirmMode',this.checked?'1':'0')">
+              <span>✋ Confirm</span>
+            </label>
             <span id="quiz-timer-display"></span>
           </div>
         </div>
@@ -1528,6 +1532,7 @@
           <div class="quiz-feedback" id="quiz-feedback"></div>
           <div id="quiz-explanation" class="quiz-explanation" style="display:none;"></div>
           <div class="quiz-actions" style="margin-top:18px;">
+            <button class="quiz-btn quiz-btn-primary" id="quiz-confirm-btn" onclick="confirmPendingAnswer()" style="display:none;background:var(--good,#16a34a);">تأكيد الإجابة ✓</button>
             <button class="quiz-btn quiz-btn-primary" id="quiz-next-btn" onclick="nextQuizQ()" style="display:none;">التالي →</button>
             <button class="quiz-btn quiz-btn-secondary" onclick="endQuiz()">إنهاء</button>
           </div>
@@ -1536,7 +1541,6 @@
       </div>
 
       <div id="quiz-result-screen" class="quiz-screen-hidden">
-        <div id="quiz-wrong-review"></div>
         <div class="quiz-card quiz-result-card">
           <div id="quiz-final-badge" class="quiz-grade-badge">?</div>
           <div id="quiz-confetti-msg" style="font-size:1.2rem;font-weight:700;margin-bottom:8px;color:var(--accent);"></div>
@@ -1554,6 +1558,7 @@
             <button class="quiz-btn quiz-btn-secondary" onclick="showPage('page-dashboard')"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg> Dashboard</button>
           </div>
         </div>
+        <div id="quiz-wrong-review"></div>
       </div>
     </div>
   </section>
