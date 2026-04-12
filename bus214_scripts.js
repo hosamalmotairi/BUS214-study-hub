@@ -786,7 +786,7 @@ function handleQuizAnswer(chosen) {
     if (window.SFX) SFX.play('correct');
   } else {
     quizWrong++;
-    fb.textContent = "❌ خطأ — الإجابة الصحيحة: " + ["A","B","C","D","E"][disp.ans] + ". " + disp.opts[disp.ans];
+    fb.textContent = "❌ خطأ — الإجابة الصحيحة: " + ["A","B","C","D","E"][disp.ans];
     fb.className = "quiz-feedback wrong";
     if (window.SFX) SFX.play('wrong');
     if (typeof saveWrongAnswer === 'function') saveWrongAnswer(q, origChosen);
@@ -2553,7 +2553,7 @@ function handleTBAnswer(chosen) {
       delete retryQ._tbDisp; // re-shuffle on retry
       const insertAt = Math.min(tbState.current + 4, tbState.questions.length);
       tbState.questions.splice(insertAt, 0, retryQ);
-      fb.innerHTML = '❌ خطأ — سيرجع السؤال بعد <strong>3 أسئلة</strong> 🔄<br><span style="font-size:.85rem;">الإجابة الصحيحة: ' + ['A','B','C','D','E'][dispAns] + '</span>';
+      fb.textContent = '❌ خطأ — الإجابة الصحيحة: ' + ['A','B','C','D','E'][dispAns];
     } else {
       fb.textContent = '❌ خطأ — الإجابة الصحيحة: ' + ['A','B','C','D','E'][dispAns];
     }
