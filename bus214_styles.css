@@ -1,6 +1,7 @@
     :root {
       --bg: #EFF6FF;
       --paper: #ffffff;
+      --surface: #F8FAFC;
       --ink: #0F172A;
       --muted: #64748b;
       --accent: #2563EB;
@@ -884,6 +885,7 @@
     body.dark {
       --bg: #0B1120;
       --paper: #1E293B;
+      --surface: #141C2E;
       --ink: #E2E8F0;
       --muted: #94A3B8;
       --accent: #60A5FA;

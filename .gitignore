@@ -14,3 +14,7 @@ drive-download-*
 new_questions.js
 missing_questions.json
 parse_testbank.py
+match_slides.py
+match_topics.py
+mid2_slide_map.json
+mid2_topic_map.json

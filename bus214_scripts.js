@@ -864,25 +864,45 @@ function handleQuizAnswer(chosen) {
   const multiplier = getComboMultiplier(combo);
   if (isCorrect) awardXP(10, multiplier);
   showQuizEncouragement(isCorrect);
-  // Show explanation for correct answer only — clean Arabic text
+  // Show explanation — supports array (per-option) or string (Mid 2 testbank) formats
   const expEl = document.getElementById("quiz-explanation");
-  if (expEl && q.exp && q.exp[q.ans]) {
-    const raw = q.exp[q.ans];
-    // Extract Arabic sentence (inside dir=rtl span), strip emoji prefixes
-    const arMatch = raw.match(/dir=['"]rtl['"][^>]*>([^<]+)/);
-    const arText = arMatch ? arMatch[1].replace(/^[✅❌]\s*(صح\s*—?\s*|Correct\.?\s*)/i, '').trim() : '';
-    const enText = raw.split('<br>')[0].replace(/<[^>]+>/g, '').replace(/^[✅❌]\s*(Correct\.?\s*)/i, '').trim();
-    const showText = arText || enText;
+  const rawExp = q.exp ? (Array.isArray(q.exp) ? q.exp[q.ans] : q.exp) : null;
+  if (expEl && rawExp) {
+    // Extract Arabic (from <span dir='rtl'>...</span> if present) and English parts
+    const arMatch = rawExp.match(/dir=['"]rtl['"][^>]*>([^<]+)/);
+    const arText = arMatch
+      ? arMatch[1].replace(/^[✅❌]\s*(صح\s*—?\s*|Correct\.?\s*)/i, '').trim()
+      : (/[\u0600-\u06FF]/.test(rawExp) && !/<span/.test(rawExp)
+          ? rawExp.replace(/^[✅❌]\s*/u, '').trim()  // Mid 2 plain Arabic string
+          : '');
+    const enText = rawExp.split('<br>')[0]
+      .replace(/<[^>]+>/g, '')
+      .replace(/^[✅❌]\s*(Correct\.?\s*|صح\s*—?\s*)/i, '')
+      .trim();
+    const cleanEn = /[\u0600-\u06FF]/.test(enText) ? '' : enText;
     expEl.textContent = '';
-    if (showText) {
-      const icon = document.createElement('span');
-      icon.textContent = isCorrect ? '💡 ' : '📖 ';
-      const txt = document.createElement('span');
-      txt.textContent = showText;
-      expEl.appendChild(icon);
-      expEl.appendChild(txt);
+    const icon = isCorrect ? '💡 ' : '📖 ';
+    if (cleanEn) {
+      const enDiv = document.createElement('div');
+      enDiv.setAttribute('dir', 'ltr');
+      enDiv.setAttribute('lang', 'en');
+      enDiv.style.cssText = 'text-align:left;direction:ltr;unicode-bidi:isolate;margin-bottom:' + (arText ? '8px' : '0') + ';';
+      enDiv.textContent = icon + cleanEn;
+      expEl.appendChild(enDiv);
+    }
+    if (arText) {
+      const arDiv = document.createElement('div');
+      arDiv.setAttribute('dir', 'rtl');
+      arDiv.setAttribute('lang', 'ar');
+      arDiv.style.cssText = 'text-align:right;direction:rtl;unicode-bidi:isolate;';
+      arDiv.textContent = (cleanEn ? '' : icon) + arText;
+      expEl.appendChild(arDiv);
+    }
+    if (cleanEn || arText) {
       expEl.className = isCorrect ? 'quiz-explanation exp-clean correct' : 'quiz-explanation exp-clean wrong';
       expEl.style.display = 'block';
+    } else {
+      expEl.style.display = 'none';
     }
   } else if (expEl) {
     expEl.style.display = 'none';
@@ -3337,6 +3357,24 @@ function tbToggleBookmark(btn) {
   if (typeof showXPToast === 'function' && added) showXPToast('🔖 تم الحفظ');
 }
 
+// Navigate to a specific <h3> section within a chapter page
+function goToTopic(pageId, h3Idx) {
+  if (typeof showPage === 'function') showPage(pageId);
+  setTimeout(function() {
+    var page = document.getElementById(pageId);
+    if (!page) return;
+    var h3s = page.querySelectorAll('h3');
+    var target = h3s[h3Idx || 0];
+    if (!target) return;
+    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    // Flash highlight
+    var prev = target.style.background;
+    target.style.transition = 'background .4s';
+    target.style.background = 'var(--cta-soft, #FEF3C7)';
+    setTimeout(function(){ target.style.background = prev || ''; }, 1600);
+  }, 120);
+}
+
 // ═══════════════════════════════════════════════
 //  TEST BANK QUIZ
 // ═══════════════════════════════════════════════
@@ -3365,8 +3403,8 @@ function tbGetResume() {
   try {
     const r = JSON.parse(localStorage.getItem(TB_RESUME_KEY) || 'null');
     if (!r) return null;
-    // Expire after 24 hours
-    if (Date.now() - r.savedAt > 86400000) { tbClearResume(); return null; }
+    // Expire after 7 days
+    if (Date.now() - r.savedAt > 604800000) { tbClearResume(); return null; }
     return r;
   } catch(e) { return null; }
 }
@@ -3451,16 +3489,25 @@ function renderTBQuestion() {
     const letters = ['A','B','C','D','E'];
     let wrongReviewHtml = '';
     if (hasWrong) {
-      wrongReviewHtml = `
+      const wrongsForBreakdown = tbState.wrongList.map(w => ({ ch: w.q.ch }));
+      const chapterBreakdownHtml = (typeof renderChapterBreakdown === 'function')
+        ? renderChapterBreakdown(wrongsForBreakdown) : '';
+      wrongReviewHtml = chapterBreakdownHtml + `
         <div id="tb-wrong-review-wrap" style="margin-top:18px;">
           <button onclick="(function(){var el=document.getElementById('tb-wrong-review');if(el.style.display==='none'){el.style.display='block';this.textContent='▲ إخفاء الأسئلة الغلط'}else{el.style.display='none';this.textContent='📋 عرض الأسئلة الغلط ↓'}}).call(this)"
             style="width:100%;padding:12px 20px;border-radius:12px;border:1.5px solid #F59E0B;background:#FFFBEB;color:#92400E;font-weight:700;font-size:.9rem;cursor:pointer;font-family:inherit;margin-bottom:8px;">
             📋 عرض الأسئلة الغلط ↓ (${tbState.wrongList.length})
           </button>
           <div id="tb-wrong-review" style="display:none;">
-            ${tbState.wrongList.map((w, wi) => `
+            ${tbState.wrongList.map((w, wi) => {
+              const chPage = w.q.topicPage || { ch1:'page-ch1', ch2:'page-ch2', ch3:'page-ch3' }[w.q.ch];
+              const hasTopic = typeof w.q.topicIdx === 'number';
+              const slideLink = chPage
+                ? `<a href="#" onclick="${hasTopic ? `goToTopic('${chPage}',${w.q.topicIdx})` : `showPage('${chPage}')`};return false;" style="display:inline-block;margin-inline-start:8px;font-size:.72rem;background:var(--accent-soft);color:var(--accent);padding:4px 10px;border-radius:8px;font-weight:700;text-decoration:none;">📖 راجع الموضوع</a>`
+                : '';
+              return `
               <div style="background:var(--paper);border:1.5px solid var(--line);border-radius:16px;padding:18px;margin-bottom:12px;text-align:right;">
-                <div style="font-size:.72rem;font-weight:700;color:var(--accent);margin-bottom:8px;">${w.q.ch.toUpperCase()}</div>
+                <div style="font-size:.72rem;font-weight:700;color:var(--accent);margin-bottom:8px;">${w.q.ch.toUpperCase()}${slideLink}</div>
                 <div style="font-weight:700;font-size:.95rem;color:var(--ink);margin-bottom:14px;line-height:1.6;">${w.q.q}</div>
                 ${(w.q._tbDisp ? w.q._tbDisp.opts : w.q.opts).map((opt, oi) => {
                   const origIdx = w.q._tbDisp ? w.q._tbDisp.indices[oi] : oi;
@@ -3474,7 +3521,8 @@ function renderTBQuestion() {
                     <span>${opt}</span>
                   </div>`;
                 }).join('')}
-              </div>`).join('')}
+              </div>`;
+            }).join('')}
           </div>
         </div>`;
     }
@@ -3622,28 +3670,63 @@ function handleTBAnswer(chosen) {
       tbState.questions.splice(insertAt, 0, retryQ);
     }
   }
+  // Helper: render feedback with proper bilingual + RTL handling
+  const renderTBFeedback = (headerText, exp, borderColor, isOk) => {
+    fb.textContent = '';
+    const header = document.createElement('div');
+    header.style.cssText = 'margin-bottom:6px;';
+    header.textContent = headerText;
+    fb.appendChild(header);
+    if (!exp) return;
+    const rawExp = Array.isArray(exp) ? exp[q.ans] : String(exp);
+    if (!rawExp) return;
+    // Extract Arabic + English parts
+    const arMatch = rawExp.match(/dir=['"]rtl['"][^>]*>([^<]+)/);
+    const arText = arMatch
+      ? arMatch[1].replace(/^[✅❌]\s*(صح\s*—?\s*|Correct\.?\s*)/i, '').trim()
+      : (/[\u0600-\u06FF]/.test(rawExp) && !/<span/.test(rawExp)
+          ? rawExp.replace(/^[✅❌]\s*/u, '').trim()
+          : '');
+    const enText = rawExp.split('<br>')[0]
+      .replace(/<[^>]+>/g, '')
+      .replace(/^[✅❌]\s*(Correct\.?\s*|صح\s*—?\s*)/i, '')
+      .trim();
+    const cleanEn = /[\u0600-\u06FF]/.test(enText) ? '' : enText;
+    if (!cleanEn && !arText) return;
+    const box = document.createElement('div');
+    box.style.cssText = 'font-size:.85rem;font-weight:400;color:var(--ink);background:var(--paper);border:1px solid ' + borderColor + ';border-radius:10px;padding:10px 14px;margin-top:6px;line-height:1.7;';
+    if (cleanEn) {
+      const enDiv = document.createElement('div');
+      enDiv.setAttribute('dir', 'ltr');
+      enDiv.setAttribute('lang', 'en');
+      enDiv.style.cssText = 'text-align:left;direction:ltr;unicode-bidi:isolate;' + (arText ? 'margin-bottom:8px;padding-bottom:8px;border-bottom:1px dashed var(--line);' : '');
+      enDiv.textContent = enText;
+      box.appendChild(enDiv);
+    }
+    if (arText) {
+      const arDiv = document.createElement('div');
+      arDiv.setAttribute('dir', 'rtl');
+      arDiv.setAttribute('lang', 'ar');
+      arDiv.style.cssText = 'text-align:right;direction:rtl;unicode-bidi:isolate;';
+      arDiv.textContent = arText;
+      box.appendChild(arDiv);
+    }
+    fb.appendChild(box);
+  };
   if (examMode) {
-    // In exam mode, show only a minimal confirmation
-    fb.innerHTML = '<div style="color:var(--muted);font-size:.82rem;font-weight:500;">تم التسجيل — تابع للسؤال التالي</div>';
+    fb.textContent = '';
+    const msg = document.createElement('div');
+    msg.style.cssText = 'color:var(--muted);font-size:.82rem;font-weight:500;';
+    msg.textContent = 'تم التسجيل — تابع للسؤال التالي';
+    fb.appendChild(msg);
     fb.style.color = 'var(--muted)';
   } else if (!isCorrect) {
-    const expArr = q.exp;
-    const correctExp = Array.isArray(expArr) ? expArr[q.ans] : null;
     const correctLetter = ['A','B','C','D','E'][dispAns];
-    if (correctExp) {
-      fb.innerHTML = `<div style="margin-bottom:6px;">❌ الإجابة الصحيحة: <strong>${correctLetter}</strong></div><div style="font-size:.85rem;font-weight:400;color:var(--ink);background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin-top:6px;line-height:1.7;text-align:right;">${correctExp}</div>`;
-    } else {
-      fb.textContent = '❌ خطأ — الإجابة الصحيحة: ' + correctLetter;
-    }
+    renderTBFeedback('❌ الإجابة الصحيحة: ' + correctLetter, q.exp, 'var(--line)', false);
     fb.style.color = 'var(--destructive, #DC2626)';
   } else {
-    const expArr = q.exp;
-    const correctExp = Array.isArray(expArr) ? expArr[q.ans] : null;
-    if (correctExp && !q._isRetry) {
-      fb.innerHTML = `<div style="margin-bottom:6px;">${q._isRetry ? '✅ صح! أحسنت — تذكرتها 💪' : '✅ صح!'}</div><div style="font-size:.85rem;font-weight:400;color:var(--ink);background:var(--paper);border:1px solid #d1fae5;border-radius:10px;padding:10px 14px;margin-top:6px;line-height:1.7;text-align:right;">${correctExp}</div>`;
-    } else {
-      fb.textContent = q._isRetry ? '✅ صح! أحسنت — تذكرتها 💪' : '✅ صح!';
-    }
+    const okText = q._isRetry ? '✅ صح! أحسنت — تذكرتها 💪' : '✅ صح!';
+    renderTBFeedback(okText, q._isRetry ? null : q.exp, '#d1fae5', true);
     fb.style.color = 'var(--good)';
   }
   if (window.SFX) SFX.play(isCorrect ? 'correct' : 'wrong');
@@ -3697,6 +3780,7 @@ function renderChapterBreakdown(wrongs) {
   const chLabels = isMid2
     ? { ch1: 'Ch 5 — Ethical Issues', ch2: 'Ch 6 — Framework', ch3: 'Ch 7 — Moral Philosophy' }
     : { ch1: 'Ch 1 — Ethics', ch2: 'Ch 2 — Stakeholders', ch3: 'Ch 3 — Sustainability' };
+  const chPages = { ch1: 'page-ch1', ch2: 'page-ch2', ch3: 'page-ch3' };
   const maxCount = Math.max(1, ...Object.values(chCounts));
   let html = '<div style="background:var(--bg);border:1.5px solid var(--line);border-radius:14px;padding:16px;margin-bottom:16px;">';
   html += '<div style="font-weight:700;font-size:.92rem;margin-bottom:12px;">📊 الفصول اللي تحتاج تركيز</div>';
@@ -3704,9 +3788,12 @@ function renderChapterBreakdown(wrongs) {
     const n = chCounts[ch] || 0;
     const pct = Math.round((n / maxCount) * 100);
     const barColor = n === 0 ? 'var(--good)' : n > maxCount * 0.6 ? 'var(--destructive,#DC2626)' : 'var(--cta,#F59E0B)';
+    const slideLink = n > 0 && chPages[ch]
+      ? ' <a href="#" onclick="showPage(\'' + chPages[ch] + '\');return false;" style="margin-inline-start:8px;font-size:.72rem;background:var(--accent-soft);color:var(--accent);padding:3px 8px;border-radius:8px;font-weight:700;text-decoration:none;white-space:nowrap;">📖 افتح الملخص</a>'
+      : '';
     html += '<div style="margin-bottom:10px;">'
-      + '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;font-size:.82rem;">'
-      + '<span style="font-weight:600;">' + (chLabels[ch] || ch) + '</span>'
+      + '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;font-size:.82rem;gap:8px;flex-wrap:wrap;">'
+      + '<span style="font-weight:600;">' + (chLabels[ch] || ch) + slideLink + '</span>'
       + '<span style="color:var(--muted);font-weight:700;">' + n + ' خطأ</span></div>'
       + '<div style="height:8px;background:var(--line);border-radius:99px;overflow:hidden;">'
       + '<div style="height:100%;width:' + pct + '%;background:' + barColor + ';border-radius:99px;transition:width .4s;"></div></div></div>';
