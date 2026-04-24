@@ -1290,7 +1290,8 @@ const MID2_TESTBANK = [
     '.chap-table tr:last-child td{border-bottom:none}' +
     '.chap-table tr:nth-child(even) td{background:var(--bg)}' +
     '@media print{.toolbar{display:none}body{background:#fff}.page{padding:0 10mm;max-width:none}.hero{box-shadow:none}@page{margin:12mm 10mm}' +
-    '.q-card,.chap-section,.chap-item,.chap-step,.chap-note{page-break-inside:avoid;break-inside:avoid-page}' +
+    '.q-card,.chap-item,.chap-step,.chap-note{page-break-inside:avoid;break-inside:avoid-page}' +
+    '.chap-section{page-break-inside:auto;break-inside:auto}' +
     '.q-text,.opt,.chap-item,.chap-ar,.chap-note{word-wrap:break-word;overflow-wrap:break-word;white-space:normal}' +
     'table,.chap-table{page-break-inside:auto}' +
     'tr{page-break-inside:avoid}' +
@@ -1575,7 +1576,7 @@ const MID2_TESTBANK = [
           var ktHeaderAr = ktHeader ? ktHeader.querySelector('.ar-line') : null;
           var ktHeaderArText = ktHeaderAr ? ktHeaderAr.textContent.trim() : '';
           var ktHeaderMain = ktHeader ? ktHeader.textContent.replace(ktHeaderArText, '').trim() : '🎯 Key Takeaways';
-          var kt = '<div class="chap-section">' +
+          var kt = '<div style="margin:16px 0;page-break-inside:auto;break-inside:auto;">' +
                    '<div class="chap-heading"><span>' + escHtml(ktHeaderMain) + '</span>' +
                    (ktHeaderArText ? '<span class="chap-ar">' + escHtml(ktHeaderArText) + '</span>' : '') +
                    '</div><ul class="chap-list">';

@@ -3525,7 +3525,7 @@ function renderTBQuestion() {
                 : '';
               return `
               <div style="background:var(--paper);border:1.5px solid var(--line);border-radius:16px;padding:18px;margin-bottom:12px;text-align:right;">
-                <div style="font-size:.72rem;font-weight:700;color:var(--accent);margin-bottom:8px;">${w.q.ch.toUpperCase()}${slideLink}</div>
+                <div style="font-size:.72rem;font-weight:700;color:var(--accent);margin-bottom:8px;">${(window.CH_LABELS && window.CH_LABELS.short && window.CH_LABELS.short[w.q.ch]) || w.q.ch.toUpperCase()}${slideLink}</div>
                 <div style="font-weight:700;font-size:.95rem;color:var(--ink);margin-bottom:14px;line-height:1.6;">${w.q.q}</div>
                 ${(w.q._tbDisp ? w.q._tbDisp.opts : w.q.opts).map((opt, oi) => {
                   const origIdx = w.q._tbDisp ? w.q._tbDisp.indices[oi] : oi;
@@ -3626,7 +3626,7 @@ function renderTBQuestion() {
           <button onclick="tbToggleBookmark(this)" title="${bmTitle}" style="${bmStyle}border:1.5px solid;padding:4px 10px;border-radius:8px;cursor:pointer;font-size:.9rem;line-height:1;transition:all .15s;">${bmIcon}</button>
           ${retryBadge}
           ${isTF ? '<span style="font-size:.72rem;font-weight:700;color:var(--cta,#F59E0B);background:var(--cta-soft,#FEF3C7);padding:4px 10px;border-radius:8px;">T/F</span>' : ''}
-          <span style="font-size:.72rem;font-weight:700;color:#fff;background:var(--accent);padding:4px 12px;border-radius:8px;letter-spacing:.03em;">${q.ch.toUpperCase()}</span>
+          <span style="font-size:.72rem;font-weight:700;color:#fff;background:var(--accent);padding:4px 12px;border-radius:8px;letter-spacing:.03em;">${(window.CH_LABELS && window.CH_LABELS.short && window.CH_LABELS.short[q.ch]) || q.ch.toUpperCase()}</span>
         </div>
       </div>
       <div style="width:100%;height:5px;background:var(--line);border-radius:99px;margin-bottom:20px;overflow:hidden;">
