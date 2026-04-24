@@ -1570,6 +1570,18 @@ const MID2_TESTBANK = [
             '<span>' + escHtml(mainText) + '</span>' +
             (arText ? '<span class="chap-ar">' + escHtml(arText) + '</span>' : '') +
             '</div>';
+        } else if (cls.includes('key-takeaways')) {
+          var ktHeader = el.querySelector('div');
+          var ktHeaderAr = ktHeader ? ktHeader.querySelector('.ar-line') : null;
+          var ktHeaderArText = ktHeaderAr ? ktHeaderAr.textContent.trim() : '';
+          var ktHeaderMain = ktHeader ? ktHeader.textContent.replace(ktHeaderArText, '').trim() : '🎯 Key Takeaways';
+          var kt = '<div class="chap-section">' +
+                   '<div class="chap-heading"><span>' + escHtml(ktHeaderMain) + '</span>' +
+                   (ktHeaderArText ? '<span class="chap-ar">' + escHtml(ktHeaderArText) + '</span>' : '') +
+                   '</div><ul class="chap-list">';
+          el.querySelectorAll('li').forEach(function(li){ kt += itemHtml(li); });
+          kt += '</ul></div>';
+          body += kt;
         }
       });
 

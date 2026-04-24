@@ -881,6 +881,33 @@
     }
 
 
+    /* Key Takeaways — dark-mode overrides (inline styles use !important) */
+    body.dark .key-takeaways.kt-amber {
+      background: linear-gradient(135deg, rgba(245,158,11,0.12), rgba(217,119,6,0.18)) !important;
+      border-color: rgba(245,158,11,0.6) !important;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.25) !important;
+    }
+    body.dark .key-takeaways.kt-amber > div:first-child { color: #FBBF24 !important; }
+    body.dark .key-takeaways.kt-amber ul { color: #FDE68A !important; }
+
+    body.dark .key-takeaways.kt-blue {
+      background: linear-gradient(135deg, rgba(37,99,235,0.15), rgba(59,130,246,0.22)) !important;
+      border-color: rgba(96,165,250,0.6) !important;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.25) !important;
+    }
+    body.dark .key-takeaways.kt-blue > div:first-child { color: #93C5FD !important; }
+    body.dark .key-takeaways.kt-blue ul { color: #DBEAFE !important; }
+
+    body.dark .key-takeaways.kt-red {
+      background: linear-gradient(135deg, rgba(220,38,38,0.12), rgba(239,68,68,0.18)) !important;
+      border-color: rgba(248,113,113,0.6) !important;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.25) !important;
+    }
+    body.dark .key-takeaways.kt-red > div:first-child { color: #FCA5A5 !important; }
+    body.dark .key-takeaways.kt-red ul { color: #FECACA !important; }
+
+    body.dark .key-takeaways .ar-line { color: inherit !important; opacity: .85; }
+
     /* ── DARK MODE ── */
     body.dark {
       --bg: #0B1120;

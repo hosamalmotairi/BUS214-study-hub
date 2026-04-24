@@ -3,6 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
   <title>BUS 214 Mid 2 — HOSAM Study Hub</title>
   <meta name="description" content="BUS 214 Business Ethics Mid 2 Study Guide — Chapters 5, 6, 7. Ethical Issues, Decision Making Framework, Moral Philosophy.">
   <meta name="author" content="Hosam Almotairi">
@@ -470,7 +473,7 @@
     <button class="ch-pdf-btn" onclick="exportChapterPDF('page-ch1','Chapter 5 — Recognizing Ethical Issues')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> تصدير الملخص كـ PDF</button>
 
     <!-- ══ KEY TAKEAWAYS — Chapter 5 ══ -->
-    <div style="background:linear-gradient(135deg,#FEF3C7,#FDE68A);border:2px solid #F59E0B;border-radius:16px;padding:18px 22px;margin:18px 0;box-shadow:0 4px 14px rgba(245,158,11,.15);">
+    <div class="key-takeaways kt-amber" style="background:linear-gradient(135deg,#FEF3C7,#FDE68A);border:2px solid #F59E0B;border-radius:16px;padding:18px 22px;margin:18px 0;box-shadow:0 4px 14px rgba(245,158,11,.15);">
       <div style="font-weight:800;font-size:1.05rem;color:#92400E;margin-bottom:10px;display:flex;align-items:center;gap:8px;">🎯 Key Takeaways — أهم النقاط <span class="ar-line" style="font-weight:600;font-size:.85rem;">(ملخّص سريع)</span></div>
       <ul style="margin:0;padding-right:20px;color:#78350F;font-size:.92rem;line-height:1.85;">
         <li><strong>Ethical Issue:</strong> choice among right/wrong actions. <strong>Dilemma:</strong> all alternatives negative.<span class="ar-line">قضية (اختر صح/غلط) — معضلة (كل الخيارات سلبية)</span></li>
@@ -772,7 +775,7 @@
     <p style="color:var(--muted);">Source: Ferrell, Business Ethics 13e · Ch. 6</p>
 
     <!-- ══ KEY TAKEAWAYS — Chapter 6 ══ -->
-    <div style="background:linear-gradient(135deg,#DBEAFE,#BFDBFE);border:2px solid #2563EB;border-radius:16px;padding:18px 22px;margin:18px 0;box-shadow:0 4px 14px rgba(37,99,235,.15);">
+    <div class="key-takeaways kt-blue" style="background:linear-gradient(135deg,#DBEAFE,#BFDBFE);border:2px solid #2563EB;border-radius:16px;padding:18px 22px;margin:18px 0;box-shadow:0 4px 14px rgba(37,99,235,.15);">
       <div style="font-weight:800;font-size:1.05rem;color:#1E3A8A;margin-bottom:10px;display:flex;align-items:center;gap:8px;">🎯 Key Takeaways — أهم النقاط <span class="ar-line" style="font-weight:600;font-size:.85rem;">(ملخّص سريع)</span></div>
       <ul style="margin:0;padding-right:20px;color:#1E3A8A;font-size:.92rem;line-height:1.85;">
         <li><strong>First step</strong> in ethical decision-making: <strong>Recognize that an ethical issue exists</strong>.<span class="ar-line">الخطوة الأولى: التعرف على وجود قضية أخلاقية</span></li>
@@ -1000,7 +1003,7 @@
     <p style="color:var(--muted);">Source: Ferrell, Business Ethics 13e · Ch. 7</p>
 
     <!-- ══ KEY TAKEAWAYS — Chapter 7 ══ -->
-    <div style="background:linear-gradient(135deg,#FEE2E2,#FECACA);border:2px solid #DC2626;border-radius:16px;padding:18px 22px;margin:18px 0;box-shadow:0 4px 14px rgba(220,38,38,.15);">
+    <div class="key-takeaways kt-red" style="background:linear-gradient(135deg,#FEE2E2,#FECACA);border:2px solid #DC2626;border-radius:16px;padding:18px 22px;margin:18px 0;box-shadow:0 4px 14px rgba(220,38,38,.15);">
       <div style="font-weight:800;font-size:1.05rem;color:#7F1D1D;margin-bottom:10px;display:flex;align-items:center;gap:8px;">🎯 Key Takeaways — أهم النقاط <span class="ar-line" style="font-weight:600;font-size:.85rem;">(ملخّص سريع)</span></div>
       <ul style="margin:0;padding-right:20px;color:#7F1D1D;font-size:.92rem;line-height:1.85;">
         <li><strong>Moral Philosophy</strong> = personal principles (individual). <strong>Business Ethics</strong> = group decisions.<span class="ar-line">الفلسفة شخصية، أخلاقيات الأعمال جماعية</span></li>
@@ -2051,10 +2054,10 @@ function tbSelectCount(el, val) {
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 <!-- Mid 2 data overrides MUST load BEFORE bus214_scripts.js
      so that synchronous `const SEARCH_PAGES` picks up the override. -->
-<script src="bus214_mid2_data.js"></script>
-<script src="mid2_slides.js"></script>
-<script src="mid2_topics.js"></script>
-<script src="bus214_scripts.js"></script>
+<script src="bus214_mid2_data.js?v=3"></script>
+<script src="mid2_slides.js?v=3"></script>
+<script src="mid2_topics.js?v=3"></script>
+<script src="bus214_scripts.js?v=3"></script>
 <script src="bus214_firebase.js"></script>
 <style>
   /* ── Additional BUS 214 specific styles ── */

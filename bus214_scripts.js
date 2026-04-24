@@ -536,6 +536,7 @@ function showPage(id) {
   if (id === 'page-quiz') { renderMasteryBadges(); if (typeof showQuizResumeBanner === 'function') showQuizResumeBanner(); }
   if (id === 'page-mock' && typeof showMockResumeBanner === 'function') showMockResumeBanner();
   if (id === 'page-wrong-review' && typeof renderWrongReview === 'function') renderWrongReview();
+  if (id === 'page-testbank' && typeof tbShowSetup === 'function') tbShowSetup();
   if (id === 'page-before-exam' && typeof initBeforeExam === 'function') initBeforeExam();
   // Restore user highlights + notes + drawings on chapter pages
   if (typeof restoreHighlights === 'function') setTimeout(function(){ restoreHighlights(id); }, 50);
@@ -1972,6 +1973,23 @@ function exportChapterPDF(pageId, chapterName) {
       }
       else if (tag === 'TABLE' || cls.includes('summary-table')) {
         w.document.write(el.outerHTML);
+      }
+      else if (cls.includes('key-takeaways')) {
+        const header = el.querySelector('div');
+        const headerArSpan = header ? header.querySelector('.ar-line') : null;
+        const headerArText = headerArSpan ? headerArSpan.textContent : '';
+        const headerMain = header ? header.textContent.replace(headerArText, '').trim() : '🎯 Key Takeaways';
+        let ktHtml = '<div class="tip" style="margin:14px 0;"><div style="font-weight:800;font-size:1rem;margin-bottom:8px;">' + headerMain + (headerArText ? ' <span style="direction:rtl;font-family:Cairo,sans-serif;font-size:.82rem;font-weight:600;">' + headerArText + '</span>' : '') + '</div>';
+        const lis = el.querySelectorAll('li');
+        lis.forEach(li => {
+          const arS = li.querySelector('.ar-line');
+          const arT = arS ? arS.textContent : '';
+          let lh = li.innerHTML;
+          if (arS) lh = lh.replace(arS.outerHTML, '');
+          ktHtml += '<div style="margin:6px 0;padding:6px 10px;">' + lh + (arT ? '<div class="ar" style="margin-top:4px;">' + arT + '</div>' : '') + '</div>';
+        });
+        ktHtml += '</div>';
+        const _wd = w.document; _wd.write(ktHtml);
       }
     }
   }
