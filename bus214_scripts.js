@@ -2910,8 +2910,8 @@ function drawStrokeOnCanvas(stroke) {
     const p1 = pts[i-1], p2 = pts[i];
     // Use averaged pressure for this segment, default 0.5 if unavailable
     const pressure = ((p1.p || 0.5) + (p2.p || 0.5)) / 2;
-    // Pressure curve: 0.5 = 100%, higher/lower scales around it (0.3x to 1.8x)
-    const pressureMul = stroke.eraser ? 1 : (0.3 + pressure * 1.5);
+    // Softer pressure curve: 0.5 = 100%, range 0.6x to 1.4x
+    const pressureMul = stroke.eraser ? 1 : (0.6 + pressure * 0.8);
     ctx.lineWidth = stroke.size * pressureMul;
     ctx.beginPath();
     ctx.moveTo(p1.x, p1.y);
@@ -2961,22 +2961,32 @@ function continueStroke(e) {
   e.preventDefault();
   const pos = getPointerPos(e, drawState.canvas);
   drawState.currentStroke.points.push(pos);
-  // Draw the last segment live with pressure
   const ctx = drawState.ctx;
   const s = drawState.currentStroke;
   const pts = s.points;
   if (pts.length < 2) return;
-  const p1 = pts[pts.length-2], p2 = pts[pts.length-1];
-  const pressure = ((p1.p || 0.5) + (p2.p || 0.5)) / 2;
-  const pressureMul = s.eraser ? 1 : (0.3 + pressure * 1.5);
   ctx.globalCompositeOperation = s.eraser ? 'destination-out' : 'source-over';
   ctx.strokeStyle = s.color;
-  ctx.lineWidth = s.size * pressureMul;
   ctx.lineCap = 'round';
   ctx.lineJoin = 'round';
+  if (pts.length < 3) {
+    const p1 = pts[0], p2 = pts[1];
+    const pressure = ((p1.p || 0.5) + (p2.p || 0.5)) / 2;
+    ctx.lineWidth = s.size * (s.eraser ? 1 : (0.6 + pressure * 0.8));
+    ctx.beginPath();
+    ctx.moveTo(p1.x, p1.y);
+    ctx.lineTo(p2.x, p2.y);
+    ctx.stroke();
+    return;
+  }
+  const p1 = pts[pts.length-3], p2 = pts[pts.length-2], p3 = pts[pts.length-1];
+  const m1x = (p1.x + p2.x) / 2, m1y = (p1.y + p2.y) / 2;
+  const m2x = (p2.x + p3.x) / 2, m2y = (p2.y + p3.y) / 2;
+  const pressure = ((p2.p || 0.5) + (p3.p || 0.5)) / 2;
+  ctx.lineWidth = s.size * (s.eraser ? 1 : (0.6 + pressure * 0.8));
   ctx.beginPath();
-  ctx.moveTo(p1.x, p1.y);
-  ctx.lineTo(p2.x, p2.y);
+  ctx.moveTo(m1x, m1y);
+  ctx.quadraticCurveTo(p2.x, p2.y, m2x, m2y);
   ctx.stroke();
 }
 function endStroke(e) {
