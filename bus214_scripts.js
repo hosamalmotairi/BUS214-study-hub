@@ -533,7 +533,16 @@ function showPage(id) {
   if (typeof window.refreshScrollReveal === 'function') setTimeout(window.refreshScrollReveal, 50);
   document.querySelectorAll(`[data-page="${id}"]`).forEach(l => l.classList.add('active'));
   if (id === 'page-dashboard') renderDashboard();
-  if (id === 'page-quiz') renderMasteryBadges();
+  if (id === 'page-quiz') { renderMasteryBadges(); if (typeof showQuizResumeBanner === 'function') showQuizResumeBanner(); }
+  if (id === 'page-mock' && typeof showMockResumeBanner === 'function') showMockResumeBanner();
+  if (id === 'page-wrong-review' && typeof renderWrongReview === 'function') renderWrongReview();
+  if (id === 'page-before-exam' && typeof initBeforeExam === 'function') initBeforeExam();
+  // Restore user highlights + notes + drawings on chapter pages
+  if (typeof restoreHighlights === 'function') setTimeout(function(){ restoreHighlights(id); }, 50);
+  if (typeof restoreNotes === 'function') setTimeout(function(){ restoreNotes(id); }, 50);
+  // Drawings: always turn off draw mode when navigating, then restore
+  if (drawState && drawState.active) toggleDrawMode();
+  if (typeof restoreDrawings === 'function') setTimeout(function(){ restoreDrawings(id); }, 100);
   // Sync mobile bottom bar active state
   const mobMap = {
     'page-home': 'mob-btn-home',
@@ -647,8 +656,61 @@ if (localStorage.getItem('bus214-eli5') === '1') {
   });
 }
 
+// ── QUIZ RESUME ───────────────────────────────
+const QUIZ_RESUME_KEY = 'bus214_quiz_resume';
+function quizSaveProgress() {
+  if (!quizQs.length) return;
+  try {
+    localStorage.setItem(QUIZ_RESUME_KEY, JSON.stringify({
+      qs: quizQs.map(function(q){ return { ch: q.ch, q: q.q }; }), // reference by text
+      idx: quizIdx, correct: quizCorrect, wrong: quizWrong,
+      filter: window.quizCurrentCh, timeRemaining: quizTimeRemaining || 0,
+      savedAt: Date.now()
+    }));
+  } catch (e) {}
+}
+function quizClearResume() { try { localStorage.removeItem(QUIZ_RESUME_KEY); } catch(e) {} }
+function quizGetResume() {
+  try {
+    const r = JSON.parse(localStorage.getItem(QUIZ_RESUME_KEY) || 'null');
+    if (!r) return null;
+    if (Date.now() - r.savedAt > 86400000) { quizClearResume(); return null; } // 24h
+    return r;
+  } catch (e) { return null; }
+}
+function showQuizResumeBanner() {
+  const banner = document.getElementById('quiz-resume-banner');
+  if (!banner) return;
+  const r = quizGetResume();
+  if (!r || r.idx >= r.qs.length) { banner.style.display = 'none'; return; }
+  const pct = Math.round(r.idx / r.qs.length * 100);
+  banner.innerHTML = '<div><div style="font-weight:700;color:var(--accent);font-size:.95rem;">🔖 كويز محفوظ</div><div style="font-size:.82rem;color:var(--muted);margin-top:3px;">سؤال ' + r.idx + ' من ' + r.qs.length + ' (' + pct + '%)</div></div>'
+    + '<div style="display:flex;gap:6px;"><button onclick="quizClearResume();showQuizResumeBanner();" style="background:transparent;color:var(--muted);border:1.5px solid var(--line);padding:8px 14px;border-radius:10px;font-weight:600;font-size:.82rem;cursor:pointer;font-family:inherit;">حذف</button>'
+    + '<button onclick="quizResumeSession()" style="background:var(--accent);color:#fff;border:none;padding:8px 18px;border-radius:10px;font-weight:700;font-size:.82rem;cursor:pointer;font-family:inherit;">استئناف ←</button></div>';
+  banner.style.display = 'flex';
+}
+function quizResumeSession() {
+  const r = quizGetResume();
+  if (!r) return;
+  // Rebuild questions from refs
+  const pool = (typeof allQuizQ !== 'undefined' ? allQuizQ : []);
+  const byText = {};
+  pool.forEach(function(q){ byText[q.q] = q; });
+  const rebuilt = r.qs.map(function(ref){ return byText[ref.q]; }).filter(Boolean);
+  if (rebuilt.length === 0) { quizClearResume(); return; }
+  quizQs = rebuilt; quizIdx = r.idx; quizCorrect = r.correct; quizWrong = r.wrong; quizAnswered = false;
+  window.quizCurrentCh = r.filter; quizTimeRemaining = r.timeRemaining || 0;
+  window.quizAnswerLog = [];
+  document.body.classList.add('quiz-mode');
+  document.getElementById("quiz-start-screen").classList.add('quiz-screen-hidden');
+  document.getElementById("quiz-game-screen").classList.remove('quiz-screen-hidden');
+  document.getElementById("quiz-result-screen").classList.add('quiz-screen-hidden');
+  if (typeof renderQuizQuestion === 'function') renderQuizQuestion();
+}
+
 // ── QUIZ MODE ────────────────────────────────
 function startQuiz() {
+  quizClearResume(); // start fresh
   const filter = document.querySelector("input[name=quiz-filter]:checked").value;
   window.quizCurrentCh = (filter === "all") ? null : filter;
   const count = parseInt(document.getElementById("quiz-count").value);
@@ -693,7 +755,7 @@ function renderQuizQ() {
   const pct = (quizIdx / quizQs.length) * 100;
   document.getElementById("qpf").style.width = pct + "%";
   document.getElementById("q-counter").textContent = `Question ${quizIdx + 1} / ${quizQs.length}`;
-  const chLabels = { ch1: "Chapter 1 — Business Ethics", ch2: "Chapter 2 — Stakeholders & Governance", ch3: "Chapter 3 — Sustainability" };
+  const chLabels = (window.CH_LABELS && window.CH_LABELS.quizLong) || { ch1: "Chapter 1 — Business Ethics", ch2: "Chapter 2 — Stakeholders & Governance", ch3: "Chapter 3 — Sustainability" };
   const chColors = { ch1: "#2563EB", ch2: "#7C3AED", ch3: "#10b981" };
   document.getElementById("quiz-chapter-tag").innerHTML = `<span style="background:${chColors[q.ch] || '#2563EB'};color:#fff;padding:3px 10px;border-radius:999px;font-size:.78rem;">${chLabels[q.ch] || q.ch}</span>`;
   document.getElementById("quiz-q-text").textContent = q.q;
@@ -828,6 +890,8 @@ function handleQuizAnswer(chosen) {
   const nextBtn = document.getElementById("quiz-next-btn");
   nextBtn.style.display = "block";
   setTimeout(() => nextBtn.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 50);
+  // Save quiz progress for resume
+  if (typeof quizSaveProgress === 'function') quizSaveProgress();
   // Auto-advance on correct answer
   if (isCorrect && localStorage.getItem('bus214_autoAdvance') === '1') {
     clearTimeout(window._autoAdvTimer);
@@ -856,6 +920,7 @@ function nextQuizQ() {
 function endQuiz() {
   clearInterval(quizTimerInt);
   document.body.classList.remove('quiz-mode');
+  if (typeof quizClearResume === 'function') quizClearResume();
   const total = quizCorrect + quizWrong;
   const pct = total ? Math.round((quizCorrect / total) * 100) : 0;
   const elapsed = quizStartTime ? Math.round((Date.now() - quizStartTime) / 1000) : 0;
@@ -1047,8 +1112,68 @@ function startQuickCheck(ch) {
   setTimeout(() => startQuiz(), 300);
 }
 
+// ── MOCK EXAM RESUME ───────────────────────────
+const MOCK_RESUME_KEY = 'bus214_mock_resume';
+function mockSaveProgress() {
+  if (!mockQs.length) return;
+  try {
+    localStorage.setItem(MOCK_RESUME_KEY, JSON.stringify({
+      qs: mockQs.map(function(q){ return { ch: q.ch, q: q.q }; }),
+      idx: mockIdx, correct: mockCorrect, wrong: mockWrong,
+      answers: mockAnswers.map(function(a){ return { q: a.q.q, chosen: a.chosen }; }),
+      timeRemaining: mockTimeRemaining || 0,
+      savedAt: Date.now()
+    }));
+  } catch (e) {}
+}
+function mockClearResume() { try { localStorage.removeItem(MOCK_RESUME_KEY); } catch(e) {} }
+function mockGetResume() {
+  try {
+    const r = JSON.parse(localStorage.getItem(MOCK_RESUME_KEY) || 'null');
+    if (!r) return null;
+    if (Date.now() - r.savedAt > 86400000) { mockClearResume(); return null; }
+    return r;
+  } catch (e) { return null; }
+}
+function mockResumeSession() {
+  const r = mockGetResume();
+  if (!r) return;
+  const pool = (typeof testBankQ !== 'undefined' ? testBankQ : []);
+  const byText = {};
+  pool.forEach(function(q){ byText[q.q] = q; });
+  const rebuilt = r.qs.map(function(ref){ return byText[ref.q]; }).filter(Boolean);
+  if (rebuilt.length === 0) { mockClearResume(); return; }
+  mockQs = rebuilt; mockIdx = r.idx; mockCorrect = r.correct; mockWrong = r.wrong;
+  mockAnswers = r.answers.map(function(a){ return { q: byText[a.q] || {q:a.q}, chosen: a.chosen }; }).filter(function(a){return a.q.opts;});
+  mockTimeRemaining = r.timeRemaining || mockTimeLimit;
+  document.body.classList.add('mock-mode');
+  document.getElementById("mock-start-screen").style.display = "none";
+  document.getElementById("mock-game-screen").style.display = "block";
+  document.getElementById("mock-result-screen").style.display = "none";
+  clearInterval(mockTimerInt);
+  mockTimerInt = setInterval(() => {
+    mockTimeRemaining = Math.max(0, mockTimeRemaining - 1);
+    const m = Math.floor(mockTimeRemaining / 60), s = mockTimeRemaining % 60;
+    document.getElementById("mock-timer").textContent = "⏱ " + m + ":" + (s < 10 ? "0" : "") + s;
+    if (mockTimeRemaining <= 0) endMock();
+  }, 1000);
+  if (typeof renderMockQ === 'function') renderMockQ();
+}
+function showMockResumeBanner() {
+  const banner = document.getElementById('mock-resume-banner');
+  if (!banner) return;
+  const r = mockGetResume();
+  if (!r || r.idx >= r.qs.length) { banner.style.display = 'none'; return; }
+  const pct = Math.round(r.idx / r.qs.length * 100);
+  banner.innerHTML = '<div><div style="font-weight:700;color:var(--accent);font-size:.95rem;">🔖 امتحان تجريبي محفوظ</div><div style="font-size:.82rem;color:var(--muted);margin-top:3px;">سؤال ' + r.idx + ' من ' + r.qs.length + ' (' + pct + '%)</div></div>'
+    + '<div style="display:flex;gap:6px;"><button onclick="mockClearResume();showMockResumeBanner();" style="background:transparent;color:var(--muted);border:1.5px solid var(--line);padding:8px 14px;border-radius:10px;font-weight:600;font-size:.82rem;cursor:pointer;font-family:inherit;">حذف</button>'
+    + '<button onclick="mockResumeSession()" style="background:var(--accent);color:#fff;border:none;padding:8px 18px;border-radius:10px;font-weight:700;font-size:.82rem;cursor:pointer;font-family:inherit;">استئناف ←</button></div>';
+  banner.style.display = 'flex';
+}
+
 // ── MOCK EXAM ─────────────────────────────────
 function startMock() {
+  mockClearResume();
   const pool = [...testBankQ].sort(() => Math.random() - 0.5).slice(0, 30);
   mockQs = pool; mockIdx = 0; mockCorrect = 0; mockWrong = 0; mockAnswers = [];
   mockTimeRemaining = mockTimeLimit;
@@ -1073,7 +1198,7 @@ function renderMockQ() {
   const pct = (mockIdx / mockQs.length) * 100;
   document.getElementById("mock-progress-fill").style.width = pct + "%";
   document.getElementById("mock-counter").textContent = `Q ${mockIdx + 1} / ${mockQs.length}`;
-  const chLabels = { ch1: "Chapter 1", ch2: "Chapter 2", ch3: "Chapter 3" };
+  const chLabels = (window.CH_LABELS && window.CH_LABELS.short) || { ch1: "Chapter 1", ch2: "Chapter 2", ch3: "Chapter 3" };
   document.getElementById("mock-ch-tag").textContent = chLabels[q.ch] || q.ch;
   document.getElementById("mock-q-text").textContent = q.q;
   const optsDiv = document.getElementById("mock-opts");
@@ -1116,6 +1241,7 @@ function handleMockAnswer(chosen) {
   mockAnswers.push({ q: mockQs[mockIdx], chosen });
   window.mockAnswers = mockAnswers;
   document.getElementById("mock-next-btn").style.display = "block";
+  if (typeof mockSaveProgress === 'function') mockSaveProgress();
 }
 
 function nextMockQ() {
@@ -1126,6 +1252,7 @@ function nextMockQ() {
 function endMock() {
   clearInterval(mockTimerInt);
   document.body.classList.remove('mock-mode');
+  if (typeof mockClearResume === 'function') mockClearResume();
   const total = mockCorrect + mockWrong;
   const pct = total ? Math.round((mockCorrect / total) * 100) : 0;
   document.getElementById("mock-game-screen").style.display = "none";
@@ -1392,7 +1519,7 @@ function renderConceptOfDay() {
   if (!cards.length) return;
   const dayIndex = Math.floor(Date.now() / 86400000) % cards.length;
   const card = cards[dayIndex];
-  const chLabels = { ch1:'📖 الفصل الأول', ch2:'🤝 الفصل الثاني', ch3:'🌱 الفصل الثالث' };
+  const chLabels = (window.CH_LABELS && window.CH_LABELS.cotd) || { ch1:'📖 الفصل الأول', ch2:'🤝 الفصل الثاني', ch3:'🌱 الفصل الثالث' };
   const el = id => document.getElementById(id);
   if (el('cotd-chapter')) el('cotd-chapter').textContent = chLabels[card.ch] || card.ch;
   if (el('cotd-term'))    el('cotd-term').textContent    = card.front || card.term || '';
@@ -1400,7 +1527,7 @@ function renderConceptOfDay() {
 }
 
 // ── SEARCH ────────────────────────────────────
-const SEARCH_PAGES = [
+const SEARCH_PAGES = (window.SEARCH_PAGES_OVERRIDE) || [
   { id: 'page-ch1', label: '📖 Chapter 1 — Business Ethics' },
   { id: 'page-ch2', label: '🤝 Chapter 2 — Stakeholders & Governance' },
   { id: 'page-ch3', label: '🌱 Chapter 3 — Sustainability' },
@@ -1451,7 +1578,7 @@ function runSearch(query) {
     });
   });
   // Also search quiz questions
-  const chLabels = { ch1: 'Ch1 Quiz', ch2: 'Ch2 Quiz', ch3: 'Ch3 Quiz' };
+  const chLabels = (window.CH_LABELS && window.CH_LABELS.quizTag) || { ch1: 'Ch1 Quiz', ch2: 'Ch2 Quiz', ch3: 'Ch3 Quiz' };
   allQuizQ.forEach(q => {
     if (re.test(q.q) || q.opts.some(o => re.test(o))) {
       const correct = q.opts[q.ans];
@@ -1514,23 +1641,24 @@ function handleChQ(btn, isCorrect) {
 function exportTestBankPDF(ch) {
   const letters = ['A','B','C','D','E'];
   const pool = ch === 'all' ? testBankQ : testBankQ.filter(q => q.ch === ch);
-  const chNames = { ch1: 'Chapter 1 — Business Ethics', ch2: 'Chapter 2 — Stakeholders & Governance', ch3: 'Chapter 3 — Sustainability', all: 'Chapters 1–3' };
+  const chNames = (window.CH_LABELS && window.CH_LABELS.tbLong) || { ch1: 'Chapter 1 — Business Ethics', ch2: 'Chapter 2 — Stakeholders & Governance', ch3: 'Chapter 3 — Sustainability', all: 'Chapters 1–3' };
   const chColors = { ch1: '#2563EB', ch2: '#7C3AED', ch3: '#10b981', all: '#1e293b' };
   const color = chColors[ch] || '#1e293b';
   const w = window.open('', '_blank');
   let html = `<!DOCTYPE html><html dir="ltr"><head><meta charset="UTF-8">
   <title>Test Bank — ${chNames[ch]}</title>
   <style>
-    body { font-family: Arial, sans-serif; font-size: 11pt; margin: 20mm 15mm; color: #1e293b; }
+    * { box-sizing: border-box; word-wrap: break-word; overflow-wrap: break-word; max-width: 100%; }
+    body { font-family: Arial, sans-serif; font-size: 11pt; margin: 20mm 15mm; color: #1e293b; word-wrap: break-word; overflow-wrap: break-word; hyphens: auto; }
     h1 { font-size: 16pt; color: ${color}; border-bottom: 2px solid ${color}; padding-bottom: 8px; margin-bottom: 4px; }
     .meta { font-size: 9pt; color: #64748b; margin-bottom: 20px; }
-    .q-block { margin-bottom: 18px; break-inside: avoid; }
+    .q-block { margin-bottom: 18px; break-inside: avoid; page-break-inside: avoid; }
     .q-num { font-weight: 800; color: ${color}; margin-bottom: 4px; font-size: 10pt; }
-    .q-text { font-weight: 600; margin-bottom: 6px; line-height: 1.5; }
-    .opt { padding: 2px 0 2px 12px; font-size: 10.5pt; line-height: 1.5; }
+    .q-text { font-weight: 600; margin-bottom: 6px; line-height: 1.5; word-wrap: break-word; overflow-wrap: break-word; white-space: normal; }
+    .opt { padding: 2px 0 2px 12px; font-size: 10.5pt; line-height: 1.5; word-wrap: break-word; overflow-wrap: break-word; white-space: normal; }
     .opt.correct { font-weight: 700; color: #16a34a; }
     .divider { border: none; border-top: 1px solid #e2e8f0; margin: 14px 0; }
-    @media print { body { margin: 10mm 12mm; } }
+    @media print { body { margin: 10mm 12mm; } @page { margin: 12mm 10mm; } }
   </style></head><body>
   <h1>📋 Test Bank — ${chNames[ch]}</h1>
   <div class="meta">Ferrell, Business Ethics 13e &nbsp;·&nbsp; ${pool.length} Questions &nbsp;·&nbsp; BUS 214</div>`;
@@ -1563,7 +1691,7 @@ function exportWrongAnswersPDF(mode) {
   } else {
     wrong = (window.quizAnswerLog || []).filter(a => a.chosen !== a.q.ans);
   }
-  const chNames = { ch1:'Chapter 1', ch2:'Chapter 2', ch3:'Chapter 3' };
+  const chNames = (window.CH_LABELS && window.CH_LABELS.short) || { ch1:'Chapter 1', ch2:'Chapter 2', ch3:'Chapter 3' };
   const w = window.open('', '_blank');
   if (!w) { alert('فعّل النوافذ المنبثقة للتصدير'); return; }
   w.document.write(`<!DOCTYPE html><html dir="ltr"><head><meta charset="UTF-8">
@@ -1684,8 +1812,8 @@ function exportChapterPDF(pageId, chapterName) {
     <style>
       @page { size: A4; margin: 12mm 14mm 12mm 14mm; }
       :root { --c1:${p.c1};--c2:${p.c2};--c3:${p.c3};--bg1:${p.bg1};--bg2:${p.bg2};--line:${p.line};--ink:${p.ink};--muted:${p.muted}; }
-      * { box-sizing:border-box;margin:0;padding:0; }
-      body { font-family:'Inter',system-ui,sans-serif;color:var(--ink);line-height:1.55;font-size:11.5px;max-width:780px;margin:0 auto;background:${p.bodyBg};-webkit-font-smoothing:antialiased; }
+      * { box-sizing:border-box;margin:0;padding:0;word-wrap:break-word;overflow-wrap:break-word;max-width:100%; }
+      body { font-family:'Inter',system-ui,sans-serif;color:var(--ink);line-height:1.55;font-size:11.5px;max-width:780px;margin:0 auto;background:${p.bodyBg};-webkit-font-smoothing:antialiased;word-wrap:break-word;overflow-wrap:break-word;hyphens:auto; }
       .toolbar { position:sticky;top:0;z-index:100;background:${isDark?p.paper:'#fff'};padding:14px 32px;border-bottom:1px solid ${isDark?p.line:'#e2e8f0'};display:flex;align-items:center;gap:14px;box-shadow:0 2px 12px rgba(0,0,0,${isDark?'.15':'.04'}); }
       .toolbar-btn { background:linear-gradient(135deg,var(--c1),var(--c2));color:#fff;border:none;padding:10px 28px;border-radius:10px;font-weight:700;cursor:pointer;font-size:.92rem;font-family:inherit;box-shadow:0 4px 14px rgba(108,99,255,.25); }
       .toolbar .hint { color:var(--muted);font-size:.82rem; }
@@ -1717,9 +1845,12 @@ function exportChapterPDF(pageId, chapterName) {
         .toolbar { display:none !important; }
         body { padding:0;max-width:none;font-size:11px; }
         .content { padding:16px 0 32px; }
-        .block,.tip,.memo,.hbox { break-inside:avoid;box-shadow:none!important; }
-        table { box-shadow:none!important; }
+        .block,.tip,.memo,.hbox,.step-card,.note { break-inside:avoid;page-break-inside:avoid;box-shadow:none!important; }
+        table { box-shadow:none!important;page-break-inside:auto; }
+        tr { page-break-inside:avoid; }
+        td,th { word-wrap:break-word;overflow-wrap:break-word;white-space:normal; }
         td { color:#334155 !important; }
+        .section h3 { page-break-after:avoid; }
       }
     </style></head><body>
     <div class="toolbar">
@@ -1839,14 +1970,36 @@ function checkReminders() {
   const last = parseInt(localStorage.getItem(LAST_KEY) || '0');
   const now = Date.now();
   localStorage.setItem(LAST_KEY, now);
-  if (!last) return;
-  const daysSince = Math.floor((now - last) / (1000*60*60*24));
   const daysToExam = Math.ceil((EXAM.getTime() - now) / (1000*60*60*24));
   let msg = '';
-  if (daysToExam <= 0) return;
-  if (daysSince >= 3) msg = `⏰ ما راجعت من ${daysSince} أيام! باقي ${daysToExam} يوم على الاختبار`;
-  else if (daysToExam <= 3) msg = `🔥 باقي ${daysToExam} يوم فقط على الاختبار! وقت المراجعة النهائية`;
-  else if (daysToExam <= 7) msg = `📚 باقي ${daysToExam} أيام على الاختبار — استمر بالمراجعة!`;
+  // Check streak warning: user has a streak but hasn't studied today
+  try {
+    const streak = JSON.parse(localStorage.getItem('bus214_streak') || '{"count":0,"lastDate":""}');
+    const today = new Date().toISOString().slice(0, 10);
+    const yesterday = new Date(Date.now() - 86400000).toISOString().slice(0, 10);
+    if (streak.count >= 3 && streak.lastDate === yesterday) {
+      // About to lose streak!
+      msg = `🔥 عندك streak ${streak.count} يوم — حل ولو كويز صغير اليوم عشان ما ينكسر!`;
+    }
+  } catch (e) {}
+  // Daily tip: if user studied today, confirm it
+  if (!msg && last) {
+    const daysSince = Math.floor((now - last) / (1000*60*60*24));
+    if (daysToExam > 0) {
+      if (daysSince >= 3) msg = `⏰ ما راجعت من ${daysSince} أيام! باقي ${daysToExam} يوم على الاختبار`;
+      else if (daysToExam <= 3) msg = `🔥 باقي ${daysToExam} يوم فقط على الاختبار! وقت المراجعة النهائية`;
+      else if (daysToExam <= 7) msg = `📚 باقي ${daysToExam} أيام على الاختبار — استمر بالمراجعة!`;
+    }
+  }
+  // Check if user has wrong answers to review (motivation)
+  if (!msg) {
+    try {
+      const wrongs = JSON.parse(localStorage.getItem('bus214_wrongAnswers') || '[]');
+      if (wrongs.length >= 5) {
+        msg = `📋 عندك ${wrongs.length} أخطاء محفوظة — وقت المراجعة!`;
+      }
+    } catch (e) {}
+  }
   if (msg) {
     const toast = document.getElementById('reminder-toast');
     const textEl = document.getElementById('reminder-toast-text');
@@ -2350,9 +2503,873 @@ const testBankQ = [
   { ch:"ch3", q:"Recycling is the reprocessing of materials—especially steel, aluminum, paper, glass, rubber, and some plastics—for reuse.", opts:["True", "False"], ans:0 },
 ];
 // ═══════════════════════════════════════════════
+//  BEFORE THE EXAM — comprehensive pre-exam review
+// ═══════════════════════════════════════════════
+const BEXAM_CONTENT = {
+  ch1: {
+    title: 'Chapter 5 — Recognizing Ethical Issues in Business',
+    color: '#F59E0B',
+    bgSoft: '#FEF3C7',
+    border: '#F59E0B',
+    summary: [
+      { term: 'Ethical Issue', def: 'مشكلة تتطلب الاختيار بين أفعال تُقيَّم كصح/خطأ.', eng: 'Requires choosing among right/wrong actions.' },
+      { term: 'Ethical Dilemma', def: 'كل الخيارات لها نتائج سلبية — تختار الأقل ضرراً.', eng: 'All alternatives have negative outcomes.' },
+      { term: '3 Foundational Values', def: '<strong>Integrity</strong> (النزاهة) · <strong>Honesty</strong> (الأمانة) · <strong>Fairness</strong> (الإنصاف).', eng: 'Three core values for identifying ethical issues.' },
+      { term: 'Fairness — 3 Elements', def: '<strong>Equality</strong> (المساواة) · <strong>Reciprocity</strong> (المعاملة بالمثل) · <strong>Optimization</strong> (التحسين).', eng: 'Three elements motivating fairness.' },
+      { term: 'Commission vs Omission Lying', def: '<strong>Commission</strong> = الخداع بالكلمات. <strong>Omission</strong> = عدم الإبلاغ عن المشاكل.', eng: 'Two types of lying: active vs silent.' },
+      { term: 'Bribery: Active vs Passive', def: '<strong>Active</strong> = العاطي (يرتكب الجريمة). <strong>Passive</strong> = المسؤول المتلقي.', eng: 'Active = giver commits offense; Passive = receiver does.' },
+      { term: 'Facilitation Payments', def: 'قانونية في أمريكا (FCPA) بحالات معينة، <strong>ممنوعة</strong> في بريطانيا.', eng: 'Legal in US (FCPA) sometimes, illegal in UK.' },
+      { term: 'FCPA', def: 'قانون أمريكي يمنع رشوة <strong>المسؤولين الأجانب</strong>.', eng: 'US law against bribing foreign officials.' },
+      { term: 'Hostile Work Environment — 3 Criteria', def: '1) السلوك غير مرحب به. 2) حاد ومتكرر ومغيّر لظروف العمل. 3) شخص عاقل سيجده عدائياً.', eng: 'Unwelcome · Severe/Pervasive · Reasonable Person test.' },
+      { term: 'Age Discrimination Act', def: 'يحمي الأفراد <strong>40 سنة فأكثر</strong>، ويمنع إلزام التقاعد قبل 70.', eng: 'Protects workers 40+; no forced retirement before 70.' },
+      { term: 'Insider Trading', def: 'قانوني فقط إذا كان في شركتك <strong>+ تبلغ SEC خلال يومي عمل</strong>.', eng: 'Legal only in own company AND reported to SEC within 2 days.' },
+      { term: 'Consumer Fraud Types', def: '<strong>Collusion</strong> (موظف يساعد) · <strong>Duplicity</strong> (تمثيل حوادث) · <strong>Guile</strong> (حيل).', eng: 'Three types of consumer fraud.' },
+      { term: 'Puffery', def: 'مبالغة إعلانية لا يعتمد عليها مشترٍ عاقل (مثل \"أفضل قهوة\"). قانونية.', eng: 'Exaggeration no reasonable buyer relies on.' },
+      { term: 'Crisis Management', def: 'التعامل مع حدث عالي التأثير يتسم بالغموض والحاجة لفعل سريع.', eng: 'Handling high-impact ambiguous events.' }
+    ],
+    tips: [
+      '🎯 فرّق بين Issue و Dilemma: Issue فيها صح وخطأ، Dilemma كلها خيارات سلبية',
+      '⚖️ Active Bribery = العاطي | Passive Bribery = المتلقي',
+      '📋 احفظ Consumer Fraud: Collusion (موظف)، Duplicity (تمثيل)، Guile (حيل)',
+      '📅 Insider Trading قانوني فقط: في شركتك + SEC خلال يومين',
+      '🌐 FCPA للمسؤولين الأجانب، ADEA للعمر 40+'
+    ]
+  },
+  ch2: {
+    title: 'Chapter 6 — A Framework for Ethical Decision Making',
+    color: '#2563EB',
+    bgSoft: '#DBEAFE',
+    border: '#2563EB',
+    summary: [
+      { term: 'Ethical Decision Making — الخطوة الأولى', def: 'التعرف على وجود قضية أخلاقية (Ethical Awareness).', eng: 'Recognize ethical issue exists.' },
+      { term: 'Ethical Issue Intensity', def: 'مدى أهمية القضية في نظر الفرد/المجموعة/المنظمة. شخصية وزمنية.', eng: 'Relevance/importance perceived by individual/group/org.' },
+      { term: 'Moral Intensity', def: 'تصور الفرد للضغط الاجتماعي والضرر للآخرين.', eng: 'Perceived social pressure and harm to others.' },
+      { term: 'Individual Factors (5)', def: '<strong>Gender · Education · Nationality · Age · Locus of Control</strong>.', eng: 'Five individual factors.' },
+      { term: 'Locus of Control', def: '<strong>Internal</strong> = تتحكم بحياتك بجهدك. <strong>External</strong> = قوى خارجية تتحكم.', eng: 'Internal = master of fate; External = go with flow.' },
+      { term: 'Organizational Factors', def: '<strong>Corporate Culture · Ethical Culture · Significant Others · Obedience to Authority</strong>.', eng: 'Four key org factors.' },
+      { term: 'Significant Others', def: 'الزملاء والمدراء — تأثيرهم اليومي <strong>أكبر</strong> من CEO أو الدين.', eng: 'Peers/managers have MORE daily impact than CEO.' },
+      { term: 'Opportunity', def: 'الظروف التي تحد أو تسمح بالسلوك غير الأخلاقي. <strong>غياب العقاب = Opportunity</strong>.', eng: 'Conditions permitting behavior; absence of punishment.' },
+      { term: 'Guilt', def: 'أول علامة على قرار غير أخلاقي. النية ≠ السلوك → ذنب.', eng: 'First sign of unethical decision.' },
+      { term: 'Normative vs Descriptive', def: '<strong>Normative</strong> = كيف <em>يجب</em>. <strong>Descriptive</strong> = كيف <em>يحصل فعلاً</em>.', eng: 'Normative = should; Descriptive = is.' },
+      { term: 'Veil of Ignorance (Rawls)', def: 'كيف تضع المبادئ إذا لم تعرف موقعك المستقبلي في المجتمع؟', eng: 'Design principles not knowing your future position.' },
+      { term: 'Equality Principle', def: 'لكل شخص حقوق أساسية متوافقة مع حريات الآخرين.', eng: 'Basic rights compatible with others\' liberties.' },
+      { term: 'Difference Principle', def: 'التفاوت يجب أن يفيد <strong>أقل الأفراد حظاً</strong>.', eng: 'Inequalities must benefit the least-advantaged.' },
+      { term: 'Institutions (Social)', def: 'الدين، التعليم، العائلة — تؤسس القيم المعيارية.', eng: 'Religion, education, family shape normative values.' }
+    ],
+    tips: [
+      '🎯 Moral Intensity ≠ Ethical Issue Intensity — انتبه للفرق',
+      '⚖️ Internal Locus = إيجابي للأخلاق | External = يمشي مع التيار',
+      '👥 Significant Others أقوى من CEO في التأثير اليومي',
+      '📖 Normative = المثالي | Descriptive = الواقع',
+      '🎭 Veil of Ignorance = صمّم المجتمع وأنت لا تعرف موقعك'
+    ]
+  },
+  ch3: {
+    title: 'Chapter 7 — Moral Philosophy and Cognitive Moral Development',
+    color: '#DC2626',
+    bgSoft: '#FEE2E2',
+    border: '#DC2626',
+    summary: [
+      { term: 'Moral Philosophy', def: 'مبادئ شخصية لتحديد الصح والخطأ (فردية).', eng: 'Individual principles; person-specific.' },
+      { term: 'Business Ethics', def: 'قرارات جماعية لأهداف العمل.', eng: 'Group decisions for business objectives.' },
+      { term: 'Teleology (Consequentialism)', def: 'الفعل صح إذا أنتج <strong>نتيجة مرغوبة</strong>. تشمل Egoism & Utilitarianism.', eng: 'Judged by consequences.' },
+      { term: 'Egoism', def: 'تعظيم <strong>المصلحة الذاتية</strong>. Enlightened Egoism = طويل المدى مع مراعاة الآخرين.', eng: 'Self-interest maximization.' },
+      { term: 'Utilitarianism', def: '<strong>أعظم خير لأكبر عدد</strong>. Rule vs Act.', eng: 'Greatest good for greatest number.' },
+      { term: 'Deontology', def: 'تركز على <strong>الحقوق والنوايا</strong> لا النتائج. Nonconsequentialism.', eng: 'Rights & intentions, not consequences.' },
+      { term: 'Categorical Imperative (Kant)', def: '"تصرّف كما لو أن فعلك سيصبح <strong>قانوناً كونياً</strong>."', eng: '"Act so your rule could become universal law."' },
+      { term: 'Relativist Perspective', def: 'الأخلاق ذاتية من تجارب الأفراد والمجموعات. تتغير مع الظروف.', eng: 'Subjective from individual/group experiences.' },
+      { term: 'Virtue Ethics', def: 'ما سيعتبره شخص <strong>ناضج ذو شخصية أخلاقية</strong> مناسباً. Inductive.', eng: 'What a mature moral person would do.' },
+      { term: '3 Types of Justice', def: '<strong>Distributive</strong> (النتائج) · <strong>Procedural</strong> (العمليات) · <strong>Interactional</strong> (العلاقات).', eng: 'Outcomes · Processes · Relationships.' },
+      { term: 'Kohlberg\'s 6 Stages', def: '1) Obedience · 2) Self-interest · 3) Relationships · 4) Social System · 5) Social Contract · 6) Universal Principles.', eng: 'Cognitive Moral Development stages.' },
+      { term: 'Kohlberg\'s 3 Levels', def: '<strong>Pre-conventional</strong> (1-2) · <strong>Conventional</strong> (3-4) · <strong>Post-conventional</strong> (5-6).', eng: 'Three levels of CMD.' },
+      { term: 'Adam Smith vs Milton Friedman', def: 'Smith = أخلاق الأعمال تأتي من أخلاق الناس الصالحين. Friedman = السوق يكافئ ويعاقب، الربح هدف.', eng: 'Two views on free markets.' },
+      { term: 'White-Collar Crime', def: 'جرائم <strong>غير عنيفة</strong> من أفراد متعلمين في مناصب قوة. خسائر أكبر من الجرائم العنيفة.', eng: 'Nonviolent crimes by educated; monetary loss > violent crime.' },
+      { term: 'Economic Freedom', def: 'الملكية الذاتية، حرية الاختيار، التبادل الطوعي، الأسواق المفتوحة.', eng: 'Self-ownership, choice, voluntary exchange.' }
+    ],
+    tips: [
+      '🎯 Teleology = النتائج | Deontology = الحقوق والنوايا',
+      '🌍 Utilitarianism = الأغلبية | Egoism = الفرد',
+      '⚖️ 3 أنواع عدالة: Distributive (نتائج)، Procedural (عمليات)، Interactional (علاقات)',
+      '📊 Kohlberg 6 مراحل → 3 مستويات (قبل التقليدي، التقليدي، بعد التقليدي)',
+      '💼 White-Collar Crime: أشخاص متعلمون في مناصب قوة'
+    ]
+  }
+};
+
+function initBeforeExam() {
+  // Countdown
+  try {
+    const examDate = new Date('2026-05-07T00:00:00');
+    const now = Date.now();
+    const days = Math.max(0, Math.ceil((examDate.getTime() - now) / 86400000));
+    const el = document.getElementById('bexam-days');
+    if (el) el.textContent = days;
+  } catch (e) {}
+  // Default to ch1 tab
+  switchBexamTab('ch1');
+}
+
+function switchBexamTab(ch) {
+  const tabs = ['ch1', 'ch2', 'ch3'];
+  tabs.forEach(function(c) {
+    const btn = document.getElementById('bexam-tab-' + c);
+    if (!btn) return;
+    if (c === ch) {
+      const data = BEXAM_CONTENT[c];
+      btn.style.cssText = 'flex:1;min-width:130px;padding:14px;border-radius:12px;border:1.5px solid ' + data.border + ';background:linear-gradient(135deg,' + data.bgSoft + ',' + data.bgSoft + ');color:' + data.border + ';font-weight:800;font-size:.92rem;cursor:pointer;font-family:inherit;';
+    } else {
+      btn.style.cssText = 'flex:1;min-width:130px;padding:14px;border-radius:12px;border:1.5px solid var(--line);background:var(--paper);color:var(--ink);font-weight:600;font-size:.92rem;cursor:pointer;font-family:inherit;';
+    }
+  });
+  renderBexamContent(ch);
+}
+
+function renderBexamContent(ch) {
+  const container = document.getElementById('bexam-content');
+  if (!container) return;
+  const data = BEXAM_CONTENT[ch];
+  if (!data) { container.innerHTML = ''; return; }
+  let html = '<section class="chapter" style="margin-top:0;padding:20px 24px;">';
+  html += '<h2 style="margin-top:0;color:' + data.border + ';">' + data.title + '</h2>';
+
+  // Key terms summary
+  html += '<div style="font-weight:800;font-size:1rem;margin:20px 0 12px;color:var(--ink);">📌 أهم التعاريف والمفاهيم</div>';
+  html += '<div style="display:flex;flex-direction:column;gap:10px;">';
+  data.summary.forEach(function(item) {
+    const encodedTerm = item.term.replace(/'/g, "\\'").replace(/"/g, '&quot;');
+    html += '<div style="background:var(--bg);border:1.5px solid var(--line);border-right:4px solid ' + data.border + ';border-radius:12px;padding:14px 16px;">'
+      + '<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px;flex-wrap:wrap;margin-bottom:10px;">'
+      + '<div style="font-weight:800;font-size:1rem;color:' + data.border + ';">' + item.term + '</div>'
+      + '<button onclick="showRelatedQuestions(\'' + encodedTerm + '\',\'' + ch + '\')" style="background:' + data.bgSoft + ';color:' + data.border + ';border:1.5px solid ' + data.border + ';padding:5px 12px;border-radius:8px;font-size:.75rem;font-weight:700;cursor:pointer;font-family:inherit;white-space:nowrap;">📝 شلون يجي في الاختبار؟</button>'
+      + '</div>'
+      + '<div style="font-size:.92rem;line-height:1.7;color:var(--ink);margin-bottom:8px;"><span style="font-weight:700;color:var(--muted);font-size:.72rem;text-transform:uppercase;letter-spacing:.05em;margin-left:4px;">EN:</span> ' + item.eng + '</div>'
+      + '<div style="font-size:.9rem;line-height:1.7;color:var(--ink);direction:rtl;padding:8px 10px;background:var(--paper);border-radius:8px;border-right:3px solid ' + data.border + ';"><span style="font-weight:700;color:var(--muted);font-size:.72rem;margin-left:4px;">AR:</span> ' + item.def + '</div>'
+      + '</div>';
+  });
+  html += '</div>';
+
+  // Exam tips
+  html += '<div style="font-weight:800;font-size:1rem;margin:24px 0 12px;color:var(--ink);">💡 نصائح للاختبار</div>';
+  html += '<div style="background:linear-gradient(135deg,' + data.bgSoft + ',' + data.bgSoft + ');border:2px solid ' + data.border + ';border-radius:14px;padding:16px 20px;">';
+  html += '<ul style="margin:0;padding-right:20px;color:' + data.border + ';font-size:.92rem;line-height:2;">';
+  data.tips.forEach(function(tip) { html += '<li>' + tip + '</li>'; });
+  html += '</ul></div>';
+
+  html += '</section>';
+  container.innerHTML = html;
+}
+
+// Show related TB questions for a given term
+function showRelatedQuestions(term, ch) {
+  const pool = (typeof MID2_TESTBANK !== 'undefined' ? MID2_TESTBANK : (typeof testBankQ !== 'undefined' ? testBankQ : []));
+  const chQuestions = pool.filter(function(q){ return q.ch === ch; });
+  // Simple keyword search — match any word in the term against question text or options
+  const termWords = term.toLowerCase().replace(/[^a-z\u0600-\u06FF\s]/g, ' ').split(/\s+/).filter(function(w){ return w.length > 2; });
+  const related = chQuestions.filter(function(q) {
+    const haystack = (q.q + ' ' + (q.opts || []).join(' ') + ' ' + (q.exp || '')).toLowerCase();
+    return termWords.some(function(w){ return haystack.indexOf(w) !== -1; });
+  }).slice(0, 5);
+  // Build modal
+  let modal = document.getElementById('rq-modal');
+  if (!modal) {
+    modal = document.createElement('div');
+    modal.id = 'rq-modal';
+    modal.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:10003;display:none;align-items:center;justify-content:center;padding:20px;';
+    modal.onclick = function(e) { if (e.target === modal) modal.style.display = 'none'; };
+    document.body.appendChild(modal);
+  }
+  const letters = ['A','B','C','D','E'];
+  let html = '<div style="background:var(--paper);border-radius:18px;max-width:700px;width:100%;max-height:85vh;overflow-y:auto;padding:24px;direction:rtl;">';
+  html += '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">';
+  html += '<div style="font-weight:800;font-size:1.1rem;">📝 "' + term + '" في الاختبار</div>';
+  html += '<button onclick="document.getElementById(\'rq-modal\').style.display=\'none\'" style="background:transparent;border:none;font-size:1.6rem;color:var(--muted);cursor:pointer;padding:0 8px;">×</button>';
+  html += '</div>';
+  if (related.length === 0) {
+    html += '<div style="text-align:center;padding:40px 20px;color:var(--muted);">ما لقينا أسئلة مرتبطة بهذا المصطلح — جرّب راجع من بنك الأسئلة الكامل.</div>';
+  } else {
+    html += '<div style="font-size:.82rem;color:var(--muted);margin-bottom:14px;">وجدنا <strong>' + related.length + '</strong> سؤال مرتبط:</div>';
+    related.forEach(function(q, idx) {
+      const dispAns = q.ans;
+      html += '<div style="background:var(--bg);border:1.5px solid var(--line);border-radius:12px;padding:14px 16px;margin-bottom:10px;">';
+      html += '<div style="font-weight:700;margin-bottom:10px;line-height:1.7;font-size:.92rem;">Q' + (idx+1) + '. ' + q.q + '</div>';
+      (q.opts || []).forEach(function(opt, j) {
+        const isCorrect = j === dispAns;
+        let style = 'padding:7px 12px;border-radius:8px;margin-bottom:4px;font-size:.85rem;line-height:1.5;';
+        if (isCorrect) style += 'background:rgba(5,150,105,0.12);border:1px solid rgba(5,150,105,0.3);color:var(--good);font-weight:700;';
+        else style += 'color:var(--muted);';
+        html += '<div style="' + style + '">' + letters[j] + '. ' + opt + (isCorrect ? ' ✓' : '') + '</div>';
+      });
+      if (q.exp) {
+        html += '<div style="margin-top:8px;padding:8px 12px;background:var(--accent-soft);border-radius:8px;font-size:.82rem;line-height:1.6;color:var(--ink);">💡 ' + q.exp + '</div>';
+      }
+      html += '</div>';
+    });
+  }
+  html += '</div>';
+  modal.innerHTML = html;
+  modal.style.display = 'flex';
+}
+
+// ═══════════════════════════════════════════════
+//  DRAWING / PEN TOOL (Apple Pencil, touch, mouse)
+// ═══════════════════════════════════════════════
+const DRAW_KEY_PREFIX = 'bus214_draw_';
+let drawState = {
+  active: false,
+  drawing: false,
+  color: '#000000',
+  size: 4,
+  eraser: false,
+  pencilOnly: false, // ignore finger touches (Apple Pencil only)
+  strokes: [], // current page's strokes: [{color, size, eraser, points:[{x,y,p}]}]
+  currentStroke: null,
+  pageId: null,
+  canvas: null,
+  ctx: null
+};
+
+function getPageStrokes(pageId) {
+  try {
+    const raw = localStorage.getItem(DRAW_KEY_PREFIX + pageId);
+    return raw ? JSON.parse(raw) : [];
+  } catch (e) { return []; }
+}
+function savePageStrokes(pageId, strokes) {
+  try { localStorage.setItem(DRAW_KEY_PREFIX + pageId, JSON.stringify(strokes)); } catch (e) {}
+}
+
+function setupDrawCanvas() {
+  const canvas = document.getElementById('draw-canvas');
+  if (!canvas) return null;
+  drawState.canvas = canvas;
+  drawState.ctx = canvas.getContext('2d');
+  // Size canvas to match page content (account for device pixel ratio for crisp drawing)
+  const pageEl = document.querySelector('.page.active');
+  if (!pageEl) return null;
+  const rect = pageEl.getBoundingClientRect();
+  const scrollY = window.scrollY;
+  const pageTop = rect.top + scrollY;
+  const pageW = pageEl.offsetWidth;
+  const pageH = pageEl.offsetHeight;
+  const dpr = Math.min(window.devicePixelRatio || 1, 2); // cap at 2x to limit memory
+  canvas.style.top = pageTop + 'px';
+  canvas.style.left = pageEl.offsetLeft + 'px';
+  canvas.style.width = pageW + 'px';
+  canvas.style.height = pageH + 'px';
+  canvas.width = Math.floor(pageW * dpr);
+  canvas.height = Math.floor(pageH * dpr);
+  drawState.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  return canvas;
+}
+// Handle orientation change / resize on iPad
+let _drawResizeTimer;
+window.addEventListener('resize', function() {
+  if (!drawState.active && (!drawState.pageId || getPageStrokes(drawState.pageId).length === 0)) return;
+  clearTimeout(_drawResizeTimer);
+  _drawResizeTimer = setTimeout(function() {
+    setupDrawCanvas();
+    redrawStrokes();
+  }, 200);
+});
+window.addEventListener('orientationchange', function() {
+  setTimeout(function() {
+    if (drawState.canvas) { setupDrawCanvas(); redrawStrokes(); }
+  }, 300);
+});
+
+function toggleDrawMode() {
+  const toolbar = document.getElementById('draw-toolbar');
+  const canvas = document.getElementById('draw-canvas');
+  if (!toolbar || !canvas) return;
+  if (drawState.active) {
+    // Turn off
+    drawState.active = false;
+    toolbar.style.display = 'none';
+    canvas.style.pointerEvents = 'none';
+    // Restore normal page gestures
+    document.body.style.overscrollBehavior = '';
+    document.documentElement.style.overscrollBehavior = '';
+    const fab = document.getElementById('draw-fab');
+    if (fab) fab.style.opacity = '1';
+  } else {
+    // Turn on
+    drawState.pageId = getCurrentPageId();
+    if (!drawState.pageId) return;
+    setupDrawCanvas();
+    // Load existing strokes
+    drawState.strokes = getPageStrokes(drawState.pageId);
+    redrawStrokes();
+    canvas.style.display = 'block';
+    canvas.style.pointerEvents = 'auto';
+    toolbar.style.display = 'flex';
+    drawState.active = true;
+    // Prevent pull-to-refresh and rubber-band scroll while drawing
+    document.body.style.overscrollBehavior = 'none';
+    document.documentElement.style.overscrollBehavior = 'none';
+    const fab = document.getElementById('draw-fab');
+    if (fab) fab.style.opacity = '0.5';
+  }
+}
+
+function setDrawColor(btn, color) {
+  drawState.color = color;
+  drawState.eraser = false;
+  document.querySelectorAll('.draw-color-btn').forEach(function(b){ b.style.borderColor = 'transparent'; });
+  btn.style.borderColor = '#60A5FA';
+  const eraserBtn = document.getElementById('draw-eraser-btn');
+  if (eraserBtn) eraserBtn.style.borderColor = 'transparent';
+}
+function setDrawSize(btn, size) {
+  drawState.size = size;
+  document.querySelectorAll('.draw-size-btn').forEach(function(b){ b.style.borderColor = 'transparent'; });
+  btn.style.borderColor = '#60A5FA';
+}
+function toggleEraser() {
+  drawState.eraser = !drawState.eraser;
+  const btn = document.getElementById('draw-eraser-btn');
+  if (btn) btn.style.borderColor = drawState.eraser ? '#60A5FA' : 'transparent';
+}
+function togglePencilOnly() {
+  drawState.pencilOnly = !drawState.pencilOnly;
+  const btn = document.getElementById('draw-pencil-only-btn');
+  if (btn) {
+    btn.style.borderColor = drawState.pencilOnly ? '#60A5FA' : 'transparent';
+    btn.style.background = drawState.pencilOnly ? '#1e3a8a' : '#374151';
+    btn.title = drawState.pencilOnly ? 'قلم Apple فقط — الأصابع متجاهلة ✓' : 'اضغط لتفعيل وضع القلم فقط (تجاهل الأصابع)';
+  }
+}
+
+function drawUndo() {
+  if (!drawState.pageId || drawState.strokes.length === 0) return;
+  drawState.strokes.pop();
+  savePageStrokes(drawState.pageId, drawState.strokes);
+  redrawStrokes();
+}
+function drawClear() {
+  if (!drawState.pageId) return;
+  if (!confirm('مسح كل الرسم في هذه الصفحة؟')) return;
+  drawState.strokes = [];
+  savePageStrokes(drawState.pageId, drawState.strokes);
+  redrawStrokes();
+}
+
+function redrawStrokes() {
+  if (!drawState.ctx || !drawState.canvas) return;
+  const ctx = drawState.ctx;
+  ctx.clearRect(0, 0, drawState.canvas.width, drawState.canvas.height);
+  drawState.strokes.forEach(function(stroke) { drawStrokeOnCanvas(stroke); });
+}
+function drawStrokeOnCanvas(stroke) {
+  const ctx = drawState.ctx;
+  if (!ctx || !stroke.points || stroke.points.length === 0) return;
+  ctx.globalCompositeOperation = stroke.eraser ? 'destination-out' : 'source-over';
+  ctx.strokeStyle = stroke.color;
+  ctx.lineCap = 'round';
+  ctx.lineJoin = 'round';
+  const pts = stroke.points;
+  // Draw each segment with its own width based on pressure (Apple Pencil)
+  for (let i = 1; i < pts.length; i++) {
+    const p1 = pts[i-1], p2 = pts[i];
+    // Use averaged pressure for this segment, default 0.5 if unavailable
+    const pressure = ((p1.p || 0.5) + (p2.p || 0.5)) / 2;
+    // Pressure curve: 0.5 = 100%, higher/lower scales around it (0.3x to 1.8x)
+    const pressureMul = stroke.eraser ? 1 : (0.3 + pressure * 1.5);
+    ctx.lineWidth = stroke.size * pressureMul;
+    ctx.beginPath();
+    ctx.moveTo(p1.x, p1.y);
+    // Midpoint smoothing for cleaner curves
+    if (i + 1 < pts.length) {
+      const p3 = pts[i+1];
+      const mx = (p2.x + p3.x) / 2;
+      const my = (p2.y + p3.y) / 2;
+      ctx.quadraticCurveTo(p2.x, p2.y, mx, my);
+    } else {
+      ctx.lineTo(p2.x, p2.y);
+    }
+    ctx.stroke();
+  }
+}
+
+function getPointerPos(e, canvas) {
+  const rect = canvas.getBoundingClientRect();
+  const clientX = (e.touches ? e.touches[0].clientX : e.clientX);
+  const clientY = (e.touches ? e.touches[0].clientY : e.clientY);
+  // e.pressure: 0.5 default when not supported; Apple Pencil gives 0..1
+  return { x: clientX - rect.left, y: clientY - rect.top, p: e.pressure || 0.5 };
+}
+
+function startStroke(e) {
+  if (!drawState.active) return;
+  // Pencil-only mode: ignore finger/mouse if enabled (only accept 'pen' = Apple Pencil)
+  if (drawState.pencilOnly && e.pointerType && e.pointerType !== 'pen') return;
+  // Palm rejection: if a pencil is connected and currently drawing with one, ignore touch
+  if (e.pointerType === 'touch' && drawState.drawing) return;
+  e.preventDefault();
+  drawState.drawing = true;
+  drawState.activePointerId = e.pointerId;
+  const pos = getPointerPos(e, drawState.canvas);
+  drawState.currentStroke = {
+    color: drawState.color,
+    size: drawState.size,
+    eraser: drawState.eraser,
+    points: [pos]
+  };
+}
+function continueStroke(e) {
+  if (!drawState.active || !drawState.drawing || !drawState.currentStroke) return;
+  // Only track the same pointer that started the stroke
+  if (drawState.activePointerId != null && e.pointerId !== drawState.activePointerId) return;
+  if (drawState.pencilOnly && e.pointerType && e.pointerType !== 'pen') return;
+  e.preventDefault();
+  const pos = getPointerPos(e, drawState.canvas);
+  drawState.currentStroke.points.push(pos);
+  // Draw the last segment live with pressure
+  const ctx = drawState.ctx;
+  const s = drawState.currentStroke;
+  const pts = s.points;
+  if (pts.length < 2) return;
+  const p1 = pts[pts.length-2], p2 = pts[pts.length-1];
+  const pressure = ((p1.p || 0.5) + (p2.p || 0.5)) / 2;
+  const pressureMul = s.eraser ? 1 : (0.3 + pressure * 1.5);
+  ctx.globalCompositeOperation = s.eraser ? 'destination-out' : 'source-over';
+  ctx.strokeStyle = s.color;
+  ctx.lineWidth = s.size * pressureMul;
+  ctx.lineCap = 'round';
+  ctx.lineJoin = 'round';
+  ctx.beginPath();
+  ctx.moveTo(p1.x, p1.y);
+  ctx.lineTo(p2.x, p2.y);
+  ctx.stroke();
+}
+function endStroke(e) {
+  if (!drawState.active || !drawState.drawing) return;
+  if (e && e.pointerId != null && drawState.activePointerId != null && e.pointerId !== drawState.activePointerId) return;
+  drawState.drawing = false;
+  drawState.activePointerId = null;
+  if (drawState.currentStroke && drawState.currentStroke.points.length > 0) {
+    drawState.strokes.push(drawState.currentStroke);
+    savePageStrokes(drawState.pageId, drawState.strokes);
+    // Redraw the entire stroke with the smooth quadratic path (the live draw was straight segments)
+    redrawStrokes();
+  }
+  drawState.currentStroke = null;
+}
+
+// Wire up pointer events once on load
+document.addEventListener('DOMContentLoaded', function() {
+  const canvas = document.getElementById('draw-canvas');
+  if (!canvas) return;
+  canvas.addEventListener('pointerdown', startStroke);
+  canvas.addEventListener('pointermove', continueStroke);
+  canvas.addEventListener('pointerup', endStroke);
+  canvas.addEventListener('pointercancel', endStroke);
+  canvas.addEventListener('pointerleave', endStroke);
+});
+// Also wire up immediately in case DOMContentLoaded has already fired
+setTimeout(function() {
+  const canvas = document.getElementById('draw-canvas');
+  if (!canvas || canvas._drawWired) return;
+  canvas._drawWired = true;
+  canvas.addEventListener('pointerdown', startStroke);
+  canvas.addEventListener('pointermove', continueStroke);
+  canvas.addEventListener('pointerup', endStroke);
+  canvas.addEventListener('pointercancel', endStroke);
+  canvas.addEventListener('pointerleave', endStroke);
+}, 500);
+
+// Show/hide draw FAB per page
+function updateDrawFabVisibility(pageId) {
+  const fab = document.getElementById('draw-fab');
+  if (!fab) return;
+  if (document.body.classList.contains('quiz-mode') || document.body.classList.contains('mock-mode')) {
+    fab.style.display = 'none';
+    return;
+  }
+  const showOn = ['page-home', 'page-ch1', 'page-ch2', 'page-ch3', 'page-ch5', 'page-ch6', 'page-ch7', 'page-quick', 'page-quick-review', 'page-flash'];
+  fab.style.display = showOn.indexOf(pageId) !== -1 ? 'block' : 'none';
+  // Has existing drawings? Indicate on FAB
+  const hasDrawings = getPageStrokes(pageId).length > 0;
+  fab.style.boxShadow = hasDrawings ? '0 0 0 3px rgba(124,58,237,.4), 0 6px 20px rgba(124,58,237,.4)' : '0 6px 20px rgba(124,58,237,.4)';
+}
+
+// Restore drawings when showing a page
+function restoreDrawings(pageId) {
+  updateDrawFabVisibility(pageId);
+  const canvas = document.getElementById('draw-canvas');
+  const strokes = getPageStrokes(pageId);
+  if (strokes.length === 0) {
+    // Hide canvas when no drawings and not in draw mode
+    if (canvas && !drawState.active) canvas.style.display = 'none';
+    return;
+  }
+  // Show canvas at page layout and replay strokes
+  setTimeout(function() {
+    setupDrawCanvas();
+    drawState.strokes = strokes;
+    drawState.pageId = pageId;
+    redrawStrokes();
+    if (canvas) {
+      canvas.style.display = 'block';
+      canvas.style.pointerEvents = 'none'; // allow scroll/interaction until draw mode enabled
+    }
+  }, 100);
+}
+
+// Hide canvas when leaving page if draw mode is off
+const _origShowPage = window.showPage;
+// (showPage enhancement handled below via hook in main showPage function)
+
+// ═══════════════════════════════════════════════
+//  STICKY NOTES (per-page user notes)
+// ═══════════════════════════════════════════════
+const NOTES_KEY_PREFIX = 'bus214_notes_';
+
+function getPageNotes(pageId) {
+  try { return JSON.parse(localStorage.getItem(NOTES_KEY_PREFIX + pageId) || '[]'); }
+  catch (e) { return []; }
+}
+function savePageNotes(pageId, list) {
+  try { localStorage.setItem(NOTES_KEY_PREFIX + pageId, JSON.stringify(list)); } catch (e) {}
+}
+function getCurrentPageId() {
+  const active = document.querySelector('.page.active');
+  return active ? active.id : null;
+}
+function getPageLabel(pageId) {
+  const map = {
+    'page-home': 'الصفحة الرئيسية',
+    'page-ch1': 'Chapter 1',
+    'page-ch2': 'Chapter 2',
+    'page-ch3': 'Chapter 3',
+    'page-ch5': 'Chapter 5 — Ethical Issues',
+    'page-ch6': 'Chapter 6 — Decision Framework',
+    'page-ch7': 'Chapter 7 — Moral Philosophy',
+    'page-quick-review': 'المراجعة السريعة',
+    'page-flash': 'Flash Cards',
+    'page-quiz': 'Quiz Mode',
+    'page-mock': 'Mock Exam',
+    'page-testbank': 'Test Bank',
+    'page-dashboard': 'Dashboard',
+    'page-wrong-review': 'المراجعة'
+  };
+  return map[pageId] || pageId;
+}
+
+function toggleNotesPanel() {
+  const panel = document.getElementById('notes-panel');
+  if (!panel) return;
+  const isOpen = panel.style.display === 'flex';
+  if (isOpen) {
+    panel.style.display = 'none';
+  } else {
+    panel.style.display = 'flex';
+    const pid = getCurrentPageId();
+    const lbl = document.getElementById('notes-page-label');
+    if (lbl) lbl.textContent = pid ? getPageLabel(pid) : '';
+    renderNotesList();
+  }
+}
+function renderNotesList() {
+  const pid = getCurrentPageId();
+  const list = document.getElementById('notes-list');
+  if (!list || !pid) return;
+  const notes = getPageNotes(pid);
+  if (notes.length === 0) {
+    list.innerHTML = '<div style="text-align:center;padding:30px 10px;color:var(--muted);font-size:.85rem;"><div style="font-size:2.5rem;opacity:.3;margin-bottom:8px;">📭</div>لا توجد ملاحظات بعد<div style="font-size:.72rem;margin-top:4px;">ملاحظاتك تُحفظ محلياً في جهازك</div></div>';
+    return;
+  }
+  let html = '';
+  notes.slice().reverse().forEach(function(n, idx) {
+    const realIdx = notes.length - 1 - idx;
+    const dateStr = new Date(n.ts).toLocaleDateString('ar-SA') + ' · ' + new Date(n.ts).toLocaleTimeString('ar-SA', {hour:'2-digit',minute:'2-digit'});
+    const escaped = (n.text || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\n/g, '<br>');
+    html += '<div style="background:#FEF3C7;border:1.5px solid #FDE68A;border-right:4px solid #F59E0B;border-radius:10px;padding:12px 14px;margin-bottom:10px;position:relative;">'
+      + '<div style="font-size:.88rem;line-height:1.6;color:#78350F;word-wrap:break-word;">' + escaped + '</div>'
+      + '<div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px;padding-top:8px;border-top:1px solid rgba(180,83,9,.15);">'
+      + '<span style="font-size:.7rem;color:#92400E;">' + dateStr + '</span>'
+      + '<button onclick="deleteNote(' + realIdx + ')" style="background:transparent;border:none;color:#92400E;font-size:.78rem;font-weight:700;cursor:pointer;padding:2px 8px;border-radius:6px;">🗑️ حذف</button>'
+      + '</div></div>';
+  });
+  list.innerHTML = html;
+}
+function addNote() {
+  const input = document.getElementById('notes-input');
+  const pid = getCurrentPageId();
+  if (!input || !pid) return;
+  const text = input.value.trim();
+  if (!text) return;
+  const notes = getPageNotes(pid);
+  notes.push({ text: text, ts: Date.now() });
+  savePageNotes(pid, notes);
+  input.value = '';
+  renderNotesList();
+  updateNotesFabVisibility(pid);
+}
+function deleteNote(idx) {
+  const pid = getCurrentPageId();
+  if (!pid) return;
+  const notes = getPageNotes(pid);
+  if (idx < 0 || idx >= notes.length) return;
+  if (!confirm('حذف هذه الملاحظة؟')) return;
+  notes.splice(idx, 1);
+  savePageNotes(pid, notes);
+  renderNotesList();
+  updateNotesFabVisibility(pid);
+}
+function updateNotesFabVisibility(pageId) {
+  const fab = document.getElementById('notes-fab');
+  if (!fab) return;
+  // Hide on quiz/mock/testbank active sessions
+  if (document.body.classList.contains('quiz-mode') || document.body.classList.contains('mock-mode')) {
+    fab.style.display = 'none';
+    return;
+  }
+  // Show on chapter, review, home pages
+  const showOn = ['page-home', 'page-ch1', 'page-ch2', 'page-ch3', 'page-ch5', 'page-ch6', 'page-ch7', 'page-quick', 'page-quick-review', 'page-flash'];
+  fab.style.display = showOn.indexOf(pageId) !== -1 ? 'block' : 'none';
+  // Update badge if notes exist
+  const count = getPageNotes(pageId).length;
+  fab.textContent = count > 0 ? '📝·' + count : '📝';
+}
+function restoreNotes(pageId) {
+  // Just update FAB visibility + count when navigating
+  updateNotesFabVisibility(pageId);
+}
+
+// ═══════════════════════════════════════════════
+//  HIGHLIGHTER (user-selected text highlights)
+// ═══════════════════════════════════════════════
+const HL_KEY_PREFIX = 'bus214_hl_';
+
+function getPageHighlights(pageId) {
+  try { return JSON.parse(localStorage.getItem(HL_KEY_PREFIX + pageId) || '[]'); }
+  catch (e) { return []; }
+}
+function savePageHighlights(pageId, list) {
+  try { localStorage.setItem(HL_KEY_PREFIX + pageId, JSON.stringify(list)); } catch (e) {}
+}
+
+// Show highlighter popup on text selection within a chapter page
+document.addEventListener('mouseup', function(e) {
+  const popup = document.getElementById('highlighter-popup');
+  if (!popup) return;
+  // Don't show if clicking inside popup itself
+  if (popup.contains(e.target)) return;
+  const sel = window.getSelection();
+  const text = sel.toString().trim();
+  if (!text || text.length < 2 || text.length > 300) {
+    popup.style.display = 'none';
+    return;
+  }
+  // Only show inside allowed pages (chapters, quick review, etc.)
+  const allowedPages = ['page-ch1', 'page-ch2', 'page-ch3', 'page-ch5', 'page-ch6', 'page-ch7', 'page-quick', 'page-quick-review', 'page-home'];
+  const range = sel.getRangeAt(0);
+  let node = range.commonAncestorContainer;
+  if (node.nodeType === 3) node = node.parentElement;
+  const pageEl = node.closest('.page');
+  if (!pageEl || allowedPages.indexOf(pageEl.id) === -1) {
+    popup.style.display = 'none';
+    return;
+  }
+  // Position popup above selection
+  const rect = range.getBoundingClientRect();
+  popup.style.display = 'flex';
+  const popupW = 200;
+  const left = Math.max(10, Math.min(window.innerWidth - popupW - 10, rect.left + window.scrollX + rect.width / 2 - popupW / 2));
+  const top = rect.top + window.scrollY - 44;
+  popup.style.left = left + 'px';
+  popup.style.top = top + 'px';
+  popup.style.display = 'flex';
+});
+// Hide on scroll or click away
+document.addEventListener('scroll', function() {
+  const popup = document.getElementById('highlighter-popup');
+  if (popup) popup.style.display = 'none';
+}, true);
+document.addEventListener('mousedown', function(e) {
+  const popup = document.getElementById('highlighter-popup');
+  if (!popup || popup.style.display === 'none') return;
+  if (popup.contains(e.target)) return;
+  popup.style.display = 'none';
+});
+
+function applyHighlight(color) {
+  const sel = window.getSelection();
+  if (!sel || sel.rangeCount === 0) return;
+  const text = sel.toString().trim();
+  if (!text) return;
+  const range = sel.getRangeAt(0);
+  let node = range.commonAncestorContainer;
+  if (node.nodeType === 3) node = node.parentElement;
+  const pageEl = node.closest('.page');
+  if (!pageEl) return;
+  const pageId = pageEl.id;
+  // Wrap selection using execCommand for simplicity (handles cross-element selections)
+  try {
+    const mark = document.createElement('mark');
+    mark.className = 'user-hl';
+    mark.style.background = color;
+    mark.dataset.hlColor = color;
+    mark.dataset.hlText = text;
+    range.surroundContents(mark);
+    // Click to remove
+    mark.onclick = function(ev) {
+      ev.stopPropagation();
+      if (!confirm('حذف هذا الهايلايت؟')) return;
+      const parent = mark.parentNode;
+      while (mark.firstChild) parent.insertBefore(mark.firstChild, mark);
+      parent.removeChild(mark);
+      parent.normalize();
+      // Remove from storage
+      const list = getPageHighlights(pageId);
+      const idx = list.findIndex(function(h){ return h.text === text && h.color === color; });
+      if (idx !== -1) { list.splice(idx, 1); savePageHighlights(pageId, list); }
+    };
+    // Save to localStorage
+    const list = getPageHighlights(pageId);
+    list.push({ text: text, color: color, ts: Date.now() });
+    savePageHighlights(pageId, list);
+  } catch (e) {
+    // surroundContents fails if range crosses element boundaries — fall back
+    alert('حدد النص داخل فقرة واحدة لحفظ الهايلايت');
+  }
+  document.getElementById('highlighter-popup').style.display = 'none';
+  sel.removeAllRanges();
+}
+
+function removeHighlight() {
+  const sel = window.getSelection();
+  if (!sel || sel.rangeCount === 0) return;
+  let node = sel.getRangeAt(0).commonAncestorContainer;
+  if (node.nodeType === 3) node = node.parentElement;
+  const mark = node.closest && node.closest('mark.user-hl');
+  if (mark) { mark.click(); } else {
+    alert('حدد نص مُهايلت لحذفه');
+  }
+  document.getElementById('highlighter-popup').style.display = 'none';
+}
+
+// Restore highlights when showing a chapter page
+function restoreHighlights(pageId) {
+  const pageEl = document.getElementById(pageId);
+  if (!pageEl) return;
+  const list = getPageHighlights(pageId);
+  if (!list.length) return;
+  // Skip if already restored
+  if (pageEl.dataset.hlRestored === '1') return;
+  pageEl.dataset.hlRestored = '1';
+  list.forEach(function(hl) {
+    try { highlightTextInElement(pageEl, hl.text, hl.color); } catch (e) {}
+  });
+}
+function highlightTextInElement(root, text, color) {
+  if (!text || text.length < 2) return;
+  const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+    acceptNode: function(node) {
+      if (node.parentElement && node.parentElement.closest('mark.user-hl, script, style')) return NodeFilter.FILTER_REJECT;
+      return node.nodeValue.indexOf(text) !== -1 ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_SKIP;
+    }
+  });
+  const nodes = [];
+  let n;
+  while ((n = walker.nextNode())) nodes.push(n);
+  nodes.forEach(function(node) {
+    const idx = node.nodeValue.indexOf(text);
+    if (idx === -1) return;
+    const range = document.createRange();
+    range.setStart(node, idx);
+    range.setEnd(node, idx + text.length);
+    const mark = document.createElement('mark');
+    mark.className = 'user-hl';
+    mark.style.background = color;
+    mark.dataset.hlColor = color;
+    mark.dataset.hlText = text;
+    try {
+      range.surroundContents(mark);
+      const pageEl = mark.closest('.page');
+      const pageId = pageEl && pageEl.id;
+      mark.onclick = function(ev) {
+        ev.stopPropagation();
+        if (!confirm('حذف هذا الهايلايت؟')) return;
+        const parent = mark.parentNode;
+        while (mark.firstChild) parent.insertBefore(mark.firstChild, mark);
+        parent.removeChild(mark);
+        parent.normalize();
+        if (pageId) {
+          const list = getPageHighlights(pageId);
+          const i = list.findIndex(function(h){ return h.text === text && h.color === color; });
+          if (i !== -1) { list.splice(i, 1); savePageHighlights(pageId, list); }
+        }
+      };
+    } catch (e) {}
+  });
+}
+
+// ═══════════════════════════════════════════════
+//  BOOKMARKS (Starred Questions)
+// ═══════════════════════════════════════════════
+const BOOKMARK_KEY = 'bus214_bookmarks';
+function getBookmarks() {
+  try { return JSON.parse(localStorage.getItem(BOOKMARK_KEY) || '[]'); }
+  catch (e) { return []; }
+}
+function isBookmarked(qText) {
+  if (!qText) return false;
+  return getBookmarks().indexOf(qText) !== -1;
+}
+function toggleBookmark(qText) {
+  if (!qText) return false;
+  const list = getBookmarks();
+  const idx = list.indexOf(qText);
+  if (idx === -1) list.push(qText);
+  else list.splice(idx, 1);
+  try { localStorage.setItem(BOOKMARK_KEY, JSON.stringify(list)); } catch (e) {}
+  return idx === -1; // true if just added
+}
+function tbToggleBookmark(btn) {
+  const q = tbState.questions[tbState.current];
+  if (!q) return;
+  const added = toggleBookmark(q.q);
+  btn.innerHTML = added ? '🔖' : '🏷️';
+  btn.title = added ? 'تمت الإضافة للإشارات' : 'اضغط للحفظ في الإشارات';
+  btn.style.background = added ? 'var(--cta-soft,#FEF3C7)' : 'transparent';
+  btn.style.borderColor = added ? 'var(--cta,#F59E0B)' : 'var(--line)';
+  if (typeof showXPToast === 'function' && added) showXPToast('🔖 تم الحفظ');
+}
+
+// ═══════════════════════════════════════════════
 //  TEST BANK QUIZ
 // ═══════════════════════════════════════════════
 let tbState = { questions: [], current: 0, correct: 0, wrong: 0, answered: false, wrongList: [] };
+const TB_RESUME_KEY = 'bus214_tb_resume';
+
+function tbSaveProgress() {
+  if (!tbState.questions.length) return;
+  try {
+    localStorage.setItem(TB_RESUME_KEY, JSON.stringify({
+      current: tbState.current,
+      correct: tbState.correct,
+      wrong: tbState.wrong,
+      questions: tbState.questions.map(q => ({ ...q, _tbDisp: undefined })),
+      wrongList: tbState.wrongList.map(w => ({ qIdx: w.q.q, chosen: w.chosen })),
+      savedAt: Date.now()
+    }));
+  } catch(e) {}
+}
+
+function tbClearResume() {
+  localStorage.removeItem(TB_RESUME_KEY);
+}
+
+function tbGetResume() {
+  try {
+    const r = JSON.parse(localStorage.getItem(TB_RESUME_KEY) || 'null');
+    if (!r) return null;
+    // Expire after 24 hours
+    if (Date.now() - r.savedAt > 86400000) { tbClearResume(); return null; }
+    return r;
+  } catch(e) { return null; }
+}
 
 function startTestBank(ch) {
   const selectedCh = ch || window._tbSelectedCh || 'all';
@@ -2362,6 +3379,7 @@ function startTestBank(ch) {
   // Clear previous shuffle cache so options re-shuffle each new session
   pool.forEach(q => delete q._tbDisp);
   tbState = { questions: pool, current: 0, correct: 0, wrong: 0, answered: false, wrongList: [] };
+  tbClearResume();
   // Hide setup sections
   const chSec = document.getElementById('tb-setup-chapters');
   const setSec = document.getElementById('tb-setup-settings');
@@ -2373,18 +3391,48 @@ function startTestBank(ch) {
   if (area) area.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
+function tbResumeSession() {
+  const r = tbGetResume();
+  if (!r) return;
+  tbState = { questions: r.questions, current: r.current, correct: r.correct, wrong: r.wrong, answered: false, wrongList: [] };
+  const chSec = document.getElementById('tb-setup-chapters');
+  const setSec = document.getElementById('tb-setup-settings');
+  if (chSec) chSec.style.display = 'none';
+  if (setSec) setSec.style.display = 'none';
+  renderTBQuestion();
+  const area = document.getElementById('tb-quiz-area');
+  if (area) area.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
 function tbShowSetup() {
   const chSec = document.getElementById('tb-setup-chapters');
   const setSec = document.getElementById('tb-setup-settings');
   if (chSec) chSec.style.display = '';
   if (setSec) setSec.style.display = '';
-  document.getElementById('tb-quiz-area').innerHTML = '';
+  const area = document.getElementById('tb-quiz-area');
+  if (area) {
+    // Show resume banner if there's a saved session
+    const r = tbGetResume();
+    if (r && r.current > 0 && r.current < r.questions.length) {
+      const pct = Math.round(r.current / r.questions.length * 100);
+      area.innerHTML = `<div style="background:var(--accent-soft,#CCFBF1);border:1.5px solid var(--accent);border-radius:14px;padding:16px 20px;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;">
+        <div>
+          <div style="font-weight:700;color:var(--accent);font-size:.95rem;">🔖 جلسة سابقة محفوظة</div>
+          <div style="font-size:.82rem;color:var(--muted);margin-top:3px;">سؤال ${r.current} من ${r.questions.length} (${pct}% اكتمل)</div>
+        </div>
+        <button onclick="tbResumeSession()" style="background:var(--accent);color:#fff;border:none;padding:10px 22px;border-radius:10px;font-weight:700;font-size:.88rem;cursor:pointer;font-family:inherit;">استئناف ←</button>
+      </div>`;
+    } else {
+      area.innerHTML = '';
+    }
+  }
 }
 
 function renderTBQuestion() {
   const area = document.getElementById('tb-quiz-area');
   if (!area) return;
   if (tbState.current >= tbState.questions.length) {
+    tbClearResume(); // Session complete — clear saved progress
     const pct = Math.round((tbState.correct / tbState.questions.length) * 100);
     const badge = pct >= 90 ? '🏆' : pct >= 75 ? '🥇' : pct >= 60 ? '🥈' : '📚';
     // Save to dashboard stats
@@ -2498,11 +3546,18 @@ function renderTBQuestion() {
     </button>`;
   }).join('');
   const retryBadge = q._isRetry ? '<span style="font-size:.72rem;font-weight:700;color:#fff;background:#F59E0B;padding:4px 10px;border-radius:8px;">🔄 إعادة</span>' : '';
+  const bookmarked = isBookmarked(q.q);
+  const bmIcon = bookmarked ? '🔖' : '🏷️';
+  const bmTitle = bookmarked ? 'تمت الإضافة للإشارات (اضغط لإزالتها)' : 'اضغط للحفظ في الإشارات';
+  const bmStyle = bookmarked
+    ? 'background:var(--cta-soft,#FEF3C7);border-color:var(--cta,#F59E0B);'
+    : 'background:transparent;border-color:var(--line);';
   area.innerHTML = `
     <div class="chapter" style="margin-bottom:0;padding:24px;animation:pageFadeSlide .3s ease both;${q._isRetry ? 'border:2px solid #F59E0B;' : ''}">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
         <span style="font-size:.9rem;font-weight:800;color:var(--accent);">سؤال ${ci} <span style="font-weight:400;color:var(--muted);">/ ${total}</span></span>
-        <div style="display:flex;gap:6px;">
+        <div style="display:flex;gap:6px;align-items:center;">
+          <button onclick="tbToggleBookmark(this)" title="${bmTitle}" style="${bmStyle}border:1.5px solid;padding:4px 10px;border-radius:8px;cursor:pointer;font-size:.9rem;line-height:1;transition:all .15s;">${bmIcon}</button>
           ${retryBadge}
           ${isTF ? '<span style="font-size:.72rem;font-weight:700;color:var(--cta,#F59E0B);background:var(--cta-soft,#FEF3C7);padding:4px 10px;border-radius:8px;">T/F</span>' : ''}
           <span style="font-size:.72rem;font-weight:700;color:#fff;background:var(--accent);padding:4px 12px;border-radius:8px;letter-spacing:.03em;">${q.ch.toUpperCase()}</span>
@@ -2515,7 +3570,7 @@ function renderTBQuestion() {
       <div id="tb-opts" style="display:flex;${isTF ? 'flex-direction:row;' : 'flex-direction:column;'}gap:${isTF ? '12px' : '8px'};">${optsHtml}</div>
       <div id="tb-feedback" style="margin-top:14px;font-weight:700;min-height:24px;font-size:.95rem;"></div>
       <div style="display:flex;gap:10px;margin-top:16px;">
-        <button id="tb-next-btn" onclick="tbState.current++;renderTBQuestion();" style="display:none;background:var(--accent);color:#fff;border:none;padding:12px 32px;border-radius:12px;font-weight:700;font-size:.9rem;cursor:pointer;font-family:inherit;transition:all .15s;">${ci === total ? 'عرض النتيجة' : 'التالي ←'}</button>
+        <button id="tb-next-btn" onclick="tbState.current++;renderTBQuestion();setTimeout(()=>{const a=document.getElementById('tb-quiz-area');if(a)a.scrollIntoView({behavior:'smooth',block:'start'});},80);" style="display:none;background:var(--accent);color:#fff;border:none;padding:12px 32px;border-radius:12px;font-weight:700;font-size:.9rem;cursor:pointer;font-family:inherit;transition:all .15s;">${ci === total ? 'عرض النتيجة' : 'التالي ←'}</button>
       </div>
     </div>`;
 }
@@ -2528,10 +3583,20 @@ function handleTBAnswer(chosen) {
   const dispAns = q._tbDisp ? q._tbDisp.ans : q.ans;
   const isCorrect = chosen === dispAns;
   if (isCorrect) tbState.correct++; else tbState.wrong++;
+  const examMode = window._tbExamMode === true;
   const btns = document.querySelectorAll('#tb-opts .quiz-mcq-btn');
   const isDark = document.body.classList.contains('dark');
   btns.forEach((btn, i) => {
     btn.style.pointerEvents = 'none';
+    if (examMode) {
+      // Exam mode: just mark the chosen answer, don't reveal correct
+      if (i === chosen) {
+        btn.style.background = isDark ? 'rgba(37,99,235,0.15)' : 'rgba(37,99,235,0.08)';
+        btn.style.borderColor = 'var(--accent)';
+        btn.style.fontWeight = '700';
+      }
+      return;
+    }
     if (i === dispAns) {
       btn.style.background = isDark ? 'rgba(5,150,105,0.15)' : '#e6f7ed';
       btn.style.borderColor = 'var(--good)';
@@ -2545,30 +3610,52 @@ function handleTBAnswer(chosen) {
     }
   });
   const fb = document.getElementById('tb-feedback');
-  // ── Spaced repetition: re-queue wrong questions 4 positions later ──
+  // ── Save wrong for review (even in exam mode so it's tracked) ──
   if (!isCorrect) {
-    // Only re-queue if not already a retry (limit to one retry)
-    if ((q._retryCount || 0) < 3) {
-      const retryQ = Object.assign({}, q, { _isRetry: true, _retryCount: (q._retryCount || 0) + 1 });
-      delete retryQ._tbDisp; // re-shuffle on retry
-      const insertAt = Math.min(tbState.current + 4, tbState.questions.length);
-      tbState.questions.splice(insertAt, 0, retryQ);
-      fb.textContent = '❌ خطأ — الإجابة الصحيحة: ' + ['A','B','C','D','E'][dispAns];
-    } else {
-      fb.textContent = '❌ خطأ — الإجابة الصحيحة: ' + ['A','B','C','D','E'][dispAns];
-    }
     tbState.wrongList.push({ q, chosen });
     if (typeof saveWrongAnswer === 'function') saveWrongAnswer(q, chosen);
-  } else {
-    fb.textContent = q._isRetry ? '✅ صح! أحسنت — تذكرتها 💪' : '✅ صح!';
+    // Re-queue in retry mode, but NOT in exam mode (exam stays linear)
+    if (!examMode && window._tbRetryEnabled !== false && (q._retryCount || 0) < 1) {
+      const retryQ = Object.assign({}, q, { _isRetry: true, _retryCount: (q._retryCount || 0) + 1 });
+      delete retryQ._tbDisp;
+      const insertAt = Math.min(tbState.current + 4, tbState.questions.length);
+      tbState.questions.splice(insertAt, 0, retryQ);
+    }
   }
-  fb.style.color = isCorrect ? 'var(--good)' : 'var(--destructive, #DC2626)';
+  if (examMode) {
+    // In exam mode, show only a minimal confirmation
+    fb.innerHTML = '<div style="color:var(--muted);font-size:.82rem;font-weight:500;">تم التسجيل — تابع للسؤال التالي</div>';
+    fb.style.color = 'var(--muted)';
+  } else if (!isCorrect) {
+    const expArr = q.exp;
+    const correctExp = Array.isArray(expArr) ? expArr[q.ans] : null;
+    const correctLetter = ['A','B','C','D','E'][dispAns];
+    if (correctExp) {
+      fb.innerHTML = `<div style="margin-bottom:6px;">❌ الإجابة الصحيحة: <strong>${correctLetter}</strong></div><div style="font-size:.85rem;font-weight:400;color:var(--ink);background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin-top:6px;line-height:1.7;text-align:right;">${correctExp}</div>`;
+    } else {
+      fb.textContent = '❌ خطأ — الإجابة الصحيحة: ' + correctLetter;
+    }
+    fb.style.color = 'var(--destructive, #DC2626)';
+  } else {
+    const expArr = q.exp;
+    const correctExp = Array.isArray(expArr) ? expArr[q.ans] : null;
+    if (correctExp && !q._isRetry) {
+      fb.innerHTML = `<div style="margin-bottom:6px;">${q._isRetry ? '✅ صح! أحسنت — تذكرتها 💪' : '✅ صح!'}</div><div style="font-size:.85rem;font-weight:400;color:var(--ink);background:var(--paper);border:1px solid #d1fae5;border-radius:10px;padding:10px 14px;margin-top:6px;line-height:1.7;text-align:right;">${correctExp}</div>`;
+    } else {
+      fb.textContent = q._isRetry ? '✅ صح! أحسنت — تذكرتها 💪' : '✅ صح!';
+    }
+    fb.style.color = 'var(--good)';
+  }
   if (window.SFX) SFX.play(isCorrect ? 'correct' : 'wrong');
   // Update next button text dynamically (total may have grown)
   const nextBtn = document.getElementById('tb-next-btn');
   nextBtn.style.display = 'inline-block';
   const remaining = tbState.questions.length - tbState.current - 1;
   nextBtn.textContent = remaining === 0 ? 'عرض النتيجة' : 'التالي ←';
+  // Scroll to show feedback + next button
+  setTimeout(() => nextBtn.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 100);
+  // Save progress for resume
+  tbSaveProgress();
   if (typeof updateCombo === 'function') {
     const combo = updateCombo(isCorrect);
     const multiplier = getComboMultiplier(combo);
@@ -2598,6 +3685,36 @@ function saveWrongAnswer(q, chosen) {
   localStorage.setItem('bus214_wrongAnswers', JSON.stringify(wrongs));
 }
 
+function renderChapterBreakdown(wrongs) {
+  // Count wrongs per chapter
+  const chCounts = {};
+  wrongs.forEach(function(w){
+    const ch = (w.ch || '').toString().toLowerCase();
+    chCounts[ch] = (chCounts[ch] || 0) + 1;
+  });
+  const isMid2 = document.body.dataset && document.body.dataset.mid === '2';
+  const chList = isMid2 ? ['ch1', 'ch2', 'ch3'] : ['ch1', 'ch2', 'ch3'];
+  const chLabels = isMid2
+    ? { ch1: 'Ch 5 — Ethical Issues', ch2: 'Ch 6 — Framework', ch3: 'Ch 7 — Moral Philosophy' }
+    : { ch1: 'Ch 1 — Ethics', ch2: 'Ch 2 — Stakeholders', ch3: 'Ch 3 — Sustainability' };
+  const maxCount = Math.max(1, ...Object.values(chCounts));
+  let html = '<div style="background:var(--bg);border:1.5px solid var(--line);border-radius:14px;padding:16px;margin-bottom:16px;">';
+  html += '<div style="font-weight:700;font-size:.92rem;margin-bottom:12px;">📊 الفصول اللي تحتاج تركيز</div>';
+  chList.forEach(function(ch) {
+    const n = chCounts[ch] || 0;
+    const pct = Math.round((n / maxCount) * 100);
+    const barColor = n === 0 ? 'var(--good)' : n > maxCount * 0.6 ? 'var(--destructive,#DC2626)' : 'var(--cta,#F59E0B)';
+    html += '<div style="margin-bottom:10px;">'
+      + '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;font-size:.82rem;">'
+      + '<span style="font-weight:600;">' + (chLabels[ch] || ch) + '</span>'
+      + '<span style="color:var(--muted);font-weight:700;">' + n + ' خطأ</span></div>'
+      + '<div style="height:8px;background:var(--line);border-radius:99px;overflow:hidden;">'
+      + '<div style="height:100%;width:' + pct + '%;background:' + barColor + ';border-radius:99px;transition:width .4s;"></div></div></div>';
+  });
+  html += '</div>';
+  return html;
+}
+
 function renderWrongReview() {
   const container = document.getElementById('wrong-review-list');
   if (!container) return;
@@ -2607,7 +3724,8 @@ function renderWrongReview() {
     return;
   }
   const letters = ['A','B','C','D','E'];
-  let html = '<div style="font-size:.85rem;color:var(--muted);margin-bottom:16px;">عدد الأخطاء: <strong>' + wrongs.length + '</strong></div>';
+  let html = renderChapterBreakdown(wrongs);
+  html += '<div style="font-size:.85rem;color:var(--muted);margin-bottom:16px;">عدد الأخطاء: <strong>' + wrongs.length + '</strong></div>';
   wrongs.slice().reverse().forEach((w, i) => {
     html += '<div class="wrong-review-card" style="background:var(--bg);border:1.5px solid var(--line);border-radius:14px;padding:16px;margin-bottom:12px;">';
     html += '<div style="font-size:.72rem;color:var(--muted);margin-bottom:6px;">Ch ' + w.ch + ' · ' + new Date(w.date).toLocaleDateString('ar-SA') + '</div>';
@@ -2643,8 +3761,81 @@ function renderWrongReview() {
 }
 
 function clearWrongAnswers() {
+  if (!confirm('مسح كل الإجابات الخاطئة المحفوظة؟')) return;
   localStorage.removeItem('bus214_wrongAnswers');
   renderWrongReview();
+}
+
+// ── BOOKMARKS REVIEW ──────────────────────────────
+function renderBookmarks() {
+  const container = document.getElementById('bookmarks-list');
+  if (!container) return;
+  const bookmarks = getBookmarks();
+  if (bookmarks.length === 0) {
+    container.innerHTML = '<div style="text-align:center;padding:40px 20px;color:var(--muted);"><div style="font-size:48px;opacity:.4;margin-bottom:12px;">🏷️</div><p style="font-weight:600;">ما حفظت أي سؤال بعد!</p><p style="font-size:.82rem;">اضغط على الأيقونة 🏷️ في أي سؤال لحفظه هنا</p></div>';
+    return;
+  }
+  const letters = ['A','B','C','D','E'];
+  const pool = (typeof testBankQ !== 'undefined' ? testBankQ : []).concat(typeof allQuizQ !== 'undefined' ? allQuizQ : []);
+  let html = '<div style="font-size:.85rem;color:var(--muted);margin-bottom:16px;">عدد المحفوظات: <strong>' + bookmarks.length + '</strong></div>';
+  bookmarks.slice().reverse().forEach(function(qText) {
+    const q = pool.find(function(x){ return x.q === qText; });
+    html += '<div style="background:var(--bg);border:1.5px solid var(--line);border-radius:14px;padding:16px;margin-bottom:12px;position:relative;">';
+    html += '<button onclick="unbookmarkAndRefresh(\'' + qText.replace(/'/g, "\\'").substring(0,100) + '\')" style="position:absolute;top:10px;left:10px;background:transparent;border:1.5px solid var(--line);color:var(--muted);padding:4px 10px;border-radius:8px;cursor:pointer;font-size:.78rem;">حذف</button>';
+    if (q) {
+      html += '<div style="font-size:.72rem;color:var(--muted);margin-bottom:6px;">Ch ' + (q.ch || '?') + '</div>';
+      html += '<div style="font-weight:700;margin-bottom:10px;line-height:1.6;padding-top:6px;">' + q.q + '</div>';
+      (q.opts || []).forEach(function(opt, j) {
+        const isCorrect = j === q.ans;
+        let style = 'padding:8px 12px;border-radius:8px;margin-bottom:4px;font-size:.88rem;';
+        if (isCorrect) style += 'background:rgba(5,150,105,0.12);border:1px solid rgba(5,150,105,0.3);color:var(--good);font-weight:700;';
+        else style += 'color:var(--muted);';
+        html += '<div style="' + style + '">' + letters[j] + '. ' + opt + (isCorrect ? ' ✓' : '') + '</div>';
+      });
+      if (q.exp) {
+        let expText = Array.isArray(q.exp) ? (q.exp[q.ans] || '') : String(q.exp);
+        expText = expText.replace(/^[✅❌⚠️]\s*/u, '').trim();
+        if (expText) {
+          html += '<div style="margin-top:10px;padding:10px 14px;background:var(--accent-soft);border-radius:10px;font-size:.84rem;line-height:1.6;">'
+            + '<span style="font-weight:700;color:var(--accent);">💡 </span>'
+            + '<span style="color:var(--ink);">' + expText + '</span></div>';
+        }
+      }
+    } else {
+      html += '<div style="font-weight:600;line-height:1.6;color:var(--muted);">' + qText + '</div>';
+      html += '<div style="font-size:.78rem;color:var(--muted);margin-top:6px;">⚠️ لم يُعثر على السؤال في المجموعة الحالية</div>';
+    }
+    html += '</div>';
+  });
+  container.innerHTML = html;
+}
+function unbookmarkAndRefresh(qText) {
+  toggleBookmark(qText);
+  renderBookmarks();
+}
+function clearBookmarks() {
+  if (!confirm('مسح كل الإشارات المحفوظة؟')) return;
+  localStorage.removeItem(BOOKMARK_KEY);
+  renderBookmarks();
+}
+function switchReviewTab(tab) {
+  const wrongBtn = document.getElementById('rev-tab-wrong');
+  const bmBtn = document.getElementById('rev-tab-bm');
+  const wrongSec = document.getElementById('rev-wrong-section');
+  const bmSec = document.getElementById('rev-bm-section');
+  if (!wrongBtn || !bmBtn) return;
+  if (tab === 'wrong') {
+    wrongBtn.style.cssText = 'flex:1;padding:12px;border-radius:12px;border:1.5px solid var(--destructive,#DC2626);background:rgba(220,38,38,.08);color:var(--destructive,#DC2626);font-weight:700;font-size:.88rem;cursor:pointer;font-family:inherit;';
+    bmBtn.style.cssText = 'flex:1;padding:12px;border-radius:12px;border:1.5px solid var(--line);background:var(--paper);color:var(--ink);font-weight:600;font-size:.88rem;cursor:pointer;font-family:inherit;';
+    wrongSec.style.display = '';
+    bmSec.style.display = 'none';
+  } else {
+    wrongBtn.style.cssText = 'flex:1;padding:12px;border-radius:12px;border:1.5px solid var(--line);background:var(--paper);color:var(--ink);font-weight:600;font-size:.88rem;cursor:pointer;font-family:inherit;';
+    bmBtn.style.cssText = 'flex:1;padding:12px;border-radius:12px;border:1.5px solid var(--cta,#F59E0B);background:var(--cta-soft,#FEF3C7);color:var(--cta,#F59E0B);font-weight:700;font-size:.88rem;cursor:pointer;font-family:inherit;';
+    wrongSec.style.display = 'none';
+    bmSec.style.display = '';
+    renderBookmarks();
+  }
 }
 
 // ── QUIZ KEYBOARD SHORTCUTS ────────────────────────────────

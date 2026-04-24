@@ -9,3 +9,8 @@ drive-download-*
 .DS_Store
 .claude/
 .gstack/
+
+# Build / temp scripts
+new_questions.js
+missing_questions.json
+parse_testbank.py

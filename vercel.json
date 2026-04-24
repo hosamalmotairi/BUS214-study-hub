@@ -1,5 +1,3 @@
 {
-  "rewrites": [
-    { "source": "/", "destination": "/bus214_edition.html" }
-  ]
+  "cleanUrls": true
 }

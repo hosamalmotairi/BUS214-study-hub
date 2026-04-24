@@ -1,10 +1,14 @@
-const CACHE_NAME = 'bus214-v1';
+const CACHE_NAME = 'bus214-v2';
 const ASSETS = [
   '/',
+  '/index.html',
   '/bus214_edition.html',
+  '/bus214_mid2.html',
+  '/bus214_mid2_data.js',
   '/bus214_scripts.js',
   '/bus214_firebase.js',
-  '/bus214_styles.css'
+  '/bus214_styles.css',
+  '/manifest.json'
 ];
 
 self.addEventListener('install', e => {
