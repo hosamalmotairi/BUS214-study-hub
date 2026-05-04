@@ -10,6 +10,9 @@ drive-download-*
 .claude/
 .gstack/
 
+# Local backups (kept on disk for fast rollback, not tracked)
+*_backup.*
+
 # Build / temp scripts
 new_questions.js
 missing_questions.json
