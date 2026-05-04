@@ -95,6 +95,7 @@
   <ul class="sidebar-menu">
     <li><a href="#" onclick="showPage('page-home');if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span> Home</a></li>
     <li><a href="#" onclick="showPage('page-roadmap');renderRoadmap();if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></span> 🎯 خطتي</a></li>
+    <li><a href="#" onclick="showPage('page-cheatsheet');if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></span> 📄 ورقة الغش</a></li>
     <li><a href="index.html"><span class="sidebar-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></span> اختيار الميدترم</a></li>
     <li class="sidebar-divider"></li>
     <li class="sidebar-label"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg> Chapters</li>
@@ -488,6 +489,264 @@
       <button onclick="toggleFocusMode()" id="focus-mode-toggle" style="background:var(--accent); color:#fff; border:none; padding:10px 20px; border-radius:10px; font-weight:700; cursor:pointer; font-family:inherit;">🎯 تفعيل وضع التركيز</button>
     </div>
   </section>
+</div>
+
+<!-- ══════════════════════════════════════════
+     CHEAT SHEET — Two-Page A4 print layout
+═══════════════════════════════════════════ -->
+<div id="page-cheatsheet" class="page">
+  <section class="hero no-print">
+    <div class="tag">Cram Sheet</div>
+    <h1>📄 ورقة الغش — Mid 2</h1>
+    <p>صفحتان A4 كثيفتان، طبعهم وحطّهم قدامك ليلة الميد. الوجه الأول Ch 5 · الوجه الثاني Ch 6+7.</p>
+    <button onclick="window.print()" class="quiz-btn quiz-btn-primary" style="margin-top:12px;">🖨️ طباعة الورقتين</button>
+  </section>
+
+  <div class="cheatsheet-wrap">
+
+  <!-- ═════════ SHEET 1 — Chapter 5 ═════════ -->
+  <article class="cs-sheet cs-sheet-1">
+    <header class="cs-header">
+      <div><strong>BUS 214 — Mid 2</strong> · Cram Sheet</div>
+      <div class="cs-chip cs-chip-blue">Ch 5 — Recognizing Ethical Issues</div>
+    </header>
+
+    <div class="cs-grid">
+
+      <section class="cs-card">
+        <h3>Issue vs Dilemma</h3>
+        <ul>
+          <li><b>Issue</b>: Choice between right & wrong — <i>has a correct answer</i>.</li>
+          <li><b>Dilemma</b>: All options have <b>negative outcomes</b> — pick least harmful.</li>
+        </ul>
+      </section>
+
+      <section class="cs-card">
+        <h3>3 Foundational Values</h3>
+        <ul>
+          <li><b>Integrity</b> — whole, sound, unimpaired.</li>
+          <li><b>Honesty</b> — truthful, trustworthy. Opposite = Dishonesty.</li>
+          <li><b>Fairness</b> — being just/equitable/impartial.</li>
+        </ul>
+        <p class="cs-mini"><b>Fairness 3 Elements</b>: Equality (equal distribution) · Reciprocity (give & receive) · Optimization (equity vs efficiency trade-off).</p>
+      </section>
+
+      <section class="cs-card cs-card-wide">
+        <h3>12 Emerging Issue Types (slide 5-3)</h3>
+        <ol class="cs-twocol">
+          <li>Time/Resource misuse</li>
+          <li>Abusive behavior (intent + bullying)</li>
+          <li>Lying (Commission/Omission)</li>
+          <li>Conflicts of Interest</li>
+          <li>Bribery (Active/Passive)</li>
+          <li>Corporate Intelligence</li>
+          <li>Discrimination</li>
+          <li>Sexual Harassment</li>
+          <li>Fraud (general)</li>
+          <li>Consumer Fraud</li>
+          <li>Financial Misconduct</li>
+          <li>Insider Trading</li>
+        </ol>
+      </section>
+
+      <section class="cs-card">
+        <h3>Lying — 2 Types</h3>
+        <ul>
+          <li><b>Commission</b>: <i>active deception by words</i> — creating false belief.</li>
+          <li><b>Omission</b>: <i>intentionally not informing</i> of differences/problems/safety issues.</li>
+        </ul>
+      </section>
+
+      <section class="cs-card">
+        <h3>Bribery</h3>
+        <ul>
+          <li><b>Active</b>: person who <i>offers/promises</i> the bribe.</li>
+          <li><b>Passive</b>: <i>official who receives</i> the bribe.</li>
+          <li><b>Facilitation Payments</b>: small payments to speed routine government action.</li>
+        </ul>
+        <p class="cs-mini"><b>FCPA</b> (US): allows facilitation. <b>U.K. Bribery Act</b>: forbids ALL bribery, no exceptions.</p>
+      </section>
+
+      <section class="cs-card">
+        <h3>Corporate Intelligence</h3>
+        <p><b>3 Models</b>: passive monitoring · tactical field support · top-management strategy.</p>
+        <p class="cs-mini"><b>4 In-depth discovery sources</b>: corporate records · court documents · regulatory filings · press releases.</p>
+        <p class="cs-mini">Examples of misuse: <i>Dumpster diving · Shoulder surfing · Whacking</i>.</p>
+      </section>
+
+      <section class="cs-card">
+        <h3>Discrimination & Harassment Laws</h3>
+        <ul>
+          <li><b>EEOC</b> — federal agency, protects against workplace discrimination.</li>
+          <li><b>ADEA</b> — protects employees aged <b>40+</b>.</li>
+          <li><b>Affirmative Action</b> — recruit/hire/train/promote historically disadvantaged.</li>
+        </ul>
+      </section>
+
+      <section class="cs-card cs-card-wide">
+        <h3>Sexual Harassment</h3>
+        <p><b>Hostile Work Env — 3 criteria</b> (ALL must apply): (1) Unwelcome · (2) Severe & pervasive, alters employment · (3) Reasonable person finds hostile.</p>
+        <p><b>Dual Relationship</b>: personal/loving/sexual relationship + shared professional responsibility.</p>
+        <p><b>7 Prevention Steps</b>: <span class="cs-num">1</span>Statement of policy · <span class="cs-num">2</span>Definition · <span class="cs-num">3</span>Nonretaliation · <span class="cs-num">4</span>Prevention procedures · <span class="cs-num">5</span>Reporting procedure · <span class="cs-num">6</span>Enforce · <span class="cs-num">7</span>Timely reporting to authorities.</p>
+      </section>
+
+      <section class="cs-card">
+        <h3>Marketing Fraud Sub-Types</h3>
+        <ul>
+          <li><b>Puffery</b>: exaggeration <i>no reasonable buyer relies on</i> ("world's best") — <b>LEGAL</b>.</li>
+          <li><b>Implied Falsity</b>: tendency to mislead/confuse without explicit lie — <b>illegal</b>.</li>
+          <li><b>Literally False</b>: explicit untrue claim — <b>illegal</b>.</li>
+        </ul>
+      </section>
+
+      <section class="cs-card">
+        <h3>Consumer Fraud Tactics</h3>
+        <ul>
+          <li><b>Collusion</b>: employee assists consumer to defraud.</li>
+          <li><b>Duplicity</b>: staging an accident, then claiming.</li>
+          <li><b>Guile</b>: crafty understanding of right/wrong used dishonestly.</li>
+          <li><b>Shoplifting</b>: classic theft.</li>
+        </ul>
+      </section>
+
+      <section class="cs-card">
+        <h3>Insider Trading & Accounting Fraud</h3>
+        <ul>
+          <li><b>Insider Trading</b>: buy/sell stock with non-public info — illegal & unethical.</li>
+          <li><b>Accounting Fraud</b>: inaccurate financial reports → mislead investors.</li>
+          <li><b>Collusion</b> (general def): SECRET agreement between 2+ parties for fraud/illegal/deceit.</li>
+        </ul>
+      </section>
+
+    </div>
+    <footer class="cs-footer">Source: Ferrell BE 13e — Ch 5 · BUS 214 KSU · Cram Sheet 1/2</footer>
+  </article>
+
+  <!-- ═════════ SHEET 2 — Chapters 6 + 7 ═════════ -->
+  <article class="cs-sheet cs-sheet-2">
+    <header class="cs-header">
+      <div><strong>BUS 214 — Mid 2</strong> · Cram Sheet</div>
+      <div class="cs-chip cs-chip-amber">Ch 6 — Decision Framework</div>
+      <div class="cs-chip cs-chip-purple">Ch 7 — Moral Philosophy</div>
+    </header>
+
+    <div class="cs-grid">
+
+      <section class="cs-card cs-card-wide">
+        <h3>Ch 6 — 5-Component Decision Framework</h3>
+        <ol class="cs-twocol">
+          <li><b>Issue Intensity</b> — how important does the actor think it is.</li>
+          <li><b>Individual Factors</b> — gender, education, nationality, age, locus of control.</li>
+          <li><b>Organizational Factors</b> — corporate culture, ethical culture, significant others, obedience to authority.</li>
+          <li><b>Opportunity</b> — conditions that limit/permit ethical decisions.</li>
+          <li><b>Eval, Intentions, Behavior</b> → ethical decision.</li>
+        </ol>
+      </section>
+
+      <section class="cs-card">
+        <h3>Locus of Control</h3>
+        <ul>
+          <li><b>Internal</b>: <i>I</i> control my outcomes — own actions matter.</li>
+          <li><b>External</b>: outcomes come from <i>luck/fate/others</i>.</li>
+        </ul>
+        <p class="cs-mini">Internal-locus people more likely to act ethically (own up to consequences).</p>
+      </section>
+
+      <section class="cs-card">
+        <h3>Org Culture vs Ethical Culture</h3>
+        <ul>
+          <li><b>Corporate Culture</b>: values, norms, artifacts, ways of solving problems.</li>
+          <li><b>Ethical Culture</b>: subset — acceptable behavior defined by company + industry.</li>
+          <li><b>Significant Others</b>: peer influence in work group.</li>
+          <li><b>Obedience to Authority</b>: why employees comply with unethical requests.</li>
+        </ul>
+      </section>
+
+      <section class="cs-card">
+        <h3>Institutional Theory + Rawls</h3>
+        <ul>
+          <li><b>Institutional Theory</b>: orgs operate by taken-for-granted norms; institutions are foundation for normative values.</li>
+          <li><b>Veil of Ignorance</b> (Rawls): design rules without knowing your position.</li>
+          <li><b>Equality Principle</b>: each person has basic rights compatible with others'.</li>
+          <li><b>Difference Principle</b>: inequalities OK <i>only</i> if they benefit least advantaged.</li>
+        </ul>
+        <p class="cs-mini"><b>Guilt</b> = the FIRST sign of an unethical decision.</p>
+      </section>
+
+      <section class="cs-card cs-card-wide">
+        <h3>Ch 7 — 6 Moral Philosophies</h3>
+        <table class="cs-table">
+          <thead><tr><th>Philosophy</th><th>Core Idea</th><th>Sub-types / Notes</th></tr></thead>
+          <tbody>
+            <tr><td><b>Egoism</b></td><td>Self-interest</td><td><i>Enlightened Egoism</i> = long-term self-interest</td></tr>
+            <tr><td><b>Utilitarianism</b></td><td>Greatest good for greatest number</td><td><i>Rule</i> (general) · <i>Act</i> (situational) · consequentialist</td></tr>
+            <tr><td><b>Deontology</b></td><td>Rights + intentions; act regardless of outcome</td><td><i>Categorical Imperative</i> (Kant): act so your maxim becomes universal law · <i>Rule / Act deontologists</i> · nonconsequentialist</td></tr>
+            <tr><td><b>Relativist</b></td><td>No universal moral truth</td><td><i>Descriptive</i> (observe cultures) · <i>Meta-ethical</i> (people view differently) · <i>Normative</i> (one opinion = another)</td></tr>
+            <tr><td><b>Virtue Ethics</b></td><td>Character + good moral standards</td><td>Asks "What kind of person should I be?"</td></tr>
+            <tr><td><b>Justice</b></td><td>Fair treatment + due reward</td><td>3 sub-types ↓</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="cs-card">
+        <h3>3 Justice Types</h3>
+        <ul>
+          <li><b>Distributive</b>: fairness of <i>outcomes / results</i>.</li>
+          <li><b>Procedural</b>: fairness of <i>processes / activities</i> producing the outcomes.</li>
+          <li><b>Interactional</b>: fairness in <i>relationships</i> between organizational members (respect/dignity).</li>
+        </ul>
+      </section>
+
+      <section class="cs-card">
+        <h3>Goodness Theories + Hedonism</h3>
+        <ul>
+          <li><b>Monists</b>: ONE ultimate good (e.g. happiness).</li>
+          <li><b>Pluralists</b>: MULTIPLE goods.</li>
+          <li><b>Instrumentalists</b>: things valued for what they produce.</li>
+          <li><b>Hedonism</b>: pleasure = ultimate good. <i>Quantitative</i> (measurable) · <i>Qualitative</i> (some pleasures higher than others).</li>
+        </ul>
+      </section>
+
+      <section class="cs-card cs-card-wide">
+        <h3>Kohlberg's 6 Stages of Cognitive Moral Development</h3>
+        <table class="cs-table">
+          <thead><tr><th>Level</th><th>Stage</th><th>Reasoning</th></tr></thead>
+          <tbody>
+            <tr><td rowspan="2"><b>Pre-conventional</b></td><td>1</td><td>Avoid punishment</td></tr>
+            <tr><td>2</td><td>Reward / self-interest</td></tr>
+            <tr><td rowspan="2"><b>Conventional</b></td><td>3</td><td>Approval of others (good boy/girl)</td></tr>
+            <tr><td>4</td><td>Law and order, duty</td></tr>
+            <tr><td rowspan="2"><b>Post-conventional</b></td><td>5</td><td>Social contract, individual rights</td></tr>
+            <tr><td>6</td><td>Universal ethical principles</td></tr>
+          </tbody>
+        </table>
+        <p class="cs-mini">Most adults: stages 3-4. Stage 6 is rare — universal & impartial principles.</p>
+      </section>
+
+      <section class="cs-card">
+        <h3>White-Collar Crime</h3>
+        <ul>
+          <li>Highly trusted, educated individuals.</li>
+          <li>Use position for fraud, embezzlement, corruption.</li>
+          <li>Often non-violent but high-impact financially.</li>
+        </ul>
+      </section>
+
+      <section class="cs-card">
+        <h3>Confusion Pairs (one-line memory hooks)</h3>
+        <ul>
+          <li><b>Teleology</b> = consequences. <b>Deontology</b> = rights/duties.</li>
+          <li><b>Egoism</b> = me. <b>Utilitarianism</b> = us (greatest #).</li>
+          <li><b>Rule</b> = general principles. <b>Act</b> = case-by-case.</li>
+          <li><b>Distributive</b> = outcomes. <b>Procedural</b> = process. <b>Interactional</b> = relationships.</li>
+        </ul>
+      </section>
+
+    </div>
+    <footer class="cs-footer">Source: Ferrell BE 13e — Ch 6 + 7 · BUS 214 KSU · Cram Sheet 2/2</footer>
+  </article>
+
+  </div>
 </div>
 
 <!-- ══════════════════════════════════════════

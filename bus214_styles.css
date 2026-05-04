@@ -4538,3 +4538,181 @@ body.focus-mode .page.active {
   padding-right: 16px !important;
 }
 
+/* ── CHEAT SHEET — A4 print-optimized ───────────────────────── */
+.cheatsheet-wrap {
+  max-width: 210mm;
+  margin: 24px auto;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.cs-sheet {
+  background: #fff;
+  color: #111;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  padding: 12mm;
+  box-shadow: 0 6px 24px rgba(0,0,0,0.08);
+  font-family: 'Inter', 'Readex Pro', sans-serif;
+  font-size: 9.5pt;
+  line-height: 1.42;
+  min-height: 297mm;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+.cs-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  border-bottom: 2px solid #111;
+  padding-bottom: 6px;
+  margin-bottom: 10px;
+  font-size: 10pt;
+}
+.cs-chip {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 12px;
+  font-size: 8.5pt;
+  font-weight: 700;
+  color: #fff;
+}
+.cs-chip-blue   { background: #1d4ed8; }
+.cs-chip-amber  { background: #b45309; }
+.cs-chip-purple { background: #6d28d9; }
+
+.cs-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 8px;
+}
+.cs-card {
+  background: #f9fafb;
+  border-left: 3px solid #1d4ed8;
+  border-radius: 4px;
+  padding: 7px 10px;
+  break-inside: avoid;
+}
+.cs-sheet-2 .cs-card { border-left-color: #b45309; }
+.cs-card-wide { grid-column: span 2; }
+.cs-card h3 {
+  margin: 0 0 5px 0;
+  font-size: 9.5pt;
+  font-weight: 700;
+  color: #1d4ed8;
+}
+.cs-sheet-2 .cs-card h3 { color: #b45309; }
+.cs-card ul, .cs-card ol {
+  margin: 0;
+  padding-right: 18px;
+  padding-left: 18px;
+}
+.cs-card li { margin-bottom: 2px; }
+.cs-mini {
+  font-size: 8.5pt;
+  margin: 4px 0 0 0;
+  color: #4b5563;
+  font-style: italic;
+}
+.cs-twocol {
+  column-count: 2;
+  column-gap: 14px;
+}
+.cs-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 8.5pt;
+  margin-top: 4px;
+}
+.cs-table th, .cs-table td {
+  border: 1px solid #d1d5db;
+  padding: 3px 6px;
+  text-align: right;
+  vertical-align: top;
+}
+.cs-table th {
+  background: #e5e7eb;
+  font-weight: 700;
+}
+.cs-num {
+  display: inline-block;
+  background: #1d4ed8;
+  color: #fff;
+  width: 14px; height: 14px;
+  text-align: center;
+  border-radius: 50%;
+  font-size: 7.5pt;
+  font-weight: 700;
+  line-height: 14px;
+  margin-left: 2px;
+}
+.cs-footer {
+  margin-top: auto;
+  border-top: 1px solid #d1d5db;
+  padding-top: 4px;
+  font-size: 7.5pt;
+  color: #6b7280;
+  text-align: center;
+}
+.cs-grid { flex: 1; }
+
+/* Print-specific — strict A4 layout */
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 0;
+  }
+  html, body {
+    background: #fff !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 210mm !important;
+  }
+  body > *:not(main),
+  .sidebar-nav, .game-hud, .draw-fab, .notes-fab,
+  .menu-toggle, .auth-overlay, .no-print,
+  #focus-exit-fab {
+    display: none !important;
+  }
+  main, .main-content {
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 210mm !important;
+    max-width: 210mm !important;
+  }
+  /* Hide all pages except cheatsheet during print */
+  .page:not(#page-cheatsheet) { display: none !important; }
+  #page-cheatsheet {
+    display: block !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 210mm !important;
+  }
+  .cheatsheet-wrap {
+    margin: 0 !important;
+    padding: 0 !important;
+    gap: 0 !important;
+    max-width: 210mm !important;
+    width: 210mm !important;
+  }
+  .cs-sheet {
+    box-shadow: none !important;
+    border: none !important;
+    border-radius: 0 !important;
+    margin: 0 !important;
+    width: 210mm !important;
+    height: 297mm;
+    page-break-after: always;
+    break-after: page;
+  }
+  .cs-sheet-2 { page-break-before: always; break-before: page; }
+  .cs-sheet:last-child { page-break-after: auto; break-after: auto; }
+}
+
+/* Dark mode override — cheat sheet stays light always (optimized for printing) */
+body.dark .cs-sheet { background: #fff; color: #111; }
+body.dark .cs-card { background: #f9fafb; }
+body.dark .cs-mini { color: #4b5563; }
+
