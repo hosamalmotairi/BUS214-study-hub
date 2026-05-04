@@ -4497,3 +4497,44 @@ body.dark .quiz-retry-banner {
   from { transform: scale(.97); opacity: .6; }
   to   { transform: scale(1);   opacity: 1; }
 }
+
+/* Gamification Animations */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+.shake {
+  animation: shake 0.4s ease-in-out;
+}
+
+@keyframes pulseRed {
+  0%, 100% { color: #DC2626; text-shadow: 0 0 5px rgba(220,38,38,0.3); }
+  50% { color: #EF4444; text-shadow: 0 0 15px rgba(239,68,68,0.8); }
+}
+.pulse-red {
+  animation: pulseRed 1s infinite;
+}
+
+/* ── FOCUS MODE — hide distractions, center content ──────── */
+body.focus-mode .sidebar-nav,
+body.focus-mode .game-hud,
+body.focus-mode .draw-fab,
+body.focus-mode .notes-fab,
+body.focus-mode .menu-toggle,
+body.focus-mode .hero,
+body.focus-mode .breadcrumb,
+body.focus-mode .toc-item,
+body.focus-mode .tag {
+  display: none !important;
+}
+body.focus-mode .main-content,
+body.focus-mode main,
+body.focus-mode .page.active {
+  margin-left: auto !important;
+  margin-right: auto !important;
+  max-width: 720px;
+  padding-left: 16px !important;
+  padding-right: 16px !important;
+}
+

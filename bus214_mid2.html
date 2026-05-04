@@ -94,6 +94,7 @@
   </div>
   <ul class="sidebar-menu">
     <li><a href="#" onclick="showPage('page-home');if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span> Home</a></li>
+    <li><a href="#" onclick="showPage('page-roadmap');renderRoadmap();if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></span> 🎯 خطتي</a></li>
     <li><a href="index.html"><span class="sidebar-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></span> اختيار الميدترم</a></li>
     <li class="sidebar-divider"></li>
     <li class="sidebar-label"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg> Chapters</li>
@@ -107,6 +108,7 @@
     <li class="sidebar-divider"></li>
     <li class="sidebar-label"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg> Practice</li>
     <li><a href="#" onclick="showPage('page-testbank');if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></span> التدريب</a></li>
+    <li><a href="#" onclick="showPage('page-past-exams');if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8v4l3 3"/><circle cx="12" cy="12" r="10"/></svg></span> تجميعات سابقة</a></li>
     <li><a href="#" onclick="showPage('page-dashboard');if(window.innerWidth<=768)toggleSidebar();return false;"><span class="sidebar-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></span> تقدمي</a></li>
     <li class="sidebar-divider"></li>
     <li class="sidebar-label"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> Tools</li>
@@ -463,6 +465,32 @@
 </div>
 
 <!-- ══════════════════════════════════════════
+     STUDY ROADMAP — خطة 4 أيام للميد
+═══════════════════════════════════════════ -->
+<div id="page-roadmap" class="page">
+  <section class="hero">
+    <div class="tag">Study Plan</div>
+    <h1><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-left:8px"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg> خطتي للميد</h1>
+    <p>كل يوم 3 مهمات. اضغط المهمة → تسوّيها → ترجع تأشّرها ✓ — بدون قرارات ولا تشتت.</p>
+    <div class="cover-meta">
+      <div class="cover-box"><span class="cover-label">الميد</span><span class="cover-value">الخميس 7 May</span></div>
+      <div class="cover-box"><span class="cover-label">المتبقي</span><span class="cover-value" id="rm-days-left">— أيام</span></div>
+      <div class="cover-box"><span class="cover-label">إنجاز اليوم</span><span class="cover-value" id="rm-today-progress">0/0</span></div>
+    </div>
+  </section>
+
+  <section class="chapter">
+    <div id="roadmap-container"></div>
+
+    <div style="margin-top:32px; padding:20px; background:var(--paper); border:1.5px solid var(--line); border-radius:12px;">
+      <h3 style="margin-top:0; font-size:1rem;">💡 نصيحة: وضع التركيز</h3>
+      <p style="font-size:.9rem; color:var(--muted); margin:8px 0;">عشان لا تتنطّط بين الصفحات: لما تكون تذاكر، فعّل <strong>وضع التركيز</strong> (الزر تحت 🎯). هيخفي القائمة الجانبية + الأزرار، ويخليك تشوف فقط المحتوى اللي تذاكره.</p>
+      <button onclick="toggleFocusMode()" id="focus-mode-toggle" style="background:var(--accent); color:#fff; border:none; padding:10px 20px; border-radius:10px; font-weight:700; cursor:pointer; font-family:inherit;">🎯 تفعيل وضع التركيز</button>
+    </div>
+  </section>
+</div>
+
+<!-- ══════════════════════════════════════════
      CHAPTER 1
 ═══════════════════════════════════════════ -->
 <div id="page-ch1" class="page">
@@ -576,6 +604,7 @@
       <ul>
         <li><strong>Corporate intelligence</strong> — Collection and analysis of information on markets, technologies, customers, competitors, and external trends.<span class="ar-line">جمع وتحليل المعلومات عن الأسواق والتقنيات والعملاء والمنافسين</span></li>
         <li><strong>Three intelligence models:</strong> (1) Passive monitoring for early warning, (2) Tactical field support, (3) Support dedicated to top-management strategy.<span class="ar-line">ثلاثة نماذج: مراقبة سلبية، دعم ميداني تكتيكي، دعم استراتيجية الإدارة العليا</span><span class="key-word">Key Word: <b>Three Models</b></span></li>
+        <li><strong>In-depth discovery sources:</strong> <mark class="kw">corporate records, court documents, regulatory filings, and press releases</mark>, plus background information about the company or its executives.<span class="ar-line">مصادر البحث المعمّق: سجلات الشركة، وثائق المحاكم، الإيداعات الرقابية، البيانات الصحفية</span><span class="key-word">Key Word: <b>4 Sources</b></span></li>
       </ul>
     </div>
 
@@ -602,6 +631,18 @@
           <span class="key-word">Key Word: <b>Three-Part Test</b></span>
         </li>
         <li><strong>Dual relationship</strong> — A personal/loving/sexual relationship with someone with whom you share professional responsibilities.<span class="ar-line">العلاقة المزدوجة</span></li>
+        <li><strong>7 Steps to prevent sexual harassment:</strong>
+          <ol>
+            <li>Establish a <mark class="kw">statement of policy</mark>.<span class="ar-line">سياسة مكتوبة معتمدة</span></li>
+            <li>Establish a <mark class="kw">definition</mark> of sexual harassment.<span class="ar-line">تعريف واضح للتحرش</span></li>
+            <li>Establish a <mark class="kw">nonretaliation</mark> policy.<span class="ar-line">سياسة عدم الانتقام من المُبلِّغ</span></li>
+            <li>Establish specific <mark class="kw">prevention procedures</mark>.<span class="ar-line">إجراءات وقاية محددة</span></li>
+            <li>Establish a <mark class="kw">reporting procedure</mark> and encourage victims to report.<span class="ar-line">آلية إبلاغ تشجع الضحية</span></li>
+            <li><mark class="kw">Enforce</mark> established policies.<span class="ar-line">تطبيق السياسات بصرامة</span></li>
+            <li>Ensure <mark class="kw">timely reporting</mark> to the proper authorities.<span class="ar-line">إبلاغ السلطات المختصة في الوقت المناسب</span></li>
+          </ol>
+          <span class="key-word">Key Word: <b>7 Steps</b></span>
+        </li>
       </ul>
     </div>
 
@@ -1536,9 +1577,15 @@
           <div style="text-align:center;"><div style="font-size:1.8rem;font-weight:800;color:#d93025;">30</div><div style="font-size:.8rem;color:var(--muted);">Minutes</div></div>
           <div style="text-align:center;"><div style="font-size:1.8rem;font-weight:800;color:#d93025;">3</div><div style="font-size:.8rem;color:var(--muted);">Chapters</div></div>
         </div>
-        <button class="quiz-btn quiz-btn-primary" onclick="startMock()" style="width:100%;max-width:360px;padding:16px;font-size:1.1rem;">Start Mock Exam <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></button>
+        <div style="display:flex;flex-direction:column;gap:12px;align-items:center;">
+          <button class="quiz-btn quiz-btn-primary" onclick="startMock()" style="width:100%;max-width:360px;padding:16px;font-size:1.1rem;">Start Mock Exam <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></button>
+          <button class="quiz-btn" onclick="startAdaptiveMock()" style="width:100%;max-width:360px;padding:16px;font-size:1.1rem;background:var(--cta);border-color:var(--cta);color:#fff;">🎯 وضع نقاط الضعف (Adaptive)</button>
+        </div>
       </div>
     </div>
+
+    <!-- Confusion Drills Container -->
+    <div id="confusion-drills-container" style="margin-top: 20px;"></div>
 
     <div id="mock-game-screen" style="display:none;">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
@@ -1597,11 +1644,23 @@
     </div>
 
     <h3 style="margin-top:28px;">Best Scores</h3>
-    <div class="dash-scores-grid">
-      <div class="dash-score-card"><div class="dash-score-label">All Chapters</div><div class="dash-score-val" id="dash-best-all">—</div></div>
-      <div class="dash-score-card"><div class="dash-score-label">Chapter 5</div><div class="dash-score-val" id="dash-best-ch1">—</div></div>
-      <div class="dash-score-card"><div class="dash-score-label">Chapter 6</div><div class="dash-score-val" id="dash-best-ch2">—</div></div>
-      <div class="dash-score-card"><div class="dash-score-label">Chapter 7</div><div class="dash-score-val" id="dash-best-ch3">—</div></div>
+    <div class="dash-scores-grid" style="display:flex;flex-direction:column;gap:12px;margin-top:16px;">
+      <div class="dash-score-bar-wrap" style="background:var(--paper);border:1.5px solid var(--line);border-radius:14px;padding:16px;">
+        <div style="display:flex;justify-content:space-between;margin-bottom:8px;font-weight:700;"><span style="color:var(--accent);">All Chapters</span><span id="dash-best-all">—</span></div>
+        <div style="height:10px;background:var(--line);border-radius:5px;overflow:hidden;"><div id="dash-bar-all" style="height:100%;width:0%;background:linear-gradient(90deg,var(--accent),#60A5FA);transition:width 1s cubic-bezier(0.4, 0, 0.2, 1);"></div></div>
+      </div>
+      <div class="dash-score-bar-wrap" style="background:var(--paper);border:1.5px solid var(--line);border-radius:14px;padding:16px;">
+        <div style="display:flex;justify-content:space-between;margin-bottom:8px;font-weight:600;"><span>Chapter 5</span><span id="dash-best-ch1">—</span></div>
+        <div style="height:8px;background:var(--line);border-radius:4px;overflow:hidden;"><div id="dash-bar-ch1" style="height:100%;width:0%;background:var(--good);transition:width 1s cubic-bezier(0.4, 0, 0.2, 1);"></div></div>
+      </div>
+      <div class="dash-score-bar-wrap" style="background:var(--paper);border:1.5px solid var(--line);border-radius:14px;padding:16px;">
+        <div style="display:flex;justify-content:space-between;margin-bottom:8px;font-weight:600;"><span>Chapter 6</span><span id="dash-best-ch2">—</span></div>
+        <div style="height:8px;background:var(--line);border-radius:4px;overflow:hidden;"><div id="dash-bar-ch2" style="height:100%;width:0%;background:var(--cta);transition:width 1s cubic-bezier(0.4, 0, 0.2, 1);"></div></div>
+      </div>
+      <div class="dash-score-bar-wrap" style="background:var(--paper);border:1.5px solid var(--line);border-radius:14px;padding:16px;">
+        <div style="display:flex;justify-content:space-between;margin-bottom:8px;font-weight:600;"><span>Chapter 7</span><span id="dash-best-ch3">—</span></div>
+        <div style="height:8px;background:var(--line);border-radius:4px;overflow:hidden;"><div id="dash-bar-ch3" style="height:100%;width:0%;background:var(--secondary);transition:width 1s cubic-bezier(0.4, 0, 0.2, 1);"></div></div>
+      </div>
     </div>
 
     <div id="dash-weak-alert" style="display:none;gap:10px;align-items:center;margin-top:24px;padding:14px 18px;border-radius:14px;border:1.5px solid var(--line);"></div>
@@ -1800,6 +1859,134 @@ function tbSelectCount(el, val) {
   </div>
   <div id="pomo-total-sessions" style="display:none;">0</div>
 </div>
+
+<!-- ══════════════════════════════════════════
+     PAST EXAMS PAGE — تجميعات سنوات سابقة
+     (نفس بنية Test Bank بالضبط، مع اختيار التجميعة بدل الفصل)
+═══════════════════════════════════════════ -->
+<div id="page-past-exams" class="page">
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="tag">BUS 214 · Past Exams</div>
+    <h1><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-left:8px"><path d="M12 8v4l3 3"/><circle cx="12" cy="12" r="10"/></svg> تجميعات سابقة</h1>
+    <p>أسئلة من اختبارات سنوات سابقة — تخص محتوى Mid 2 (Ch 5/6/7) فقط</p>
+    <div class="cover-meta">
+      <div class="cover-box"><span class="cover-label">Total</span><span class="cover-value" id="pe-total-count">53 Q</span></div>
+      <div class="cover-box"><span class="cover-label">Chapters</span><span class="cover-value">5 — 7</span></div>
+      <div class="cover-box"><span class="cover-label">Source</span><span class="cover-value">تجميعات</span></div>
+    </div>
+  </section>
+
+  <!-- Chapter Selection -->
+  <section id="pe-setup-exams" class="chapter" style="margin-top:20px;">
+    <h2 style="font-size:1.1rem;margin-bottom:16px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-left:6px"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg> اختر الفصل</h2>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;" class="pe-exam-grid">
+      <button onclick="peSelectExam('all')" class="pe-exam-btn pe-exam-active" data-exam="all" style="background:var(--accent);color:#fff;border:none;padding:14px 10px;border-radius:14px;font-weight:800;font-size:.88rem;cursor:pointer;transition:all .2s;font-family:inherit;text-align:center;">
+        <div style="font-size:1.3rem;margin-bottom:4px;" id="pe-cnt-all">53</div>
+        <div>الكل</div>
+      </button>
+      <button onclick="peSelectExam('ch1')" class="pe-exam-btn" data-exam="ch1" style="background:var(--paper);color:var(--accent);border:1.5px solid var(--line);padding:14px 10px;border-radius:14px;font-weight:700;font-size:.88rem;cursor:pointer;transition:all .2s;font-family:inherit;text-align:center;">
+        <div style="font-size:1.3rem;margin-bottom:4px;" id="pe-cnt-ch1">17</div>
+        <div>Ch 5</div>
+      </button>
+      <button onclick="peSelectExam('ch2')" class="pe-exam-btn" data-exam="ch2" style="background:var(--paper);color:var(--accent);border:1.5px solid var(--line);padding:14px 10px;border-radius:14px;font-weight:700;font-size:.88rem;cursor:pointer;transition:all .2s;font-family:inherit;text-align:center;">
+        <div style="font-size:1.3rem;margin-bottom:4px;" id="pe-cnt-ch2">18</div>
+        <div>Ch 6</div>
+      </button>
+      <button onclick="peSelectExam('ch3')" class="pe-exam-btn" data-exam="ch3" style="background:var(--paper);color:var(--accent);border:1.5px solid var(--line);padding:14px 10px;border-radius:14px;font-weight:700;font-size:.88rem;cursor:pointer;transition:all .2s;font-family:inherit;text-align:center;">
+        <div style="font-size:1.3rem;margin-bottom:4px;" id="pe-cnt-ch3">18</div>
+        <div>Ch 7</div>
+      </button>
+    </div>
+  </section>
+
+  <!-- Settings + Start -->
+  <section id="pe-setup-settings" class="chapter" style="margin-top:14px;">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+      <span style="font-weight:700;font-size:.9rem;color:var(--ink);">عدد الأسئلة</span>
+    </div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px;">
+      <button onclick="peSelectCount(this,10)" class="pe-count-btn" style="padding:10px 20px;border-radius:10px;border:1.5px solid var(--line);background:var(--paper);color:var(--ink);font-weight:600;font-size:.88rem;cursor:pointer;font-family:inherit;transition:all .15s;">10</button>
+      <button onclick="peSelectCount(this,20)" class="pe-count-btn pe-count-active" style="padding:10px 20px;border-radius:10px;border:1.5px solid var(--accent);background:var(--accent-soft);color:var(--accent);font-weight:700;font-size:.88rem;cursor:pointer;font-family:inherit;transition:all .15s;">20</button>
+      <button onclick="peSelectCount(this,30)" class="pe-count-btn" style="padding:10px 20px;border-radius:10px;border:1.5px solid var(--line);background:var(--paper);color:var(--ink);font-weight:600;font-size:.88rem;cursor:pointer;font-family:inherit;transition:all .15s;">30</button>
+      <button onclick="peSelectCount(this,999)" class="pe-count-btn" style="padding:10px 20px;border-radius:10px;border:1.5px solid var(--line);background:var(--paper);color:var(--ink);font-weight:600;font-size:.88rem;cursor:pointer;font-family:inherit;transition:all .15s;">الكل</button>
+    </div>
+    <select id="pe-count" style="display:none;">
+      <option value="10">10</option>
+      <option value="20" selected>20</option>
+      <option value="30">30</option>
+      <option value="999">999</option>
+    </select>
+    <!-- Retry toggle -->
+    <div onclick="window._peRetryEnabled=!window._peRetryEnabled;this.querySelector('.pe-retry-track').style.background=window._peRetryEnabled?'var(--accent)':'var(--line)';this.querySelector('.pe-retry-thumb').style.transform=window._peRetryEnabled?'translateX(-22px)':'translateX(0)';"
+      style="display:flex;align-items:center;justify-content:space-between;background:var(--surface,#F8FAFC);border:1.5px solid var(--line);border-radius:12px;padding:12px 16px;margin-top:4px;margin-bottom:10px;cursor:pointer;user-select:none;">
+      <div>
+        <div style="font-weight:700;font-size:.88rem;color:var(--ink);">🔁 إعادة الأسئلة الخاطئة</div>
+        <div style="font-size:.78rem;color:var(--muted);margin-top:2px;">لو أخطأت، يرجع السؤال لاحقاً في الجلسة</div>
+      </div>
+      <div class="pe-retry-track" style="width:44px;height:24px;border-radius:999px;background:var(--accent);position:relative;flex-shrink:0;transition:background .2s;">
+        <div class="pe-retry-thumb" style="width:20px;height:20px;border-radius:50%;background:#fff;position:absolute;top:2px;right:2px;transform:translateX(-22px);transition:transform .2s;box-shadow:0 1px 4px rgba(0,0,0,.2);"></div>
+      </div>
+    </div>
+    <!-- Exam mode toggle -->
+    <div onclick="window._peExamMode=!window._peExamMode;this.querySelector('.pe-exam-track').style.background=window._peExamMode?'#DC2626':'var(--line)';this.querySelector('.pe-exam-thumb').style.transform=window._peExamMode?'translateX(-22px)':'translateX(0)';this.querySelector('.pe-exam-hint').textContent=window._peExamMode?'⚠️ بدون فيدباك فوري — النتيجة بالآخر':'عرض الإجابة والشرح فوراً بعد كل سؤال';"
+      style="display:flex;align-items:center;justify-content:space-between;background:var(--surface,#F8FAFC);border:1.5px solid var(--line);border-radius:12px;padding:12px 16px;margin-bottom:16px;cursor:pointer;user-select:none;">
+      <div>
+        <div style="font-weight:700;font-size:.88rem;color:var(--ink);">📝 وضع الامتحان</div>
+        <div class="pe-exam-hint" style="font-size:.78rem;color:var(--muted);margin-top:2px;">عرض الإجابة والشرح فوراً بعد كل سؤال</div>
+      </div>
+      <div class="pe-exam-track" style="width:44px;height:24px;border-radius:999px;background:var(--line);position:relative;flex-shrink:0;transition:background .2s;">
+        <div class="pe-exam-thumb" style="width:20px;height:20px;border-radius:50%;background:#fff;position:absolute;top:2px;right:2px;transform:translateX(0);transition:transform .2s;box-shadow:0 1px 4px rgba(0,0,0,.2);"></div>
+      </div>
+    </div>
+    <button onclick="startPastExamTB(window._peSelectedExam||'all')" style="width:100%;padding:14px;border-radius:14px;border:none;background:linear-gradient(135deg,#D97706,#F59E0B);color:#fff;font-size:1.05rem;font-weight:800;cursor:pointer;font-family:inherit;transition:all .2s;box-shadow:0 4px 16px rgba(217,119,6,.25);">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:middle;margin-left:8px"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+      ابدأ التجميعات
+    </button>
+  </section>
+
+  <!-- Quiz Area -->
+  <div id="pe-quiz-area" style="margin-top:14px;"></div>
+
+</div>
+
+<script>
+window._peSelectedExam = 'all';
+window._peRetryEnabled = true;
+
+function peSelectExam(examId) {
+  window._peSelectedExam = examId;
+  document.querySelectorAll('.pe-exam-btn').forEach(b => {
+    if (b.dataset.exam === examId) {
+      b.style.background = 'var(--accent)';
+      b.style.color = '#fff';
+      b.style.border = 'none';
+      b.classList.add('pe-exam-active');
+    } else {
+      b.style.background = 'var(--paper)';
+      b.style.color = 'var(--ink)';
+      b.style.border = '1.5px solid var(--line)';
+      b.classList.remove('pe-exam-active');
+    }
+  });
+}
+
+function peSelectCount(el, val) {
+  document.getElementById('pe-count').value = val;
+  document.querySelectorAll('.pe-count-btn').forEach(b => {
+    b.style.borderColor = 'var(--line)';
+    b.style.background = 'var(--paper)';
+    b.style.color = 'var(--ink)';
+    b.style.fontWeight = '600';
+  });
+  el.style.borderColor = 'var(--accent)';
+  el.style.background = 'var(--accent-soft)';
+  el.style.color = 'var(--accent)';
+  el.style.fontWeight = '700';
+}
+</script>
 
 <!-- ══════════════════════════════════════════
      BADGES PAGE

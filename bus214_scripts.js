@@ -2,6 +2,53 @@
 //  BUS 214 — Business Ethics Study Hub
 //  Scripts.js — Question Banks, Quiz, Flash Cards
 // ══════════════════════════════════════════════
+// ── GAMIFICATION AUDIO (Web Audio API) ────────────────
+window.SFX = {
+  ctx: null,
+  init() {
+    if (!this.ctx) this.ctx = new (window.AudioContext || window.webkitAudioContext)();
+  },
+  play(type) {
+    try {
+      this.init();
+      if (this.ctx.state === 'suspended') this.ctx.resume();
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+      osc.connect(gain);
+      gain.connect(this.ctx.destination);
+      const now = this.ctx.currentTime;
+      if (type === 'correct') {
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(523.25, now);
+        osc.frequency.exponentialRampToValueAtTime(1046.50, now + 0.1);
+        gain.gain.setValueAtTime(0, now);
+        gain.gain.linearRampToValueAtTime(0.1, now + 0.02);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.3);
+        osc.start(now);
+        osc.stop(now + 0.3);
+      } else if (type === 'wrong') {
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(150, now);
+        osc.frequency.exponentialRampToValueAtTime(100, now + 0.2);
+        gain.gain.setValueAtTime(0, now);
+        gain.gain.linearRampToValueAtTime(0.1, now + 0.02);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.3);
+        osc.start(now);
+        osc.stop(now + 0.3);
+      } else if (type === 'complete' || type === 'levelup') {
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(440, now);
+        osc.frequency.setValueAtTime(554.37, now + 0.1);
+        osc.frequency.setValueAtTime(659.25, now + 0.2);
+        gain.gain.setValueAtTime(0, now);
+        gain.gain.linearRampToValueAtTime(0.1, now + 0.05);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.6);
+        osc.start(now);
+        osc.stop(now + 0.6);
+      }
+    } catch(e) {}
+  }
+};
 
 // ── QUESTION BANK ──────────────────────────────
 const allQuizQ = [
@@ -538,6 +585,7 @@ function showPage(id) {
   if (id === 'page-wrong-review' && typeof renderWrongReview === 'function') renderWrongReview();
   if (id === 'page-testbank' && typeof tbShowSetup === 'function') tbShowSetup();
   if (id === 'page-before-exam' && typeof initBeforeExam === 'function') initBeforeExam();
+  if (id === 'page-past-exams' && typeof peShowSetup === 'function') peShowSetup();
   // Restore user highlights + notes + drawings on chapter pages
   if (typeof restoreHighlights === 'function') setTimeout(function(){ restoreHighlights(id); }, 50);
   if (typeof restoreNotes === 'function') setTimeout(function(){ restoreNotes(id); }, 50);
@@ -1175,7 +1223,14 @@ function mockResumeSession() {
   mockTimerInt = setInterval(() => {
     mockTimeRemaining = Math.max(0, mockTimeRemaining - 1);
     const m = Math.floor(mockTimeRemaining / 60), s = mockTimeRemaining % 60;
-    document.getElementById("mock-timer").textContent = "⏱ " + m + ":" + (s < 10 ? "0" : "") + s;
+    const timerEl = document.getElementById("mock-timer");
+    timerEl.textContent = "⏱ " + m + ":" + (s < 10 ? "0" : "") + s;
+    if (mockTimeRemaining <= 300) {
+      timerEl.classList.add("pulse-red");
+    } else {
+      timerEl.classList.remove("pulse-red");
+    }
+    if (typeof mockSaveResume === 'function' && mockTimeRemaining % 5 === 0) mockSaveResume();
     if (mockTimeRemaining <= 0) endMock();
   }, 1000);
   if (typeof renderMockQ === 'function') renderMockQ();
@@ -1192,6 +1247,351 @@ function showMockResumeBanner() {
   banner.style.display = 'flex';
 }
 
+// ── ADAPTIVE QUIZ ENGINE (WEAKNESS MODE) ────────
+// 120-char prefix avoids collisions on Ferrell's "Which moral philosophy
+// evaluates the morality of an action on the basis of..." stems (4 distinct Qs).
+function qStatsKey(qText) { return (qText || '').trim().substring(0, 120); }
+function getQStats() {
+  try { return JSON.parse(localStorage.getItem('bus214_qstats') || '{}'); }
+  catch(e) { return {}; }
+}
+function updateQStats(qText, isCorrect) {
+  try {
+    const stats = getQStats();
+    const key = qStatsKey(qText);
+    if (!stats[key]) stats[key] = { c: 0, t: 0 };
+    stats[key].t++;
+    if (isCorrect) stats[key].c++;
+    stats[key].ts = Date.now();
+    localStorage.setItem('bus214_qstats', JSON.stringify(stats));
+  } catch(e) {}
+}
+
+function startAdaptiveMock() {
+  mockClearResume();
+  const stats = getQStats();
+
+  // Create a pool of questions with weights
+  const weightedPool = testBankQ.map(q => {
+    const key = qStatsKey(q.q);
+    const qStat = stats[key];
+    let weight = 1; // Default weight
+    if (qStat && qStat.t > 0) {
+      // Weight = 1 + (1 - accuracy) * 3
+      weight = 1 + (1 - (qStat.c / qStat.t)) * 3;
+    }
+    return { q, weight, rand: Math.random() };
+  });
+
+  // Sort by combination of random and weight (Higher weight = higher chance to be at the top)
+  weightedPool.sort((a, b) => (b.weight * b.rand) - (a.weight * a.rand));
+
+  const pool = weightedPool.slice(0, 15).map(wp => wp.q); // 15 questions for weakness mode
+  
+  mockQs = pool; mockIdx = 0; mockCorrect = 0; mockWrong = 0; mockAnswers = [];
+  mockTimeLimit = 15 * 60; // 15 mins
+  mockTimeRemaining = mockTimeLimit;
+  document.body.classList.add('mock-mode');
+  document.getElementById("mock-start-screen").style.display = "none";
+  document.getElementById("mock-game-screen").style.display = "block";
+  document.getElementById("mock-result-screen").style.display = "none";
+  clearInterval(mockTimerInt);
+  mockTimerInt = setInterval(() => {
+    mockTimeRemaining = Math.max(0, mockTimeRemaining - 1);
+    const m = Math.floor(mockTimeRemaining / 60), s = mockTimeRemaining % 60;
+    const timerEl = document.getElementById("mock-timer");
+    timerEl.textContent = "⏱ " + m + ":" + (s < 10 ? "0" : "") + s;
+    if (mockTimeRemaining <= 300) {
+      timerEl.classList.add("pulse-red");
+    } else {
+      timerEl.classList.remove("pulse-red");
+    }
+    if (typeof mockSaveResume === 'function' && mockTimeRemaining % 5 === 0) mockSaveResume();
+    if (mockTimeRemaining <= 0) endMock();
+  }, 1000);
+  renderMockQ();
+}
+
+// ── CONFUSION-PAIR DRILLS ─────────────────────
+function startConfusionDrill(pairId) {
+  const pair = window.CONFUSION_PAIRS.find(p => p.id === pairId);
+  if (!pair) return;
+
+  // Filter testBankQ: match against question stem + correct answer only,
+  // NOT all options. This avoids false positives where a concept appears
+  // as a distractor (e.g. Puffery as wrong answer to an Insider Trading Q).
+  let pool = testBankQ.filter(q => {
+    const correctOpt = q.opts[q.ans] || '';
+    const text = (q.q + " " + correctOpt).toLowerCase();
+    if (pair.keywords) {
+      return pair.keywords.some(kw => text.includes(kw.toLowerCase()));
+    }
+    const includes = pair.include || [];
+    const excludes = pair.exclude || [];
+    const hasInclude = includes.some(kw => text.includes(kw.toLowerCase()));
+    if (!hasInclude) return false;
+    const hasExclude = excludes.some(kw => text.includes(kw.toLowerCase()));
+    return !hasExclude;
+  });
+
+  // Take up to 10 random questions
+  pool = pool.sort(() => Math.random() - 0.5).slice(0, 10);
+  if (pool.length === 0) {
+    alert("لا يوجد أسئلة كافية لهذا التدريب!");
+    return;
+  }
+
+  mockClearResume();
+  mockQs = pool; mockIdx = 0; mockCorrect = 0; mockWrong = 0; mockAnswers = [];
+  document.body.classList.add('mock-mode');
+  
+  // Hide timer for drills
+  document.getElementById("mock-timer").style.display = "none";
+  
+  // Add contrast message logic
+  window._currentConfusionContrast = pair.contrast;
+
+  document.getElementById("mock-start-screen").style.display = "none";
+  document.getElementById("mock-game-screen").style.display = "block";
+  document.getElementById("mock-result-screen").style.display = "none";
+  clearInterval(mockTimerInt); // No timer!
+  
+  renderMockQ();
+}
+
+function renderConfusionGrid() {
+  const container = document.getElementById("confusion-drills-container");
+  if (!container || !window.CONFUSION_PAIRS) return;
+  
+  let html = '<h3 style="margin-bottom:15px; margin-top:30px; font-size:1.2rem; color:var(--text); border-bottom:1px solid var(--line); padding-bottom:8px;">🎯 خلط المفاهيم (Confusion Drills)</h3>';
+  html += '<p style="font-size:0.85rem; color:var(--muted); margin-bottom:15px;">تدريبات سريعة للتمييز بين المفاهيم المتشابهة والمربكة في الاختبار (بدون مؤقت).</p>';
+  html += '<div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(200px, 1fr)); gap:10px;">';
+  
+  window.CONFUSION_PAIRS.forEach(pair => {
+    // Pre-compute matching question count so user knows drill size
+    const count = (typeof testBankQ !== 'undefined' ? testBankQ : []).filter(q => {
+      const correctOpt = q.opts[q.ans] || '';
+      const text = (q.q + " " + correctOpt).toLowerCase();
+      if (pair.keywords) return pair.keywords.some(kw => text.includes(kw.toLowerCase()));
+      const inc = (pair.include || []).some(kw => text.includes(kw.toLowerCase()));
+      if (!inc) return false;
+      const exc = (pair.exclude || []).some(kw => text.includes(kw.toLowerCase()));
+      return !exc;
+    }).length;
+    html += `<button class="quiz-btn" onclick="startConfusionDrill('${pair.id}')" style="padding:12px; font-size:0.85rem; border:1px solid var(--line); border-radius:10px; background:var(--paper); color:var(--text); cursor:pointer; box-shadow:0 2px 4px rgba(0,0,0,0.05);">${pair.label}<div style="font-size:.72rem; color:var(--muted); margin-top:4px;">${count} سؤال</div></button>`;
+  });
+  
+  html += '</div>';
+  container.innerHTML = html;
+}
+
+
+// ── STUDY ROADMAP (4-day plan to reduce decision fatigue) ──
+const ROADMAP_PLAN = [
+  {
+    dayNum: 1, label: 'اليوم — Mon', date: '2026-05-04', emoji: '📚',
+    theme: 'يوم الفصل الخامس (Ch 5)',
+    tasks: [
+      { id: 'd1-t1', label: 'راجع Ch 5 — Quick Review', mins: 15, action: () => showPage('page-ch1') },
+      { id: 'd1-t2', label: 'حل 20 سؤال Test Bank — Ch 5', mins: 25, action: () => showPage('page-testbank') },
+      { id: 'd1-t3', label: 'خلط المفاهيم: Issue vs Dilemma', mins: 10, action: () => { showPage('page-mock'); setTimeout(() => { if (typeof startConfusionDrill === 'function') startConfusionDrill('issue-dilemma'); }, 200); } }
+    ]
+  },
+  {
+    dayNum: 2, label: 'غداً — Tue', date: '2026-05-05', emoji: '🧭',
+    theme: 'فصل 6 + 7 (Decision Framework + Moral Philosophy)',
+    tasks: [
+      { id: 'd2-t1', label: 'راجع Ch 6 — Decision Framework', mins: 20, action: () => showPage('page-ch2') },
+      { id: 'd2-t2', label: 'راجع Ch 7 — Moral Philosophy', mins: 20, action: () => showPage('page-ch3') },
+      { id: 'd2-t3', label: 'خلط: Teleology vs Deontology', mins: 15, action: () => { showPage('page-mock'); setTimeout(() => { if (typeof startConfusionDrill === 'function') startConfusionDrill('teleology-deontology'); }, 200); } }
+    ]
+  },
+  {
+    dayNum: 3, label: 'الأربعاء — Wed', date: '2026-05-06', emoji: '🎯',
+    theme: 'يوم الاختبار التجريبي (Mock + Adaptive)',
+    tasks: [
+      { id: 'd3-t1', label: 'Mock Exam كامل (30 سؤال)', mins: 30, action: () => showPage('page-mock') },
+      { id: 'd3-t2', label: 'وضع نقاط الضعف (Adaptive)', mins: 20, action: () => { showPage('page-mock'); setTimeout(() => { if (typeof startAdaptiveMock === 'function') startAdaptiveMock(); }, 200); } },
+      { id: 'd3-t3', label: 'تجميعات سابقة — اختر سنة', mins: 20, action: () => showPage('page-past-exams') }
+    ]
+  },
+  {
+    dayNum: 4, label: 'يوم الميد — Thu', date: '2026-05-07', emoji: '🏆',
+    theme: 'مراجعة سريعة وثقة',
+    tasks: [
+      { id: 'd4-t1', label: 'Flash Cards — مراجعة سريعة', mins: 15, action: () => { showPage('page-flash'); if (typeof initFlashCards === 'function') initFlashCards(); } },
+      { id: 'd4-t2', label: 'مراجعة الأسئلة اللي خطأت فيها', mins: 15, action: () => showPage('page-wrong-review') },
+      { id: 'd4-t3', label: 'نفس عميق ✨ ثم انطلق', mins: 5, action: () => alert('بالتوفيق يا حسام! 🎓 أنت قد سويت كل اللي تقدر تسويه. ادخل الاختبار بثقة 💪') }
+    ]
+  }
+];
+
+function getRoadmapState() {
+  try { return JSON.parse(localStorage.getItem('bus214_roadmap') || '{}'); }
+  catch (e) { return {}; }
+}
+function setRoadmapTaskDone(taskId, done) {
+  try {
+    const state = getRoadmapState();
+    state[taskId] = done ? Date.now() : null;
+    localStorage.setItem('bus214_roadmap', JSON.stringify(state));
+  } catch (e) {}
+}
+
+function _rmEl(tag, attrs, text) {
+  const el = document.createElement(tag);
+  if (attrs) for (const k in attrs) {
+    if (k === 'style') el.setAttribute('style', attrs[k]);
+    else if (k === 'cls') el.className = attrs[k];
+    else el.setAttribute(k, attrs[k]);
+  }
+  if (text != null) el.textContent = text;
+  return el;
+}
+
+function renderRoadmap() {
+  const container = document.getElementById('roadmap-container');
+  if (!container) return;
+  while (container.firstChild) container.removeChild(container.firstChild);
+  const state = getRoadmapState();
+  const today = new Date().toISOString().slice(0, 10);
+
+  const examDate = new Date('2026-05-07');
+  const now = new Date();
+  const daysLeft = Math.max(0, Math.ceil((examDate - now) / (1000 * 60 * 60 * 24)));
+  const daysLeftEl = document.getElementById('rm-days-left');
+  if (daysLeftEl) daysLeftEl.textContent = daysLeft + (daysLeft === 1 ? ' يوم' : ' أيام');
+
+  let todayDoneCount = 0, todayTotalCount = 0;
+
+  ROADMAP_PLAN.forEach((day, dayIdx) => {
+    const isToday = day.date === today;
+    const isPast = day.date < today;
+    const dayDoneCount = day.tasks.filter(t => state[t.id]).length;
+    const allDone = dayDoneCount === day.tasks.length;
+    if (isToday) { todayDoneCount = dayDoneCount; todayTotalCount = day.tasks.length; }
+
+    const headerStyle = isToday
+      ? 'background:linear-gradient(135deg, var(--accent), #60A5FA); color:#fff;'
+      : isPast ? 'background:var(--paper); color:var(--muted); opacity:.6;' : 'background:var(--paper); color:var(--text);';
+
+    const dayWrap = _rmEl('div', { style: 'margin-bottom:20px; border:1.5px solid ' + (isToday ? 'var(--accent)' : 'var(--line)') + '; border-radius:14px; overflow:hidden;' });
+
+    const header = _rmEl('div', { style: 'padding:14px 18px; ' + headerStyle + ' display:flex; justify-content:space-between; align-items:center;' });
+    const headerLeft = _rmEl('div');
+    const titleEl = _rmEl('strong', { style: 'font-size:1.05rem;' }, day.emoji + ' ' + day.label);
+    const themeEl = _rmEl('div', { style: 'font-size:.82rem; margin-top:2px; opacity:.9;' }, day.theme);
+    headerLeft.appendChild(titleEl); headerLeft.appendChild(themeEl);
+    const headerRight = _rmEl('div', { style: 'font-size:.85rem; font-weight:700;' }, dayDoneCount + '/' + day.tasks.length + (allDone ? ' ✅' : ''));
+    header.appendChild(headerLeft); header.appendChild(headerRight);
+    dayWrap.appendChild(header);
+
+    const tasksWrap = _rmEl('div', { style: 'padding:8px 0; background:var(--bg);' });
+    day.tasks.forEach((t, taskIdx) => {
+      const done = !!state[t.id];
+      const row = _rmEl('div', { style: 'display:flex; align-items:center; gap:12px; padding:12px 18px; border-bottom:1px solid var(--line);' });
+
+      const cb = _rmEl('input', { type: 'checkbox', style: 'width:20px; height:20px; cursor:pointer; flex-shrink:0;' });
+      cb.checked = done;
+      cb.addEventListener('change', () => { setRoadmapTaskDone(t.id, cb.checked); renderRoadmap(); });
+      row.appendChild(cb);
+
+      const middle = _rmEl('div', { style: 'flex:1; ' + (done ? 'text-decoration:line-through; color:var(--muted);' : '') });
+      middle.appendChild(_rmEl('div', { style: 'font-weight:600; font-size:.95rem;' }, t.label));
+      middle.appendChild(_rmEl('div', { style: 'font-size:.75rem; color:var(--muted); margin-top:2px;' }, '⏱ ' + t.mins + ' دقيقة'));
+      row.appendChild(middle);
+
+      if (!done) {
+        const btn = _rmEl('button', { style: 'background:var(--accent); color:#fff; border:none; padding:8px 14px; border-radius:8px; font-weight:600; font-size:.82rem; cursor:pointer; font-family:inherit; flex-shrink:0;' }, 'ابدأ ←');
+        btn.addEventListener('click', () => ROADMAP_PLAN[dayIdx].tasks[taskIdx].action());
+        row.appendChild(btn);
+      }
+      tasksWrap.appendChild(row);
+    });
+    dayWrap.appendChild(tasksWrap);
+    container.appendChild(dayWrap);
+  });
+
+  const todayEl = document.getElementById('rm-today-progress');
+  if (todayEl) todayEl.textContent = todayDoneCount + '/' + todayTotalCount;
+}
+window.ROADMAP_PLAN = ROADMAP_PLAN;
+window.setRoadmapTaskDone = setRoadmapTaskDone;
+window.renderRoadmap = renderRoadmap;
+
+// ── FOCUS MODE (hide sidebar/HUD/FABs to reduce distraction) ──
+function toggleFocusMode() {
+  const enabled = document.body.classList.toggle('focus-mode');
+  try { localStorage.setItem('bus214_focus_mode', enabled ? '1' : '0'); } catch (e) {}
+  const btn = document.getElementById('focus-mode-toggle');
+  if (btn) btn.textContent = enabled ? '🎯 إيقاف وضع التركيز' : '🎯 تفعيل وضع التركيز';
+  let exitBtn = document.getElementById('focus-exit-fab');
+  if (enabled && !exitBtn) {
+    exitBtn = document.createElement('button');
+    exitBtn.id = 'focus-exit-fab';
+    exitBtn.textContent = '✕ خروج من التركيز';
+    exitBtn.onclick = toggleFocusMode;
+    exitBtn.style.cssText = 'position:fixed; top:20px; left:20px; z-index:99998; background:var(--accent); color:#fff; border:none; padding:10px 16px; border-radius:24px; font-weight:700; font-size:.85rem; cursor:pointer; box-shadow:0 4px 12px rgba(0,0,0,0.2); font-family:inherit;';
+    document.body.appendChild(exitBtn);
+  } else if (!enabled && exitBtn) {
+    exitBtn.remove();
+  }
+}
+window.toggleFocusMode = toggleFocusMode;
+try { if (localStorage.getItem('bus214_focus_mode') === '1') setTimeout(toggleFocusMode, 100); } catch (e) {}
+
+// ── PAST EXAMS (reuses Test Bank machinery via tbState._areaId) ──
+function getPastExamStats(examId) {
+  try {
+    const all = JSON.parse(localStorage.getItem("bus214_past_exam_stats") || "{}");
+    return all[examId] || {};
+  } catch (e) { return {}; }
+}
+function savePastExamStats(examId, stats) {
+  try {
+    const all = JSON.parse(localStorage.getItem("bus214_past_exam_stats") || "{}");
+    all[examId] = stats;
+    localStorage.setItem("bus214_past_exam_stats", JSON.stringify(all));
+  } catch (e) {}
+}
+
+function startPastExamTB(selectedCh) {
+  if (!window.PAST_EXAMS) return;
+  // Aggregate every past-exam question, then filter by chapter
+  let allQs = [];
+  window.PAST_EXAMS.forEach(e => allQs.push(...e.questions));
+  let pool = (selectedCh === "all" || !selectedCh) ? allQs : allQs.filter(q => q.ch === selectedCh);
+  const count = parseInt(document.getElementById("pe-count").value || "20");
+  pool = pool.sort(() => Math.random() - 0.5).slice(0, Math.min(count, pool.length));
+  pool.forEach(q => delete q._tbDisp);
+  // Route TB machinery to PE area
+  tbState = {
+    questions: pool, current: 0, correct: 0, wrong: 0, answered: false, wrongList: [],
+    _areaId: "pe-quiz-area", _chId: "pe-setup-exams", _setId: "pe-setup-settings"
+  };
+  // Make retry/exam-mode honor PE toggles by aliasing to TB globals
+  window._tbRetryEnabled = !!window._peRetryEnabled;
+  window._tbExamMode = !!window._peExamMode;
+  if (typeof tbClearResume === "function") tbClearResume();
+  const chSec = document.getElementById("pe-setup-exams");
+  const setSec = document.getElementById("pe-setup-settings");
+  if (chSec) chSec.style.display = "none";
+  if (setSec) setSec.style.display = "none";
+  renderTBQuestion();
+  const area = document.getElementById("pe-quiz-area");
+  if (area) area.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+function peShowSetup() {
+  // Reset TB state to default IDs (so other flows are not affected)
+  tbState = { questions: [], current: 0, correct: 0, wrong: 0, answered: false, wrongList: [] };
+  const chSec = document.getElementById("pe-setup-exams");
+  const setSec = document.getElementById("pe-setup-settings");
+  const area = document.getElementById("pe-quiz-area");
+  if (chSec) chSec.style.display = "";
+  if (setSec) setSec.style.display = "";
+  if (area) area.innerHTML = "";
+}
 // ── MOCK EXAM ─────────────────────────────────
 function startMock() {
   mockClearResume();
@@ -1206,7 +1606,14 @@ function startMock() {
   mockTimerInt = setInterval(() => {
     mockTimeRemaining = Math.max(0, mockTimeRemaining - 1);
     const m = Math.floor(mockTimeRemaining / 60), s = mockTimeRemaining % 60;
-    document.getElementById("mock-timer").textContent = "⏱ " + m + ":" + (s < 10 ? "0" : "") + s;
+    const timerEl = document.getElementById("mock-timer");
+    timerEl.textContent = "⏱ " + m + ":" + (s < 10 ? "0" : "") + s;
+    if (mockTimeRemaining <= 300) {
+      timerEl.classList.add("pulse-red");
+    } else {
+      timerEl.classList.remove("pulse-red");
+    }
+    if (typeof mockSaveResume === 'function' && mockTimeRemaining % 5 === 0) mockSaveResume();
     if (mockTimeRemaining <= 0) endMock();
   }, 1000);
   renderMockQ();
@@ -1255,10 +1662,25 @@ function handleMockAnswer(chosen) {
   } else {
     mockWrong++;
     document.getElementById("mock-feedback").textContent = "❌ Wrong — The correct answer is: " + ["A","B","C","D","E"][q.ans] + ". " + q.opts[q.ans];
-    document.getElementById("mock-feedback").className = "quiz-feedback wrong";
+    document.getElementById("mock-feedback").className = "quiz-feedback wrong shake";
     if (window.SFX) SFX.play('wrong');
     if (typeof saveWrongAnswer === 'function') saveWrongAnswer(q, chosen);
   }
+  
+  // Show contrast message if in Confusion Drill mode
+  if (window._currentConfusionContrast) {
+    let contrastMsg = document.getElementById("confusion-contrast-msg");
+    if (!contrastMsg) {
+      contrastMsg = document.createElement("div");
+      contrastMsg.id = "confusion-contrast-msg";
+      contrastMsg.style.cssText = "margin-top:15px; padding:12px; background:var(--accent-soft); border:1.5px solid var(--accent); border-radius:10px; font-weight:bold; color:var(--text); text-align:right;";
+      document.getElementById("mock-opts").parentNode.insertBefore(contrastMsg, document.getElementById("mock-opts").nextSibling);
+    }
+    contrastMsg.innerHTML = window._currentConfusionContrast;
+    contrastMsg.style.display = "block";
+  }
+
+  updateQStats(q.q, chosen === q.ans);
   mockAnswers.push({ q: mockQs[mockIdx], chosen });
   window.mockAnswers = mockAnswers;
   document.getElementById("mock-next-btn").style.display = "block";
@@ -1283,6 +1705,10 @@ function endMock() {
   document.getElementById("mock-grade").textContent = grade;
   document.getElementById("mock-res-correct").textContent = mockCorrect;
   document.getElementById("mock-res-wrong").textContent = mockWrong;
+  document.getElementById("mock-timer").style.display = "inline-block"; // restore timer
+  window._currentConfusionContrast = null; // clear drill state
+  let contrastMsg = document.getElementById("confusion-contrast-msg");
+  if (contrastMsg) contrastMsg.style.display = "none";
   // Update best scores
   if (!bestScores['all'] || pct > bestScores['all']) bestScores['all'] = pct;
   localStorage.setItem('bus214_bestScores', JSON.stringify(bestScores));
@@ -1482,6 +1908,16 @@ function renderDashboard() {
   const el7 = document.getElementById("dash-best-ch3");
   if (el7) el7.textContent = bestScores["ch3"] !== undefined ? bestScores["ch3"] + "%" : "—";
 
+  // Update visual bars
+  const barAll = document.getElementById("dash-bar-all");
+  if (barAll) barAll.style.width = (bestScores["all"] || 0) + "%";
+  const barCh1 = document.getElementById("dash-bar-ch1");
+  if (barCh1) barCh1.style.width = (bestScores["ch1"] || 0) + "%";
+  const barCh2 = document.getElementById("dash-bar-ch2");
+  if (barCh2) barCh2.style.width = (bestScores["ch2"] || 0) + "%";
+  const barCh3 = document.getElementById("dash-bar-ch3");
+  if (barCh3) barCh3.style.width = (bestScores["ch3"] || 0) + "%";
+
   // Weak Area Alert
   const weakEl = document.getElementById("dash-weak-alert");
   if (weakEl) {
@@ -1577,38 +2013,62 @@ document.addEventListener('keydown', e => {
 
 function runSearch(query) {
   const container = document.getElementById('search-results');
-  query = query.trim();
+  query = query.trim().toLowerCase();
   if (query.length < 2) {
     container.innerHTML = '<p style="color:var(--muted);font-size:.85rem;text-align:center;margin:0;">اكتب للبحث في الفصول الثلاثة</p>';
     return;
   }
+  
+  // Advanced Synonym Mapping
+  const synonyms = {
+    "ethics": "أخلاق", "أخلاق": "ethics",
+    "fraud": "احتيال", "احتيال": "fraud",
+    "bribery": "رشوة", "رشوة": "bribery",
+    "dilemma": "معضلة", "معضلة": "dilemma",
+    "culture": "ثقافة", "ثقافة": "culture",
+    "justice": "عدالة", "عدالة": "justice",
+    "philosophy": "فلسفة", "فلسفة": "philosophy",
+    "virtue": "فضيلة", "فضيلة": "virtue",
+    "stakeholder": "أصحاب المصلحة", "مصلحة": "stakeholder"
+  };
+  
+  let searchTerms = [query];
+  Object.keys(synonyms).forEach(key => {
+    if (query.includes(key)) searchTerms.push(synonyms[key]);
+  });
+  
   const results = [];
-  const re = new RegExp(query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi');
+  const searchRegexes = searchTerms.map(term => new RegExp(term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi'));
+
   SEARCH_PAGES.forEach(({ id, label }) => {
     const pageEl = document.getElementById(id);
     if (!pageEl) return;
-    const nodes = pageEl.querySelectorAll('li, td, p, h3, .qr-def, .qr-term, .benefit-card p, .energy-card p');
+    const nodes = pageEl.querySelectorAll('li, td, p, h3, h4, .qr-def, .qr-term, .mk-term, .mk-desc');
     nodes.forEach(node => {
       const text = node.innerText || node.textContent || '';
-      if (re.test(text)) {
-        const snippet = text.replace(/\s+/g, ' ').trim().substring(0, 120);
-        const highlighted = snippet.replace(re, m => `<mark>${m}</mark>`);
-        results.push({ pageId: id, pageLabel: label, html: highlighted });
-        re.lastIndex = 0;
+      let isMatch = false;
+      let matchedRegex = null;
+      for (const re of searchRegexes) {
+        if (re.test(text)) {
+          isMatch = true;
+          matchedRegex = re;
+          re.lastIndex = 0;
+          break;
+        }
+      }
+      
+      if (isMatch) {
+        const snippet = text.replace(/\s+/g, ' ').trim().substring(0, 150);
+        const highlighted = snippet.replace(matchedRegex, m => `<mark style="background:#FEF08A;color:#854D0E;padding:0 4px;border-radius:4px;font-weight:bold;">${m}</mark>`);
+        // Ensure we don't add duplicates
+        if (!results.find(r => r.html === highlighted)) {
+          results.push({ pageId: id, pageLabel: label, html: highlighted });
+        }
       }
     });
   });
-  // Also search quiz questions
-  const chLabels = (window.CH_LABELS && window.CH_LABELS.quizTag) || { ch1: 'Ch1 Quiz', ch2: 'Ch2 Quiz', ch3: 'Ch3 Quiz' };
-  allQuizQ.forEach(q => {
-    if (re.test(q.q) || q.opts.some(o => re.test(o))) {
-      const correct = q.opts[q.ans];
-      const snippet = q.q.substring(0, 100) + ' → ' + correct.substring(0, 60);
-      const highlighted = snippet.replace(re, m => `<mark>${m}</mark>`);
-      results.push({ pageId: 'page-quiz', pageLabel: '❓ ' + (chLabels[q.ch] || 'Quiz'), html: highlighted });
-      re.lastIndex = 0;
-    }
-  });
+  
+  // NOTE: allQuizQ search is intentionally REMOVED to protect Mock Exam integrity.
 
   if (results.length === 0) {
     container.innerHTML = '<p style="color:var(--muted);font-size:.85rem;text-align:center;margin:0;">لا نتائج — No results found</p>';
@@ -1633,12 +2093,16 @@ function handleChQ(btn, isCorrect) {
   if (item.dataset.answered) return;
   item.dataset.answered = '1';
   if (isCorrect) item.dataset.correct = '1';
+  
+  const qText = item.querySelector('.chq-text') ? item.querySelector('.chq-text').innerText : '';
+  if (qText) updateQStats(qText, isCorrect);
   item.querySelectorAll('.chq-btn').forEach(b => {
     b.disabled = true;
     if (b === btn) b.classList.add(isCorrect ? 'chq-correct' : 'chq-wrong');
   });
   // highlight correct btn when user answered wrong
   if (!isCorrect) {
+    item.classList.add('shake');
     item.querySelectorAll('.chq-btn').forEach(b => {
       if (b.getAttribute('onclick').includes('true')) b.classList.add('chq-correct');
     });
@@ -2402,6 +2866,7 @@ document.addEventListener('DOMContentLoaded', () => {
   updateStreak();
   checkReminders();
   updateGameHUD();
+  renderConfusionGrid();
 });
 const testBankQ = [
   { ch:"ch1", q:"Corporate social responsibility is defined as which of the following?", opts:["An organization's obligation to maximize its positive effects and minimize its negative effects on stakeholders", "Principles, values, and norms that primarily guide individual and group behavior in the world of business", "The institutionalization of business ethics into all levels of business decision making", "A business's responsibility to manufacture products that function properly", "Charitable contributions made by a business to enhance its reputation with stakeholders"], ans:0 },
@@ -2784,14 +3249,19 @@ function setupDrawCanvas() {
   // Size canvas to match page content (account for device pixel ratio for crisp drawing)
   const pageEl = document.querySelector('.page.active');
   if (!pageEl) return null;
-  const rect = pageEl.getBoundingClientRect();
-  const scrollY = window.scrollY;
-  const pageTop = rect.top + scrollY;
+  // Use offsetParent chain (layout coords) instead of getBoundingClientRect
+  // so we're not affected by the .page.active fade-slide transform animation.
+  let pageTop = 0, pageLeft = 0, walker = pageEl;
+  while (walker) {
+    pageTop += walker.offsetTop;
+    pageLeft += walker.offsetLeft;
+    walker = walker.offsetParent;
+  }
   const pageW = pageEl.offsetWidth;
   const pageH = pageEl.offsetHeight;
   const dpr = Math.min(window.devicePixelRatio || 1, 2); // cap at 2x to limit memory
   canvas.style.top = pageTop + 'px';
-  canvas.style.left = pageEl.offsetLeft + 'px';
+  canvas.style.left = pageLeft + 'px';
   canvas.style.width = pageW + 'px';
   canvas.style.height = pageH + 'px';
   canvas.width = Math.floor(pageW * dpr);
@@ -2928,24 +3398,33 @@ function drawStrokeOnCanvas(stroke) {
   }
 }
 
+// Pointer position using cached rect (refreshed at stroke start) to avoid
+// layout thrash from getBoundingClientRect() on every pointermove event.
+function getPointerPosFast(e) {
+  const rect = drawState.strokeRect;
+  return { x: e.clientX - rect.left, y: e.clientY - rect.top, p: e.pressure || 0.5 };
+}
+// Slow-path used at stroke start (no cached rect yet)
 function getPointerPos(e, canvas) {
   const rect = canvas.getBoundingClientRect();
   const clientX = (e.touches ? e.touches[0].clientX : e.clientX);
   const clientY = (e.touches ? e.touches[0].clientY : e.clientY);
-  // e.pressure: 0.5 default when not supported; Apple Pencil gives 0..1
   return { x: clientX - rect.left, y: clientY - rect.top, p: e.pressure || 0.5 };
 }
 
 function startStroke(e) {
   if (!drawState.active) return;
-  // Pencil-only mode: ignore finger/mouse if enabled (only accept 'pen' = Apple Pencil)
   if (drawState.pencilOnly && e.pointerType && e.pointerType !== 'pen') return;
-  // Palm rejection: if a pencil is connected and currently drawing with one, ignore touch
   if (e.pointerType === 'touch' && drawState.drawing) return;
   e.preventDefault();
+  // Capture pointer so we keep getting move/up events even if finger leaves canvas
+  if (drawState.canvas.setPointerCapture && e.pointerId != null) {
+    try { drawState.canvas.setPointerCapture(e.pointerId); } catch (_) {}
+  }
   drawState.drawing = true;
   drawState.activePointerId = e.pointerId;
-  const pos = getPointerPos(e, drawState.canvas);
+  drawState.strokeRect = drawState.canvas.getBoundingClientRect();
+  const pos = getPointerPosFast(e);
   drawState.currentStroke = {
     color: drawState.color,
     size: drawState.size,
@@ -2953,51 +3432,66 @@ function startStroke(e) {
     points: [pos]
   };
 }
+
 function continueStroke(e) {
   if (!drawState.active || !drawState.drawing || !drawState.currentStroke) return;
-  // Only track the same pointer that started the stroke
   if (drawState.activePointerId != null && e.pointerId !== drawState.activePointerId) return;
   if (drawState.pencilOnly && e.pointerType && e.pointerType !== 'pen') return;
   e.preventDefault();
-  const pos = getPointerPos(e, drawState.canvas);
-  drawState.currentStroke.points.push(pos);
+
   const ctx = drawState.ctx;
   const s = drawState.currentStroke;
-  const pts = s.points;
-  if (pts.length < 2) return;
+  // Apple Pencil samples at 240Hz but pointermove fires at 60-120Hz —
+  // getCoalescedEvents() returns the in-between samples for full fidelity.
+  const coalesced = (typeof e.getCoalescedEvents === 'function') ? e.getCoalescedEvents() : null;
+  const events = (coalesced && coalesced.length > 0) ? coalesced : [e];
+
+  // Set static ctx props once (saves N redundant assignments per move)
   ctx.globalCompositeOperation = s.eraser ? 'destination-out' : 'source-over';
   ctx.strokeStyle = s.color;
   ctx.lineCap = 'round';
   ctx.lineJoin = 'round';
-  if (pts.length < 3) {
-    const p1 = pts[0], p2 = pts[1];
-    const pressure = ((p1.p || 0.5) + (p2.p || 0.5)) / 2;
-    ctx.lineWidth = s.size * (s.eraser ? 1 : (0.6 + pressure * 0.8));
+
+  for (let i = 0; i < events.length; i++) {
+    s.points.push(getPointerPosFast(events[i]));
+    const pts = s.points;
+    if (pts.length < 2) continue;
+    if (pts.length < 3) {
+      const p1 = pts[0], p2 = pts[1];
+      const pr = ((p1.p || 0.5) + (p2.p || 0.5)) / 2;
+      ctx.lineWidth = s.size * (s.eraser ? 1 : (0.6 + pr * 0.8));
+      ctx.beginPath();
+      ctx.moveTo(p1.x, p1.y);
+      ctx.lineTo(p2.x, p2.y);
+      ctx.stroke();
+      continue;
+    }
+    const p1 = pts[pts.length-3], p2 = pts[pts.length-2], p3 = pts[pts.length-1];
+    const m1x = (p1.x + p2.x) * 0.5, m1y = (p1.y + p2.y) * 0.5;
+    const m2x = (p2.x + p3.x) * 0.5, m2y = (p2.y + p3.y) * 0.5;
+    const pr = ((p2.p || 0.5) + (p3.p || 0.5)) / 2;
+    ctx.lineWidth = s.size * (s.eraser ? 1 : (0.6 + pr * 0.8));
     ctx.beginPath();
-    ctx.moveTo(p1.x, p1.y);
-    ctx.lineTo(p2.x, p2.y);
+    ctx.moveTo(m1x, m1y);
+    ctx.quadraticCurveTo(p2.x, p2.y, m2x, m2y);
     ctx.stroke();
-    return;
   }
-  const p1 = pts[pts.length-3], p2 = pts[pts.length-2], p3 = pts[pts.length-1];
-  const m1x = (p1.x + p2.x) / 2, m1y = (p1.y + p2.y) / 2;
-  const m2x = (p2.x + p3.x) / 2, m2y = (p2.y + p3.y) / 2;
-  const pressure = ((p2.p || 0.5) + (p3.p || 0.5)) / 2;
-  ctx.lineWidth = s.size * (s.eraser ? 1 : (0.6 + pressure * 0.8));
-  ctx.beginPath();
-  ctx.moveTo(m1x, m1y);
-  ctx.quadraticCurveTo(p2.x, p2.y, m2x, m2y);
-  ctx.stroke();
 }
 function endStroke(e) {
   if (!drawState.active || !drawState.drawing) return;
   if (e && e.pointerId != null && drawState.activePointerId != null && e.pointerId !== drawState.activePointerId) return;
+  // Release pointer capture if we have it
+  if (drawState.canvas && e && e.pointerId != null && drawState.canvas.hasPointerCapture && drawState.canvas.hasPointerCapture(e.pointerId)) {
+    try { drawState.canvas.releasePointerCapture(e.pointerId); } catch (_) {}
+  }
   drawState.drawing = false;
   drawState.activePointerId = null;
+  drawState.strokeRect = null;
   if (drawState.currentStroke && drawState.currentStroke.points.length > 0) {
     drawState.strokes.push(drawState.currentStroke);
     savePageStrokes(drawState.pageId, drawState.strokes);
-    // Redraw the entire stroke with the smooth quadratic path (the live draw was straight segments)
+    // Final smooth re-render: live draw was incremental segments, the full
+    // bezier path looks slightly cleaner.
     redrawStrokes();
   }
   drawState.currentStroke = null;
@@ -3026,6 +3520,10 @@ setTimeout(function() {
 }, 500);
 
 // Show/hide draw FAB per page
+function isAuthOverlayBlocking() {
+  const o = document.getElementById('auth-overlay');
+  return !!(o && getComputedStyle(o).display !== 'none');
+}
 function updateDrawFabVisibility(pageId) {
   const fab = document.getElementById('draw-fab');
   if (!fab) return;
@@ -3033,7 +3531,11 @@ function updateDrawFabVisibility(pageId) {
     fab.style.display = 'none';
     return;
   }
-  const showOn = ['page-home', 'page-ch1', 'page-ch2', 'page-ch3', 'page-ch5', 'page-ch6', 'page-ch7', 'page-quick', 'page-quick-review', 'page-flash'];
+  if (isAuthOverlayBlocking()) {
+    fab.style.display = 'none';
+    return;
+  }
+  const showOn = ['page-home', 'page-ch1', 'page-ch2', 'page-ch3', 'page-quick', 'page-flash'];
   fab.style.display = showOn.indexOf(pageId) !== -1 ? 'block' : 'none';
   // Has existing drawings? Indicate on FAB
   const hasDrawings = getPageStrokes(pageId).length > 0;
@@ -3172,8 +3674,12 @@ function updateNotesFabVisibility(pageId) {
     fab.style.display = 'none';
     return;
   }
+  if (isAuthOverlayBlocking()) {
+    fab.style.display = 'none';
+    return;
+  }
   // Show on chapter, review, home pages
-  const showOn = ['page-home', 'page-ch1', 'page-ch2', 'page-ch3', 'page-ch5', 'page-ch6', 'page-ch7', 'page-quick', 'page-quick-review', 'page-flash'];
+  const showOn = ['page-home', 'page-ch1', 'page-ch2', 'page-ch3', 'page-quick', 'page-flash'];
   fab.style.display = showOn.indexOf(pageId) !== -1 ? 'block' : 'none';
   // Update badge if notes exist
   const count = getPageNotes(pageId).length;
@@ -3409,6 +3915,12 @@ function goToTopic(pageId, h3Idx) {
 let tbState = { questions: [], current: 0, correct: 0, wrong: 0, answered: false, wrongList: [] };
 const TB_RESUME_KEY = 'bus214_tb_resume';
 
+// Allow Past Exams (and other future flows) to reuse this machinery
+// by routing render output to a different area + setup IDs.
+function _tbAreaId()  { return tbState._areaId  || 'tb-quiz-area'; }
+function _tbChId()    { return tbState._chId    || 'tb-setup-chapters'; }
+function _tbSetId()   { return tbState._setId   || 'tb-setup-settings'; }
+
 function tbSaveProgress() {
   if (!tbState.questions.length) return;
   try {
@@ -3447,13 +3959,13 @@ function startTestBank(ch) {
   tbState = { questions: pool, current: 0, correct: 0, wrong: 0, answered: false, wrongList: [] };
   tbClearResume();
   // Hide setup sections
-  const chSec = document.getElementById('tb-setup-chapters');
-  const setSec = document.getElementById('tb-setup-settings');
+  const chSec = document.getElementById(_tbChId());
+  const setSec = document.getElementById(_tbSetId());
   if (chSec) chSec.style.display = 'none';
   if (setSec) setSec.style.display = 'none';
   renderTBQuestion();
   // Scroll to quiz area
-  const area = document.getElementById('tb-quiz-area');
+  const area = document.getElementById(_tbAreaId());
   if (area) area.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
@@ -3461,21 +3973,21 @@ function tbResumeSession() {
   const r = tbGetResume();
   if (!r) return;
   tbState = { questions: r.questions, current: r.current, correct: r.correct, wrong: r.wrong, answered: false, wrongList: [] };
-  const chSec = document.getElementById('tb-setup-chapters');
-  const setSec = document.getElementById('tb-setup-settings');
+  const chSec = document.getElementById(_tbChId());
+  const setSec = document.getElementById(_tbSetId());
   if (chSec) chSec.style.display = 'none';
   if (setSec) setSec.style.display = 'none';
   renderTBQuestion();
-  const area = document.getElementById('tb-quiz-area');
+  const area = document.getElementById(_tbAreaId());
   if (area) area.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
 function tbShowSetup() {
-  const chSec = document.getElementById('tb-setup-chapters');
-  const setSec = document.getElementById('tb-setup-settings');
+  const chSec = document.getElementById(_tbChId());
+  const setSec = document.getElementById(_tbSetId());
   if (chSec) chSec.style.display = '';
   if (setSec) setSec.style.display = '';
-  const area = document.getElementById('tb-quiz-area');
+  const area = document.getElementById(_tbAreaId());
   if (area) {
     // Show resume banner if there's a saved session
     const r = tbGetResume();
@@ -3495,7 +4007,7 @@ function tbShowSetup() {
 }
 
 function renderTBQuestion() {
-  const area = document.getElementById('tb-quiz-area');
+  const area = document.getElementById(_tbAreaId());
   if (!area) return;
   if (tbState.current >= tbState.questions.length) {
     tbClearResume(); // Session complete — clear saved progress
@@ -3646,7 +4158,7 @@ function renderTBQuestion() {
       <div id="tb-opts" style="display:flex;${isTF ? 'flex-direction:row;' : 'flex-direction:column;'}gap:${isTF ? '12px' : '8px'};">${optsHtml}</div>
       <div id="tb-feedback" style="margin-top:14px;font-weight:700;min-height:24px;font-size:.95rem;"></div>
       <div style="display:flex;gap:10px;margin-top:16px;">
-        <button id="tb-next-btn" onclick="tbState.current++;renderTBQuestion();setTimeout(()=>{const a=document.getElementById('tb-quiz-area');if(a)a.scrollIntoView({behavior:'smooth',block:'start'});},80);" style="display:none;background:var(--accent);color:#fff;border:none;padding:12px 32px;border-radius:12px;font-weight:700;font-size:.9rem;cursor:pointer;font-family:inherit;transition:all .15s;">${ci === total ? 'عرض النتيجة' : 'التالي ←'}</button>
+        <button id="tb-next-btn" onclick="tbState.current++;renderTBQuestion();setTimeout(()=>{const a=document.getElementById(_tbAreaId());if(a)a.scrollIntoView({behavior:'smooth',block:'start'});},80);" style="display:none;background:var(--accent);color:#fff;border:none;padding:12px 32px;border-radius:12px;font-weight:700;font-size:.9rem;cursor:pointer;font-family:inherit;transition:all .15s;">${ci === total ? 'عرض النتيجة' : 'التالي ←'}</button>
       </div>
     </div>`;
 }

@@ -69,7 +69,15 @@ async function authSubmit() {
 
 function skipAuth() {
   document.getElementById("auth-overlay").style.display = "none";
+  refreshFabsAfterAuth();
   // Guest: don't show user info or logout button
+}
+
+function refreshFabsAfterAuth() {
+  const pid = document.querySelector('.page.active')?.id;
+  if (!pid) return;
+  if (typeof updateDrawFabVisibility === 'function') updateDrawFabVisibility(pid);
+  if (typeof updateNotesFabVisibility === 'function') updateNotesFabVisibility(pid);
 }
 
 function signOutUser() {
@@ -89,11 +97,13 @@ auth.onAuthStateChanged(async user => {
     const userName = document.getElementById("fb-user-name");
     if (userInfo) userInfo.style.display = "flex";
     if (userName) userName.textContent = user.displayName || user.email.split("@")[0];
+    refreshFabsAfterAuth();
     await syncUserProgress(user);
   } else {
     document.getElementById("auth-overlay").style.display = "flex";
     const userInfo = document.getElementById("fb-user-info");
     if (userInfo) userInfo.style.display = "none";
+    refreshFabsAfterAuth();
   }
 });
 
