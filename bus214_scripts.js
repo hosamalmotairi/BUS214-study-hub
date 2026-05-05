@@ -3309,9 +3309,12 @@ function toggleDrawMode() {
     redrawStrokes();
     canvas.style.display = 'block';
     canvas.style.pointerEvents = 'auto';
-    // touch-action: in pencilOnly mode, finger should SCROLL the page —
-    // pen events bypass touch-action and still hit the canvas.
-    canvas.style.touchAction = drawState.pencilOnly ? 'pan-y pinch-zoom' : 'none';
+    // touch-action: ALWAYS 'none' so the PEN draws cleanly without
+    // the browser hijacking strokes for pan/zoom. Finger scrolling
+    // when pencilOnly is on is handled manually via touch listeners
+    // (see _onCanvasTouchStart/Move/End below) using touchType to
+    // distinguish stylus from finger on iOS.
+    canvas.style.touchAction = 'none';
     toolbar.style.display = 'flex';
     drawState.active = true;
     // Prevent pull-to-refresh and rubber-band scroll while drawing
@@ -3348,10 +3351,38 @@ function togglePencilOnly() {
     btn.style.background = drawState.pencilOnly ? '#1e3a8a' : '#374151';
     btn.title = drawState.pencilOnly ? 'قلم Apple فقط — الإصبع للتمرير ✓' : 'اضغط لتفعيل وضع القلم فقط (الإصبع للتمرير)';
   }
-  // Sync canvas touch-action so finger scrolls in pencilOnly mode,
-  // or draws in finger-mode (touch-action: none captures all touch).
-  const canvas = document.getElementById('draw-canvas');
-  if (canvas) canvas.style.touchAction = drawState.pencilOnly ? 'pan-y pinch-zoom' : 'none';
+}
+
+// ── FINGER SCROLL via touch events (in pencilOnly mode) ─────
+// touch-action:none on canvas so the pen draws cleanly without browser
+// gesture hijacking. But that would block finger scroll too — we restore
+// it manually here using TouchEvent.touchType (iOS) to distinguish
+// stylus from finger. Finger movement → window.scrollBy.
+function _isFingerTouch(t) {
+  // iOS Safari: 'direct' = finger, 'stylus' = Apple Pencil.
+  // Other browsers: touchType undefined → assume finger.
+  return !t.touchType || t.touchType === 'direct';
+}
+function _onCanvasTouchStart(e) {
+  if (!drawState.active || !drawState.pencilOnly) return;
+  const t = Array.from(e.touches).find(_isFingerTouch);
+  if (!t) return;
+  drawState._fingerScroll = { lastY: t.clientY, lastX: t.clientX, id: t.identifier };
+}
+function _onCanvasTouchMove(e) {
+  if (!drawState._fingerScroll) return;
+  const t = Array.from(e.touches).find(x => x.identifier === drawState._fingerScroll.id);
+  if (!t) return;
+  const dy = drawState._fingerScroll.lastY - t.clientY;
+  window.scrollBy(0, dy);
+  drawState._fingerScroll.lastY = t.clientY;
+  e.preventDefault(); // We're handling scroll manually
+}
+function _onCanvasTouchEnd(e) {
+  if (!drawState._fingerScroll) return;
+  // If the tracked finger lifted, clear state
+  const stillThere = Array.from(e.touches).some(x => x.identifier === drawState._fingerScroll.id);
+  if (!stillThere) drawState._fingerScroll = null;
 }
 
 function drawUndo() {
@@ -3542,18 +3573,7 @@ function endStroke(e) {
 }
 
 // Wire up pointer events once on load
-document.addEventListener('DOMContentLoaded', function() {
-  const canvas = document.getElementById('draw-canvas');
-  if (!canvas) return;
-  canvas.addEventListener('pointerdown', startStroke);
-  canvas.addEventListener('pointermove', continueStroke);
-  canvas.addEventListener('pointerup', endStroke);
-  canvas.addEventListener('pointercancel', endStroke);
-  canvas.addEventListener('pointerleave', endStroke);
-});
-// Also wire up immediately in case DOMContentLoaded has already fired
-setTimeout(function() {
-  const canvas = document.getElementById('draw-canvas');
+function _wireDrawListeners(canvas) {
   if (!canvas || canvas._drawWired) return;
   canvas._drawWired = true;
   canvas.addEventListener('pointerdown', startStroke);
@@ -3561,6 +3581,18 @@ setTimeout(function() {
   canvas.addEventListener('pointerup', endStroke);
   canvas.addEventListener('pointercancel', endStroke);
   canvas.addEventListener('pointerleave', endStroke);
+  // Manual finger scroll listeners (work alongside pointer events).
+  // passive:false so we can preventDefault inside touchmove.
+  canvas.addEventListener('touchstart', _onCanvasTouchStart, { passive: true });
+  canvas.addEventListener('touchmove', _onCanvasTouchMove, { passive: false });
+  canvas.addEventListener('touchend', _onCanvasTouchEnd, { passive: true });
+  canvas.addEventListener('touchcancel', _onCanvasTouchEnd, { passive: true });
+}
+document.addEventListener('DOMContentLoaded', function() {
+  _wireDrawListeners(document.getElementById('draw-canvas'));
+});
+setTimeout(function() {
+  _wireDrawListeners(document.getElementById('draw-canvas'));
 }, 500);
 
 // Show/hide draw FAB per page
