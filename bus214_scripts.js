@@ -1389,7 +1389,7 @@ function renderConfusionGrid() {
 // ── STUDY ROADMAP (4-day plan to reduce decision fatigue) ──
 const ROADMAP_PLAN = [
   {
-    dayNum: 1, label: 'اليوم — Mon', date: '2026-05-04', emoji: '📚',
+    dayNum: 1, label: 'الإثنين — Mon', date: '2026-05-04', emoji: '📚',
     theme: 'يوم الفصل الخامس (Ch 5)',
     tasks: [
       { id: 'd1-t1', label: 'راجع Ch 5 — Quick Review', mins: 15, action: () => showPage('page-ch1') },
@@ -1398,7 +1398,7 @@ const ROADMAP_PLAN = [
     ]
   },
   {
-    dayNum: 2, label: 'غداً — Tue', date: '2026-05-05', emoji: '🧭',
+    dayNum: 2, label: 'الثلاثاء — Tue', date: '2026-05-05', emoji: '🧭',
     theme: 'فصل 6 + 7 (Decision Framework + Moral Philosophy)',
     tasks: [
       { id: 'd2-t1', label: 'راجع Ch 6 — Decision Framework', mins: 20, action: () => showPage('page-ch2') },
@@ -1416,7 +1416,7 @@ const ROADMAP_PLAN = [
     ]
   },
   {
-    dayNum: 4, label: 'يوم الميد — Thu', date: '2026-05-07', emoji: '🏆',
+    dayNum: 4, label: 'الخميس — Thu (يوم الميد)', date: '2026-05-07', emoji: '🏆',
     theme: 'مراجعة سريعة وثقة',
     tasks: [
       { id: 'd4-t1', label: 'Flash Cards — مراجعة سريعة', mins: 15, action: () => { showPage('page-flash'); if (typeof initFlashCards === 'function') initFlashCards(); } },
@@ -1471,6 +1471,16 @@ function renderRoadmap() {
     const allDone = dayDoneCount === day.tasks.length;
     if (isToday) { todayDoneCount = dayDoneCount; todayTotalCount = day.tasks.length; }
 
+    // Dynamic relative-date prefix (اليوم / غداً / أمس) based on real current date
+    const dayMs = 24 * 60 * 60 * 1000;
+    const diffDays = Math.round((new Date(day.date) - new Date(today)) / dayMs);
+    let relativePrefix = '';
+    if (diffDays === 0) relativePrefix = 'اليوم · ';
+    else if (diffDays === 1) relativePrefix = 'غداً · ';
+    else if (diffDays === -1) relativePrefix = 'أمس · ';
+    else if (diffDays === 2) relativePrefix = 'بعد غدٍ · ';
+    const displayLabel = relativePrefix + day.label;
+
     const headerStyle = isToday
       ? 'background:linear-gradient(135deg, var(--accent), #60A5FA); color:#fff;'
       : isPast ? 'background:var(--paper); color:var(--muted); opacity:.6;' : 'background:var(--paper); color:var(--text);';
@@ -1479,7 +1489,7 @@ function renderRoadmap() {
 
     const header = _rmEl('div', { style: 'padding:14px 18px; ' + headerStyle + ' display:flex; justify-content:space-between; align-items:center;' });
     const headerLeft = _rmEl('div');
-    const titleEl = _rmEl('strong', { style: 'font-size:1.05rem;' }, day.emoji + ' ' + day.label);
+    const titleEl = _rmEl('strong', { style: 'font-size:1.05rem;' }, day.emoji + ' ' + displayLabel);
     const themeEl = _rmEl('div', { style: 'font-size:.82rem; margin-top:2px; opacity:.9;' }, day.theme);
     headerLeft.appendChild(titleEl); headerLeft.appendChild(themeEl);
     const headerRight = _rmEl('div', { style: 'font-size:.85rem; font-weight:700;' }, dayDoneCount + '/' + day.tasks.length + (allDone ? ' ✅' : ''));
