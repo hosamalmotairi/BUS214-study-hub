@@ -3365,23 +3365,44 @@ function _isFingerTouch(t) {
 }
 function _onCanvasTouchStart(e) {
   if (!drawState.active || !drawState.pencilOnly) return;
-  const t = Array.from(e.touches).find(_isFingerTouch);
-  if (!t) return;
-  drawState._fingerScroll = { lastY: t.clientY, lastX: t.clientX, id: t.identifier };
+  // Find finger (not stylus) — manual loop instead of Array.from to avoid alloc
+  let finger = null;
+  for (let i = 0; i < e.touches.length; i++) {
+    if (_isFingerTouch(e.touches[i])) { finger = e.touches[i]; break; }
+  }
+  if (!finger) return;
+  drawState._fingerScroll = { lastY: finger.clientY, id: finger.identifier, dyAccum: 0, scheduled: false };
 }
 function _onCanvasTouchMove(e) {
-  if (!drawState._fingerScroll) return;
-  const t = Array.from(e.touches).find(x => x.identifier === drawState._fingerScroll.id);
+  const fs = drawState._fingerScroll;
+  if (!fs) return;
+  let t = null;
+  for (let i = 0; i < e.touches.length; i++) {
+    if (e.touches[i].identifier === fs.id) { t = e.touches[i]; break; }
+  }
   if (!t) return;
-  const dy = drawState._fingerScroll.lastY - t.clientY;
-  window.scrollBy(0, dy);
-  drawState._fingerScroll.lastY = t.clientY;
-  e.preventDefault(); // We're handling scroll manually
+  fs.dyAccum += fs.lastY - t.clientY;
+  fs.lastY = t.clientY;
+  // Batch the scroll commit to next animation frame — avoids forcing
+  // synchronous reflow on every touch sample (60-120Hz).
+  if (!fs.scheduled) {
+    fs.scheduled = true;
+    requestAnimationFrame(() => {
+      if (drawState._fingerScroll === fs) {
+        window.scrollBy(0, fs.dyAccum);
+        fs.dyAccum = 0;
+        fs.scheduled = false;
+      }
+    });
+  }
 }
 function _onCanvasTouchEnd(e) {
-  if (!drawState._fingerScroll) return;
-  // If the tracked finger lifted, clear state
-  const stillThere = Array.from(e.touches).some(x => x.identifier === drawState._fingerScroll.id);
+  const fs = drawState._fingerScroll;
+  if (!fs) return;
+  let stillThere = false;
+  for (let i = 0; i < e.touches.length; i++) {
+    if (e.touches[i].identifier === fs.id) { stillThere = true; break; }
+  }
   if (!stillThere) drawState._fingerScroll = null;
 }
 
@@ -3581,10 +3602,11 @@ function _wireDrawListeners(canvas) {
   canvas.addEventListener('pointerup', endStroke);
   canvas.addEventListener('pointercancel', endStroke);
   canvas.addEventListener('pointerleave', endStroke);
-  // Manual finger scroll listeners (work alongside pointer events).
-  // passive:false so we can preventDefault inside touchmove.
+  // Manual finger scroll listeners — ALL passive so they don't block
+  // the iOS compositor thread. touch-action:none on canvas already
+  // prevents native scroll, so we don't need preventDefault.
   canvas.addEventListener('touchstart', _onCanvasTouchStart, { passive: true });
-  canvas.addEventListener('touchmove', _onCanvasTouchMove, { passive: false });
+  canvas.addEventListener('touchmove', _onCanvasTouchMove, { passive: true });
   canvas.addEventListener('touchend', _onCanvasTouchEnd, { passive: true });
   canvas.addEventListener('touchcancel', _onCanvasTouchEnd, { passive: true });
 }
