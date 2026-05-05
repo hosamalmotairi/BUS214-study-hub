@@ -3223,7 +3223,7 @@ let drawState = {
   color: '#000000',
   size: 4,
   eraser: false,
-  pencilOnly: false, // ignore finger touches (Apple Pencil only)
+  pencilOnly: true, // default: Apple Pencil only — finger scrolls the page
   strokes: [], // current page's strokes: [{color, size, eraser, points:[{x,y,p}]}]
   currentStroke: null,
   pageId: null,
@@ -3309,6 +3309,9 @@ function toggleDrawMode() {
     redrawStrokes();
     canvas.style.display = 'block';
     canvas.style.pointerEvents = 'auto';
+    // touch-action: in pencilOnly mode, finger should SCROLL the page —
+    // pen events bypass touch-action and still hit the canvas.
+    canvas.style.touchAction = drawState.pencilOnly ? 'pan-y pinch-zoom' : 'none';
     toolbar.style.display = 'flex';
     drawState.active = true;
     // Prevent pull-to-refresh and rubber-band scroll while drawing
@@ -3343,8 +3346,12 @@ function togglePencilOnly() {
   if (btn) {
     btn.style.borderColor = drawState.pencilOnly ? '#60A5FA' : 'transparent';
     btn.style.background = drawState.pencilOnly ? '#1e3a8a' : '#374151';
-    btn.title = drawState.pencilOnly ? 'قلم Apple فقط — الأصابع متجاهلة ✓' : 'اضغط لتفعيل وضع القلم فقط (تجاهل الأصابع)';
+    btn.title = drawState.pencilOnly ? 'قلم Apple فقط — الإصبع للتمرير ✓' : 'اضغط لتفعيل وضع القلم فقط (الإصبع للتمرير)';
   }
+  // Sync canvas touch-action so finger scrolls in pencilOnly mode,
+  // or draws in finger-mode (touch-action: none captures all touch).
+  const canvas = document.getElementById('draw-canvas');
+  if (canvas) canvas.style.touchAction = drawState.pencilOnly ? 'pan-y pinch-zoom' : 'none';
 }
 
 function drawUndo() {
