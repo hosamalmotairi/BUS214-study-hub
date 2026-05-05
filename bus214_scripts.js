@@ -3367,6 +3367,14 @@ function redrawStrokes() {
   ctx.clearRect(0, 0, drawState.canvas.width, drawState.canvas.height);
   drawState.strokes.forEach(function(stroke) { drawStrokeOnCanvas(stroke); });
 }
+// Map velocity (px/ms) to width multiplier — Notability-style "ink feel":
+// slow strokes = thick, fast strokes = thin. Range clamped 0.7x..1.35x.
+function _velMul(v) {
+  // v ~0.2 px/ms = slow handwriting → 1.35x; v ~3 px/ms = quick scribble → 0.7x
+  const t = Math.max(0, Math.min(1, (v - 0.15) / (3.0 - 0.15)));
+  return 1.35 - t * 0.65;
+}
+
 function drawStrokeOnCanvas(stroke) {
   const ctx = drawState.ctx;
   if (!ctx || !stroke.points || stroke.points.length === 0) return;
@@ -3375,18 +3383,31 @@ function drawStrokeOnCanvas(stroke) {
   ctx.lineCap = 'round';
   ctx.lineJoin = 'round';
   const pts = stroke.points;
-  // Draw each segment with its own width based on pressure (Apple Pencil)
-  for (let i = 1; i < pts.length; i++) {
+  const N = pts.length;
+  // Smoothed velocity per-segment (EMA) to avoid jittery thickness
+  let smoothV = -1;
+  for (let i = 1; i < N; i++) {
     const p1 = pts[i-1], p2 = pts[i];
-    // Use averaged pressure for this segment, default 0.5 if unavailable
+    // Velocity (only if timestamps present)
+    if (p1.t && p2.t && p2.t > p1.t) {
+      const dx = p2.x - p1.x, dy = p2.y - p1.y;
+      const v = Math.sqrt(dx*dx + dy*dy) / (p2.t - p1.t);
+      smoothV = smoothV < 0 ? v : (smoothV * 0.65 + v * 0.35);
+    }
     const pressure = ((p1.p || 0.5) + (p2.p || 0.5)) / 2;
-    // Softer pressure curve: 0.5 = 100%, range 0.6x to 1.4x
     const pressureMul = stroke.eraser ? 1 : (0.6 + pressure * 0.8);
-    ctx.lineWidth = stroke.size * pressureMul;
+    const velMul = (smoothV >= 0 && !stroke.eraser) ? _velMul(smoothV) : 1.0;
+    // Tapered ends — first 3 and last 3 segments scale down to mimic ink
+    // entry/exit. Skip taper for very short strokes.
+    let taperMul = 1;
+    if (N > 8 && !stroke.eraser) {
+      if (i <= 3)       taperMul = 0.55 + i * 0.15;            // 0.70, 0.85, 1.00 → settled
+      else if (i >= N - 3) taperMul = 0.55 + (N - 1 - i) * 0.15; // taper out
+    }
+    ctx.lineWidth = stroke.size * pressureMul * velMul * taperMul;
     ctx.beginPath();
     ctx.moveTo(p1.x, p1.y);
-    // Midpoint smoothing for cleaner curves
-    if (i + 1 < pts.length) {
+    if (i + 1 < N) {
       const p3 = pts[i+1];
       const mx = (p2.x + p3.x) / 2;
       const my = (p2.y + p3.y) / 2;
@@ -3400,9 +3421,15 @@ function drawStrokeOnCanvas(stroke) {
 
 // Pointer position using cached rect (refreshed at stroke start) to avoid
 // layout thrash from getBoundingClientRect() on every pointermove event.
+// Includes timestamp for velocity calculation (Notability-style ink feel).
 function getPointerPosFast(e) {
   const rect = drawState.strokeRect;
-  return { x: e.clientX - rect.left, y: e.clientY - rect.top, p: e.pressure || 0.5 };
+  return {
+    x: e.clientX - rect.left,
+    y: e.clientY - rect.top,
+    p: e.pressure || 0.5,
+    t: e.timeStamp || performance.now()
+  };
 }
 // Slow-path used at stroke start (no cached rect yet)
 function getPointerPos(e, canvas) {
@@ -3456,10 +3483,20 @@ function continueStroke(e) {
     s.points.push(getPointerPosFast(events[i]));
     const pts = s.points;
     if (pts.length < 2) continue;
+
+    // Compute velocity for newest segment (Notability-style ink feel)
+    const pLast = pts[pts.length-1], pPrev = pts[pts.length-2];
+    if (pLast.t && pPrev.t && pLast.t > pPrev.t) {
+      const dx = pLast.x - pPrev.x, dy = pLast.y - pPrev.y;
+      const v = Math.sqrt(dx*dx + dy*dy) / (pLast.t - pPrev.t);
+      s.smoothV = (s.smoothV === undefined) ? v : (s.smoothV * 0.65 + v * 0.35);
+    }
+    const velMul = (s.smoothV !== undefined && !s.eraser) ? _velMul(s.smoothV) : 1.0;
+
     if (pts.length < 3) {
       const p1 = pts[0], p2 = pts[1];
       const pr = ((p1.p || 0.5) + (p2.p || 0.5)) / 2;
-      ctx.lineWidth = s.size * (s.eraser ? 1 : (0.6 + pr * 0.8));
+      ctx.lineWidth = s.size * (s.eraser ? 1 : (0.6 + pr * 0.8)) * velMul;
       ctx.beginPath();
       ctx.moveTo(p1.x, p1.y);
       ctx.lineTo(p2.x, p2.y);
@@ -3470,7 +3507,7 @@ function continueStroke(e) {
     const m1x = (p1.x + p2.x) * 0.5, m1y = (p1.y + p2.y) * 0.5;
     const m2x = (p2.x + p3.x) * 0.5, m2y = (p2.y + p3.y) * 0.5;
     const pr = ((p2.p || 0.5) + (p3.p || 0.5)) / 2;
-    ctx.lineWidth = s.size * (s.eraser ? 1 : (0.6 + pr * 0.8));
+    ctx.lineWidth = s.size * (s.eraser ? 1 : (0.6 + pr * 0.8)) * velMul;
     ctx.beginPath();
     ctx.moveTo(m1x, m1y);
     ctx.quadraticCurveTo(p2.x, p2.y, m2x, m2y);
