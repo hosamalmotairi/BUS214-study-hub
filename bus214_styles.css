@@ -5015,3 +5015,232 @@ body.dark .study-aids-hub > .sah-subtitle { color: #94A3B8; }
 body.dark .study-aids-hub .sah-card { background: #1E293B; color: #E2E8F0; }
 body.dark .study-aids-hub .sah-card strong { color: #93C5FD; }
 
+/* ══════════════════════════════════════════
+   DISCUSSION ACTIVITY (end-of-chapter card)
+   Calm indigo, blockquote-style question, scannable answer.
+   Bilingual via existing .ar-line toggle.
+═══════════════════════════════════════════ */
+.discussion-activity {
+  margin: 28px 0 16px;
+  background: #FAFAFF;
+  border: 1px solid #E0E7FF;
+  border-radius: 18px;
+  padding: 22px 26px 24px;
+  position: relative;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
+}
+.discussion-activity .da-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #4338CA;
+  background: #EEF2FF;
+  padding: 5px 12px;
+  border-radius: 999px;
+  margin-bottom: 14px;
+}
+.discussion-activity .da-tag .ar-line {
+  display: inline-block;
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #6366F1;
+  letter-spacing: 0;
+  text-transform: none;
+  border-radius: 0;
+}
+.discussion-activity .da-question {
+  margin: 0 0 18px;
+  padding: 14px 18px 14px 18px;
+  background: #fff;
+  border-right: 4px solid #6366F1;
+  border-radius: 4px 12px 12px 4px;
+  font-family: 'IBM Plex Sans Arabic', 'Inter', 'Segoe UI', sans-serif;
+}
+.discussion-activity .da-question .da-q-en {
+  font-size: 1.12rem;
+  font-weight: 600;
+  color: #0F172A;
+  line-height: 1.55;
+  margin: 0;
+  letter-spacing: 0.005em;
+}
+.discussion-activity .da-question .ar-line {
+  display: block;
+  margin-top: 10px;
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 1rem;
+  line-height: 1.85;
+  font-weight: 500;
+  color: #4338CA;
+  border-radius: 0;
+}
+.discussion-activity .da-answer-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #4338CA;
+  margin: 0 0 10px;
+}
+.discussion-activity .da-answer-label::before {
+  content: "";
+  flex: 0 0 18px;
+  height: 2px;
+  background: #C7D2FE;
+}
+.discussion-activity .da-answer-label .ar-line {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #6366F1;
+  border-radius: 0;
+}
+.discussion-activity .da-points {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.discussion-activity .da-points > li {
+  position: relative;
+  padding: 10px 14px 10px 32px;
+  margin: 0 0 6px;
+  font-size: 0.97rem;
+  line-height: 1.7;
+  color: #1E293B;
+  border-radius: 8px;
+}
+.discussion-activity .da-points > li:hover {
+  background: rgba(99, 102, 241, 0.04);
+}
+.discussion-activity .da-points > li::before {
+  content: "";
+  position: absolute;
+  left: 14px;
+  top: 18px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #6366F1;
+}
+.discussion-activity .da-points > li strong {
+  color: #4338CA;
+  font-weight: 700;
+}
+.discussion-activity .da-points > li em {
+  font-style: normal;
+  background: #FEF3C7;
+  color: #92400E;
+  padding: 1px 6px;
+  border-radius: 4px;
+  font-size: 0.92em;
+  font-weight: 600;
+}
+.discussion-activity .da-points > li .ar-line {
+  display: block;
+  margin-top: 6px;
+  background: none;
+  border: none;
+  padding: 0;
+  font-family: 'IBM Plex Sans Arabic', 'Segoe UI', Tahoma, sans-serif;
+  font-size: 0.95rem;
+  line-height: 1.85;
+  color: #475569;
+  border-radius: 0;
+}
+.discussion-activity .da-key {
+  margin: 18px 0 0;
+  padding: 12px 16px;
+  background: linear-gradient(135deg, #EEF2FF 0%, #F5F3FF 100%);
+  border: 1px dashed #A5B4FC;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: #312E81;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+.discussion-activity .da-key::before {
+  content: "🎯";
+  flex: 0 0 auto;
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+.discussion-activity .da-key b {
+  color: #4338CA;
+  font-weight: 700;
+}
+.discussion-activity .da-key .ar-line {
+  display: block;
+  margin-top: 6px;
+  background: none;
+  border: none;
+  padding: 0;
+  font-family: 'IBM Plex Sans Arabic', sans-serif;
+  font-size: 0.92rem;
+  line-height: 1.85;
+  font-weight: 500;
+  color: #4F46E5;
+  border-radius: 0;
+}
+.discussion-activity .da-source {
+  margin-top: 14px;
+  font-size: 0.78rem;
+  color: #94A3B8;
+  text-align: left;
+  letter-spacing: 0.02em;
+}
+
+/* Dark mode */
+body.dark .discussion-activity {
+  background: #0F172A;
+  border-color: #1E293B;
+  box-shadow: none;
+}
+body.dark .discussion-activity .da-tag {
+  background: rgba(99, 102, 241, 0.15);
+  color: #A5B4FC;
+}
+body.dark .discussion-activity .da-tag .ar-line { color: #C7D2FE; }
+body.dark .discussion-activity .da-question {
+  background: #1E293B;
+  border-right-color: #818CF8;
+}
+body.dark .discussion-activity .da-question .da-q-en { color: #F1F5F9; }
+body.dark .discussion-activity .da-question .ar-line { color: #C7D2FE; }
+body.dark .discussion-activity .da-answer-label,
+body.dark .discussion-activity .da-answer-label .ar-line { color: #A5B4FC; }
+body.dark .discussion-activity .da-points > li { color: #E2E8F0; }
+body.dark .discussion-activity .da-points > li:hover { background: rgba(99, 102, 241, 0.08); }
+body.dark .discussion-activity .da-points > li strong { color: #A5B4FC; }
+body.dark .discussion-activity .da-points > li em { background: rgba(252, 211, 77, 0.15); color: #FCD34D; }
+body.dark .discussion-activity .da-points > li .ar-line { color: #94A3B8; }
+body.dark .discussion-activity .da-key {
+  background: rgba(99, 102, 241, 0.08);
+  border-color: rgba(165, 180, 252, 0.3);
+  color: #C7D2FE;
+}
+body.dark .discussion-activity .da-key b { color: #A5B4FC; }
+body.dark .discussion-activity .da-key .ar-line { color: #C7D2FE; }
+body.dark .discussion-activity .da-source { color: #64748B; }
+
+@media (max-width: 640px) {
+  .discussion-activity { padding: 18px 18px 20px; }
+  .discussion-activity .da-question { padding: 12px 14px; }
+  .discussion-activity .da-question .da-q-en { font-size: 1.05rem; }
+  .discussion-activity .da-points > li { padding: 8px 12px 8px 28px; font-size: 0.94rem; }
+}
