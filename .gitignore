@@ -21,3 +21,4 @@ match_slides.py
 match_topics.py
 mid2_slide_map.json
 mid2_topic_map.json
+extract_notes.py
