@@ -4917,3 +4917,101 @@ body.dark .scenario-card .sc-opts li { background: #0F172A; border-color: #33415
 body.dark .scenario-card details { background: #1E3A8A; }
 body.dark .scenario-card details summary { color: #93C5FD; }
 
+/* ── STUDY AIDS HUB — consolidated mnemonics + traps box ───── */
+.study-aids-hub {
+  background: linear-gradient(135deg, #ECFDF5 0%, #FEF3C7 100%);
+  border: 2px solid #10B981;
+  border-radius: 16px;
+  padding: 20px 22px;
+  margin: 16px 0 24px 0;
+  box-shadow: 0 4px 16px rgba(16, 185, 129, 0.1);
+}
+.study-aids-hub > .sah-title {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #047857;
+  margin: 0 0 6px 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.study-aids-hub > .sah-subtitle {
+  color: #64748B;
+  font-size: 0.85rem;
+  margin-bottom: 16px;
+}
+.study-aids-hub .sah-row {
+  margin-bottom: 14px;
+}
+.study-aids-hub .sah-row-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  margin: 12px 0 8px 0;
+  padding: 4px 10px;
+  display: inline-block;
+  border-radius: 6px;
+}
+.study-aids-hub .sah-row-mn .sah-row-title {
+  background: #10B981;
+  color: #fff;
+}
+.study-aids-hub .sah-row-tr .sah-row-title {
+  background: #F59E0B;
+  color: #fff;
+}
+.study-aids-hub .sah-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 10px;
+}
+.study-aids-hub .sah-card {
+  background: #fff;
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: 0.88rem;
+  line-height: 1.55;
+  border-right: 3px solid #10B981;
+}
+.study-aids-hub .sah-row-tr .sah-card {
+  border-right-color: #F59E0B;
+}
+.study-aids-hub .sah-card .sah-key {
+  display: inline-block;
+  background: #10B981;
+  color: #fff;
+  padding: 1px 8px;
+  border-radius: 5px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  font-size: 0.85rem;
+  margin-left: 4px;
+}
+.study-aids-hub .sah-row-tr .sah-card .sah-key {
+  background: #F59E0B;
+}
+.study-aids-hub .sah-card strong { color: #1E40AF; }
+.study-aids-hub .sah-card .vs {
+  display: inline-block;
+  background: #F59E0B;
+  color: #fff;
+  padding: 0 6px;
+  border-radius: 3px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  margin: 0 3px;
+}
+
+@media (max-width: 768px) {
+  .study-aids-hub .sah-grid { grid-template-columns: 1fr; }
+  .study-aids-hub { padding: 16px; }
+}
+
+body.dark .study-aids-hub {
+  background: linear-gradient(135deg, #064E3B 0%, #451A03 100%);
+  border-color: #34D399;
+}
+body.dark .study-aids-hub > .sah-title { color: #6EE7B7; }
+body.dark .study-aids-hub > .sah-subtitle { color: #94A3B8; }
+body.dark .study-aids-hub .sah-card { background: #1E293B; color: #E2E8F0; }
+body.dark .study-aids-hub .sah-card strong { color: #93C5FD; }
+
