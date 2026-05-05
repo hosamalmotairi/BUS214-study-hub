@@ -3500,7 +3500,7 @@ function getPointerPos(e, canvas) {
 
 function startStroke(e) {
   if (!drawState.active) return;
-  if (drawState.pencilOnly && e.pointerType && e.pointerType !== 'pen') return;
+  if (drawState.pencilOnly && e.pointerType !== 'pen') return;
   if (e.pointerType === 'touch' && drawState.drawing) return;
   e.preventDefault();
   // Capture pointer so we keep getting move/up events even if finger leaves canvas
@@ -3522,7 +3522,7 @@ function startStroke(e) {
 function continueStroke(e) {
   if (!drawState.active || !drawState.drawing || !drawState.currentStroke) return;
   if (drawState.activePointerId != null && e.pointerId !== drawState.activePointerId) return;
-  if (drawState.pencilOnly && e.pointerType && e.pointerType !== 'pen') return;
+  if (drawState.pencilOnly && e.pointerType !== 'pen') return;
   e.preventDefault();
 
   const ctx = drawState.ctx;
