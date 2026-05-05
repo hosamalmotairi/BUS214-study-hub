@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -471,7 +471,7 @@
 <div id="page-roadmap" class="page">
   <section class="hero">
     <div class="tag">Study Plan</div>
-    <h1><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-left:8px"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg> خطتي للميد</h1>
+    <h2 class="page-title"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-left:8px"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg> خطتي للميد</h2>
     <p>كل يوم 3 مهمات. اضغط المهمة → تسوّيها → ترجع تأشّرها ✓ — بدون قرارات ولا تشتت.</p>
     <div class="cover-meta">
       <div class="cover-box"><span class="cover-label">الميد</span><span class="cover-value">الخميس 7 May</span></div>
@@ -497,7 +497,7 @@
 <div id="page-cheatsheet" class="page">
   <section class="hero no-print">
     <div class="tag">Mid Summary</div>
-    <h1>📄 ملخص الميد — Mid 2</h1>
+    <h2 class="page-title">📄 ملخص الميد — Mid 2</h2>
     <p>صفحتان A4 كثيفتان، طبعهم وحطّهم قدامك ليلة الميد. الوجه الأول Ch 5 · الوجه الثاني Ch 6+7.</p>
     <button onclick="window.print()" class="quiz-btn quiz-btn-primary" style="margin-top:12px;">🖨️ طباعة الورقتين</button>
   </section>
@@ -1990,7 +1990,7 @@
   <!-- Hero -->
   <section class="hero">
     <div class="tag">BUS 214 · Official Test Bank</div>
-    <h1><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-left:8px"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/><line x1="8" y1="7" x2="16" y2="7"/><line x1="8" y1="11" x2="14" y2="11"/></svg> Test Bank</h1>
+    <h2 class="page-title"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-left:8px"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/><line x1="8" y1="7" x2="16" y2="7"/><line x1="8" y1="11" x2="14" y2="11"/></svg> Test Bank</h2>
     <p>أسئلة من التست بانك الرسمي — Ferrell, Business Ethics 13e · Chapters 5–7</p>
     <div class="cover-meta">
       <div class="cover-box"><span class="cover-label">Total</span><span class="cover-value">144 Q</span></div>
@@ -2129,7 +2129,7 @@ function tbSelectCount(el, val) {
   <div style="display:flex;justify-content:center;gap:5px;margin-top:8px;" id="pomo-dots"></div>
   <div style="display:flex;gap:8px;justify-content:center;margin-top:14px;">
     <button onclick="pomoToggle()" id="pomo-widget-start" style="background:var(--accent);color:#fff;border:none;padding:7px 20px;border-radius:8px;font-weight:700;font-size:.82rem;cursor:pointer;font-family:inherit;">▶️ ابدأ</button>
-    <button onclick="pomoReset()" style="background:none;border:1px solid var(--line);color:var(--muted);padding:7px 12px;border-radius:8px;font-size:.82rem;cursor:pointer;font-family:inherit;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg></button>
+    <button onclick="pomoReset()" aria-label="إعادة ضبط المؤقت" style="background:none;border:1px solid var(--line);color:var(--muted);padding:7px 12px;border-radius:8px;font-size:.82rem;cursor:pointer;font-family:inherit;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg></button>
   </div>
   <div style="display:flex;gap:4px;justify-content:center;margin-top:10px;">
     <button onclick="pomoSetMode('work')" id="pomo-btn-work" style="font-size:.68rem;padding:3px 8px;border-radius:6px;border:1px solid var(--accent);color:var(--accent);background:none;cursor:pointer;font-family:inherit;">25د</button>
@@ -2152,7 +2152,7 @@ function tbSelectCount(el, val) {
   <!-- Hero -->
   <section class="hero">
     <div class="tag">BUS 214 · Past Exams</div>
-    <h1><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-left:8px"><path d="M12 8v4l3 3"/><circle cx="12" cy="12" r="10"/></svg> تجميعات سابقة</h1>
+    <h2 class="page-title"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-left:8px"><path d="M12 8v4l3 3"/><circle cx="12" cy="12" r="10"/></svg> تجميعات سابقة</h2>
     <p>أسئلة من اختبارات سنوات سابقة — تخص محتوى Mid 2 (Ch 5/6/7) فقط</p>
     <div class="cover-meta">
       <div class="cover-box"><span class="cover-label">Total</span><span class="cover-value" id="pe-total-count">53 Q</span></div>
@@ -2312,7 +2312,7 @@ function peSelectCount(el, val) {
 <div id="page-pomodoro" class="page">
   <section class="hero">
     <div class="tag">BUS 214 · Focus Mode</div>
-    <h1><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-left:8px"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> Pomodoro Timer</h1>
+    <h2 class="page-title"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-left:8px"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> Pomodoro Timer</h2>
     <p>ركّز على دراستك — 25 دقيقة دراسة، 5 دقائق استراحة</p>
   </section>
 
@@ -2352,7 +2352,7 @@ function peSelectCount(el, val) {
 <div id="page-before-exam" class="page">
   <section class="hero" style="background:linear-gradient(135deg,#DC2626,#F59E0B);">
     <div class="tag">BUS 214 · Last-Minute Review</div>
-    <h1>🔥 قبل الاختبار</h1>
+    <h2 class="page-title">🔥 قبل الاختبار</h2>
     <p>ملخص شامل لكل فصل — أهم التعاريف، النقاط الرئيسية، وأسئلة متوقعة</p>
   </section>
 
@@ -2397,7 +2397,7 @@ function peSelectCount(el, val) {
 <div id="page-wrong-review" class="page">
   <section class="hero">
     <div class="tag">BUS 214 · Learn from Mistakes</div>
-    <h1><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-left:8px"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg> مراجعة الأخطاء</h1>
+    <h2 class="page-title"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-left:8px"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg> مراجعة الأخطاء</h2>
     <p>راجع الأسئلة اللي غلطت فيها عشان ما تغلط فيها مرة ثانية</p>
   </section>
 
@@ -2443,11 +2443,11 @@ function peSelectCount(el, val) {
 
 <div id="draw-toolbar" style="display:none;position:fixed;bottom:20px;left:50%;transform:translateX(-50%);z-index:10002;background:#1f2937;color:#fff;padding:10px 14px;border-radius:16px;box-shadow:0 8px 30px rgba(0,0,0,.35);gap:8px;align-items:center;flex-wrap:wrap;max-width:calc(100vw - 20px);">
   <div style="display:flex;gap:4px;align-items:center;">
-    <button class="draw-color-btn" data-color="#000000" onclick="setDrawColor(this,'#000000')" style="background:#000000;width:28px;height:28px;border-radius:50%;border:2px solid #60A5FA;cursor:pointer;"></button>
-    <button class="draw-color-btn" data-color="#DC2626" onclick="setDrawColor(this,'#DC2626')" style="background:#DC2626;width:28px;height:28px;border-radius:50%;border:2px solid transparent;cursor:pointer;"></button>
-    <button class="draw-color-btn" data-color="#2563EB" onclick="setDrawColor(this,'#2563EB')" style="background:#2563EB;width:28px;height:28px;border-radius:50%;border:2px solid transparent;cursor:pointer;"></button>
-    <button class="draw-color-btn" data-color="#16A34A" onclick="setDrawColor(this,'#16A34A')" style="background:#16A34A;width:28px;height:28px;border-radius:50%;border:2px solid transparent;cursor:pointer;"></button>
-    <button class="draw-color-btn" data-color="#F59E0B" onclick="setDrawColor(this,'#F59E0B')" style="background:#F59E0B;width:28px;height:28px;border-radius:50%;border:2px solid transparent;cursor:pointer;"></button>
+    <button class="draw-color-btn" aria-label="لون أسود" data-color="#000000" onclick="setDrawColor(this,'#000000')" style="background:#000000;width:28px;height:28px;border-radius:50%;border:2px solid #60A5FA;cursor:pointer;"></button>
+    <button class="draw-color-btn" aria-label="لون أحمر" data-color="#DC2626" onclick="setDrawColor(this,'#DC2626')" style="background:#DC2626;width:28px;height:28px;border-radius:50%;border:2px solid transparent;cursor:pointer;"></button>
+    <button class="draw-color-btn" aria-label="لون أزرق" data-color="#2563EB" onclick="setDrawColor(this,'#2563EB')" style="background:#2563EB;width:28px;height:28px;border-radius:50%;border:2px solid transparent;cursor:pointer;"></button>
+    <button class="draw-color-btn" aria-label="لون أخضر" data-color="#16A34A" onclick="setDrawColor(this,'#16A34A')" style="background:#16A34A;width:28px;height:28px;border-radius:50%;border:2px solid transparent;cursor:pointer;"></button>
+    <button class="draw-color-btn" aria-label="لون برتقالي" data-color="#F59E0B" onclick="setDrawColor(this,'#F59E0B')" style="background:#F59E0B;width:28px;height:28px;border-radius:50%;border:2px solid transparent;cursor:pointer;"></button>
   </div>
   <div style="width:1px;height:28px;background:#4b5563;"></div>
   <div style="display:flex;gap:4px;align-items:center;">

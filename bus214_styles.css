@@ -4658,6 +4658,57 @@ body.focus-mode .page.active {
 }
 .cs-grid { flex: 1; }
 
+/* Cheat Sheet — Responsive for screen viewing (print uses 3-col regardless) */
+@media (max-width: 768px) {
+  .cheatsheet-wrap { max-width: 100%; padding: 0 8px; }
+  .cs-sheet { padding: 12mm 8mm; min-height: auto; }
+  .cs-grid { grid-template-columns: 1fr !important; }
+  .cs-card-wide { grid-column: span 1 !important; }
+  .cs-twocol { column-count: 1; }
+  .cs-table { font-size: 9pt; }
+}
+@media (min-width: 769px) and (max-width: 1023px) {
+  .cs-grid { grid-template-columns: 1fr 1fr !important; }
+  .cs-card-wide { grid-column: span 2 !important; }
+}
+
+/* Touch target minimum — WCAG 2.5.5 + Apple HIG (44px) */
+.cs-grid button,
+#roadmap-container button,
+.draw-color-btn,
+.quiz-btn,
+button.size-btn {
+  min-height: 44px;
+}
+/* Roadmap "ابدأ ←" buttons specifically — were 35px */
+#roadmap-container button[onclick*="ROADMAP_PLAN"] {
+  min-height: 44px;
+  padding: 10px 14px !important;
+}
+
+/* Page title — keep visual weight identical to old <h1> */
+h2.page-title {
+  font-size: 2rem;
+  font-weight: 800;
+  margin: 0 0 12px 0;
+  color: inherit;
+  line-height: 1.2;
+}
+.hero h2.page-title { color: #fff; }
+
+/* Hide game HUD on small screens (portrait) — frees up bottom space */
+@media (max-width: 768px) and (orientation: portrait) {
+  .game-hud { display: none !important; }
+}
+
+/* Dark mode — improve note-box contrast (was gray-on-dark, hard to read) */
+body.dark .note-box {
+  background: #1e293b;
+  border-color: #334155;
+  color: #e2e8f0;
+}
+body.dark .note-box strong { color: #f1f5f9; }
+
 /* Print-specific — strict A4 layout */
 @media print {
   @page {
