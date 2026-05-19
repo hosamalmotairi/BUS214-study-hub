@@ -5244,3 +5244,29 @@ body.dark .discussion-activity .da-source { color: #64748B; }
   .discussion-activity .da-question .da-q-en { font-size: 1.05rem; }
   .discussion-activity .da-points > li { padding: 8px 12px 8px 28px; font-size: 0.94rem; }
 }
+
+/* ── WORD TOOLS — select text → translate + pronounce ── */
+.word-tools {
+  position: absolute; z-index: 9996;
+  display: flex; align-items: center; gap: 9px;
+  background: var(--paper, #fff);
+  border: 1.5px solid var(--line);
+  border-radius: 999px;
+  padding: 5px 14px 5px 5px;
+  box-shadow: 0 6px 22px rgba(0,0,0,.22);
+  max-width: 280px;
+  animation: ws-pop .15s ease;
+}
+.wt-speak {
+  flex-shrink: 0;
+  width: 30px; height: 30px; border-radius: 50%;
+  background: var(--accent); color: #fff;
+  border: none; cursor: pointer; padding: 0;
+  display: flex; align-items: center; justify-content: center;
+}
+.wt-speak:active { transform: scale(.9); }
+.wt-text {
+  font-size: .9rem; font-weight: 600; color: var(--ink);
+  line-height: 1.45; word-break: break-word;
+}
+@keyframes ws-pop { from { transform: scale(.4); opacity: 0; } to { transform: scale(1); opacity: 1; } }

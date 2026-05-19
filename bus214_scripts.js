@@ -4593,3 +4593,94 @@ document.addEventListener("keydown", function(e) {
     nextQuizQ();
   }
 });
+
+// ══════════════════════════════════════════════
+//  WORD TOOLS — select text → translate + pronounce
+// ══════════════════════════════════════════════
+(function () {
+  let _wtGlossary = null;
+  function buildWtGlossary() {
+    const g = {};
+    document.querySelectorAll('.def-term').forEach(function (el) {
+      const t = (el.textContent || '').trim();
+      let idx = t.indexOf('—');
+      if (idx < 0) idx = t.indexOf('–');
+      if (idx < 0) return;
+      const en = t.slice(0, idx).trim();
+      const ar = t.slice(idx + 1).trim();
+      if (/[A-Za-z]/.test(en) && /[؀-ۿ]/.test(ar)) g[en.toLowerCase()] = ar;
+    });
+    return g;
+  }
+  function wtTranslate(text, cb) {
+    if (!_wtGlossary) _wtGlossary = buildWtGlossary();
+    const key = text.trim().toLowerCase();
+    if (_wtGlossary[key]) { cb(_wtGlossary[key]); return; }
+    const pair = /[؀-ۿ]/.test(text) ? 'ar|en' : 'en|ar';
+    fetch('https://api.mymemory.translated.net/get?q=' + encodeURIComponent(text) + '&langpair=' + pair)
+      .then(function (r) { return r.json(); })
+      .then(function (d) {
+        const tr = d && d.responseData && d.responseData.translatedText;
+        cb(tr || '—');
+      })
+      .catch(function () { cb('تعذّرت الترجمة'); });
+  }
+
+  function initWordTools() {
+    if (document.getElementById('word-tools')) return;
+    const card = document.createElement('div');
+    card.id = 'word-tools';
+    card.className = 'word-tools';
+    card.style.display = 'none';
+    card.innerHTML =
+      '<button class="wt-speak" aria-label="استمع للنطق" title="استمع"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path><path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path></svg></button>'
+      + '<span class="wt-text"></span>';
+    document.body.appendChild(card);
+    const speakBtn = card.querySelector('.wt-speak');
+    const textEl = card.querySelector('.wt-text');
+
+    let lastText = '';
+    let token = 0;
+    function hide() { card.style.display = 'none'; }
+    function speak(text) {
+      if (!('speechSynthesis' in window)) return;
+      speechSynthesis.cancel();
+      const u = new SpeechSynthesisUtterance(text);
+      u.lang = /[A-Za-z]/.test(text) ? 'en-US' : 'ar-SA';
+      u.rate = 0.88;
+      speechSynthesis.speak(u);
+    }
+    function check() {
+      const sel = window.getSelection();
+      if (!sel || sel.isCollapsed) { hide(); return; }
+      const text = (sel.toString() || '').trim();
+      if (text.length < 1 || text.length > 200) { hide(); return; }
+      let r;
+      try { r = sel.getRangeAt(0).getBoundingClientRect(); } catch (e) { hide(); return; }
+      if (!r || (r.width === 0 && r.height === 0)) { hide(); return; }
+      lastText = text;
+      textEl.textContent = '⏳ جارٍ الترجمة…';
+      card.style.display = 'flex';
+      const myToken = ++token;
+      wtTranslate(text, function (tr) { if (myToken === token) textEl.textContent = tr; });
+      const cw = card.offsetWidth || 200;
+      let left = r.left + window.scrollX + r.width / 2 - cw / 2;
+      left = Math.max(8, Math.min(left, window.scrollX + window.innerWidth - cw - 8));
+      card.style.top = (r.bottom + window.scrollY + 8) + 'px';
+      card.style.left = left + 'px';
+    }
+    card.addEventListener('mousedown', function (e) { e.preventDefault(); });
+    speakBtn.addEventListener('click', function (e) {
+      e.stopPropagation();
+      if (lastText) speak(lastText);
+    });
+    document.addEventListener('mouseup', function () { setTimeout(check, 10); });
+    document.addEventListener('touchend', function () { setTimeout(check, 10); });
+    document.addEventListener('selectionchange', function () {
+      const s = window.getSelection();
+      if (!s || s.isCollapsed) hide();
+    });
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initWordTools);
+  else initWordTools();
+})();
