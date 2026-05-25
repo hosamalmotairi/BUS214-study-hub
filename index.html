@@ -4,13 +4,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>BUS 214 — HOSAM Study Hub</title>
-  <meta name="description" content="BUS 214 Business Ethics — اختر الميدترم المناسب: Mid 1 أو Mid 2.">
+  <meta name="description" content="BUS 214 Business Ethics — اختر الميدترم المناسب أو الفاينل.">
   <meta name="author" content="Hosam Almotairi">
 
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://bus-214-study-hub.vercel.app/">
   <meta property="og:title" content="BUS 214 Study Hub ⚖️">
-  <meta property="og:description" content="ذاكر BUS 214 بذكاء — Mid 1 + Mid 2 في مكان واحد.">
+  <meta property="og:description" content="ذاكر BUS 214 بذكاء — Mid 1 + Mid 2 + Final في مكان واحد.">
   <meta property="og:locale" content="ar_SA">
 
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%230d9488'/><text y='.9em' font-size='64' x='50%' dominant-baseline='auto' text-anchor='middle'>⚖️</text></svg>">
@@ -28,6 +28,7 @@
       --primary: #0F766E;
       --primary-light: #14B8A6;
       --accent: #D97706;
+      --indigo: #6366F1;
       --surface: #FAFAF9;
       --card: #FFFFFF;
       --text: #1C1917;
@@ -37,6 +38,8 @@
       --tint-border: #CCFBF1;
       --amber-bg: #FFFBEB;
       --amber-border: #FEF3C7;
+      --indigo-bg: #EEF2FF;
+      --indigo-border: #E0E7FF;
     }
 
     @media (prefers-color-scheme: dark) {
@@ -44,6 +47,7 @@
         --primary: #0D9488;
         --primary-light: #2DD4BF;
         --accent: #F59E0B;
+        --indigo: #818CF8;
         --surface: #1C1917;
         --card: #292524;
         --text: #FAFAF9;
@@ -53,6 +57,8 @@
         --tint-border: rgba(15,118,110,0.3);
         --amber-bg: rgba(217,119,6,0.12);
         --amber-border: rgba(217,119,6,0.25);
+        --indigo-bg: rgba(99,102,241,0.15);
+        --indigo-border: rgba(99,102,241,0.3);
       }
     }
 
@@ -155,6 +161,11 @@
       border: 1px solid var(--amber-border);
       color: var(--accent);
     }
+    .card-icon.indigo {
+      background: var(--indigo-bg);
+      border: 1px solid var(--indigo-border);
+      color: var(--indigo);
+    }
 
     .card-title {
       font-family: 'Cairo', sans-serif;
@@ -179,30 +190,9 @@
     .card.amber:hover { border-color: var(--accent); box-shadow: 0 12px 32px -8px rgba(217,119,6,0.18); }
     .card.amber::before { background: linear-gradient(135deg, transparent 0%, var(--amber-bg) 100%); }
 
-    .card.soon { cursor: default; opacity: 0.7; }
-    .card.soon:hover { transform: none; box-shadow: none; border-color: var(--border); }
-    .card.soon:hover::before { opacity: 0; }
-    .card-icon.soon {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      color: var(--muted);
-    }
-    .card-cta-soon {
-      display: inline-flex; align-items: center; gap: 6px;
-      color: var(--muted);
-      font-weight: 600;
-      font-size: 14px;
-      margin-top: auto;
-    }
-    .soon-tag {
-      position: absolute; top: 16px; left: 16px;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      color: var(--muted);
-      font-family: 'Cairo', sans-serif;
-      font-size: 11px; font-weight: 700;
-      padding: 3px 10px; border-radius: 999px;
-    }
+    .card.indigo .card-cta { color: var(--indigo); }
+    .card.indigo:hover { border-color: var(--indigo); box-shadow: 0 12px 32px -8px rgba(99,102,241,0.18); }
+    .card.indigo::before { background: linear-gradient(135deg, transparent 0%, var(--indigo-bg) 100%); }
 
     .card-cta::after {
       content: '←';
@@ -244,7 +234,7 @@
   <main class="wrap">
     <div class="badge">⚖️ BUS 214 · Business Ethics</div>
     <h1>HOSAM <span class="em">Study Hub</span></h1>
-    <p class="sub">اختر الميدترم اللي تبي تذاكره</p>
+    <p class="sub">اختر اللي تبي تذاكره</p>
 
     <div class="cards">
       <a class="card" href="bus214_edition.html">
@@ -261,13 +251,12 @@
         <span class="card-cta">ابدأ المذاكرة</span>
       </a>
 
-      <div class="card soon">
-        <span class="soon-tag">قريباً</span>
-        <div class="card-icon soon">★</div>
+      <a class="card indigo" href="https://bus214-final.vercel.app" target="_blank" rel="noopener">
+        <div class="card-icon indigo">★</div>
         <h2 class="card-title">Final</h2>
-        <p class="card-chapters">الاختبار النهائي — شامل لكل الفصول</p>
-        <span class="card-cta-soon">قريباً</span>
-      </div>
+        <p class="card-chapters">Ch 1·2·3 · 5·6·7 · 8·9·11 — الفاينل شامل لكل الفصول</p>
+        <span class="card-cta">ابدأ المذاكرة</span>
+      </a>
     </div>
 
     <a class="more-sites" href="https://mkt201.vercel.app/" target="_blank" rel="noopener">
